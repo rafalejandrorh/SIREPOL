@@ -68,9 +68,24 @@ class UserController extends Controller
         if($validar_persona == false){
             $request = $request->all();
             $request['password'] = bcrypt($request['password']);
+
+            
+
+            $person->cedula = $request['cedula'];
+            $person->primer_nombre = $request['primer_nombre'];
+            $person->segundo_nombre = $request['segundo_nombre'];
+            $person->primer_apellido = $request['primer_apellido'];
+            $person->segundo_apellido = $request['segundo_apellido'];
+            $person->id_genero = $request['id_genero'];
+            $person->fecha_nacimiento = $request['fecha_nacimiento'];
+            $person->id_estado_nacimiento = $request['id_estado_nacimiento'];
+            $person->save();
+
+
             $funcionario = $person->create($request);
             $user = $funcionario->person()->create($request); 
             $role = $user->user()->create($request);
+
             $role->roles()->sync($request['roles']);
 
             // dd ($funcionario);
