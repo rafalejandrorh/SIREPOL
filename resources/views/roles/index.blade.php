@@ -11,9 +11,9 @@
                     <div class="card">
                         <div class="card-body">
         
-                        @can('crear-rol')
+                        {{-- @can('crear-rol') --}}
                         <a class="btn btn-warning" href="{{ route('roles.create') }}">Nuevo</a>                        
-                        @endcan
+                        {{-- @endcan --}}
         
                 
                             <table class="table table-striped mt-2">
@@ -43,7 +43,7 @@
 
                             <!-- Centramos la paginacion a la derecha -->
                             <div class="pagination justify-content-end">
-                                {!! $roles->links() !!} 
+                                {{-- {!! $roles->links() !!}  --}}
                             </div>                    
                             </div>
                         </div>

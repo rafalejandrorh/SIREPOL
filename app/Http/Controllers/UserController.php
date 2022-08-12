@@ -51,6 +51,7 @@ class UserController extends Controller
         $person = new Person();
         $funcionario = new Funcionario();
         $usuario = new User();
+        $roles = new Role();
         $cedula = $request['cedula'];
         $obtener_persona = $person->where('cedula','=',$cedula)->get();
         $validar_persona = $person->where('cedula','=',$cedula)->exists();
@@ -69,8 +70,6 @@ class UserController extends Controller
             $request = $request->all();
             $request['password'] = bcrypt($request['password']);
 
-            
-
             $person->cedula = $request['cedula'];
             $person->primer_nombre = $request['primer_nombre'];
             $person->segundo_nombre = $request['segundo_nombre'];
@@ -81,12 +80,17 @@ class UserController extends Controller
             $person->id_estado_nacimiento = $request['id_estado_nacimiento'];
             $person->save();
 
+            $usuario->usuario = $request['usuario'];
+            $usuario->email = $request['email'];
+            $usuario->password = $request['password'];
+            $usuario->save();
 
-            $funcionario = $person->create($request);
-            $user = $funcionario->person()->create($request); 
-            $role = $user->user()->create($request);
+            $roles->roles()->sync($request['roles']);
 
-            $role->roles()->sync($request['roles']);
+            // $funcionario = $person->create($request);
+            // $user = $funcionario->person()->create($request); 
+            // $role = $user->user()->create($request);
+            //$role->roles()->sync($request['roles']);
 
             // dd ($funcionario);
             return redirect()->route('users')->with('Datos actualizados con éxito');
@@ -97,29 +101,54 @@ class UserController extends Controller
             $request = $request->all();
             $request['password'] = bcrypt($request['password']);
 
-            $credencial = $request['credencial'];
-            $id_jerarquia = $request['id_jerarquia'];
-            $telefono = $request['telefono'];
-            $id_person = $obtener_persona[0]['id'];
-            $id_estatus = $request['estatus_funcionario'];
-            $user = $funcionario->create(['credencial' => $credencial,'id_jerarquia' => $id_jerarquia, 'telefono' => $telefono, 'id_person' => $id_person, 'id_estatus'=> $id_estatus]); 
-            $role = $user->user()->create($request);
-            $role->roles()->sync($request['roles']);
+            $funcionario->credencial = $request['credencial'];
+            $funcionario->id_jerarquia = $request['id_jerarquia'];
+            $funcionario->telefono = $request['telefono'];
+            $funcionario->id_person = $obtener_persona[0]['id'];
+            $funcionario->id_estatus = $request['estatus_funcionario'];
+
+            $usuario->usuario = $request['usuario'];
+            $usuario->email = $request['email'];
+            $usuario->password = $request['password'];
+            $usuario->save();
+
+            $roles->roles()->sync($request['roles']);
+
+            // $credencial = $request['credencial'];
+            // $id_jerarquia = $request['id_jerarquia'];
+            // $telefono = $request['telefono'];
+            // $id_person = $obtener_persona[0]['id'];
+            // $id_estatus = $request['estatus_funcionario'];
+            //$user = $funcionario->create(['credencial' => $credencial,'id_jerarquia' => $id_jerarquia, 'telefono' => $telefono, 
+            //'id_person' => $id_person, 'id_estatus'=> $id_estatus]); 
+            //$role = $user->user()->create($request);
+            //$role->roles()->sync($request['roles']);
+
             return redirect()->route('users')->with('Datos actualizados con éxito');
            
         }
         
         if($validar_persona == true and $validar_funcionario == true and $validar_usuario == false){
 
-            $obtener_usuario = $usuario->where('id_funcionario','=',$obtener_funcionario[0]['id'])->get();
             $request = $request->all();
             $password = $request['password'];
             $bcrypt = bcrypt($password);
-            $usuario = $request['usuario'];
-            $email = $request['email'];
-            $funcionario = $obtener_funcionario[0]['id'];
-            $role = $usuario->create(['usuario'=> $usuario, 'email'=> $email, 'password'=> $bcrypt,'id_funcionario'=> $funcionario]);
-            $role->roles()->sync($request['roles']);
+
+            $usuario->id_funcionario = $obtener_funcionario[0]['id'];
+            $usuario->usuario = $request['usuario'];
+            $usuario->email = $request['email'];
+            $usuario->password = $bcrypt;
+            $usuario->save();
+
+            $roles->roles()->sync($request['roles']);
+
+            // $usuario = $request['usuario'];
+            // $email = $request['email'];
+            // $funcionario = $obtener_funcionario[0]['id'];
+            // $role = $usuario->create(['usuario'=> $usuario, 'email'=> $email, 'password'=> $bcrypt,'id_funcionario'=> $funcionario]);
+            // $role->roles()->sync($request['roles']);
+
+
             return redirect()->route('users')->with('Datos actualizados con éxito');
             // dd($role);
         }
