@@ -43,4 +43,31 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function funcionario()
+    {
+        return $this->belongsto(Funcionario::class, 'id_funcionario');
+    }
+
+    static function returnValidations(){
+
+        return $validations=[
+
+            'name'     => 'string|max:255|unique:users',
+            'email'    => 'string|max:255|unique:users',
+        ];
+        
+    }
+
+    static function  returnMessages(){
+        return $messages=[
+
+                //'name.required'      =>'El Nombre es obligatorio.',
+                //'email.required'     =>'El Email  es obligatorio.',
+                'name.unique'        =>'Nombre de usuario en uso, ingrese otro por favor!',
+                'email.unique'       =>'Este email está en uso, ingrese otro por favor!',
+                //'password.required'  =>'El password es obligatorio.',
+
+        ];
+} 
 }

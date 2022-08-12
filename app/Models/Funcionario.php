@@ -11,7 +11,7 @@ class Funcionario extends Model
 
     protected $table = 'funcionarios';
 
-    //protected $fillable = ['credencial','rango_id', 'organismo_id', 'despacho_id', 'telefono', 'person_id', 'estatus_laboral_id'];
+    protected $fillable = ['credencial','id_jerarquia', 'id_estatus', 'telefono', 'id_person'];
 
     // relacion de uno a uno con la tabla funcionario(inversa)
     public function person()

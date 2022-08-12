@@ -40,25 +40,25 @@
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="email">Primer Nombre</label>
-                                    {!! Form::text('name', null, array('class' => 'form-control')) !!}
+                                    {!! Form::text('primer_nombre', null, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="email">Segundo Nombre</label>
-                                    {!! Form::text('name', null, array('class' => 'form-control')) !!}
+                                    {!! Form::text('segundo_nombre', null, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="email">Primer Apellido</label>
-                                    {!! Form::text('name', null, array('class' => 'form-control')) !!}
+                                    {!! Form::text('primer_apellido', null, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="email">Segundo Apellido</label>
-                                    {!! Form::text('name', null, array('class' => 'form-control')) !!}
+                                    {!! Form::text('segundo_nombre', null, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -70,7 +70,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="email">Fecha de Nacimiento</label>
-                                    {!! Form::text('fecha_nacimiento', null, array('class' => 'form-control')) !!}
+                                    {!! Form::text('fecha_nacimiento', null, ['class'=>'form-control datepicker','autocomplete' => 'off']) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -94,7 +94,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="email">Jerarquía</label>
-                                    {!! Form::text('jerarquia', null, array('class' => 'form-control')) !!}
+                                    {!! Form::text('id_jerarquia', null, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -107,6 +107,12 @@
                                 <div class="form-group">
                                     <label for="">Roles</label>
                                     {!! Form::select('roles[]', $roles,[], array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <label for="email">Usuario</label>
+                                    {!! Form::text('usuario', null, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">

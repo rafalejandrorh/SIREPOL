@@ -11,7 +11,9 @@ class Person extends Model
 
     protected $table = 'persons';
 
-    //protected $fillable = ['tipo_id', 'letra', 'cedula', 'pasaporte', 'pnombre', 'snombre' , 'papellido', 'sapellido', 'sexo_id', 'fecha_nacimiento', 'lugar_nacimiento_id'];
+    protected $fillable = ['id_tipo_documentacion', 'letra_cedula', 'cedula', 
+    'primer_nombre', 'segundo_nombre', 'primer_apellido' , 'segundo_apellido', 'id_genero', 'fecha_nacimiento', 
+    'id_estado_nacimiento', 'id_municipio_nacimiento', 'id_pais_nacimiento'];
 
     public function person()
     {
