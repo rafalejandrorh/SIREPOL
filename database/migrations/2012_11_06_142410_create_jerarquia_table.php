@@ -16,7 +16,7 @@ class CreateJerarquiaTable extends Migration
         Schema::create('jerarquia', function (Blueprint $table) {
 
             $table->bigIncrements('id');
-            $table->string('jerarquia', 200);
+            $table->string('valor', 200);
              
             $table->timestamps();
         });

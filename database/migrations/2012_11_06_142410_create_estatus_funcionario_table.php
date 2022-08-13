@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('estatus_funcionario', function (Blueprint $table) {
 
             $table->bigIncrements('id');
-            $table->string('estatus', 60);
+            $table->string('valor', 60);
              
             $table->timestamps();
         });

@@ -19,25 +19,20 @@
                     </div>
                 @endif
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input aria-describedby="emailHelpBlock" id="email" type="email"
-                           class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email"
-                           placeholder="Enter Email" tabindex="1"
-                           value="{{ (Cookie::get('email') !== null) ? Cookie::get('email') : old('email') }}" autofocus
+                    <label for="email">Usuario</label>
+                    <input aria-describedby="emailHelpBlock" id="email" type="text"
+                           class="form-control{{ $errors->has('users') ? ' is-invalid' : '' }}" name="users"
+                           placeholder="Ingresa tu Usuario" tabindex="1"
+                           value="{{ (Cookie::get('users') !== null) ? Cookie::get('users') : old('users') }}" autofocus
                            required>
                     <div class="invalid-feedback">
-                        {{ $errors->first('email') }}
+                        {{ $errors->first('users') }}
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="d-block">
                         <label for="password" class="control-label">Password</label>
-                        <div class="float-right">
-                            <a href="{{ route('password.request') }}" class="text-small">
-                                Forgot Password?
-                            </a>
-                        </div>
                     </div>
                     <input aria-describedby="passwordHelpBlock" id="password" type="password"
                            value="{{ (Cookie::get('password') !== null) ? Cookie::get('password') : null }}"

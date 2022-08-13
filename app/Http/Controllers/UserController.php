@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Person;
 use Illuminate\Http\Request;
 use App\Models\User;
-
+use Spatie\Permission\Models\Permission;
 use App\Http\Controllers\Controller;
+use App\Models\Estatus_Funcionario;
 use App\Models\Funcionario;
 use App\Models\Genero;
+use App\Models\Geografia_Venezuela;
+use App\Models\Jerarquia;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Validator;
 
@@ -23,7 +26,9 @@ class UserController extends Controller
     {
         $user = User::all();
         $person = Person::all();
-        return view('users.index', ['Users' => $user, 'persons' => $person]);
+        $funcionario = Funcionario::all();
+
+        return view('users.index', ['Users' => $user, 'persons' => $person, 'funcionario' => $funcionario]);
     }
 
     /**
@@ -34,8 +39,12 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::pluck('name','id')->all();
-        $genero = Genero::pluck('genero', 'id')->all();
-        return view('users.create',compact('roles', 'genero'));
+        $genero = Genero::pluck('valor', 'id')->all();
+        $jerarquia = Jerarquia::pluck('valor', 'id')->all();
+        $estatus = Estatus_Funcionario::pluck('valor', 'id')->all();
+        $estado = Geografia_Venezuela::Where('id_padre', 107)->pluck('valor', 'id')->all();
+        //print_r($estado);die;
+        return view('users.create',compact('roles', 'genero', 'jerarquia', 'estatus', 'estado'));
     }
 
     /**
@@ -46,12 +55,11 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // $request = $request->all();
-        // print_r($request);die;
+
         $person = new Person();
         $funcionario = new Funcionario();
         $usuario = new User();
-        $roles = new Role();
+
         $cedula = $request['cedula'];
         $obtener_persona = $person->where('cedula','=',$cedula)->get();
         $validar_persona = $person->where('cedula','=',$cedula)->exists();
@@ -68,8 +76,15 @@ class UserController extends Controller
 
         if($validar_persona == false){
             $request = $request->all();
+
             $request['password'] = bcrypt($request['password']);
 
+            if($request['cedula'] != null){
+                $cedulado = 37;
+            }
+
+            $person->id_tipo_documentacion = $cedulado;
+            $person->letra_cedula = 'V';
             $person->cedula = $request['cedula'];
             $person->primer_nombre = $request['primer_nombre'];
             $person->segundo_nombre = $request['segundo_nombre'];
@@ -79,13 +94,23 @@ class UserController extends Controller
             $person->fecha_nacimiento = $request['fecha_nacimiento'];
             $person->id_estado_nacimiento = $request['id_estado_nacimiento'];
             $person->save();
+            $id_person = $person->id;
+            //$id_person = $person->Where('cedula', $request['cedula'])->pluck('id');
 
-            $usuario->usuario = $request['usuario'];
-            $usuario->email = $request['email'];
+            $funcionario->credencial = $request['credencial'];
+            $funcionario->id_jerarquia = $request['id_jerarquia'];
+            $funcionario->telefono = $request['telefono'];
+            $funcionario->id_person = $id_person;
+            $funcionario->id_estatus = $request['estatus_funcionario'];
+            $funcionario->save();
+            $id_funcionario = $funcionario->id;
+
+            $usuario->id_funcionario = $id_funcionario;
+            $usuario->users = $request['user'];
             $usuario->password = $request['password'];
             $usuario->save();
 
-            $roles->roles()->sync($request['roles']);
+            $usuario->assignRole($request['roles']);
 
             // $funcionario = $person->create($request);
             // $user = $funcionario->person()->create($request); 
@@ -93,8 +118,9 @@ class UserController extends Controller
             //$role->roles()->sync($request['roles']);
 
             // dd ($funcionario);
-            return redirect()->route('users')->with('Datos actualizados con éxito');
+            return redirect()->route('users.index')->with('Datos actualizados con éxito');
         }
+
         if($validar_persona == true and $validar_funcionario == false){
 
             $obtener_funcionario = $funcionario->where('id_person','=',$obtener_persona[0]['id'])->get();
@@ -106,13 +132,15 @@ class UserController extends Controller
             $funcionario->telefono = $request['telefono'];
             $funcionario->id_person = $obtener_persona[0]['id'];
             $funcionario->id_estatus = $request['estatus_funcionario'];
+            $funcionario->save();
+            $id_funcionario = $funcionario->id;
 
-            $usuario->usuario = $request['usuario'];
-            $usuario->email = $request['email'];
+            $usuario->id_funcionario = $id_funcionario;
+            $usuario->users = $request['user'];
             $usuario->password = $request['password'];
             $usuario->save();
 
-            $roles->roles()->sync($request['roles']);
+            $usuario->assignRole($request['roles']);
 
             // $credencial = $request['credencial'];
             // $id_jerarquia = $request['id_jerarquia'];
@@ -124,8 +152,7 @@ class UserController extends Controller
             //$role = $user->user()->create($request);
             //$role->roles()->sync($request['roles']);
 
-            return redirect()->route('users')->with('Datos actualizados con éxito');
-           
+            return redirect()->route('users.index')->with('Datos actualizados con éxito');
         }
         
         if($validar_persona == true and $validar_funcionario == true and $validar_usuario == false){
@@ -135,12 +162,11 @@ class UserController extends Controller
             $bcrypt = bcrypt($password);
 
             $usuario->id_funcionario = $obtener_funcionario[0]['id'];
-            $usuario->usuario = $request['usuario'];
-            $usuario->email = $request['email'];
+            $usuario->users = $request['user'];
             $usuario->password = $bcrypt;
             $usuario->save();
 
-            $roles->roles()->sync($request['roles']);
+            $usuario->assignRole($request['roles']);
 
             // $usuario = $request['usuario'];
             // $email = $request['email'];
@@ -149,9 +175,10 @@ class UserController extends Controller
             // $role->roles()->sync($request['roles']);
 
 
-            return redirect()->route('users')->with('Datos actualizados con éxito');
+            return redirect()->route('users.index')->with('Datos actualizados con éxito');
             // dd($role);
         }
+
     }
 
     /**
@@ -173,7 +200,13 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $roles = Role::pluck('name','id')->all();
+        $genero = Genero::pluck('valor', 'id')->all();
+        $jerarquia = Jerarquia::pluck('valor', 'id')->all();
+        $estatus = Estatus_Funcionario::pluck('valor', 'id')->all();
+        $estado = Geografia_Venezuela::Where('id_padre', 107)->pluck('valor', 'id')->all();
+        $user = User::find($id);
+        return view('users.edit',compact('roles', 'genero', 'jerarquia', 'estatus', 'estado', ['user' => $user]));//
     }
 
     /**
@@ -196,6 +229,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $usuario = User::find($id);
+        $usuario->delete();
+        return redirect()->route('users.index');
     }
 }

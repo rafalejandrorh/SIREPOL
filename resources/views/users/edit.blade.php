@@ -3,14 +3,14 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h3 class="page__heading">Alta de Usuarios</h3>
+            <h3 class="page__heading">Editar Usuario</h3>
         </div>
         <div class="section-body">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-body">    
-
+                        <div class="card-body">
+                     
                         @if ($errors->any())                                                
                             <div class="alert alert-dark alert-dismissible fade show" role="alert">
                             <strong>¡Revise los campos!</strong>                        
@@ -22,8 +22,8 @@
                             </button>
                             </div>
                         @endif
-
-                        {!! Form::open(array('route' => 'users.store','method'=>'POST')) !!}
+                        @foreach    
+                        {!! Form::model(null, ['method' => 'PATCH','route' => ['users.update', $user->id]]) !!}
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
@@ -64,7 +64,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="email">Género</label>
-                                    {!! Form::select('id_genero', $genero,[], array('class' => 'form-control')) !!}
+                                    {!! Form::select('id_genero', null,null, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -76,7 +76,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="email">Estado de Nacimiento</label>
-                                    {!! Form::select('id_estado_nacimiento', $estado,[], array('class' => 'form-control')) !!}
+                                    {!! Form::select('id_estado_nacimiento', null,null, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -88,19 +88,19 @@
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="email">Jerarquía</label>
-                                    {!! Form::select('id_jerarquia', $jerarquia,[], array('class' => 'form-control')) !!}
+                                    {!! Form::select('id_jerarquia', null,null, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="email">Estatus Laboral</label>
-                                    {!! Form::select('estatus_funcionario', $estatus,[], array('class' => 'form-control')) !!}
+                                    {!! Form::select('estatus_funcionario', null,null, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="">Roles</label>
-                                    {!! Form::select('roles', $roles,[], array('class' => 'form-control')) !!}
+                                    {!! Form::select('roles', null,null, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">

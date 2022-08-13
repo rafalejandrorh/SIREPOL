@@ -16,7 +16,9 @@ return new class extends Migration
         Schema::create('caracteristicas_resennado', function (Blueprint $table) {
 
             $table->bigIncrements('id');
-            $table->string('nombre', 300);
+            $table->string('valor', 300);
+            $table->bigInteger('id_padre');
+            $table->bigInteger('id_nomenclador');
              
             $table->timestamps();
         });

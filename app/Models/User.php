@@ -11,8 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
-    use HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
     
     /**
      * The attributes that are mass assignable.
@@ -20,8 +19,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
+        'id',
+        'users',
         'password',
     ];
 
@@ -53,8 +52,7 @@ class User extends Authenticatable
 
         return $validations=[
 
-            'name'     => 'string|max:255|unique:users',
-            'email'    => 'string|max:255|unique:users',
+            'users'     => 'string|max:255|unique:users',
         ];
         
     }
@@ -64,8 +62,7 @@ class User extends Authenticatable
 
                 //'name.required'      =>'El Nombre es obligatorio.',
                 //'email.required'     =>'El Email  es obligatorio.',
-                'name.unique'        =>'Nombre de usuario en uso, ingrese otro por favor!',
-                'email.unique'       =>'Este email está en uso, ingrese otro por favor!',
+                'users.unique'        =>'Nombre de usuario en uso, ingrese otro por favor!',
                 //'password.required'  =>'El password es obligatorio.',
 
         ];

@@ -16,7 +16,7 @@ class CreateGeneroTable extends Migration
         Schema::create('genero', function (Blueprint $table) {
 
             $table->bigIncrements('id');
-            $table->string('genero', 50);
+            $table->string('valor', 50);
              
             $table->timestamps();
         });

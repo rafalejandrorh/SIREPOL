@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Jerarquia extends Model
 {
     use HasFactory;
+
+    protected $table = 'jerarquia';
 }

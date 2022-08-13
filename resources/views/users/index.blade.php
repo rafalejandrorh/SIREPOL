@@ -16,7 +16,6 @@
                                     <div class="card">
                                         <div class="card-header">
                                             @can('users.create')
-                                                {{-- <a href="#!" class="unread label theme-bg4 text-white f-12 float-right" data-toggle="modal" data-target="#modal_create">Añadir Usuario</a>    --}}
                                                 <a href="{{ route('users.create') }}" class="btn btn-danger">Añadir Usuario</a>
                                             @endcan
                                         </div>
@@ -32,22 +31,24 @@
                                                                         <th>Credencial</th>
                                                                         <th>Cédula</th>
                                                                         <th>Funcionario</th>
+                                                                        <th>Jerarquía</th>
                                                                         <th>Usuario</th>
-                                                                        <th>División</th>
                                                                         <th>Acciones</th>
                                                                 </thead>
                                                                 <tbody>
                                                                    @foreach ($Users as $user)
                                                                     <tr role="row" class="odd">
-                                                                        <td class="sorting_1"></td>
-                                                                        <td class="sorting_1"></td>
-                                                                        <td class="sorting_1"></td>
-                                                                        <td class="sorting_1">{{$user->name}}</td>
-                                                                        <td></td>
+                                                                        <td class="sorting_1">{{$user->funcionario->credencial}}</td>
+                                                                        <td class="sorting_1">{{$user->funcionario->person->cedula}}</td>
+                                                                        <td class="sorting_1">{{$user->funcionario->person->primer_nombre.''.$user->funcionario->person->primer_apellido}}</td>
+                                                                        <td class="sorting_1">{{$user->funcionario->jerarquia->valor}}</td>
+                                                                        <td class="sorting_1">{{$user->users}}</td>
                                                                         <td align="center">
                                                                             @can('users.edit')
-                                                                            <a href="" class="btn btn-success">Editar</a>{{-- {{route('users.edit')}} --}}
-                                                                            <button class="btn btn-warning" title="Eliminar">Bloquear</button>                                                          
+                                                                            <a class="btn btn-info" href="{{ route('users.edit',$user->id) }}">Editar</a>
+                                                                            {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
+                                                                                {!! Form::submit('Borrar', ['class' => 'btn btn-danger']) !!}
+                                                                            {!! Form::close() !!}                                                  
                                                                             @endcan
                                                                         </td>
                                                                     </tr>

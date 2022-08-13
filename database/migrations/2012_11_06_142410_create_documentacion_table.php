@@ -16,7 +16,7 @@ class CreateDocumentacionTable extends Migration
         Schema::create('tipo_documentacion', function (Blueprint $table) {
 
             $table->bigIncrements('id');
-            $table->string('nombre', 100);
+            $table->string('valor', 100);
              
             $table->timestamps();
         });

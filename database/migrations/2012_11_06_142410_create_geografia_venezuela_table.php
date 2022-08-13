@@ -16,7 +16,9 @@ return new class extends Migration
         Schema::create('geografia_venezuela', function (Blueprint $table) {
 
             $table->bigIncrements('id');
-            $table->string('genero', 300);
+            $table->string('valor', 300);
+            $table->bigIncrements('id_padre');
+            $table->bigIncrements('id_hijo');
              
             $table->timestamps();
         });

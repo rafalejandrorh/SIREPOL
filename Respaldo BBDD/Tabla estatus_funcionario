@@ -1,0 +1,11 @@
+INSERT INTO public.estatus_funcionario (id, valor, tipo_id, nomenclador_id, created_at, updated_at) VALUES (1310000, 'ACTIVO', 131, 1310000, NULL, NULL);
+INSERT INTO public.estatus_funcionario (id, valor, tipo_id, nomenclador_id, created_at, updated_at) VALUES (1310001, 'DESTITUIDO', 131, 1310001, NULL, NULL);
+INSERT INTO public.estatus_funcionario (id, valor, tipo_id, nomenclador_id, created_at, updated_at) VALUES (1310002, 'EGRESADO', 131, 1310002, NULL, NULL);
+INSERT INTO public.estatus_funcionario (id, valor, tipo_id, nomenclador_id, created_at, updated_at) VALUES (1310003, 'FALLECIDO', 131, 1310003, NULL, NULL);
+INSERT INTO public.estatus_funcionario (id, valor, tipo_id, nomenclador_id, created_at, updated_at) VALUES (1310004, 'JUBILADO', 131, 1310004, NULL, NULL);
+INSERT INTO public.estatus_funcionario (id, valor, tipo_id, nomenclador_id, created_at, updated_at) VALUES (1310005, 'EN COMISIÓN', 131, 1310005, NULL, NULL);
+INSERT INTO public.estatus_funcionario (id, valor, tipo_id, nomenclador_id, created_at, updated_at) VALUES (1310006, 'INACTIVO', 131, 1310006, NULL, NULL);
+INSERT INTO public.estatus_funcionario (id, valor, tipo_id, nomenclador_id, created_at, updated_at) VALUES (1310007, 'EXCLUIDO', 131, 1310007, NULL, NULL);
+INSERT INTO public.estatus_funcionario (id, valor, tipo_id, nomenclador_id, created_at, updated_at) VALUES (1310008, 'PENSIONADO', 131, 1310008, NULL, NULL);
+INSERT INTO public.estatus_funcionario (id, valor, tipo_id, nomenclador_id, created_at, updated_at) VALUES (1310009, 'RENUNCIÓ', 131, 1310009, NULL, NULL);
+INSERT INTO public.estatus_funcionario (id, valor, tipo_id, nomenclador_id, created_at, updated_at) VALUES (1310010, 'SUSPENDIDO', 131, 1310010, NULL, NULL);

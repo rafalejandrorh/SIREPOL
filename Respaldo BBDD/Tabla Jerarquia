@@ -1,0 +1,9 @@
+INSERT INTO public.jerarquia (id, valor, created_at, updated_at) VALUES (14000, 'COMISIONADO', CURRENT_TIMESTAMP, NULL);
+INSERT INTO public.jerarquia (id, valor, created_at, updated_at) VALUES (14001, 'COMISIONADO AGREGADO', CURRENT_TIMESTAMP, NULL);
+INSERT INTO public.jerarquia (id, valor, created_at, updated_at) VALUES (14002, 'COMISIONADO JEFE', CURRENT_TIMESTAMP, NULL);
+INSERT INTO public.jerarquia (id, valor, created_at, updated_at) VALUES (14003, 'SUPERVISOR', CURRENT_TIMESTAMP, NULL);
+INSERT INTO public.jerarquia (id, valor, created_at, updated_at) VALUES (14004, 'SUPERVISOR AGREGADO', CURRENT_TIMESTAMP, NULL);
+INSERT INTO public.jerarquia (id, valor, created_at, updated_at) VALUES (14005, 'SUPERVISOR JEFE', CURRENT_TIMESTAMP, NULL);
+INSERT INTO public.jerarquia (id, valor, created_at, updated_at) VALUES (14006, 'OFICIAL', CURRENT_TIMESTAMP, NULL);
+INSERT INTO public.jerarquia (id, valor, created_at, updated_at) VALUES (14007, 'OFICIAL AGREGADO', CURRENT_TIMESTAMP, NULL);
+INSERT INTO public.jerarquia (id, valor, created_at, updated_at) VALUES (14008, 'OFICIAL JEFE', CURRENT_TIMESTAMP, NULL);
