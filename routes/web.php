@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ResennaController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\TrazasController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
@@ -16,13 +18,17 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 
-Route::resource('users', UserController::class)->names('users');
+Route::resource('users', UserController::class)->middleware('auth');
 
-Route::resource('roles', RoleController::class)->names('roles');
+Route::resource('roles', RoleController::class)->middleware('auth');
+
+Route::resource('resenna', ResennaController::class)->middleware('auth');
+
+Route::resource('trazas', TrazasController::class)->middleware('auth');
 
 Auth::routes();

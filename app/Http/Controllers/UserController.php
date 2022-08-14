@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Person;
 use Illuminate\Http\Request;
+use App\Models\Person;
 use App\Models\User;
-use Spatie\Permission\Models\Permission;
 use App\Http\Controllers\Controller;
 use App\Models\Estatus_Funcionario;
 use App\Models\Funcionario;
@@ -13,10 +12,21 @@ use App\Models\Genero;
 use App\Models\Geografia_Venezuela;
 use App\Models\Jerarquia;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+    function __construct()
+    {
+
+        $this->middleware('can:users.index')->only('index');
+        $this->middleware('can:users.create')->only('create');
+        $this->middleware('can:users.show')->only('show');
+        $this->middleware('can:users.edit')->only('edit', 'update');
+        $this->middleware('can:users.destroy')->only('destroy');
+ 
+    }
     /**
      * Display a listing of the resource.
      *
@@ -24,11 +34,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::all();
-        $person = Person::all();
-        $funcionario = Funcionario::all();
-
-        return view('users.index', ['Users' => $user, 'persons' => $person, 'funcionario' => $funcionario]);
+        $user = User::paginate(5);
+        return view('users.index', ['Users' => $user]);
     }
 
     /**
@@ -43,7 +50,6 @@ class UserController extends Controller
         $jerarquia = Jerarquia::pluck('valor', 'id')->all();
         $estatus = Estatus_Funcionario::pluck('valor', 'id')->all();
         $estado = Geografia_Venezuela::Where('id_padre', 107)->pluck('valor', 'id')->all();
-        //print_r($estado);die;
         return view('users.create',compact('roles', 'genero', 'jerarquia', 'estatus', 'estado'));
     }
 
@@ -112,12 +118,6 @@ class UserController extends Controller
 
             $usuario->assignRole($request['roles']);
 
-            // $funcionario = $person->create($request);
-            // $user = $funcionario->person()->create($request); 
-            // $role = $user->user()->create($request);
-            //$role->roles()->sync($request['roles']);
-
-            // dd ($funcionario);
             return redirect()->route('users.index')->with('Datos actualizados con éxito');
         }
 
@@ -142,16 +142,6 @@ class UserController extends Controller
 
             $usuario->assignRole($request['roles']);
 
-            // $credencial = $request['credencial'];
-            // $id_jerarquia = $request['id_jerarquia'];
-            // $telefono = $request['telefono'];
-            // $id_person = $obtener_persona[0]['id'];
-            // $id_estatus = $request['estatus_funcionario'];
-            //$user = $funcionario->create(['credencial' => $credencial,'id_jerarquia' => $id_jerarquia, 'telefono' => $telefono, 
-            //'id_person' => $id_person, 'id_estatus'=> $id_estatus]); 
-            //$role = $user->user()->create($request);
-            //$role->roles()->sync($request['roles']);
-
             return redirect()->route('users.index')->with('Datos actualizados con éxito');
         }
         
@@ -168,15 +158,8 @@ class UserController extends Controller
 
             $usuario->assignRole($request['roles']);
 
-            // $usuario = $request['usuario'];
-            // $email = $request['email'];
-            // $funcionario = $obtener_funcionario[0]['id'];
-            // $role = $usuario->create(['usuario'=> $usuario, 'email'=> $email, 'password'=> $bcrypt,'id_funcionario'=> $funcionario]);
-            // $role->roles()->sync($request['roles']);
-
 
             return redirect()->route('users.index')->with('Datos actualizados con éxito');
-            // dd($role);
         }
 
     }
@@ -200,13 +183,14 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $user = User::find($id);
         $roles = Role::pluck('name','id')->all();
         $genero = Genero::pluck('valor', 'id')->all();
         $jerarquia = Jerarquia::pluck('valor', 'id')->all();
         $estatus = Estatus_Funcionario::pluck('valor', 'id')->all();
         $estado = Geografia_Venezuela::Where('id_padre', 107)->pluck('valor', 'id')->all();
-        $user = User::find($id);
-        return view('users.edit',compact('roles', 'genero', 'jerarquia', 'estatus', 'estado', ['user' => $user]));//
+
+        return view('users.edit', compact('user', 'roles', 'genero', 'jerarquia', 'estatus', 'estado'));
     }
 
     /**

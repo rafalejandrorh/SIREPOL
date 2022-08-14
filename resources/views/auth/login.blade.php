@@ -1,10 +1,16 @@
 @extends('layouts.auth_app')
 @section('title')
-    Admin Login
+    SIREPOL
 @endsection
 @section('content')
+    <div class="login-main-text">
+        <div class="title text-center">
+            <h2 style="color:#000000"><b>Sistema de Reseña Policial</b></h2>
+            <h2 style="color:#000000"><b>Coordinación de Investigaciones</b></h2>
+        </div>  
+    </div>
     <div class="card card-primary">
-        <div class="card-header"><h4>Admin Login</h4></div>
+        <div class="card-header"><h4>Inicio de Sesión</h4></div>
 
         <div class="card-body">
             <form method="POST" action="{{ route('login') }}">
@@ -32,7 +38,7 @@
 
                 <div class="form-group">
                     <div class="d-block">
-                        <label for="password" class="control-label">Password</label>
+                        <label for="password" class="control-label">Contraseña</label>
                     </div>
                     <input aria-describedby="passwordHelpBlock" id="password" type="password"
                            value="{{ (Cookie::get('password') !== null) ? Cookie::get('password') : null }}"
@@ -48,13 +54,13 @@
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" name="remember" class="custom-control-input" tabindex="3"
                                id="remember"{{ (Cookie::get('remember') !== null) ? 'checked' : '' }}>
-                        <label class="custom-control-label" for="remember">Remember Me</label>
+                        <label class="custom-control-label" for="remember">Recuerdame</label>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
-                        Login
+                        Ingresar
                     </button>
                 </div>
             </form>

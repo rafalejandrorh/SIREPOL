@@ -3,7 +3,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h3 class="page__heading">Roles</h3>
+            <h3 class="page__heading"><b>Roles</b></h3>
         </div>
         <div class="section-body">
             <div class="row">
@@ -12,27 +12,28 @@
                         <div class="card-body">
         
                         @can('roles.create')
-                        <a class="btn btn-warning" href="{{ route('roles.create') }}">Nuevo</a>                        
+                        <a class="btn btn-success" href="{{ route('roles.create') }}">Nuevo</a>                        
                         @endcan
-        
-                
+
                             <table class="table table-striped mt-2">
-                                <thead style="background-color:#6777ef">                                                       
-                                    <th style="color:#fff;">Rol</th>
-                                    <th style="color:#fff;">Acciones</th>
+                                <thead>                                         
+                                    <th>Rol</th>
+                                    <th>Permisos</th>
+                                    <th>Acciones</th>
                                 </thead>  
                                 <tbody>
                                 @foreach ($roles as $role)
                                 <tr>                           
                                     <td>{{ $role->name }}</td>
+                                    <td>@foreach ($permission as $item){{ $item->description.' |' }} @endforeach</td>
                                     <td>                                
                                         @can('roles.edit')
-                                            <a class="btn btn-primary" href="{{ route('roles.edit',$role->id) }}">Editar</a>
+                                            <a class="btn btn-info" href="{{ route('roles.edit', $role->id) }}"><i class='fa fa-edit'></i></a>
                                         @endcan
                                         
                                         @can('roles.destroy')
                                             {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id],'style'=>'display:inline']) !!}
-                                                {!! Form::submit('Borrar', ['class' => 'btn btn-danger']) !!}
+                                                {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
                                             {!! Form::close() !!}
                                         @endcan
                                     </td>
@@ -43,7 +44,7 @@
 
                             <!-- Centramos la paginacion a la derecha -->
                             <div class="pagination justify-content-end">
-                                {{-- {!! $roles->links() !!}  --}}
+                                {!! $roles->links() !!} 
                             </div>                    
                             </div>
                         </div>

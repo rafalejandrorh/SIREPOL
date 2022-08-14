@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-//agregamos
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\DB;
@@ -12,13 +11,16 @@ use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
-    // function __construct()
-    // {
-    //      $this->middleware('can:ver-rol|crear-rol|editar-rol|borrar-rol', ['only' => ['index']]);
-    //      $this->middleware('can:crear-rol', ['only' => ['create','store']]);
-    //      $this->middleware('can:editar-rol', ['only' => ['edit','update']]);
-    //      $this->middleware('can:borrar-rol', ['only' => ['destroy']]);
-    // }
+    function __construct()
+    {
+
+         $this->middleware('can:roles.index')->only('index');
+         $this->middleware('can:roles.create')->only('create');
+         $this->middleware('can:roles.show')->only('show');
+         $this->middleware('can:roles.edit')->only('edit', 'update');
+         $this->middleware('can:roles.destroy')->only('destroy');
+ 
+    }
     /**
      * Display a listing of the resource.
      *
@@ -28,8 +30,8 @@ class RoleController extends Controller
     {        
          //Con paginación
          $roles = Role::paginate(5);
-         return view('roles.index',compact('roles'));
-         //al usar esta paginacion, recordar poner en el el index.blade.php este codigo  {!! $roles->links() !!} 
+         $permission = Permission::get();
+         return view('roles.index',compact('roles', 'permission'));
     }
 
     /**
@@ -40,7 +42,7 @@ class RoleController extends Controller
     public function create()
     {
         $permission = Permission::get();
-        return view('roles.crear',compact('permission'));
+        return view('roles.create',compact('permission'));
     }
 
     /**
@@ -84,10 +86,10 @@ class RoleController extends Controller
         $role = Role::find($id);
         $permission = Permission::get();
         $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id",$id)
-            ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
-            ->all();
+        ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
+        ->all();
     
-        return view('roles.editar',compact('role','permission','rolePermissions'));
+        return view('roles.edit',compact('role','permission','rolePermissions'));
     }
 
     /**

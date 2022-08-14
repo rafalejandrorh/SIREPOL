@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>@yield('title') | {{ config('app.name') }}</title>
+    <title>@yield('title')</title>
 
     <!-- General CSS Files -->
+    <link rel="icon" href="{{ asset('img/logo_PMCR.jpg')}}">
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
 
@@ -24,12 +25,15 @@
             <div class="row">
                 <div class="col-md-6 offset-md-3">
                     <div class="login-brand">
-                        <img src="{{ asset('img/logo.png') }}" alt="logo" width="100"
-                             class="shadow-light">
+                        <img src="{{ asset('img/logo_PMCR.jpg') }}" alt="Policía Municipio Cristóbal Rojas" width="200" class="shadow-light">
                     </div>
                     @yield('content')
                     <div class="simple-footer">
-{{--                        Copyright &copy; {{ getSettingValue('application_name') }}  {{ date('Y') }}--}}
+                        Policía del Municipio Cristóbal Rojas
+                       <br>
+                       Desarrollado por: División de Desarrollo de Sistemas del CICPC.
+                       <br>
+                       Copyright &copy; SIREPOL {{ date('Y') }}
                     </div>
                 </div>
             </div>

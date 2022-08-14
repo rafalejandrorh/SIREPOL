@@ -3,14 +3,14 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h3 class="page__heading"><b>Editar Usuario</b></h3>
+            <h3 class="page__heading"><b>Realizar Reseña</b></h3>
         </div>
         <div class="section-body">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-body">
-                     
+                        <div class="card-body">    
+
                         @if ($errors->any())                                                
                             <div class="alert alert-dark alert-dismissible fade show" role="alert">
                             <strong>¡Revise los campos!</strong>                        
@@ -22,19 +22,13 @@
                             </button>
                             </div>
                         @endif
-                        @foreach    
-                        {!! Form::model($user, ['method' => 'PATCH','route' => ['users.update', $user->id]]) !!}
+
+                        {!! Form::open(array('route' => 'resenna.store','method' => 'POST')) !!}
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                    <label for="name">Credencial</label>
-                                    {!! Form::text('credencial', null, array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <label for="email">Cédula</label>
-                                    {!! Form::text('cedula', null, array('class' => 'form-control')) !!}
+                                    <label for="name">Fecha de Reseña</label>
+                                    {!! Form::text('fecha_resenna', null, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -63,62 +57,91 @@
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                    <label for="email">Género</label>
-                                    {!! Form::select('id_genero', null, array('class' => 'form-control')) !!}
+                                    <label for="email">Cédula</label>
+                                    {!! Form::text('cedula', null, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="email">Fecha de Nacimiento</label>
-                                    {!! Form::text('fecha_nacimiento', null, ['class'=>'form-control datepicker','autocomplete' => 'off']) !!}
+                                    {!! Form::text('fecha_nacimiento', null, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="email">Estado de Nacimiento</label>
-                                    {!! Form::select('id_estado_nacimiento', null, array('class' => 'form-control')) !!}
+                                    {!! Form::select('estado_nacimiento', $estado, [], array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                    <label for="email">Teléfono</label>
-                                    {!! Form::text('telefono', null, array('class' => 'form-control')) !!}
+                                    <label for="email">Municipio de Nacimiento</label>
+                                    {!! Form::text('municipio_nacimiento', null, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                    <label for="email">Jerarquía</label>
-                                    {!! Form::select('id_jerarquia', null, array('class' => 'form-control')) !!}
+                                    <label for="email">Dirección</label>
+                                    {!! Form::text('direccion', null, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                    <label for="email">Estatus Laboral</label>
-                                    {!! Form::select('estatus_funcionario', null, array('class' => 'form-control')) !!}
+                                    <label for="email">Genero</label>
+                                    {!! Form::select('id_genero', $genero, [], ['class'=>'form-control datepicker','autocomplete' => 'off']) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                    <label for="">Roles</label>
-                                    {!! Form::select('roles', null, array('class' => 'form-control')) !!}
+                                    <label for="email">Profesión</label>
+                                    {!! Form::select('id_profesion',  $profesion, [], array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                    <label for="email">Usuario</label>
-                                    {!! Form::text('user', null, array('class' => 'form-control')) !!}
+                                    <label for="email">Estado Civil</label>
+                                    {!! Form::select('id_estado_civil', $estado_civil, [], array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                    <label for="password">Password</label>
-                                    {!! Form::password('password', array('class' => 'form-control')) !!}
+                                    <label for="email">Tez</label>
+                                    {!! Form::select('id_tez', $tez, [], array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                    <label for="confirm-password">Confirmar Password</label>
-                                    {!! Form::password('confirm-password', array('class' => 'form-control')) !!}
+                                    <label for="email">Contextura</label>
+                                    {!! Form::select('id_contextura', $contextura, [], array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <label for="email">Motivo de Reseña</label>
+                                    {!! Form::select('id_motivo_resenna', $motivo_resenna, [], array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <label for="email">Funcionario Aprehensor</label>
+                                    {!! Form::text('funcionario_aprehensor', null, array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <label for="">Funcionario que Reseña</label>
+                                    <select name="id_funcionario_resenna" id="" class="form-control">
+                                    @foreach ($funcionario_resenna as $funcionario)
+                                        <option value="{{ $funcionario->id }}"> {{$funcionario->valor.'. '.$funcionario->primer_nombre.' '.$funcionario->primer_apellido }}</option>
+                                    @endforeach
+                                    </select>
+                                    {{-- {!! Form::select('id_funcionario_resenna', , [], array('class' => 'form-control')) !!} --}}
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <label for="email">Observaciones</label>
+                                    {!! Form::textarea('observaciones', null, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">

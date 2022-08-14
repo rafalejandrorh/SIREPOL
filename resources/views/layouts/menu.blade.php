@@ -1,6 +1,6 @@
-<li class="side-menus {{ Request::is('home') ? 'active' : '' }}">
-    <a class="nav-link" href="/home">
-        <i class=" fas fa-balance-scale"></i><span>Reseña</span>
+<li class="side-menus {{ Request::is('resenna') ? 'active' : '' }}">
+    <a class="nav-link" href="/resenna">
+        <i class=" fas fa-balance-scale"></i><span>Reseñas</span>
     </a>
 </li>
 <li class="side-menus {{ Request::is('users') ? 'active' : '' }}">
@@ -13,7 +13,7 @@
         <i class=" fas fa-key"></i><span>Roles</span>
     </a>
 </li>
-<li class="side-menus {{ Request::is('roles') ? 'active' : '' }}">
+<li class="side-menus {{ Request::is('trazas') ? 'active' : '' }}">
     <a class="nav-link" href="/">
         <i class=" fas fa-save"></i><span>Trazas</span>
     </a>
