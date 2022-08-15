@@ -128,5 +128,13 @@
                 </div>
             </div>
         </div>
+        {{-- <script src="{{ asset('js/app.js') }}"></script>
+        <script>
+            Swal.fire(
+            'The Internet?',
+            'That thing is still around?',
+            'question'
+            )
+        </script> --}}
     </body>
 </html>

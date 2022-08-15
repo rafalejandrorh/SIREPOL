@@ -23,7 +23,6 @@
                             </div>
                         @endif
  
-                        {{-- {!! Form::open(array('method' => 'PATCH','route' => 'users.update')) !!} --}}
                         {!! Form::model($user, ['method' => 'PATCH','route' => ['users.update', $user->id]]) !!}
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-3">
@@ -77,7 +76,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Estado de Nacimiento</label>
-                                    {!! Form::select('id_estado_nacimiento', $estado, $user->funcionario->person->estado_nacimiento->valor, array('class' => 'form-control')) !!}
+                                    {!! Form::select('id_estado_nacimiento', $estado, $user->funcionario->person->estado_nacimiento->valor, array('class' => 'form-control select2')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
@@ -95,13 +94,13 @@
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Estatus Laboral</label>
-                                    {!! Form::select('id_estatus', $estatus, $user->funcionario->estatus->valor, array('class' => 'form-control')) !!}
+                                    {!! Form::select('id_estatus', $estatus, $user->funcionario->estatus->valor, array('class' => 'form-control select2')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="">Roles</label>
-                                    {!! Form::select('roles', $roles, $user->roles, array('class' => 'form-control')) !!}
+                                    {!! Form::select('roles', $roles, $user->roles, array('class' => 'form-control select2')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
@@ -115,8 +114,10 @@
                                     {!! Form::button('<i class="fa fa-save"> Guardar</i>', ['type' => 'submit', 'class' => 'btn btn-primary']) !!}
                                 </div>
                             </div>
-                        </div>
+                        
                         {!! Form::close() !!}
+
+                        </div>
                         </div>
                     </div>
                 </div>

@@ -16,7 +16,7 @@
             </a>
 
             <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item has-icon" data-toggle="modal" data-target="#changePasswordModal" href="#" data-id="{{ \Auth::id() }}">
+                <a class="dropdown-item has-icon" data-toggle="modal" data-target="#changePasswordModal" href="#" data-id="{{ \Illuminate\Support\Facades\Auth::id() }}">
                     <i class="fa fa-lock"> </i>Cambiar Contraseña
                 </a>
                 <a href="{{ url('logout') }}" class="dropdown-item has-icon text-danger"

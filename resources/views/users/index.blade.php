@@ -22,6 +22,7 @@
                                                 <th>Jerarquía</th>
                                                 <th>Usuario</th>
                                                 <th>Estatus</th>
+                                                <th>Contraseña</th>
                                                 <th>Acciones</th>
                                         </thead>
                                         <tbody>
@@ -57,6 +58,13 @@
                                                         </td>
                                                     @endif  
                                                 @endcan
+                                                <td class="sorting_1">                                                        
+                                                    {!! Form::open(['method' => 'PATCH','route' => ['users.reset', $user->id],'style'=>'display:inline']) !!}
+                                                        {!! Form::button('<i class="fa fa-reply"> Reestablecer</i>', ['type' => 'submit', 'class' => 'btn btn-primary']) !!}
+                                                    {!! Form::close() !!} 
+
+                                                    {{-- <a class="btn btn-primary" href="{{ route('users.reset', $user->id) }}"><i class='fa fa-reply'> Reestablecer</i></a> --}}
+                                                </td>
                                                 <td align="center">
                                                     @can('users.show')
                                                     <a class="btn btn-info" href="{{ route('users.show', $user->id) }}"><i class='fa fa-eye'></i></a>
@@ -80,4 +88,44 @@
         </div>
     </div>
 </section>
+@endsection
+
+@section('scripts')
+
+    @if (session('registrar') == 'Ok')
+        <script>
+            Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'El Usuario ha sido registrado.',
+            showConfirmButton: false,
+            timer: 1500
+            })
+        </script>
+    @endif
+
+    @if (session('editar') == 'Ok')
+        <script>
+            Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'El Usuario ha sido actualizado.',
+            showConfirmButton: false,
+            timer: 1500
+            })
+        </script>
+    @endif
+
+    @if (session('status') == 'Ok')
+        <script>
+            Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Estatus de Usuario actualizado.',
+            showConfirmButton: false,
+            timer: 1500
+            })
+        </script>
+    @endif
+
 @endsection

@@ -76,7 +76,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Estado de Nacimiento</label>
-                                    {!! Form::select('id_estado_nacimiento', $estado,[], array('class' => 'form-control')) !!}
+                                    {!! Form::select('id_estado_nacimiento', $estado, [], ['class' => 'form-control select2']) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
@@ -94,13 +94,13 @@
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Estatus Laboral</label>
-                                    {!! Form::select('estatus_funcionario', $estatus,[], array('class' => 'form-control')) !!}
+                                    {!! Form::select('estatus_funcionario', $estatus,[], array('class' => 'form-control select2')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="">Roles</label>
-                                    {!! Form::select('roles', $roles,[], array('class' => 'form-control')) !!}
+                                    {!! Form::select('roles', $roles,[], array('class' => 'form-control select2')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">

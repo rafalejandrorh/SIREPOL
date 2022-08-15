@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PersonController;
 use App\Http\Controllers\ResennaController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TrazasController;
@@ -22,6 +23,8 @@ Route::get('/', function () {
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+Route::post('/password', [UserController::class, 'UpdatePassword'])->name('users.password')->middleware('auth');
+Route::patch('/reset', [UserController::class, 'ResetPassword'])->name('users.reset')->middleware('auth');
 
 Route::resource('users', UserController::class)->middleware('auth');
 
@@ -30,5 +33,7 @@ Route::resource('roles', RoleController::class)->middleware('auth');
 Route::resource('resenna', ResennaController::class)->middleware('auth');
 
 Route::resource('trazas', TrazasController::class)->middleware('auth');
+
+Route::resource('persons', PersonController::class)->middleware('auth');
 
 Auth::routes();

@@ -13,6 +13,7 @@
     <link href="{{ asset('assets/css/@fortawesome/fontawesome-free/css/all.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ asset('assets/css/iziToast.min.css') }}">
     <link href="{{ asset('assets/css/sweetalert.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/js/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('assets/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
 
 @yield('page_css')
@@ -49,6 +50,7 @@
 @include('profile.edit_profile')
 
 </body>
+<script src="{{ asset('assets/js/sweetalert2/sweetalert2.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/js/popper.min.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
@@ -79,5 +81,12 @@
             }
         };
     }(jQuery));
+
+    // Swal.fire({
+    // title: 'Error!',
+    // text: 'Do you want to continue',
+    // icon: 'error',
+    // confirmButtonText: 'Cool'
+    // })
 </script>
 </html>

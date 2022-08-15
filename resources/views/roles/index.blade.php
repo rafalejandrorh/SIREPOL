@@ -30,7 +30,7 @@
                                         @endcan
                                         
                                         @can('roles.destroy')
-                                            {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id],'style'=>'display:inline']) !!}
+                                            {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id],'style'=>'display:inline', 'class' => 'eliminar']) !!}
                                                 {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
                                             {!! Form::close() !!}
                                         @endcan
@@ -50,4 +50,63 @@
                 </div>
             </div>
         </section>
+@endsection
+
+@section('scripts')
+
+    @if (session('eliminar') == 'Ok')
+        <script>
+            Swal.fire(
+                'Eliminado!',
+                'El Rol ha sido Eliminado.',
+                'Satisfactoriamente'
+            )
+        </script>
+    @endif
+
+    @if (session('registrar') == 'Ok')
+        <script>
+            Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'El Rol ha sido registrado.',
+            showConfirmButton: false,
+            timer: 1500
+            })
+        </script>
+    @endif
+
+    @if (session('editar') == 'Ok')
+    <script>
+        Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'El Rol ha sido actualizado.',
+        showConfirmButton: false,
+        timer: 1500
+        })
+    </script>
+@endif
+
+    <script>
+        $('.eliminar').submit(function(e){
+            e.preventDefault();
+
+            Swal.fire({
+            title: '¿Estás seguro?',
+            text: "No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, Eliminar!'
+            }).then((result) => {
+            if (result.value) {
+                this.submit();
+            }
+            })
+
+        });
+    </script>
+
 @endsection

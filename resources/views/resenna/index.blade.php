@@ -37,7 +37,7 @@
                                                         <a class="btn btn-primary" href="{{ route('resenna.edit', $resenna->id) }}"><i class='fa fa-edit'></i></a>
                                                         @endcan
                                                         @can('resenna.destroy')
-                                                        {!! Form::open(['method' => 'DELETE','route' => ['resenna.destroy', $resenna->id],'style'=>'display:inline']) !!}
+                                                        {!! Form::open(['method' => 'DELETE','route' => ['resenna.destroy', $resenna->id],'style'=>'display:inline', 'class' => 'eliminar']) !!}
                                                             {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
                                                         {!! Form::close() !!}                                                  
                                                         @endcan
@@ -46,7 +46,8 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
-                                        <div class="pagination justify-content-end">             
+                                        <div class="pagination justify-content-end">  
+                                            {!! $resennas->links() !!}          
                                         </div> 
                                     </div>
                                 </div>
@@ -58,4 +59,63 @@
             </div>
         </div> 
     </section>
+@endsection
+
+@section('scripts')
+
+    @if (session('eliminar') == 'Ok')
+        <script>
+            Swal.fire(
+                'Eliminado!',
+                'La Reseña ha sido Eliminada.',
+                'Satisfactoriamente'
+            )
+        </script>
+    @endif
+
+    @if (session('registrar') == 'Ok')
+        <script>
+            Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'La Reseña ha sido registrada.',
+            showConfirmButton: false,
+            timer: 1500
+            })
+        </script>
+    @endif
+
+    @if (session('editar') == 'Ok')
+    <script>
+        Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'La Reseña ha sido actualizada.',
+        showConfirmButton: false,
+        timer: 1500
+        })
+    </script>
+@endif
+
+    <script>
+        $('.eliminar').submit(function(e){
+            e.preventDefault();
+
+            Swal.fire({
+            title: '¿Estás seguro?',
+            text: "No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, Eliminar!'
+            }).then((result) => {
+            if (result.value) {
+                this.submit();
+            }
+            })
+
+        });
+    </script>
+
 @endsection

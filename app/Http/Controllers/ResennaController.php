@@ -50,7 +50,7 @@ class ResennaController extends Controller
         $tez = Caracteristicas_Resennado::Where('id_padre', 240)->pluck('valor', 'id')->all();
         $contextura = Caracteristicas_Resennado::Where('id_padre', 243)->pluck('valor', 'id')->all();
         $estado = Geografia_Venezuela::Where('id_padre', 107)->pluck('valor', 'id')->all();
-        $municipio = Geografia_Venezuela::Where('id_padre', 107)->pluck('valor', 'id')->all();
+        $municipio = Geografia_Venezuela::Where('id_padre', 108)->pluck('valor', 'id')->all();
         $documentacion = Documentacion::pluck('valor', 'id')->all();
         $funcionario_resenna = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
         ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
@@ -115,7 +115,7 @@ class ResennaController extends Controller
             $resenna->update(['url_foto' => 'storage/'.$imagen]);
 
             //alert()->success('Integrante registrado con éxito');      
-            return redirect()->route('resenna.index');  
+            return redirect()->route('resenna.index')->with('registrar', 'Ok');  
 
         }else if($validar_persona == false)
         {
@@ -166,7 +166,7 @@ class ResennaController extends Controller
             $resenna->update(['url_foto' => 'storage/'.$imagen]);
 
             //alert()->success('Integrante registrado con éxito');      
-            return redirect()->route('resenna.index');
+            return redirect()->route('resenna.index')->with('registrar', 'Ok');
 
         };
 
@@ -198,7 +198,7 @@ class ResennaController extends Controller
         $tez = Caracteristicas_Resennado::Where('id_padre', 240)->pluck('valor', 'id')->all();
         $contextura = Caracteristicas_Resennado::Where('id_padre', 243)->pluck('valor', 'id')->all();
         $estado = Geografia_Venezuela::Where('id_padre', 107)->pluck('valor', 'id')->all();
-        $municipio = Geografia_Venezuela::Where('id_padre', 107)->pluck('valor', 'id')->all();
+        $municipio = Geografia_Venezuela::Where('id_padre', 108)->pluck('valor', 'id')->all();
         $documentacion = Documentacion::pluck('valor', 'id')->all();
         $funcionario_resenna = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
         ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
@@ -220,6 +220,7 @@ class ResennaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->all();
         if($request['url_foto'] == null)
         {
             $request['url_foto'] = $request['url_foto_actual'];
@@ -231,7 +232,7 @@ class ResennaController extends Controller
         'segundo_nombre', 'primer_apellido','segundo_apellido', 'id_genero', 'fecha_nacimiento', 'id_estado_nacimiento',
         'id_municipio_nacimiento'));
 
-        return redirect()->route('resenna.index')->with('Datos actualizados con éxito');
+        return redirect()->route('resenna.index')->with('editar', 'Ok');
     }
 
     /**
@@ -244,6 +245,6 @@ class ResennaController extends Controller
     {
         $resenna = Resenna::find($id);
         $resenna->delete();
-        return redirect()->route('resenna.index')->with('Datos actualizados con éxito');
+        return redirect()->route('resenna.index')->with('eliminar', 'Ok');
     }
 }

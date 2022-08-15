@@ -14,10 +14,7 @@ use App\Models\Geografia_Venezuela;
 use App\Models\Jerarquia;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -86,7 +83,7 @@ class UserController extends Controller
                     $usuario->update(['status' => 'true', 'password' => $request['password'], 
                     'users' => $request['user'], 'id_funcionario' => $obtener_funcionario[0]['id']]);
                     $usuario->assignRole($request['roles']);
-                    return redirect()->route('users.index')->with('Datos actualizados con éxito');
+                    return redirect()->route('users.index')->with('registrar', 'Ok');
                 }
             }
         }     
@@ -130,7 +127,7 @@ class UserController extends Controller
 
             $usuario->assignRole($request['roles']);
 
-            return redirect()->route('users.index')->with('Datos actualizados con éxito');
+            return redirect()->route('users.index')->with('registrar', 'Ok');
         }
 
         if($validar_persona == true and $validar_funcionario == false){
@@ -155,7 +152,7 @@ class UserController extends Controller
 
             $usuario->assignRole($request['roles']);
 
-            return redirect()->route('users.index')->with('Datos actualizados con éxito');
+            return redirect()->route('users.index')->with('registrar', 'Ok');
         }
         
         if($validar_persona == true and $validar_funcionario == true and $validar_usuario == false){
@@ -173,7 +170,7 @@ class UserController extends Controller
             $usuario->assignRole($request['roles']);
 
 
-            return redirect()->route('users.index')->with('Datos actualizados con éxito');
+            return redirect()->route('users.index')->with('registrar', 'Ok');
         }
 
     }
@@ -224,17 +221,36 @@ class UserController extends Controller
         DB::table('model_has_roles')->where('model_id',$id)->delete();
         $user->roles()->sync($request->roles);
     
-        return redirect()->route('users.index')->with('Datos actualizados con éxito');
+        return redirect()->route('users.index')->with('Datos actualizados con éxito')->with('editar', 'Ok');
     }
 
-    public function UpdatePassword(Request $request,User $user){
-        $password = 'cicpc/'.$user->funcionario->person->cedula;
-        $bcrypt = bcrypt($password);
-        $user->update(['password'=>$bcrypt]);
+    public function UpdatePassword(Request $request){
+ 
+        //$request = $request->all();
+        dd($request);die;
+        //print_r($id);die;
+        if(!isset($request['contraseña_actual']))
+        {
+            //$user = User::find($request->id);
+            //$password = 'cicpc/'.$request->funcionario->person->cedula;
+            //$bcrypt = bcrypt($password);
+            //$request->update(['password'=>$bcrypt]);
+        }else{
+            
+        }
         //dd ($password);
         //alert()->success('El cambio de contraseña se ha realizado con exito, la misma es cicpc/Nro de cedula'); 
-        return back();
+        return back(); 
+    }
+
+    public function ResetPassword($id){
         
+        //$user = User::find($id)->all();
+        dd($id);
+        // $password = 'cicpc/'.$request->funcionario->person->cedula;
+        // $bcrypt = bcrypt($password);
+        // $request->update(['password'=>$bcrypt]);
+        //return back(); 
     }
 
     /**
@@ -243,7 +259,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy( $id)
+    public function destroy($id)
     {
         $user = User::find($id);
         if($user['status'] == true)
@@ -253,6 +269,6 @@ class UserController extends Controller
             $status = true;
         }
         $user->update(['status' => $status]);
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('status', 'Ok');
     }
 }
