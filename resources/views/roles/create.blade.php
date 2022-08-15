@@ -42,9 +42,11 @@
                                     <br/>
                                     @endforeach
                                 </div>
-                            </div>        
+                            </div> 
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                {!! Form::button('<i class="fa fa-save"> Guardar</i>', ['type' => 'submit', 'class' => 'btn btn-primary']) !!}
+                            </div>       
                         </div>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
                         {!! Form::close() !!}
                         </div>
                     </div>

@@ -10,7 +10,7 @@ class Person extends Model
     use HasFactory;
 
     protected $table = 'persons';
-
+    protected $dates = ['fecha_nacimiento'];
     protected $fillable = ['id_tipo_documentacion', 'letra_cedula', 'cedula', 
     'primer_nombre', 'segundo_nombre', 'primer_apellido' , 'segundo_apellido', 'id_genero', 'fecha_nacimiento', 
     'id_estado_nacimiento', 'id_municipio_nacimiento', 'id_pais_nacimiento'];

@@ -22,107 +22,98 @@
                             </button>
                             </div>
                         @endif
-                        @foreach    
+ 
+                        {{-- {!! Form::open(array('method' => 'PATCH','route' => 'users.update')) !!} --}}
                         {!! Form::model($user, ['method' => 'PATCH','route' => ['users.update', $user->id]]) !!}
                         <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="name">Credencial</label>
-                                    {!! Form::text('credencial', null, array('class' => 'form-control')) !!}
+                                    {!! Form::text('credencial', $user->funcionario->credencial, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Cédula</label>
-                                    {!! Form::text('cedula', null, array('class' => 'form-control')) !!}
+                                    {!! Form::text('cedula', $user->funcionario->person->cedula, array('class' => 'form-control', 'disabled')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Primer Nombre</label>
-                                    {!! Form::text('primer_nombre', null, array('class' => 'form-control')) !!}
+                                    {!! Form::text('primer_nombre', $user->funcionario->person->primer_nombre, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Segundo Nombre</label>
-                                    {!! Form::text('segundo_nombre', null, array('class' => 'form-control')) !!}
+                                    {!! Form::text('segundo_nombre', $user->funcionario->person->segundo_nombre, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Primer Apellido</label>
-                                    {!! Form::text('primer_apellido', null, array('class' => 'form-control')) !!}
+                                    {!! Form::text('primer_apellido', $user->funcionario->person->primer_apellido, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Segundo Apellido</label>
-                                    {!! Form::text('segundo_apellido', null, array('class' => 'form-control')) !!}
+                                    {!! Form::text('segundo_apellido', $user->funcionario->person->segundo_apellido, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Género</label>
-                                    {!! Form::select('id_genero', null, array('class' => 'form-control')) !!}
+                                    {!! Form::select('id_genero', $genero, $user->funcionario->person->genero, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Fecha de Nacimiento</label>
-                                    {!! Form::text('fecha_nacimiento', null, ['class'=>'form-control datepicker','autocomplete' => 'off']) !!}
+                                    {!! Form::text('fecha_nacimiento', $user->funcionario->person->fecha_nacimiento, ['class'=>'form-control datepicker','autocomplete' => 'off']) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Estado de Nacimiento</label>
-                                    {!! Form::select('id_estado_nacimiento', null, array('class' => 'form-control')) !!}
+                                    {!! Form::select('id_estado_nacimiento', $estado, $user->funcionario->person->estado_nacimiento->valor, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Teléfono</label>
-                                    {!! Form::text('telefono', null, array('class' => 'form-control')) !!}
+                                    {!! Form::text('telefono', $user->funcionario->telefono, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Jerarquía</label>
-                                    {!! Form::select('id_jerarquia', null, array('class' => 'form-control')) !!}
+                                    {!! Form::select('id_jerarquia', $jerarquia, $user->funcionario->jerarquia->valor, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Estatus Laboral</label>
-                                    {!! Form::select('estatus_funcionario', null, array('class' => 'form-control')) !!}
+                                    {!! Form::select('id_estatus', $estatus, $user->funcionario->estatus->valor, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="">Roles</label>
-                                    {!! Form::select('roles', null, array('class' => 'form-control')) !!}
+                                    {!! Form::select('roles', $roles, $user->roles, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Usuario</label>
-                                    {!! Form::text('user', null, array('class' => 'form-control')) !!}
+                                    {!! Form::text('users', $user->users, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                    <label for="password">Password</label>
-                                    {!! Form::password('password', array('class' => 'form-control')) !!}
+                                    {!! Form::button('<i class="fa fa-save"> Guardar</i>', ['type' => 'submit', 'class' => 'btn btn-primary']) !!}
                                 </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <label for="confirm-password">Confirmar Password</label>
-                                    {!! Form::password('confirm-password', array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <button type="submit" class="btn btn-primary">Guardar</button>
                             </div>
                         </div>
                         {!! Form::close() !!}

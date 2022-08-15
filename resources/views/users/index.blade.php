@@ -21,6 +21,7 @@
                                                 <th>Funcionario</th>
                                                 <th>Jerarquía</th>
                                                 <th>Usuario</th>
+                                                <th>Estatus</th>
                                                 <th>Acciones</th>
                                         </thead>
                                         <tbody>
@@ -28,18 +29,40 @@
                                             <tr role="row" class="odd">
                                                 <td class="sorting_1">{{$user->funcionario->credencial}}</td>
                                                 <td class="sorting_1">{{$user->funcionario->person->cedula}}</td>
-                                                <td class="sorting_1">{{$user->funcionario->person->primer_nombre.''.$user->funcionario->person->primer_apellido}}</td>
+                                                <td class="sorting_1">{{$user->funcionario->person->primer_nombre.' '.$user->funcionario->person->primer_apellido}}</td>
                                                 <td class="sorting_1">{{$user->funcionario->jerarquia->valor}}</td>
                                                 <td class="sorting_1">{{$user->users}}</td>
+                                                @can('users.destroy')
+                                                    @if($user->status == 1)
+                                                        <td class="sorting_1">
+                                                            {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
+                                                                {!! Form::button('Activo', ['type' => 'submit', 'class' => 'btn btn-info']) !!}
+                                                            {!! Form::close() !!} 
+                                                        </td>
+                                                    @else
+                                                        <td class="sorting_1">                                                        
+                                                            {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
+                                                                {!! Form::button('Inactivo', ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
+                                                            {!! Form::close() !!} 
+                                                        </td>
+                                                    @endif
+                                                @elsecan('users.index')
+                                                    @if($user->status == 1)
+                                                        <td class="sorting_1">
+                                                            <button class="btn btn-info">Activo</button>
+                                                        </td>
+                                                    @else
+                                                        <td class="sorting_1">                                                        
+                                                            <button class="btn btn-danger">Inactivo</button>
+                                                        </td>
+                                                    @endif  
+                                                @endcan
                                                 <td align="center">
-                                                    @can('users.edit')
-                                                    <a class="btn btn-info" href="{{ route('users.edit',$user->id) }}"><i class='fa fa-edit'></i></a>
+                                                    @can('users.show')
+                                                    <a class="btn btn-info" href="{{ route('users.show', $user->id) }}"><i class='fa fa-eye'></i></a>
                                                     @endcan
-                
-                                                    @can('users.destroy')
-                                                    {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
-                                                        {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
-                                                    {!! Form::close() !!}                                                  
+                                                    @can('users.edit')
+                                                    <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}"><i class='fa fa-edit'></i></a>
                                                     @endcan
                                                 </td>
                                             </tr>

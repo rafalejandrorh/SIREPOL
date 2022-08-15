@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
 use App\Models\Person;
 use App\Models\User;
 use App\Http\Controllers\Controller;
@@ -13,6 +14,9 @@ use App\Models\Geografia_Venezuela;
 use App\Models\Jerarquia;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -69,16 +73,23 @@ class UserController extends Controller
         $cedula = $request['cedula'];
         $obtener_persona = $person->where('cedula','=',$cedula)->get();
         $validar_persona = $person->where('cedula','=',$cedula)->exists();
-        if($validar_persona==true){
+        if($validar_persona == true){
             $obtener_funcionario = $funcionario->where('id_person','=',$obtener_persona[0]['id'])->get();
             $validar_funcionario = $funcionario->where('id_person','=',$obtener_persona[0]['id'])->exists();
-            if($validar_funcionario==true){
+            if($validar_funcionario == true){
                 $obtener_usuario = $usuario->where('id_funcionario','=',$obtener_funcionario[0]['id'])->get();
                 $validar_usuario = $usuario->where('id_funcionario','=',$obtener_funcionario[0]['id'])->exists();
+                if($validar_usuario == true){
+                    $request = $request->all();
+                    $usuario = User::find($obtener_usuario[0]['id']);
+                    $request['password'] = bcrypt($request['password']);
+                    $usuario->update(['status' => 'true', 'password' => $request['password'], 
+                    'users' => $request['user'], 'id_funcionario' => $obtener_funcionario[0]['id']]);
+                    $usuario->assignRole($request['roles']);
+                    return redirect()->route('users.index')->with('Datos actualizados con éxito');
+                }
             }
-        }
-        
-        Validator::make($request->all(),User::returnValidations(),User::returnMessages())->validate();        
+        }     
 
         if($validar_persona == false){
             $request = $request->all();
@@ -114,6 +125,7 @@ class UserController extends Controller
             $usuario->id_funcionario = $id_funcionario;
             $usuario->users = $request['user'];
             $usuario->password = $request['password'];
+            $usuario->status = 'true';
             $usuario->save();
 
             $usuario->assignRole($request['roles']);
@@ -138,6 +150,7 @@ class UserController extends Controller
             $usuario->id_funcionario = $id_funcionario;
             $usuario->users = $request['user'];
             $usuario->password = $request['password'];
+            $usuario->status = 'true';
             $usuario->save();
 
             $usuario->assignRole($request['roles']);
@@ -154,6 +167,7 @@ class UserController extends Controller
             $usuario->id_funcionario = $obtener_funcionario[0]['id'];
             $usuario->users = $request['user'];
             $usuario->password = $bcrypt;
+            $usuario->status = 'true';
             $usuario->save();
 
             $usuario->assignRole($request['roles']);
@@ -170,9 +184,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        $roles = Role::pluck('name','id')->all();
+        return view('users.show', compact('user', 'roles'));
     }
 
     /**
@@ -181,15 +196,13 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        $user = User::find($id);
         $roles = Role::pluck('name','id')->all();
         $genero = Genero::pluck('valor', 'id')->all();
         $jerarquia = Jerarquia::pluck('valor', 'id')->all();
         $estatus = Estatus_Funcionario::pluck('valor', 'id')->all();
         $estado = Geografia_Venezuela::Where('id_padre', 107)->pluck('valor', 'id')->all();
-
         return view('users.edit', compact('user', 'roles', 'genero', 'jerarquia', 'estatus', 'estado'));
     }
 
@@ -202,7 +215,26 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $user = User::find($id);
+        $user->update($request->all('users'));
+        $user->funcionario()->update($request->all('credencial', 'id_jerarquia', 'telefono', 'id_estatus'));
+        $user->funcionario->person()->update($request->all('primer_nombre', 'segundo_nombre', 'primer_apellido',
+        'segundo_apellido', 'id_genero', 'fecha_nacimiento', 'id_estado_nacimiento'));
+        DB::table('model_has_roles')->where('model_id',$id)->delete();
+        $user->roles()->sync($request->roles);
+    
+        return redirect()->route('users.index')->with('Datos actualizados con éxito');
+    }
+
+    public function UpdatePassword(Request $request,User $user){
+        $password = 'cicpc/'.$user->funcionario->person->cedula;
+        $bcrypt = bcrypt($password);
+        $user->update(['password'=>$bcrypt]);
+        //dd ($password);
+        //alert()->success('El cambio de contraseña se ha realizado con exito, la misma es cicpc/Nro de cedula'); 
+        return back();
+        
     }
 
     /**
@@ -211,10 +243,16 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy( $id)
     {
-        $usuario = User::find($id);
-        $usuario->delete();
+        $user = User::find($id);
+        if($user['status'] == true)
+        {
+            $status = false;
+        }else{
+            $status = true;
+        }
+        $user->update(['status' => $status]);
         return redirect()->route('users.index');
     }
 }

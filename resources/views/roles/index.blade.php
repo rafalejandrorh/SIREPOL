@@ -18,17 +18,15 @@
                             <table class="table table-striped mt-2">
                                 <thead>                                         
                                     <th>Rol</th>
-                                    <th>Permisos</th>
                                     <th>Acciones</th>
                                 </thead>  
                                 <tbody>
                                 @foreach ($roles as $role)
                                 <tr>                           
                                     <td>{{ $role->name }}</td>
-                                    <td>@foreach ($permission as $item){{ $item->description.' |' }} @endforeach</td>
                                     <td>                                
                                         @can('roles.edit')
-                                            <a class="btn btn-info" href="{{ route('roles.edit', $role->id) }}"><i class='fa fa-edit'></i></a>
+                                            <a class="btn btn-primary" href="{{ route('roles.edit', $role->id) }}"><i class='fa fa-edit'></i></a>
                                         @endcan
                                         
                                         @can('roles.destroy')

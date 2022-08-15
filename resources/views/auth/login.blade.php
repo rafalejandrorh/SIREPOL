@@ -24,13 +24,13 @@
                         </ul>
                     </div>
                 @endif
-                <div class="form-group">
+                <div class="form-group has-feedback">
                     <label for="email">Usuario</label>
                     <input aria-describedby="emailHelpBlock" id="email" type="text"
                            class="form-control{{ $errors->has('users') ? ' is-invalid' : '' }}" name="users"
                            placeholder="Ingresa tu Usuario" tabindex="1"
                            value="{{ (Cookie::get('users') !== null) ? Cookie::get('users') : old('users') }}" autofocus
-                           required>
+                           required>   
                     <div class="invalid-feedback">
                         {{ $errors->first('users') }}
                     </div>
@@ -42,7 +42,7 @@
                     </div>
                     <input aria-describedby="passwordHelpBlock" id="password" type="password"
                            value="{{ (Cookie::get('password') !== null) ? Cookie::get('password') : null }}"
-                           placeholder="Enter Password"
+                           placeholder="Ingresa tu Contraseña"
                            class="form-control{{ $errors->has('password') ? ' is-invalid': '' }}" name="password"
                            tabindex="2" required>
                     <div class="invalid-feedback">
@@ -54,7 +54,7 @@
                     <div class="custom-control custom-checkbox">
                         <input type="checkbox" name="remember" class="custom-control-input" tabindex="3"
                                id="remember"{{ (Cookie::get('remember') !== null) ? 'checked' : '' }}>
-                        <label class="custom-control-label" for="remember">Recuerdame</label>
+                        <label class="custom-control-label" for="remember">Recuérdame</label>
                     </div>
                 </div>
 
