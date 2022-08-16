@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Resenna extends Model
 {
@@ -58,5 +59,10 @@ class Resenna extends Model
     public function estatus_documentacion()
     {
         return $this->belongsto(tipo_documentacion::class, 'id');
-    }  
+    } 
+    
+    public function foto_resennado()
+    {
+        return Storage::url($this->url_foto);
+    }
 }

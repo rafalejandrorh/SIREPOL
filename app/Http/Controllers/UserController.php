@@ -213,7 +213,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
 
-        $user = User::find($id);
+        $user = User::find($id, ['id']);
         $user->update($request->all('users'));
         $user->funcionario()->update($request->all('credencial', 'id_jerarquia', 'telefono', 'id_estatus'));
         $user->funcionario->person()->update($request->all('primer_nombre', 'segundo_nombre', 'primer_apellido',
@@ -224,33 +224,19 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('Datos actualizados con éxito')->with('editar', 'Ok');
     }
 
-    public function UpdatePassword(Request $request){
- 
-        //$request = $request->all();
-        dd($request);die;
-        //print_r($id);die;
-        if(!isset($request['contraseña_actual']))
-        {
-            //$user = User::find($request->id);
-            //$password = 'cicpc/'.$request->funcionario->person->cedula;
-            //$bcrypt = bcrypt($password);
-            //$request->update(['password'=>$bcrypt]);
-        }else{
-            
-        }
-        //dd ($password);
-        //alert()->success('El cambio de contraseña se ha realizado con exito, la misma es cicpc/Nro de cedula'); 
-        return back(); 
-    }
-
     public function ResetPassword($id){
         
-        //$user = User::find($id)->all();
-        dd($id);
-        // $password = 'cicpc/'.$request->funcionario->person->cedula;
-        // $bcrypt = bcrypt($password);
-        // $request->update(['password'=>$bcrypt]);
-        //return back(); 
+        $user = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+        ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+        ->select('persons.cedula')->Where('users.id', $id)->get();
+        foreach($user as $usr)
+        {
+            $password = 'pm*'.$usr['cedula'].'..';
+        }
+        $bcrypt = bcrypt($password);
+        $reset_password = User::find($id, ['id']);
+        $reset_password->update(['password'=>$bcrypt]);
+        return back()->with('reset', 'Ok'); 
     }
 
     /**
@@ -261,7 +247,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id);
+        $user = User::find($id, ['id']);
         if($user['status'] == true)
         {
             $status = false;

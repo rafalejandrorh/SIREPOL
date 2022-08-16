@@ -114,7 +114,14 @@
                                     {!! Form::button('<i class="fa fa-save"> Guardar</i>', ['type' => 'submit', 'class' => 'btn btn-primary']) !!}
                                 </div>
                             </div>
-                        
+                        {!! Form::close() !!}
+
+                        {!! Form::model($user, ['method' => 'PATCH','route' => ['users.reset', $user->id]]) !!}
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    {!! Form::button('<i class="fa fa-reply"> Reestablecer Contraseña</i>', ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
+                                </div>
+                            </div>
                         {!! Form::close() !!}
 
                         </div>
@@ -124,4 +131,19 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('scripts')
+
+    @if (session('reset') == 'Ok')
+        <script>
+            Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Solicitud de Reestablecimiento procesada. La Contraseña es: pm*cedula..',
+            showConfirmButton: true,
+            })
+        </script>
+    @endif
+
 @endsection

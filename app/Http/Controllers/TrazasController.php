@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Historial_Sesion;
 use Illuminate\Http\Request;
 
 class TrazasController extends Controller
@@ -19,7 +20,7 @@ class TrazasController extends Controller
      */
     public function index()
     {
-        //
+        return view('trazas.index');
     }
 
     /**
@@ -27,7 +28,7 @@ class TrazasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function index_resenna()
     {
         //
     }
@@ -38,7 +39,7 @@ class TrazasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function index_usuarios()
     {
         //
     }
@@ -49,7 +50,7 @@ class TrazasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function index_roles()
     {
         //
     }
@@ -60,31 +61,10 @@ class TrazasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function index_historial_sesion()
     {
-        //
+        $historial_sesion = Historial_Sesion::paginate(10);
+        return view('trazas.historial_sesion_index', compact('historial_sesion'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

@@ -5,11 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-//use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use QrCode;
-use PDF;
+use Illuminate\Support\Facades\Hash;
 
-class PersonController extends Controller
+class SesionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,9 +18,8 @@ class PersonController extends Controller
     public function index()
     {
         $data = Auth::user()->id;
-        //$data1 = Auth::user()->person->id;
-        $person = User::where('id', '=', $data)->get();
-        return view('persons.index', compact('person'));
+        $user = User::Where('id', $data)->get();
+        return view('sesion.index', compact('user', 'data'));
     }
 
     /**
@@ -77,15 +74,25 @@ class PersonController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $valor=$_POST['valor'];
-        $data = Auth::user()->id;
-        $persona = User::where('id', '=', $data)->first();
-        // $request['password'] = bcrypt($request['password']);
-        if($valor==1){
-            $request['password'] = bcrypt($request['password']);
-            $persona->update($request->all());
-            //alert()->success('Contraseña actualizada con éxito'); 
-            return back();
+       
+        $persona = User::where('id', '=', $id)->first();
+        $validacion_password = Hash::check(request('curr_password'), $persona->password);
+        if($validacion_password == true)
+        {
+            $validacion_password_new = Hash::check(request('password'), $persona->password);
+            if($validacion_password_new == false)
+            {
+                $request['password'] = bcrypt($request['password']);
+                $user = User::find($id, ['id']);
+                $user->update(['password' => $request['password']]);
+                return back()->with('actualizacion', 'Ok');
+            }else{
+                return back()->with('actualizacion', 'Nok');
+            }
+            
+
+        }else{
+            return back()->with('error', 'Ok');
         }
 
     }

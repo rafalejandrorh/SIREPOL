@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\PersonController;
+use App\Http\Controllers\SesionController;
 use App\Http\Controllers\ResennaController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TrazasController;
@@ -18,13 +18,19 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+Route::get('/', function () { return view('auth.login'); });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
-Route::post('/password', [UserController::class, 'UpdatePassword'])->name('users.password')->middleware('auth');
-Route::patch('/reset', [UserController::class, 'ResetPassword'])->name('users.reset')->middleware('auth');
+
+Route::get('/historial_sesion', [App\Http\Controllers\TrazasController::class, 'index_historial_sesion'])->name('historial_sesion.index')->middleware('auth');
+
+Route::get('/traza_resennas', [App\Http\Controllers\TrazasController::class, 'index_resenna'])->name('traza_resenna.index')->middleware('auth');
+
+Route::get('/traza_users', [App\Http\Controllers\TrazasController::class, 'index_usuarios'])->name('traza_user.index')->middleware('auth');
+
+Route::get('/traza_roles', [App\Http\Controllers\TrazasController::class, 'index_roles'])->name('traza_roles.index')->middleware('auth');
+
+Route::patch('/reset{user}', [UserController::class, 'ResetPassword'])->name('users.reset')->middleware('auth');
 
 Route::resource('users', UserController::class)->middleware('auth');
 
@@ -34,6 +40,6 @@ Route::resource('resenna', ResennaController::class)->middleware('auth');
 
 Route::resource('trazas', TrazasController::class)->middleware('auth');
 
-Route::resource('persons', PersonController::class)->middleware('auth');
+Route::resource('sesion', SesionController::class)->middleware('auth');
 
 Auth::routes();

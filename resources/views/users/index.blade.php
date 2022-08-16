@@ -22,7 +22,6 @@
                                                 <th>Jerarquía</th>
                                                 <th>Usuario</th>
                                                 <th>Estatus</th>
-                                                <th>Contraseña</th>
                                                 <th>Acciones</th>
                                         </thead>
                                         <tbody>
@@ -58,19 +57,12 @@
                                                         </td>
                                                     @endif  
                                                 @endcan
-                                                <td class="sorting_1">                                                        
-                                                    {!! Form::open(['method' => 'PATCH','route' => ['users.reset', $user->id],'style'=>'display:inline']) !!}
-                                                        {!! Form::button('<i class="fa fa-reply"> Reestablecer</i>', ['type' => 'submit', 'class' => 'btn btn-primary']) !!}
-                                                    {!! Form::close() !!} 
-
-                                                    {{-- <a class="btn btn-primary" href="{{ route('users.reset', $user->id) }}"><i class='fa fa-reply'> Reestablecer</i></a> --}}
-                                                </td>
                                                 <td align="center">
                                                     @can('users.show')
-                                                    <a class="btn btn-info" href="{{ route('users.show', $user->id) }}"><i class='fa fa-eye'></i></a>
+                                                        <a class="btn btn-info" href="{{ route('users.show', $user->id) }}"><i class='fa fa-eye'></i></a>
                                                     @endcan
                                                     @can('users.edit')
-                                                    <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}"><i class='fa fa-edit'></i></a>
+                                                        <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}"><i class='fa fa-edit'></i></a>
                                                     @endcan
                                                 </td>
                                             </tr>

@@ -16,7 +16,8 @@
                             <div class="col-xs-12 col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <label for="name">Ficha Fotográfica</label>
-                                    <img src="{{$resenna->url_foto}}" alt=""  width="200">
+                                    <img src="{{ asset($resenna->url_foto)}}" alt="foto_reseñado"  width="200">
+                                    {{-- <img class="img-fluid img-thumbnail" src="<?php echo URL::to('/');?>{{$resenna->url_foto}}" alt="foto_reseñado"> --}}
                                 </div>
                             </div>    
                             <div class="col-xs-12 col-sm-12 col-md-4">

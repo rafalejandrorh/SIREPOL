@@ -28,3 +28,19 @@
     </section>
 @endsection
 
+@section('scripts')
+
+    @if (session('login') == 'Ok')
+        <script>
+            Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Inicio de Sesión Exitoso.',
+            showConfirmButton: false,
+            timer: 1500
+            })   
+        </script>
+    @endif    
+
+@endsection
+

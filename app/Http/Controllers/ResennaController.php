@@ -225,7 +225,7 @@ class ResennaController extends Controller
         {
             $request['url_foto'] = $request['url_foto_actual'];
         }
-        $resenna = Resenna::find($id);
+        $resenna = Resenna::find($id, ['id']);
         $resenna->update($request->all('fecha_resenna', 'id_estado_civil', 'id_profesion', 'id_motivo_resenna', 'id_tez', 
         'id_contextura', 'id_funcionario_aprehensor', 'id_funcionario_resenna', 'direccion', 'observaciones', 'url_foto'));
         $resenna->resennado()->update($request->all('id_tipo_documentacion', 'letra_cedula', 'cedula', 'primer_nombre', 
@@ -243,7 +243,7 @@ class ResennaController extends Controller
      */
     public function destroy($id)
     {
-        $resenna = Resenna::find($id);
+        $resenna = Resenna::find($id, ['id']);
         $resenna->delete();
         return redirect()->route('resenna.index')->with('eliminar', 'Ok');
     }

@@ -14,8 +14,9 @@
     </a>
 </li>
 <li class="side-menus {{ Request::is('trazas') ? 'active' : '' }}">
-    <a class="nav-link" href="/">
-        <i class=" fas fa-save"></i><span>Trazas</span>
+    <a class="nav-link" href="/trazas">
+        <i class=" fas fa-save"></i>
+        <span>Trazas</span>
     </a>
 </li>
 
