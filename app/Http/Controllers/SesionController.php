@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Alert;
+
 
 class SesionController extends Controller
 {
@@ -20,27 +22,6 @@ class SesionController extends Controller
         $data = Auth::user()->id;
         $user = User::Where('id', $data)->get();
         return view('sesion.index', compact('user', 'data'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -85,27 +66,19 @@ class SesionController extends Controller
                 $request['password'] = bcrypt($request['password']);
                 $user = User::find($id, ['id']);
                 $user->update(['password' => $request['password']]);
-                return back()->with('actualizacion', 'Ok');
+                Alert()->success('Cambio de Contraseña Exitoso');
+                return back();
             }else{
-                return back()->with('actualizacion', 'Nok');
+                Alert()->warning('Lo sentimos', 'La nueva Contraseña coincide con la Actual. Por favor, inserta una Contraseña distinta.');
+                return back();
             }
             
 
         }else{
+            Alert()->error('La Contraseña Actual indicada no coincide con nuestros registros.');
             return back()->with('error', 'Ok');
         }
 
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
 }

@@ -12,6 +12,8 @@ use App\Models\Geografia_Venezuela;
 use App\Models\Person;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Alert;
+
 
 class ResennaController extends Controller
 {
@@ -114,8 +116,8 @@ class ResennaController extends Controller
             $resenna = Resenna::find($id_resenna);
             $resenna->update(['url_foto' => 'storage/'.$imagen]);
 
-            //alert()->success('Integrante registrado con éxito');      
-            return redirect()->route('resenna.index')->with('registrar', 'Ok');  
+            Alert()->success('Reseña creada Satisfactoriamente','Atención: El ciudadano ya posee reseñas en el Sistema!');
+            return redirect()->route('resenna.index');  
 
         }else if($validar_persona == false)
         {
@@ -165,8 +167,8 @@ class ResennaController extends Controller
             $resenna = Resenna::find($id_resenna);
             $resenna->update(['url_foto' => 'storage/'.$imagen]);
 
-            //alert()->success('Integrante registrado con éxito');      
-            return redirect()->route('resenna.index')->with('registrar', 'Ok');
+            Alert()->success('Reseña creada Satisfactoriamente','Ciudadano: '.$request->primer_nombre.' '.$request->primer_apellido);
+            return redirect()->route('resenna.index');
 
         };
 
@@ -232,7 +234,8 @@ class ResennaController extends Controller
         'segundo_nombre', 'primer_apellido','segundo_apellido', 'id_genero', 'fecha_nacimiento', 'id_estado_nacimiento',
         'id_municipio_nacimiento'));
 
-        return redirect()->route('resenna.index')->with('editar', 'Ok');
+        Alert()->success('Reseña Actualizada Satisfactoriamente');
+        return redirect()->route('resenna.index');
     }
 
     /**

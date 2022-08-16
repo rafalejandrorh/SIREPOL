@@ -70,38 +70,3 @@
         </div>
     </section>
 @endsection
-
-@section('scripts')
-
-    @if (session('actualizacion') == 'Ok')
-        <script>
-            Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Cambio de Contraseña Exitoso.',
-            showConfirmButton: false,
-            timer: 1500
-            })
-        </script>
-
-    @elseif (session('actualizacion') == 'Nok')
-        <script>
-            Swal.fire({
-            icon: 'info',
-            title: 'Lo sentimos',
-            text:'La nueva Contraseña coincide con la Actual. Por favor, inserta una Contraseña distinta.',
-            })
-        </script>
-    @endif
-
-    @if (session('error') == 'Ok')
-        <script>
-            Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'La Contraseña Actual indicada no coincide con nuestros registros.',
-            })
-        </script>
-    @endif
-
-@endsection

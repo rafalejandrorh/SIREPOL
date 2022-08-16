@@ -59,34 +59,10 @@
             Swal.fire(
                 'Eliminado!',
                 'El Rol ha sido Eliminado.',
-                'Satisfactoriamente'
+                'success'
             )
         </script>
     @endif
-
-    @if (session('registrar') == 'Ok')
-        <script>
-            Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'El Rol ha sido registrado.',
-            showConfirmButton: false,
-            timer: 1500
-            })
-        </script>
-    @endif
-
-    @if (session('editar') == 'Ok')
-    <script>
-        Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'El Rol ha sido actualizado.',
-        showConfirmButton: false,
-        timer: 1500
-        })
-    </script>
-@endif
 
     <script>
         $('.eliminar').submit(function(e){

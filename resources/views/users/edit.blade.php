@@ -132,18 +132,3 @@
         </div>
     </section>
 @endsection
-
-@section('scripts')
-
-    @if (session('reset') == 'Ok')
-        <script>
-            Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Solicitud de Reestablecimiento procesada. La Contraseña es: pm*cedula..',
-            showConfirmButton: true,
-            })
-        </script>
-    @endif
-
-@endsection

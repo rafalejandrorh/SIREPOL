@@ -15,6 +15,8 @@ use App\Models\Jerarquia;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\DB;
+use Alert;
+
 
 class UserController extends Controller
 {
@@ -83,7 +85,9 @@ class UserController extends Controller
                     $usuario->update(['status' => 'true', 'password' => $request['password'], 
                     'users' => $request['user'], 'id_funcionario' => $obtener_funcionario[0]['id']]);
                     $usuario->assignRole($request['roles']);
-                    return redirect()->route('users.index')->with('registrar', 'Ok');
+
+                    Alert()->success('El Usuario ya existe','Atención: Se reasignó el Usuario al funcionario indicado.');
+                    return redirect()->route('users.index');
                 }
             }
         }     
@@ -127,7 +131,8 @@ class UserController extends Controller
 
             $usuario->assignRole($request['roles']);
 
-            return redirect()->route('users.index')->with('registrar', 'Ok');
+            Alert()->success('Usuario Creado Satisfactoriamente');
+            return redirect()->route('users.index');
         }
 
         if($validar_persona == true and $validar_funcionario == false){
@@ -152,7 +157,8 @@ class UserController extends Controller
 
             $usuario->assignRole($request['roles']);
 
-            return redirect()->route('users.index')->with('registrar', 'Ok');
+            Alert()->success('Usuario Creado Satisfactoriamente','Atención: El ciudadano que registró no poseía registro como funcionario, se actualizó como funcionario y se asignó el Usuario');
+            return redirect()->route('users.index');
         }
         
         if($validar_persona == true and $validar_funcionario == true and $validar_usuario == false){
@@ -169,8 +175,8 @@ class UserController extends Controller
 
             $usuario->assignRole($request['roles']);
 
-
-            return redirect()->route('users.index')->with('registrar', 'Ok');
+            Alert()->success('Usuario Creado Satisfactoriamente','Atención: El funcionario ya estaba registrado en el sistema, solamente se creó y asignó el Usuario.');
+            return redirect()->route('users.index');
         }
 
     }
@@ -221,6 +227,7 @@ class UserController extends Controller
         DB::table('model_has_roles')->where('model_id',$id)->delete();
         $user->roles()->sync($request->roles);
     
+        Alert()->success('Usuario Actualizado Satisfactoriamente');
         return redirect()->route('users.index')->with('Datos actualizados con éxito')->with('editar', 'Ok');
     }
 
@@ -236,7 +243,9 @@ class UserController extends Controller
         $bcrypt = bcrypt($password);
         $reset_password = User::find($id, ['id']);
         $reset_password->update(['password'=>$bcrypt]);
-        return back()->with('reset', 'Ok'); 
+
+        Alert()->success('Reinicio de Contraseña realizado', 'Nueva Contraseña: '.$password);
+        return back(); 
     }
 
     /**
@@ -251,10 +260,14 @@ class UserController extends Controller
         if($user['status'] == true)
         {
             $status = false;
+            $notificacion = 'Inactivo';
         }else{
             $status = true;
+            $notificacion = 'Activo';
         }
         $user->update(['status' => $status]);
-        return redirect()->route('users.index')->with('status', 'Ok');
+
+        Alert()->success('Estatus de Usuario Actualizado', 'Nuevo Estatus: '.$notificacion);
+        return redirect()->route('users.index');
     }
 }

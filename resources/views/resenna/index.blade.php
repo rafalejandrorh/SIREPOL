@@ -68,34 +68,10 @@
             Swal.fire(
                 'Eliminado!',
                 'La Reseña ha sido Eliminada.',
-                'Satisfactoriamente'
+                'success'
             )
         </script>
     @endif
-
-    @if (session('registrar') == 'Ok')
-        <script>
-            Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'La Reseña ha sido registrada.',
-            showConfirmButton: false,
-            timer: 1500
-            })
-        </script>
-    @endif
-
-    @if (session('editar') == 'Ok')
-    <script>
-        Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'La Reseña ha sido actualizada.',
-        showConfirmButton: false,
-        timer: 1500
-        })
-    </script>
-@endif
 
     <script>
         $('.eliminar').submit(function(e){

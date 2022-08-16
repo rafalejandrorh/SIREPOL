@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Historial_Sesion;
 use Illuminate\Http\Request;
+use Alert;
+
 
 class TrazasController extends Controller
 {
     function __construct()
     {
 
-         $this->middleware('can:trazas.index')->only('index');
+        $this->middleware('can:trazas.index')->only('index');
  
     }
     /**
