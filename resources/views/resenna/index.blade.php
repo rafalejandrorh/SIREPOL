@@ -25,7 +25,7 @@
                                             <tbody>
                                                 @foreach ($resennas as $resenna)
                                                 <tr role="row" class="odd">
-                                                    <td class="sorting_1">{{ date('d/m/Y', strtotime($resenna->fecha_resenna)).'.'}}</td>
+                                                    <td class="sorting_1">{{ date('d/m/Y', strtotime($resenna->fecha_resenna)).''}}</td>
                                                     <td class="sorting_1">{{$resenna->resennado->cedula}}</td>
                                                     <td class="sorting_1">{{$resenna->resennado->primer_nombre.' '.$resenna->resennado->primer_apellido}}</td>
                                                     <td class="sorting_1">{{$resenna->funcionario_resenna->person->primer_nombre.' '.$resenna->funcionario_resenna->person->primer_apellido}}</td>

@@ -9,136 +9,161 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
+
                         <div class="card-body">
+
+                        @if ($errors->any())                                                
+                            <div class="alert alert-dark alert-dismissible fade show" role="alert">
+                            <strong>¡Revise los campos!</strong>                        
+                                @foreach ($errors->all() as $error)                                    
+                                    <span class="badge badge-danger">{{ $error }}</span>
+                                @endforeach                        
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                        @endif
    
                         {!! Form::model($resenna, ['method' => 'PATCH','route' => ['resenna.update', $resenna->id]]) !!}
                         <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-6">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <a href="{{ route('resenna.index') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <i class="fa fa-address-card f-30 text-c-blue"></i>
+                                    <label for="name">Ficha Fotográfica</label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <img src="{{asset($resenna->url_foto)}}" alt="foto_reseñado"  width="150">
+                            </div>
+                            <br>
+                            <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="card">
                                     <div class="card-block border-bottom">
                                         <div class="row d-flex align-items-center">
                                             <div class="col-auto">
                                                 <i class="fa fa-address-card f-30 text-c-blue"></i>
-                                                <span class="help-block">Ficha Fotográfica</span>
+                                                <label for="name">Editar Fotografía</label>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-block">
-                                        {!! Form::file('url_foto', array('class' => 'form-control-file', 'id'=>'url', 'accept' => 'image/*')) !!}
-                                        {!! Form::text('url_foto_ver', $resenna->url_foto, array('class' => 'form-control-file', 'disabled')) !!}
-                                        {!! Form::hidden('url_foto_actual', $resenna->url_foto, array('class' => 'form-control-file')) !!}
-                                    </div>
+                                        <div class="card-block">
+                                            {!! Form::file('url_foto', array('class' => 'form-control-file', 'id'=>'url', 'accept' => 'image/*')) !!}
+                                            {!! Form::hidden('url_foto_actual', $resenna->url_foto, array('class' => 'form-control-file')) !!}
+                                        </div>
                                 </div>
                             </div>  
-                            <div class="col-xs-12 col-sm-12 col-md-3">
+                            <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="name">Fecha de Reseña</label>
                                     {!! Form::text('fecha_resenna', $resenna->fecha_resenna, array('class' => 'form-control datepicker')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
+                            <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Estatus de Documentación</label>
                                     {!! Form::select('id_tipo_documentacion', $documentacion, $resenna->resennado->documentacion->valor, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
+                            <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Letra de Cédula</label>
                                     {!! Form::select('letra_cedula', ['V' => 'V', 'E' => 'E'], $resenna->resennado->letra_cedula, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
+                            <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Cédula</label>
                                     {!! Form::text('cedula', $resenna->resennado->cedula, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
+                            <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Primer Nombre</label>
                                     {!! Form::text('primer_nombre', $resenna->resennado->primer_nombre, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
+                            <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Segundo Nombre</label>
                                     {!! Form::text('segundo_nombre', $resenna->resennado->segundo_nombre, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
+                            <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Primer Apellido</label>
                                     {!! Form::text('primer_apellido', $resenna->resennado->primer_apellido, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
+                            <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Segundo Apellido</label>
                                     {!! Form::text('segundo_apellido', $resenna->resennado->segundo_apellido, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
+                            <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Fecha de Nacimiento</label>
                                     {!! Form::text('fecha_nacimiento', $resenna->resennado->fecha_nacimiento, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
+                            <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Estado de Nacimiento</label>
                                     {!! Form::select('id_estado_nacimiento', $estado, $resenna->resennado->estado_nacimiento->valor, array('class' => 'form-control select2')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
+                            <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Municipio de Nacimiento</label>
                                     {!! Form::select('id_municipio_nacimiento', $municipio, $resenna->resennado->municipio_nacimiento->valor, array('class' => 'form-control select2')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-9">
+                            <div class="col-xs-9 col-sm-9 col-md-9">
                                 <div class="form-group">
                                     <label for="email">Dirección</label>
                                     {!! Form::text('direccion', $resenna->direccion, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
+                            <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Estado Civil</label>
                                     {!! Form::select('id_estado_civil', $estado_civil, $resenna->estado_civil->valor, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
+                            <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Genero</label>
                                     {!! Form::select('id_genero', $genero, $resenna->resennado->genero->valor, ['class'=>'form-control datepicker']) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
+                            <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Tez</label>
                                     {!! Form::select('id_tez', $tez, $resenna->tez->valor, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
+                            <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Contextura</label>
                                     {!! Form::select('id_contextura', $contextura, $resenna->contextura->valor, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-6">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label for="email">Profesión</label>
                                     {!! Form::select('id_profesion', $profesion, $resenna->profesion->valor, array('class' => 'form-control select2')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-6">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label for="email">Motivo de Reseña</label>
                                     {!! Form::select('id_motivo_resenna', $motivo_resenna, $resenna->motivo_resenna->valor, array('class' => 'form-control select2')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-6">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label for="">Funcionario Aprehensor</label>
                                     <select name="id_funcionario_aprehensor" id="" class="form-control select2">
@@ -149,7 +174,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-6">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label for="">Funcionario que Reseña</label>
                                     <select name="id_funcionario_resenna" id="" class="form-control select2">

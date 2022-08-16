@@ -27,7 +27,7 @@ class UserController extends Controller
         $this->middleware('can:users.create')->only('create');
         $this->middleware('can:users.show')->only('show');
         $this->middleware('can:users.edit')->only('edit', 'update');
-        $this->middleware('can:users.destroy')->only('destroy');
+        $this->middleware('can:users.update_status')->only('update_status');
  
     }
     /**
@@ -254,18 +254,25 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function update_status($id)
     {
-        $user = User::find($id, ['id']);
-        if($user['status'] == true)
+        $user = User::Where('id', $id)->get();
+        
+        foreach($user as $usr)
         {
-            $status = false;
+            $status = $usr['status'];
+        }
+
+        if($status == true)
+        {
+            $estatus = false;
             $notificacion = 'Inactivo';
         }else{
-            $status = true;
+            $estatus = true;
             $notificacion = 'Activo';
         }
-        $user->update(['status' => $status]);
+        $user = User::find($id, ['id']);
+        $user->update(['status' => $estatus]);
 
         Alert()->success('Estatus de Usuario Actualizado', 'Nuevo Estatus: '.$notificacion);
         return redirect()->route('users.index');

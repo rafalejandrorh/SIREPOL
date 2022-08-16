@@ -8,6 +8,9 @@
         <div class="section-body">
             <div class="row">
                 <div class="col-lg-12">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <a href="{{ route('trazas.index') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
+                    </div>
                     <div class="card">
                         <div class="card-body">
                                     <table class="table table-striped mt-2">

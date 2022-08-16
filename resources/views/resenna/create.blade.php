@@ -22,9 +22,12 @@
                             </button>
                             </div>
                         @endif
-
-                        {!! Form::open(array('route' => 'resenna.store','method' => 'POST')) !!}
+                        
+                        {!! Form::open(array('route' => 'resenna.store','method' => 'POST','files' => true)) !!}
                         <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <a href="{{ route('resenna.index') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
+                            </div>
                             <div class="col-xs-12 col-sm-12 col-md-6">
                                 <div class="card">
                                     <div class="card-block border-bottom">
@@ -37,6 +40,7 @@
                                     </div>
                                     <div class="card-block">
                                         {!! Form::file('url_foto', ['class' => 'form-control-file', 'id'=>'url', 'accept' => 'image/*']) !!}
+                                        
                                     </div>
                                 </div>
                             </div>    

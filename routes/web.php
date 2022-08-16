@@ -32,6 +32,8 @@ Route::get('/traza_roles', [App\Http\Controllers\TrazasController::class, 'index
 
 Route::patch('/reset{user}', [UserController::class, 'ResetPassword'])->name('users.reset')->middleware('auth');
 
+Route::patch('/user/{user}/status', [UserController::class, 'update_status'])->name('users.update_status')->middleware('auth');
+
 Route::resource('users', UserController::class)->middleware('auth');
 
 Route::resource('roles', RoleController::class)->middleware('auth');

@@ -32,22 +32,24 @@
                                                 <td class="sorting_1">{{$user->funcionario->person->primer_nombre.' '.$user->funcionario->person->primer_apellido}}</td>
                                                 <td class="sorting_1">{{$user->funcionario->jerarquia->valor}}</td>
                                                 <td class="sorting_1">{{$user->users}}</td>
-                                                @can('users.destroy')
-                                                    @if($user->status == 1)
+                                                @can('users.update_status')
+                                                    @if($user->status == true)
                                                         <td class="sorting_1">
-                                                            {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
+                                                            {{-- {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!} --}}
+                                                            {!! Form::model($user, ['method' => 'PATCH','route' => ['users.update_status', $user->id]]) !!}
                                                                 {!! Form::button('Activo', ['type' => 'submit', 'class' => 'btn btn-info']) !!}
                                                             {!! Form::close() !!} 
                                                         </td>
                                                     @else
                                                         <td class="sorting_1">                                                        
-                                                            {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
+                                                            {{-- {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!} --}}
+                                                            {!! Form::model($user, ['method' => 'PATCH','route' => ['users.update_status', $user->id]]) !!}    
                                                                 {!! Form::button('Inactivo', ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
                                                             {!! Form::close() !!} 
                                                         </td>
                                                     @endif
                                                 @elsecan('users.index')
-                                                    @if($user->status == 1)
+                                                    @if($user->status == true)
                                                         <td class="sorting_1">
                                                             <button class="btn btn-info">Activo</button>
                                                         </td>

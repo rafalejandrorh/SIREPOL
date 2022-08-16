@@ -8,7 +8,8 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\DB;
 Use Alert;
-
+use App\Models\Traza_Roles;
+use Illuminate\Support\Facades\Auth;
 
 class RoleController extends Controller
 {
@@ -54,6 +55,7 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        
         $this->validate($request, [
             'name' => 'required|unique:roles,name',
             'permission' => 'required',
@@ -61,6 +63,27 @@ class RoleController extends Controller
     
         $role = Role::create(['name' => $request->input('name')]);
         $role->syncPermissions($request->input('permission'));
+
+        $i = 0;
+        $roles = null;
+        while($i<count($request['permission']))
+        {
+            $permisos = Permission::select('name')->Where('id', $request['permission'][$i])->get();
+            foreach($permisos as $perm)
+            {
+                $perm['name'];
+                $roles = $perm['name'].', ' . $perm['name']; 
+            } 
+            
+            $i++;
+        };
+
+        dd($roles);die; 
+
+        $id_user = Auth::user()->id;
+        $id_Accion = 1; //Registro
+        $trazas = Traza_Roles::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 'valores_modificados' => $request['name'].',
+        ']);
 
         Alert()->success('Rol Creado Satisfactoriamente','Ahora puedes asignar el siguiente rol: '.$request->input('name'));
         return redirect()->route('roles.index');                        

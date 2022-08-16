@@ -12,7 +12,11 @@ use App\Models\Geografia_Venezuela;
 use App\Models\Person;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Alert;
+use File;
+
 
 
 class ResennaController extends Controller
@@ -101,7 +105,7 @@ class ResennaController extends Controller
             $id_resenna = $resenna->id;
 
             if($request->hasFile('url_foto')) {
-                $imagen = $request->file('url')->store('imagenes/resennados/'.$$obtener_persona[0]['id'].'-'.$request->cedula);
+                $imagen = $request->file('url_foto')->store('imagenes/resennados/'.$obtener_persona[0]['id'].'-'.$request->cedula);
             }else{
                 if($request->id_genero == '1'){
                     $imagen = 'imagenes/integrantes/masculino.png';
@@ -233,6 +237,8 @@ class ResennaController extends Controller
         $resenna->resennado()->update($request->all('id_tipo_documentacion', 'letra_cedula', 'cedula', 'primer_nombre', 
         'segundo_nombre', 'primer_apellido','segundo_apellido', 'id_genero', 'fecha_nacimiento', 'id_estado_nacimiento',
         'id_municipio_nacimiento'));
+
+        
 
         Alert()->success('Reseña Actualizada Satisfactoriamente');
         return redirect()->route('resenna.index');

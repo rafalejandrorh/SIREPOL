@@ -13,6 +13,9 @@
                         <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
+                                    
+                                <a href="{{ route('home') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
+                                <br><br><hr>
                                 <a class="btn btn-primary" href="{{ route('historial_sesion.index') }}"><i class='fa fa-history'> Historial de Sesión</i></a>
                                 <br><br><hr>
                                 <a class="btn btn-primary" href="{{ route('traza_resenna.index') }}"><i class='fa fa-balance-scale'> Reseñas</i></a>

@@ -28,6 +28,9 @@
                         {{-- {!! Form::open(array('route' => ['sesion.update', $usr->id],'method'=>'POST')) !!} --}}
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
+                                <a href="{{ route('home') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="email">Funcionario Asignado</label>
                                     {!! Form::text('user', $usr->funcionario->jerarquia->valor.'. '.$usr->funcionario->person->primer_nombre.' '.$usr->funcionario->person->primer_apellido, array('class' => 'form-control', 'disabled')) !!}
