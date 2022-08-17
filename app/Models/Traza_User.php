@@ -11,6 +11,8 @@ class Traza_User extends Model
 
     protected $table = 'traza_users';
 
+    protected $fillable = ['id_user', 'id_accion', 'valores_modificados',];
+
     public function acciones()
     {
         return $this->belongsto(Traza_Acciones::class, 'id_accion');

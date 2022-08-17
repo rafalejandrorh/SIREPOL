@@ -60,7 +60,7 @@ class TrazasController extends Controller
 
     public function show_usuarios(Traza_User $user)
     {
-        return view('trazas.roles_show', compact('user'));
+        return view('trazas.users_show', compact('user'));
     }
 
     /**

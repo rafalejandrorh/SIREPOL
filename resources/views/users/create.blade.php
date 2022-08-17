@@ -97,7 +97,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Estatus Laboral</label>
-                                    {!! Form::select('estatus_funcionario', $estatus,[], array('class' => 'form-control select2')) !!}
+                                    {!! Form::select('id_estatus', $estatus,[], array('class' => 'form-control select2')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
