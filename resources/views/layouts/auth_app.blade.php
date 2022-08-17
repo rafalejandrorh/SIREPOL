@@ -25,7 +25,7 @@
             <div class="row">
                 <div class="col-md-6 offset-md-3">
                     <div class="login-brand">
-                        <img src="{{ asset('img/logo_PMCR.jpg') }}" alt="Policía Municipio Cristóbal Rojas" width="150" class="shadow-light">
+                        <img src="{{ asset('img/logo_pmcr_sin_fondo.png') }}" alt="Policía Municipio Cristóbal Rojas" width="150" class="shadow-light">
                     </div>
                     @yield('content')
                     <div class="simple-footer">
