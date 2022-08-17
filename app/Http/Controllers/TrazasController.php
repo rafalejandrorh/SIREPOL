@@ -5,7 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Historial_Sesion;
 use Illuminate\Http\Request;
 use Alert;
-
+use App\Models\Resenna;
+use App\Models\Traza_Resenna;
+use App\Models\Traza_Roles;
+use App\Models\Traza_User;
+use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 class TrazasController extends Controller
 {
@@ -32,7 +37,13 @@ class TrazasController extends Controller
      */
     public function index_resenna()
     {
-        //
+        $resennas = Traza_Resenna::paginate(10);
+        return view('trazas.resenna_index', compact('resennas'));
+    }
+
+    public function show_resenna(Traza_Resenna $resenna)
+    {
+        return view('trazas.resenna_show', compact('resenna'));
     }
 
     /**
@@ -43,7 +54,13 @@ class TrazasController extends Controller
      */
     public function index_usuarios()
     {
-        //
+        $users = Traza_User::paginate(10);
+        return view('trazas.users_index', compact('users'));
+    }
+
+    public function show_usuarios(Traza_User $user)
+    {
+        return view('trazas.roles_show', compact('user'));
     }
 
     /**
@@ -54,7 +71,13 @@ class TrazasController extends Controller
      */
     public function index_roles()
     {
-        //
+        $roles = Traza_Roles::paginate(10);
+        return view('trazas.roles_index', compact('roles'));
+    }
+
+    public function show_roles(Traza_Roles $role)
+    {
+        return view('trazas.roles_show', compact('role'));
     }
 
     /**

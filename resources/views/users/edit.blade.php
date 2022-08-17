@@ -23,10 +23,10 @@
                             </div>
                         @endif
  
-                        {!! Form::model($user, ['method' => 'PATCH','route' => ['users.update', $user->id]]) !!}
+                        {!! Form::model($user, ['method' => 'PUT','route' => ['users.update', $user->id]]) !!}
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
-                                <a href="{{ route('trazas.index') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
+                                <a href="{{ route('users.index') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
@@ -73,7 +73,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Fecha de Nacimiento</label>
-                                    {!! Form::text('fecha_nacimiento', $user->funcionario->person->fecha_nacimiento, ['class'=>'form-control datepicker','autocomplete' => 'off']) !!}
+                                    {!! Form::date('fecha_nacimiento', $user->funcionario->person->fecha_nacimiento, ['class'=>'form-control datepicker','autocomplete' => 'off']) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
@@ -103,7 +103,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="">Roles</label>
-                                    {!! Form::select('roles', $roles, $user->roles, array('class' => 'form-control select2')) !!}
+                                    {!! Form::select('roles[]', $roles, $user->roles, array('class' => 'form-control select2')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">

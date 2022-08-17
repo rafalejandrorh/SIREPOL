@@ -216,19 +216,18 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,  User $user)
     {
-
-        $user = User::find($id, ['id']);
-        $user->update($request->all('users'));
+        $user->update($request->all());
+        $user->id;
         $user->funcionario()->update($request->all('credencial', 'id_jerarquia', 'telefono', 'id_estatus'));
         $user->funcionario->person()->update($request->all('primer_nombre', 'segundo_nombre', 'primer_apellido',
         'segundo_apellido', 'id_genero', 'fecha_nacimiento', 'id_estado_nacimiento'));
-        DB::table('model_has_roles')->where('model_id',$id)->delete();
+        DB::table('model_has_roles')->where('model_id',$user->id)->delete();
         $user->roles()->sync($request->roles);
     
         Alert()->success('Usuario Actualizado Satisfactoriamente');
-        return redirect()->route('users.index')->with('Datos actualizados con éxito')->with('editar', 'Ok');
+        return redirect()->route('users.index');
     }
 
     public function ResetPassword($id){

@@ -47,7 +47,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="name">Fecha de Reseña</label>
-                                    {!! Form::text('fecha_resenna', null, array('class' => 'form-control datepicker')) !!}
+                                    {!! Form::date('fecha_resenna', null, array('class' => 'form-control datepicker')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
@@ -95,7 +95,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Fecha de Nacimiento</label>
-                                    {!! Form::text('fecha_nacimiento', null, array('class' => 'form-control datepicker')) !!}
+                                    {!! Form::date('fecha_nacimiento', null, array('class' => 'form-control datepicker')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">

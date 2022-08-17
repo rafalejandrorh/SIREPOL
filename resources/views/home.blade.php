@@ -16,9 +16,7 @@
                                     <img src="{{ asset('img/logo_mpprijp_pmcr.png') }}" alt="logo" width="450" height="250" class="shadow-light">
                                 </div>
                                 @yield('content')
-                                <div class="simple-footer">
-            {{--                        Copyright &copy; {{ getSettingValue('application_name') }}  {{ date('Y') }}--}}
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -26,21 +24,5 @@
             </div>
         </div>
     </section>
-@endsection
-
-@section('scripts')
-
-    @if (session('login') == 'Ok')
-        <script>
-            Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: 'Inicio de Sesión Exitoso.',
-            showConfirmButton: false,
-            timer: 1500
-            })   
-        </script>
-    @endif    
-
 @endsection
 

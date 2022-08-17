@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-Use Alert;
-use App\Models\Traza_Roles;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Caracteristicas_Resennado;
+use App\Models\Traza_Roles;
+Use Alert;
+
 
 class RoleController extends Controller
 {
@@ -30,10 +31,9 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {        
-         //Con paginación
-         $roles = Role::paginate(5);
-         $permission = Permission::get();
-         return view('roles.index',compact('roles', 'permission'));
+        $roles = Role::paginate(5);
+        $permission = Permission::get();
+        return view('roles.index',compact('roles', 'permission'));
     }
 
     /**
@@ -68,22 +68,20 @@ class RoleController extends Controller
         $roles = null;
         while($i<count($request['permission']))
         {
-            $permisos = Permission::select('name')->Where('id', $request['permission'][$i])->get();
+            $permisos = Permission::select('description')->Where('id', $request['permission'][$i])->get();
             foreach($permisos as $perm)
             {
-                $perm['name'];
-                $roles = $perm['name'].', ' . $perm['name']; 
+                $perm['description'];
+                
             } 
-            
+            $roles .= $perm['description'].', '; 
             $i++;
         };
 
-        dd($roles);die; 
-
         $id_user = Auth::user()->id;
         $id_Accion = 1; //Registro
-        $trazas = Traza_Roles::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 'valores_modificados' => $request['name'].',
-        ']);
+        $trazas = Traza_Roles::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+        'valores_modificados' => 'Rol: '.$request['name'].' || Permisos: '.$roles]);
 
         Alert()->success('Rol Creado Satisfactoriamente','Ahora puedes asignar el siguiente rol: '.$request->input('name'));
         return redirect()->route('roles.index');                        
@@ -134,8 +132,26 @@ class RoleController extends Controller
         $role = Role::find($id);
         $role->name = $request->input('name');
         $role->save();
-    
         $role->syncPermissions($request->input('permission'));
+
+        $i = 0;
+        $roles = null;
+        while($i<count($request['permission']))
+        {
+            $permisos = Permission::select('description')->Where('id', $request['permission'][$i])->get();
+            foreach($permisos as $perm)
+            {
+                $perm['description'];
+                
+            } 
+            $roles .= $perm['description'].', '; 
+            $i++;
+        };
+
+        $id_user = Auth::user()->id;
+        $id_Accion = 2; //Actualización
+        $trazas = Traza_Roles::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+        'valores_modificados' => 'Rol: '.$request['name'].' || Permisos: '.$roles]);
 
         Alert()->success('Rol de '.$request->input('name'),  'Actualizado Satisfactoriamente.');
         return redirect()->route('roles.index');                        
@@ -147,9 +163,35 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Role $role)
     {
-        DB::table("roles")->where('id',$id)->delete();
+
+        $id_permisos = DB::table("role_has_permissions")->where('role_id',$role->id)
+        ->join('permissions', 'permissions.id', '=', 'role_has_permissions.permission_id')
+        ->pluck('permission_id')->all();
+        
+        $i = 0;
+        $roles = null;
+        while($i<count($id_permisos))
+        {
+            $permisos = Permission::select('description')->Where('id', $id_permisos[$i])->get();
+
+            foreach($permisos as $perm)
+            {
+                $perm['description'];
+                
+            } 
+            $roles .= $perm['description'].', '; 
+            $i++;
+        };
+
+        $id_user = Auth::user()->id;
+        $id_Accion = 3; //Eliminación
+        $trazas = Traza_Roles::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+        'valores_modificados' => 'Rol: '.$role->name.' || Permisos: '.$roles]);
+
+        $role->delete();
+
         return redirect()->route('roles.index')->with('eliminar', 'Ok');                        
     }
 }

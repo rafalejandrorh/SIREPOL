@@ -49,6 +49,8 @@
 
 <!-- JS Libraies -->
 
+@include('sweetalert::alert')
+
 <!-- Template JS File -->
 <script src="{{ asset('web/js/stisla.js') }}"></script>
 <script src="{{ asset('web/js/scripts.js') }}"></script>

@@ -3,37 +3,39 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h3 class="page__heading"><b>Historial de Sesión</b></h3>
+            <h3 class="page__heading"><b>Trazas de Roles</b></h3>
         </div>
         <div class="section-body">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="col-xs-12 col-sm-12 col-md-12">
-                        <a href="{{ route('trazas.index') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
-                    </div>
                     <div class="card">
                         <div class="card-body">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <a href="{{ route('trazas.index') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
+                            </div>
                                     <table class="table table-striped mt-2">
                                         <thead>
                                             <tr role="row">
                                                 <th>Usuario</th>
-                                                <th>Funcionario Asignado</th>
-                                                <th>Inicio de Sesión</th>
-                                                <th>Cierre de Sesión</th>
+                                                <th>Acción</th>
+                                                <th>Fecha</th>
+                                                <th>Opciones</th>
                                         </thead>
                                         <tbody>
-                                            @foreach ($historial_sesion as $historial)
+                                            @foreach ($roles as $rol)
                                             <tr role="row" class="odd">
-                                                <td class="sorting_1">{{$historial->user->users}}</td>
-                                                <td class="sorting_1">{{$historial->user->funcionario->jerarquia->valor.'. '.$historial->user->funcionario->person->primer_nombre.' '.$historial->user->funcionario->person->primer_apellido}}</td>
-                                                <td class="sorting_1">{{$historial->login}}</td>
-                                                <td class="sorting_1">{{$historial->logout}}</td>
+                                                <td class="sorting_1">{{$rol->user->users}}</td>
+                                                <td class="sorting_1">{{$rol->acciones->valor}}</td>
+                                                <td class="sorting_1">{{$rol->created_at}}</td>
+                                                <td>
+                                                    <a class="btn btn-info" href="{{ route('traza_roles.show', $rol->id) }}"><i class='fa fa-eye'></i></a>
+                                                </td>
                                             </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
                                 <div class="pagination justify-content-end">
-                                    {!! $historial_sesion->links() !!}
+                                    {!! $roles->links() !!}
                                 </div> 
                             </div>
                         </div>
