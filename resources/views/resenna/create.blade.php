@@ -40,7 +40,6 @@
                                     </div>
                                     <div class="card-block">
                                         {!! Form::file('url_foto', ['class' => 'form-control-file', 'id'=>'url', 'accept' => 'image/*']) !!}
-                                        
                                     </div>
                                 </div>
                             </div>    

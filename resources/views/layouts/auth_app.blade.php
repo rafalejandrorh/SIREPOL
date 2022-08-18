@@ -31,7 +31,7 @@
                     <div class="simple-footer">
                         Policía del Municipio Cristóbal Rojas
                        <br>
-                       Desarrollado por: División de Desarrollo de Sistemas del CICPC.
+                       Desarrollado por: Rafael Rivero - rafalejandrorivero@gmail.com
                        <br>
                        Copyright &copy; SIREPOL {{ date('Y') }}
                     </div>

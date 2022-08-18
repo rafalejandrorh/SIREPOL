@@ -5,15 +5,68 @@
         <div class="section-header">
             <h3 class="page__heading"><b>Reseñas</b></h3>
         </div>
-        <div class="section-body">
+        {{-- <div class="section-body">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
+                            {!! Form::open(array('route' => 'resenna.store','method' => 'POST')) !!}
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        {!! Form::text('buscador', null, array('class' => 'form-control')) !!}
+                                    </div>
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3">
+                                    {!! Form::button('<i class="fa fa-search"> Buscar</i>', ['type' => 'submit', 'class' => 'btn btn-primary']) !!}
+                                </div>
+                            </div>
+                            {!! Form::close() !!}
+                        </div>
+                    </div>
+                </div>
+            </div> --}}
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                                {!! Form::open(array('route' => 'resenna.index','method' => 'GET')) !!}
+                                <div class="row">
+                                    <div class="col-xs-3 col-sm-3 col-md-5">
+                                        <div class="form-group">
+                                            {!! Form::select('tipo_busqueda', ['' => 'Ver todos',
+                                            'cedula_resennado' => 'Cédula del Reseñado',
+                                            'cedula_resenna' => 'Cédula del Funcionario que Reseña',
+                                            'cedula_aprehensor' => 'Cédula del Funcionario Aprehensor', 
+                                            'credencial_resenna' => 'Credencial del Funcionario que Reseña', 
+                                            'credencial_aprehensor' => 'Credencial del Funcionario Aprehensor',
+                                            'jerarquia_resenna' => 'Jerarquía del Funcionario que Reseña',
+                                            'jerarquia_aprehensor' => 'Jerarquía del Funcionario que Aprehensor',
+                                            'nombre_resennado' => 'Primer Nombre del Reseñado',
+                                            'apellido_resennado' => 'Primer Apellido del Reseñado',
+                                            'nombre_resenna' => 'Primer Nombre del Funcionario que Reseña',
+                                            'apellido_resenna' => 'Primer Apellido del Funcionario que Reseña',
+                                            'nombre_aprehensor' => 'Primer Nombre del Funcionario Aprehensor',
+                                            'apellido_aprehensor' => 'Primer Apellido del Funcionario Aprehensor'], 
+                                            'Seleccionar', array('class' => 'form-control select2')) !!}
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3 col-sm-3 col-md-3">
+                                        <div class="form-group">
+                                            {!! Form::text('buscador', null, array('class' => 'form-control')) !!}
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-3 col-sm-3 col-md-3">
+                                        {!! Form::button('<i class="fa fa-search"> Buscar</i>', ['type' => 'submit', 'class' => 'btn btn-primary']) !!}
+                                    </div>
+                                </div>
+                                {!! Form::close() !!}
                                 @can('resenna.create')
-                                <a class="btn btn-success" href="{{ route('resenna.create') }}">Añadir Usuario</a>                        
+                                <a class="btn btn-success" href="{{ route('resenna.create') }}">Añadir Usuario</a>  
+                                <br>                      
                                 @endcan
-                                        <table class="table table-striped mt-2">
+                                        <table class="table table-striped mt-2 display dataTable table-hover">
                                             <thead>
                                                 <tr role="row">
                                                     <th>Fecha</th>
@@ -21,6 +74,7 @@
                                                     <th>Nombre de Reseñado</th>
                                                     <th>Funcionario de Reseña</th>
                                                     <th>Acciones</th>
+                                                </tr>    
                                             </thead>
                                             <tbody>
                                                 @foreach ($resennas as $resenna)
@@ -28,7 +82,7 @@
                                                     <td class="sorting_1">{{ date('d/m/Y', strtotime($resenna->fecha_resenna)).''}}</td>
                                                     <td class="sorting_1">{{$resenna->resennado->cedula}}</td>
                                                     <td class="sorting_1">{{$resenna->resennado->primer_nombre.' '.$resenna->resennado->primer_apellido}}</td>
-                                                    <td class="sorting_1">{{$resenna->funcionario_resenna->person->primer_nombre.' '.$resenna->funcionario_resenna->person->primer_apellido}}</td>
+                                                    <td class="sorting_1">{{$resenna->funcionario_resenna->jerarquia->valor.'. '.$resenna->funcionario_resenna->person->primer_nombre.' '.$resenna->funcionario_resenna->person->primer_apellido}}</td>
                                                     <td align="center">
                                                         @can('resenna.show')
                                                         <a class="btn btn-info" href="{{ route('resenna.show', $resenna->id) }}"><i class='fa fa-eye'></i></a>
@@ -47,7 +101,7 @@
                                             </tbody>
                                         </table>
                                         <div class="pagination justify-content-end">  
-                                            {!! $resennas->links() !!}          
+                                            {{ $resennas->appends(request()->input())->links() }}          
                                         </div> 
                                     </div>
                                 </div>

@@ -35,9 +35,52 @@ class TrazasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index_resenna()
+    public function index_resenna(Request $request)
     {
-        $resennas = Traza_Resenna::paginate(10);
+        $request->all();
+        if($request->buscador == null)
+        {
+            $request->buscador = null;
+        }
+
+        if($request->tipo_busqueda == 'cedula'){
+            $resennas = Traza_Resenna::join('users', 'users.id', '=', 'traza_resenna.id_user')
+            ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+            ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+            ->Where('persons.cedula', '=', $request->buscador)->paginate(10);
+
+        }else if($request->tipo_busqueda == 'credencial'){
+            $resennas = Traza_Resenna::join('users', 'users.id', '=', 'traza_resenna.id_user')
+            ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+            ->Where('funcionarios.credencial', '=', $request->buscador)->paginate(10);
+
+        }else if($request->tipo_busqueda == 'usuario'){
+            $resennas = Traza_Resenna::join('users', 'users.id', '=', 'traza_resenna.id_user')
+            ->Where('users', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+
+        }else if($request->tipo_busqueda == 'nombre'){
+            $resennas = Traza_Resenna::join('users', 'users.id', '=', 'traza_resenna.id_user')
+            ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+            ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+            ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+
+        }else if($request->tipo_busqueda == 'apellido'){
+            $resennas = Traza_Resenna::join('users', 'users.id', '=', 'traza_resenna.id_user')
+            ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+            ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+            ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+
+        }else if($request->tipo_busqueda == 'accion'){
+            $resennas = Traza_Resenna::join('traza_acciones', 'traza_acciones.id', '=', 'traza_resenna.id_accion')
+            ->Where('traza_acciones.valor', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+
+        }else if($request->tipo_busqueda == 'valores_modificados'){
+            $resennas = Traza_Resenna::Where('valores_modificados', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+
+        }else{
+            $resennas = Traza_Resenna::paginate(10);
+        }
+
         return view('trazas.resenna_index', compact('resennas'));
     }
 
@@ -52,9 +95,52 @@ class TrazasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index_usuarios()
+    public function index_usuarios(Request $request)
     {
-        $users = Traza_User::paginate(10);
+        $request->all();
+        if($request->buscador == null)
+        {
+            $request->buscador = null;
+        }
+
+        if($request->tipo_busqueda == 'cedula'){
+            $users = Traza_User::join('users', 'users.id', '=', 'traza_users.id_user')
+            ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+            ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+            ->Where('persons.cedula', '=', $request->buscador)->paginate(10);
+
+        }else if($request->tipo_busqueda == 'credencial'){
+            $users = Traza_User::join('users', 'users.id', '=', 'traza_users.id_user')
+            ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+            ->Where('funcionarios.credencial', '=', $request->buscador)->paginate(10);
+
+        }else if($request->tipo_busqueda == 'usuario'){
+            $users = Traza_User::join('users', 'users.id', '=', 'traza_users.id_user')
+            ->Where('users', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+
+        }else if($request->tipo_busqueda == 'nombre'){
+            $users = Traza_User::join('users', 'users.id', '=', 'traza_users.id_user')
+            ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+            ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+            ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+
+        }else if($request->tipo_busqueda == 'apellido'){
+            $users = Traza_User::join('users', 'users.id', '=', 'traza_users.id_user')
+            ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+            ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+            ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+
+        }else if($request->tipo_busqueda == 'accion'){
+            $users = Traza_User::join('traza_acciones', 'traza_acciones.id', '=', 'traza_users.id_accion')
+            ->Where('traza_acciones.valor', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+
+        }else if($request->tipo_busqueda == 'valores_modificados'){
+            $users = Traza_User::Where('valores_modificados', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+
+        }else{
+            $users = Traza_User::paginate(10);
+        }
+
         return view('trazas.users_index', compact('users'));
     }
 
@@ -69,9 +155,49 @@ class TrazasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function index_roles()
+    public function index_roles(Request $request)
     {
-        $roles = Traza_Roles::paginate(10);
+        $request->all();
+        if($request->buscador == null)
+        {
+            $request->buscador = null;
+        }
+
+        if($request->tipo_busqueda == 'cedula'){
+            $roles = Traza_Roles::join('users', 'users.id', '=', 'traza_roles.id_user')
+            ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+            ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+            ->Where('persons.cedula', '=', $request->buscador)->paginate(10);
+
+        }else if($request->tipo_busqueda == 'credencial'){
+            $roles = Traza_Roles::join('users', 'users.id', '=', 'traza_roles.id_user')
+            ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+            ->Where('funcionarios.credencial', '=', $request->buscador)->paginate(10);
+
+        }else if($request->tipo_busqueda == 'usuario'){
+            $roles = Traza_Roles::join('users', 'users.id', '=', 'traza_roles.id_user')
+            ->Where('users', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+
+        }else if($request->tipo_busqueda == 'nombre'){
+            $roles = Traza_Roles::join('users', 'users.id', '=', 'traza_roles.id_user')
+            ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+            ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+            ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+
+        }else if($request->tipo_busqueda == 'apellido'){
+            $roles = Traza_Roles::join('users', 'users.id', '=', 'traza_roles.id_user')
+            ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+            ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+            ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+
+        }else if($request->tipo_busqueda == 'accion'){
+            $roles = Traza_Roles::join('traza_acciones', 'traza_acciones.id', '=', 'traza_roles.id_accion')
+            ->Where('traza_acciones.valor', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+
+        }else{
+            $roles = Traza_Roles::paginate(10);
+        }
+
         return view('trazas.roles_index', compact('roles'));
     }
 
@@ -86,9 +212,46 @@ class TrazasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function index_historial_sesion()
+    public function index_historial_sesion(Request $request)
     {
-        $historial_sesion = Historial_Sesion::paginate(10);
+        $request->all();
+        if($request->buscador == null)
+        {
+            $request->buscador = null;
+        }
+
+        if($request->tipo_busqueda == 'cedula'){
+            $historial_sesion = Historial_Sesion::join('users', 'users.id', '=', 'historial_sesion.id_user')
+            ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+            ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+            ->Where('persons.cedula', '=', $request->buscador)->paginate(10);
+        }else if($request->tipo_busqueda == 'credencial'){
+            $historial_sesion = Historial_Sesion::join('users', 'users.id', '=', 'historial_sesion.id_user')
+            ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+            ->Where('funcionarios.credencial', '=', $request->buscador)->paginate(10);
+        }else if($request->tipo_busqueda == 'jerarquia'){
+            $historial_sesion = Historial_Sesion::join('users', 'users.id', '=', 'historial_sesion.id_user')
+            ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+            ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
+            ->Where('jerarquia.valor', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+        }else if($request->tipo_busqueda == 'usuario'){
+            $historial_sesion = Historial_Sesion::Where('users', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+        }else if($request->tipo_busqueda == 'nombre'){
+            $historial_sesion = Historial_Sesion::join('users', 'users.id', '=', 'historial_sesion.id_user')
+            ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+            ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+            ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+
+        }else if($request->tipo_busqueda == 'apellido'){
+            $historial_sesion = Historial_Sesion::join('users', 'users.id', '=', 'historial_sesion.id_user')
+            ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+            ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+            ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
+
+        }else{
+            $historial_sesion = Historial_Sesion::paginate(10);
+        }
+
         return view('trazas.historial_sesion_index', compact('historial_sesion'));
     }
 

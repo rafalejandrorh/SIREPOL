@@ -15,7 +15,7 @@
                         <a class="btn btn-success" href="{{ route('roles.create') }}">Nuevo</a>                        
                         @endcan
 
-                            <table class="table table-striped mt-2">
+                            <table class="table table-striped mt-2 display dataTable table-hover">
                                 <thead>                                         
                                     <th>Rol</th>
                                     <th>Acciones</th>
@@ -42,7 +42,7 @@
 
                             <!-- Centramos la paginacion a la derecha -->
                             <div class="pagination justify-content-end">
-                                {!! $roles->links() !!} 
+                                {{ $roles->appends(request()->input())->links() }} 
                             </div>                    
                             </div>
                         </div>

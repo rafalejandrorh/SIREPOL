@@ -12,7 +12,7 @@
                 <img alt="image" src="{{ asset('img/profile.jpg') }}"
                      class="rounded-circle mr-1 thumbnail-rounded user-thumbnail ">
                 <div class="d-sm-none d-lg-inline-block">
-                    Bienvenido, {{\Illuminate\Support\Facades\Auth::user()->users}}</div>
+                    {{\Illuminate\Support\Facades\Auth::user()->users}}</div>
             </a>
 
             <div class="dropdown-menu dropdown-menu-right">
