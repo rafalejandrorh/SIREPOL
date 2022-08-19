@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Alert;
 use File;
 
@@ -31,6 +32,7 @@ class ResennaController extends Controller
         $this->middleware('can:resenna.show')->only('show');
         $this->middleware('can:resenna.edit')->only('edit', 'update');
         $this->middleware('can:resenna.destroy')->only('destroy');
+        $this->middleware('can:resenna.pdf')->only('pdf');
  
     }
     /**
@@ -69,7 +71,7 @@ class ResennaController extends Controller
             $resenna = Resenna::join('funcionarios', 'funcionarios.id', '=', $columna)
             ->Where('funcionarios.credencial', '=', $request->buscador)->paginate(5);
 
-        }if($request->tipo_busqueda == 'jerarquia_resenna' || $request->tipo_busqueda == 'jerarquia_aprehensor'){
+        }else if($request->tipo_busqueda == 'jerarquia_resenna' || $request->tipo_busqueda == 'jerarquia_aprehensor'){
             if($request->tipo_busqueda == 'jerarquia_resenna'){
                 $columna = 'id_funcionario_resenna';
             }else if($request->tipo_busqueda == 'jerarquia_aprehensor'){
@@ -107,9 +109,14 @@ class ResennaController extends Controller
             ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
             ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
             
+        }else if($request->tipo_busqueda == 'motivo_resenna'){
+            $resenna = Resenna::join('caracteristicas_resennado', 'caracteristicas_resennado.id', '=', 'resenna_detenido.id_motivo_resenna')
+            ->Where('caracteristicas_resennado.valor', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
+
         }else{
             $resenna = Resenna::orderBy('fecha_resenna', 'desc')->paginate(5);
         }
+
         return view('resenna.index', ['resennas' => $resenna]);
     }
 
@@ -179,13 +186,13 @@ class ResennaController extends Controller
                 $imagen = $request->file('url_foto')->store('imagenes/resennados/'.$obtener_persona[0]['id'].'-'.$request->cedula);
             }else{
                 if($request->id_genero == '1'){
-                    $imagen = 'imagenes/integrantes/masculino.png';
+                    $imagen = 'imagenes/resennados/masculino.png';
                 }
                 if($request->id_genero == '2'){
-                    $imagen = 'imagenes/integrantes/femenino.png';
+                    $imagen = 'imagenes/resennados/femenino.png';
                 }
                 if($request->id_genero == null){
-                    $imagen = 'imagenes/integrantes/desconocido.png';
+                    $imagen = 'imagenes/resennados/desconocido.png';
                 }
             }
             $resenna = Resenna::find($id_resenna);
@@ -352,6 +359,16 @@ class ResennaController extends Controller
     public function show(Resenna $resenna)
     {
         return view('resenna.show', compact('resenna'));
+    }
+
+    public function pdf(Resenna $resenna)
+    {
+        //view()->share('resenna', $resenna);
+        // $pdf = 
+        // view('resenna.pdf', compact('resenna'));
+        //dd($resenna);die;
+        //loadHTML('<h1>Styde.net</h1>')
+        return PDF::loadView('resenna.pdf', compact('resenna'))->stream('resenna.pdf');
     }
 
     /**
