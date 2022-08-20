@@ -52,20 +52,18 @@ class User extends Authenticatable
     static function returnValidations(){
 
         return $validations=[
-
-            'users'     => 'string|max:255|unique:users',
+            'users'          => 'string|max:50|unique:users',
+            'password'       => 'required|min:6',
         ];
         
     }
 
     static function  returnMessages(){
-        return $messages=[
 
-                //'name.required'      =>'El Nombre es obligatorio.',
-                //'email.required'     =>'El Email  es obligatorio.',
-                'users.unique'        =>'Nombre de usuario en uso, ingrese otro por favor!',
-                //'password.required'  =>'El password es obligatorio.',
+        return $messages=[
+                'users.unique'          =>'Nombre de usuario en uso, ingrese otro por favor!',
+                'password.min'          =>'Tu contraseña debe ser de mínimo 6 caracteres.',
 
         ];
-} 
+    } 
 }

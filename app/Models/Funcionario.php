@@ -32,5 +32,23 @@ class Funcionario extends Model
     {
         return $this->belongsto(Estatus_Funcionario::class, 'id_estatus');
     }
+
+    static function returnValidations(){
+
+        return $validations=[
+            'credencial'          => 'unique:credencial',
+            'id_person' => 'unique:id_person'
+        ];
+        
+    }
+
+    static function  returnMessages(){
+
+        return $messages=[
+                'id_person.unique'      =>'Esta Persona ya se encuentra registrada como Funcionario',
+                'credencial.unique'     =>'Otro Funcionario posee esta Credencial',
+
+        ];
+    } 
     
 }

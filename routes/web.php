@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\SesionController;
 use App\Http\Controllers\ResennaController;
 use App\Http\Controllers\RoleController;
@@ -19,7 +20,7 @@ use App\Http\Controllers\GeografiaVenezuelaController;
 |
 */
 
-Route::get('/', function () { return view('auth.login'); });
+Route::get('/', [LoginController::class, 'index']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 
@@ -40,8 +41,6 @@ Route::get('/traza_roles/{role}', [App\Http\Controllers\TrazasController::class,
 Route::get('/resenna_pdf/{resenna}', [App\Http\Controllers\ResennaController::class, 'pdf'])->name('resenna.pdf')->middleware('auth');
 
 Route::get('resenna/create/combosBox/{id}/{tipo}', [App\Http\Controllers\GeografiaVenezuelaController::class, 'getCombos']);
-
-Route::get('resenna/{id}/{tipo}', [App\Http\Controllers\GeografiaVenezuelaController::class, 'getCombos']);
 
 Route::get('bandas/create/combosBox/{id}/{tipo}', [App\Http\Controllers\GeografiaVenezuelaController::class, 'getCombos']);
 

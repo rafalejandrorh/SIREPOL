@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class LoginController extends Controller
 {
@@ -41,6 +43,15 @@ class LoginController extends Controller
     public function username()
     {
         return 'users';
+    }
+
+    public function index()
+    {
+        $QR = QrCode::generate('http://localhost:8000/');
+        //$QR = QrCode::gradient('radial');
+        //$QR = QrCode::style('dot')
+        //$QR = QrCode::format('png')->merge('\img\logo_PMCR')->generate();
+        return view('auth.login', compact('QR'));
     }
 
 }

@@ -51,23 +51,4 @@ class Person extends Model
         return $this->belongsto(Geografia_Venezuela::class,'id_pais_nacimiento');
     }
 
-    static function returnValidations(){
-
-        return $validations=[
-
-            'cedula'       => 'unique:persons'
-            //'pasaporte'    => 'unique:persons'
-        ];
-        
-    }
-
-    static function  returnMessages(){
-        return $messages=[
-
-                'cedula.unique' =>'Cedula en uso, ingrese otro por favor!'
-                //'pasaporte.unique'       =>'Pasaporte en uso, ingrese otro por favor!'
-
-        ];
-    } 
-
 }

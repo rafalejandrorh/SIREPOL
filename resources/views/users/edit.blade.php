@@ -31,7 +31,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="name">Credencial</label>
-                                    {!! Form::text('credencial', $user->funcionario->credencial, array('class' => 'form-control')) !!}
+                                    {!! Form::text('credencial', $user->funcionario->credencial, array('class' => 'form-control', 'maxlength' => '10')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
@@ -43,7 +43,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Primer Nombre</label>
-                                    {!! Form::text('primer_nombre', $user->funcionario->person->primer_nombre, array('class' => 'form-control', 'onkeyup'=>'mayus(this);')) !!}
+                                    {!! Form::text('primer_nombre', $user->funcionario->person->primer_nombre, array('class' => 'form-control', 'onkeyup'=>'mayus(this);', 'required' => 'required')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
@@ -55,7 +55,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Primer Apellido</label>
-                                    {!! Form::text('primer_apellido', $user->funcionario->person->primer_apellido, array('class' => 'form-control', 'onkeyup'=>'mayus(this);')) !!}
+                                    {!! Form::text('primer_apellido', $user->funcionario->person->primer_apellido, array('class' => 'form-control', 'onkeyup'=>'mayus(this);', 'required' => 'required')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
@@ -67,7 +67,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Género</label>
-                                    {!! Form::select('id_genero', $genero, $user->funcionario->person->genero, array('class' => 'form-control')) !!}
+                                    {!! Form::select('id_genero[]', $genero, $user->funcionario->person->genero, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
@@ -97,19 +97,19 @@
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Estatus Laboral</label>
-                                    {!! Form::select('id_estatus', $estatus, $user->funcionario->estatus->valor, array('class' => 'form-control select2')) !!}
+                                    {!! Form::select('id_estatus[]', $estatus, $user->funcionario->estatus->valor, array('class' => 'form-control select2', 'required' => 'required')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="">Roles</label>
-                                    {!! Form::select('roles[]', $roles, $user->roles, array('class' => 'form-control select2')) !!}
+                                    {!! Form::select('roles[]', $roles, $user->roles, array('class' => 'form-control select2', 'required' => 'required')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Usuario</label>
-                                    {!! Form::text('users', $user->users, array('class' => 'form-control')) !!}
+                                    {!! Form::text('users', $user->users, array('class' => 'form-control', 'required' => 'required')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">

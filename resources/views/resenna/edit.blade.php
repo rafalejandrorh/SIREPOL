@@ -135,19 +135,19 @@
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Genero</label>
-                                    {!! Form::select('id_genero', $genero, $resenna->resennado->genero->valor, ['class'=>'form-control datepicker']) !!}
+                                    {!! Form::select('id_genero', $genero, $resenna->resennado->genero->valor, ['class'=>'form-control datepicker', 'required' => 'required']) !!}
                                 </div>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Tez</label>
-                                    {!! Form::select('id_tez', $tez, $resenna->tez->valor, array('class' => 'form-control')) !!}
+                                    {!! Form::select('id_tez', $tez, $resenna->tez->valor, array('class' => 'form-control', 'required' => 'required')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Contextura</label>
-                                    {!! Form::select('id_contextura', $contextura, $resenna->contextura->valor, array('class' => 'form-control')) !!}
+                                    {!! Form::select('id_contextura', $contextura, $resenna->contextura->valor, array('class' => 'form-control', 'required' => 'required')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6">
@@ -159,13 +159,13 @@
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label for="email">Motivo de Reseña</label>
-                                    {!! Form::select('id_motivo_resenna', $motivo_resenna, $resenna->motivo_resenna->valor, array('class' => 'form-control select2')) !!}
+                                    {!! Form::select('id_motivo_resenna', $motivo_resenna, $resenna->motivo_resenna->valor, array('class' => 'form-control select2', 'required' => 'required')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label for="">Funcionario Aprehensor</label>
-                                    <select name="id_funcionario_aprehensor" id="" class="form-control select2">
+                                    <select name="id_funcionario_aprehensor" id="" class="form-control select2" required>
                                         <option value="{{ $resenna->id_funcionario_aprehensor}}">{{$resenna->funcionario_aprehensor->jerarquia->valor.'. '.$resenna->funcionario_aprehensor->person->primer_nombre.' '.$resenna->funcionario_aprehensor->person->primer_apellido}}</option>
                                     @foreach ($funcionario_aprehensor as $funcionario)
                                         <option value="{{ $funcionario->id }}"> {{$funcionario->valor.'. '.$funcionario->primer_nombre.' '.$funcionario->primer_apellido }}</option>
@@ -176,7 +176,7 @@
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label for="">Funcionario que Reseña</label>
-                                    <select name="id_funcionario_resenna" id="" class="form-control select2">
+                                    <select name="id_funcionario_resenna" id="" class="form-control select2" required>
                                         <option value="{{ $resenna->id_funcionario_resenna}}">{{$resenna->funcionario_resenna->jerarquia->valor.'. '.$resenna->funcionario_resenna->person->primer_nombre.' '.$resenna->funcionario_resenna->person->primer_apellido}}</option>
                                     @foreach ($funcionario_resenna as $funcionario)
                                         <option value="{{ $funcionario->id }}"> {{$funcionario->valor.'. '.$funcionario->primer_nombre.' '.$funcionario->primer_apellido }}</option>

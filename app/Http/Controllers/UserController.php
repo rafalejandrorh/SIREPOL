@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Alert;
 use App\Models\Traza_User;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -105,6 +106,13 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
+        $user = Validator::make($request->all(),User::returnValidations(),User::returnMessages())->validate();
+
+        // if ($user->fails())
+        // {
+        //     return redirect()->back()->withInput()->withErrors($user->errors());
+        // }
+
         $person = new Person();
         $funcionario = new Funcionario();
         $usuario = new User();
@@ -119,7 +127,7 @@ class UserController extends Controller
                 $obtener_usuario = $usuario->where('id_funcionario','=',$obtener_funcionario[0]['id'])->get();
                 $validar_usuario = $usuario->where('id_funcionario','=',$obtener_funcionario[0]['id'])->exists();
                 if($validar_usuario == true){
-                    Alert()->success('El funcionario ya posee un Usuario.');
+                    Alert()->info('El funcionario ya posee un Usuario.');
                     return redirect()->route('users.index');
                 }
             }
@@ -157,7 +165,7 @@ class UserController extends Controller
             $id_funcionario = $funcionario->id;
 
             $usuario->id_funcionario = $id_funcionario;
-            $usuario->users = $request['user'];
+            $usuario->users = $request['users'];
             $usuario->password = $request['password'];
             $usuario->status = 'true';
             $usuario->save();
@@ -220,7 +228,7 @@ class UserController extends Controller
             $id_funcionario = $funcionario->id;
 
             $usuario->id_funcionario = $id_funcionario;
-            $usuario->users = $request['user'];
+            $usuario->users = $request['users'];
             $usuario->password = $request['password'];
             $usuario->status = 'true';
             $usuario->save();
@@ -262,7 +270,7 @@ class UserController extends Controller
             $bcrypt = bcrypt($password);
 
             $usuario->id_funcionario = $obtener_funcionario[0]['id'];
-            $usuario->users = $request['user'];
+            $usuario->users = $request['users'];
             $usuario->password = $bcrypt;
             $usuario->status = 'true';
             $usuario->save();
@@ -280,7 +288,7 @@ class UserController extends Controller
             $id_Accion = 1; //Registro
             $trazas = Traza_User::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
             'valores_modificados' => 'Datos de Usuario: '.
-            $request['user'].' || Activo || '.$rol]);
+            $request['users'].' || Activo || '.$rol]);
 
 
             Alert()->success('Usuario Creado Satisfactoriamente','Atención: El funcionario ya estaba registrado en el sistema, solamente se creó y asignó el Usuario.');
@@ -378,7 +386,7 @@ class UserController extends Controller
         
         $user = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
         ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
-        ->select('persons.cedula, users.users')->Where('users.id', $id)->get();
+        ->select('persons.cedula', 'users.users')->Where('users.id', $id)->get();
         foreach($user as $usr)
         {
             $password = 'pm*'.$usr['cedula'].'..';

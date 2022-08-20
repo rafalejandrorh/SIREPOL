@@ -197,6 +197,7 @@ return [
 
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
 
     ],
 
@@ -216,5 +217,7 @@ return [
     ])->toArray(),
 
     'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
+
+    'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class
 
 ];

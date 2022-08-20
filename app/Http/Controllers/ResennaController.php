@@ -368,16 +368,6 @@ class ResennaController extends Controller
         return view('resenna.show', compact('resenna'));
     }
 
-    public function pdf(Resenna $resenna)
-    {
-        //view()->share('resenna', $resenna);
-        // $pdf = 
-        // view('resenna.pdf', compact('resenna'));
-        //dd($resenna);die;
-        //loadHTML('<h1>Styde.net</h1>')
-        return PDF::loadView('resenna.pdf', compact('resenna'))->setOption(['dpi' => 100, 'defaultFont' => 'sans-serif'])->stream('resenna.pdf');
-    }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -439,7 +429,8 @@ class ResennaController extends Controller
         $resenna = Resenna::find($id, ['id']);
         $resenna->update($request->all('fecha_resenna', 'id_estado_civil', 'id_profesion', 'id_motivo_resenna', 'id_tez', 
         'id_contextura', 'id_funcionario_aprehensor', 'id_funcionario_resenna', 'direccion', 'observaciones'));
-        $resenna->resennado()->update($request->all('id_tipo_documentacion', 'letra_cedula', 'cedula', 'primer_nombre', 
+        $persona = Person::find($id_person, ['id']);
+        $persona->update($request->all('id_tipo_documentacion', 'letra_cedula', 'cedula', 'primer_nombre', 
         'segundo_nombre', 'primer_apellido','segundo_apellido', 'id_genero', 'fecha_nacimiento', 'id_estado_nacimiento',
         'id_municipio_nacimiento'));
 
@@ -582,5 +573,10 @@ class ResennaController extends Controller
         $resenna = Resenna::find($id, ['id']);
         $resenna->delete();
         return redirect()->route('resenna.index')->with('eliminar', 'Ok');
+    }
+
+    public function pdf(Resenna $resenna)
+    {
+        return PDF::loadView('resenna.pdf', compact('resenna'))->setOption(['dpi' => 100, 'defaultFont' => 'sans-serif'])->stream('resenna.pdf');
     }
 }
