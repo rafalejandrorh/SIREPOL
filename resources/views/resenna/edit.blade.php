@@ -24,7 +24,7 @@
                             </div>
                         @endif
    
-                        {!! Form::model($resenna, ['method' => 'PATCH','route' => ['resenna.update', $resenna->id]]) !!}
+                        {!! Form::model($resenna, array('method' => 'PATCH','route' => ['resenna.update', $resenna->id], 'files' => true)) !!}
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <a href="{{ route('resenna.index') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
@@ -50,15 +50,14 @@
                                         </div>
                                     </div>
                                         <div class="card-block">
-                                            {!! Form::file('url_foto', array('class' => 'form-control-file', 'id'=>'url', 'accept' => 'image/*')) !!}
-                                            {!! Form::hidden('url_foto_actual', $resenna->url_foto, array('class' => 'form-control-file')) !!}
+                                            {!! Form::file('url_foto', ['class' => 'form-control-file', 'id'=>'url', 'accept' => 'image/*']) !!}
                                         </div>
                                 </div>
                             </div>  
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="name">Fecha de Reseña</label>
-                                    {!! Form::date('fecha_resenna', $resenna->fecha_resenna, array('class' => 'form-control datepicker')) !!}
+                                    {!! Form::date('fecha_resenna', $resenna->fecha_resenna, array('class' => 'form-control datepicker', 'required' => 'required')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
@@ -82,25 +81,25 @@
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Primer Nombre</label>
-                                    {!! Form::text('primer_nombre', $resenna->resennado->primer_nombre, array('class' => 'form-control')) !!}
+                                    {!! Form::text('primer_nombre', $resenna->resennado->primer_nombre, array('class' => 'form-control', 'onkeyup'=>'mayus(this);', 'required' => 'required')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Segundo Nombre</label>
-                                    {!! Form::text('segundo_nombre', $resenna->resennado->segundo_nombre, array('class' => 'form-control')) !!}
+                                    {!! Form::text('segundo_nombre', $resenna->resennado->segundo_nombre, array('class' => 'form-control', 'onkeyup'=>'mayus(this);')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Primer Apellido</label>
-                                    {!! Form::text('primer_apellido', $resenna->resennado->primer_apellido, array('class' => 'form-control')) !!}
+                                    {!! Form::text('primer_apellido', $resenna->resennado->primer_apellido, array('class' => 'form-control', 'onkeyup'=>'mayus(this);', 'required' => 'required')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Segundo Apellido</label>
-                                    {!! Form::text('segundo_apellido', $resenna->resennado->segundo_apellido, array('class' => 'form-control')) !!}
+                                    {!! Form::text('segundo_apellido', $resenna->resennado->segundo_apellido, array('class' => 'form-control', 'onkeyup'=>'mayus(this);')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">

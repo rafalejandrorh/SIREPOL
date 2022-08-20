@@ -59,6 +59,7 @@
 <!-- Template JS File -->
 <script src="{{ asset('web/js/stisla.js') }}"></script>
 <script src="{{ asset('web/js/scripts.js') }}"></script>
+<script src="{{ asset('js/funcionesAjaxs.js')}}"></script>
 <script src="{{ mix('assets/js/profile.js') }}"></script>
 <script src="{{ mix('assets/js/custom/custom.js') }}"></script>
 
@@ -82,11 +83,12 @@
         };
     }(jQuery));
 
-    // Swal.fire({
-    // title: 'Error!',
-    // text: 'Do you want to continue',
-    // icon: 'error',
-    // confirmButtonText: 'Cool'
-    // })
+</script>
+
+<script>
+    function mayus(e) {
+        e.value = e.value.toUpperCase();
+        //e.value = e.value.toLowerCase();
+    }
 </script>
 </html>

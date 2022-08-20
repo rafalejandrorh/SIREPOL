@@ -43,25 +43,25 @@
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Primer Nombre</label>
-                                    {!! Form::text('primer_nombre', $user->funcionario->person->primer_nombre, array('class' => 'form-control')) !!}
+                                    {!! Form::text('primer_nombre', $user->funcionario->person->primer_nombre, array('class' => 'form-control', 'onkeyup'=>'mayus(this);')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Segundo Nombre</label>
-                                    {!! Form::text('segundo_nombre', $user->funcionario->person->segundo_nombre, array('class' => 'form-control')) !!}
+                                    {!! Form::text('segundo_nombre', $user->funcionario->person->segundo_nombre, array('class' => 'form-control', 'onkeyup'=>'mayus(this);')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Primer Apellido</label>
-                                    {!! Form::text('primer_apellido', $user->funcionario->person->primer_apellido, array('class' => 'form-control')) !!}
+                                    {!! Form::text('primer_apellido', $user->funcionario->person->primer_apellido, array('class' => 'form-control', 'onkeyup'=>'mayus(this);')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Segundo Apellido</label>
-                                    {!! Form::text('segundo_apellido', $user->funcionario->person->segundo_apellido, array('class' => 'form-control')) !!}
+                                    {!! Form::text('segundo_apellido', $user->funcionario->person->segundo_apellido, array('class' => 'form-control', 'onkeyup'=>'mayus(this);')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">

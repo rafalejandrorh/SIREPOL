@@ -23,7 +23,7 @@
                             </div>
                         @endif
                         
-                        {!! Form::open(array('route' => 'resenna.store','method' => 'POST','files' => true)) !!}
+                        {!! Form::open(array('route' => 'resenna.store','method' => 'POST','files' => true, 'id' => 'estados')) !!}
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <a href="{{ route('resenna.index') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
@@ -46,7 +46,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="name">Fecha de Reseña</label>
-                                    {!! Form::date('fecha_resenna', null, array('class' => 'form-control datepicker')) !!}
+                                    {!! Form::date('fecha_resenna', null, array('class' => 'form-control datepicker', 'required' => 'required')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
@@ -64,31 +64,31 @@
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Cédula</label>
-                                    {!! Form::text('cedula', null, array('class' => 'form-control')) !!}
+                                    {!! Form::text('cedula', null, array('class' => 'form-control', 'maxlength' => '10')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Primer Nombre</label>
-                                    {!! Form::text('primer_nombre', null, array('class' => 'form-control')) !!}
+                                    {!! Form::text('primer_nombre', null, array('class' => 'form-control', 'onkeyup'=>'mayus(this);', 'required' => 'required')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Segundo Nombre</label>
-                                    {!! Form::text('segundo_nombre', null, array('class' => 'form-control')) !!}
+                                    {!! Form::text('segundo_nombre', null, array('class' => 'form-control', 'onkeyup'=>'mayus(this);')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Primer Apellido</label>
-                                    {!! Form::text('primer_apellido', null, array('class' => 'form-control')) !!}
+                                    {!! Form::text('primer_apellido', null, array('class' => 'form-control', 'onkeyup'=>'mayus(this);', 'required' => 'required')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Segundo Apellido</label>
-                                    {!! Form::text('segundo_apellido', null, array('class' => 'form-control')) !!}
+                                    {!! Form::text('segundo_apellido', null, array('class' => 'form-control', 'onkeyup'=>'mayus(this);')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
@@ -100,13 +100,14 @@
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Estado de Nacimiento</label>
-                                    {!! Form::select('id_estado_nacimiento', $estado, [], array('class' => 'form-control select2')) !!}
+                                    {!! Form::select('id_estado_nacimiento', $estados['estados'], [], array('class' => 'form-control', 'placeholder'=>'Seleccione', 'id'=>'estados')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Municipio de Nacimiento</label>
-                                    {!! Form::select('id_municipio_nacimiento', $municipio, [], array('class' => 'form-control select2')) !!}
+                                    {!! Form::select('id_municipio_nacimiento', $estados['municipios'], [], array('class' => 'form-control', 
+                                    'id'=>'municipios','title'=>'Municipio', 'placeholder'=>'Seleccione', 'onchange'=>"cargarCombo(109,this.value,'#parroquias')")) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-9">
@@ -118,43 +119,44 @@
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Estado Civil</label>
-                                    {!! Form::select('id_estado_civil', $estado_civil, [], array('class' => 'form-control')) !!}
+                                    {!! Form::select('id_estado_civil', $estado_civil, [], array('class' => 'form-control', 'placeholder'=>'Seleccione', 'required' => 'required')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Genero</label>
-                                    {!! Form::select('id_genero', $genero, [], ['class'=>'form-control','autocomplete' => 'off']) !!}
+                                    {!! Form::select('id_genero', $genero, [], ['class'=>'form-control','autocomplete' => 'off', 'placeholder'=>'Seleccione', 'required' => 'required']) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Tez</label>
-                                    {!! Form::select('id_tez', $tez, [], array('class' => 'form-control')) !!}
+                                    {!! Form::select('id_tez', $tez, [], array('class' => 'form-control', 'placeholder'=>'Seleccione', 'required' => 'required')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Contextura</label>
-                                    {!! Form::select('id_contextura', $contextura, [], array('class' => 'form-control')) !!}
+                                    {!! Form::select('id_contextura', $contextura, [], array('class' => 'form-control', 'placeholder'=>'Seleccione', 'required' => 'required')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-6">
                                 <div class="form-group">
                                     <label for="email">Profesión</label>
-                                    {!! Form::select('id_profesion',  $profesion, [], array('class' => 'form-control select2')) !!}
+                                    {!! Form::select('id_profesion',  $profesion, [], array('class' => 'form-control select2', 'placeholder'=>'Seleccione', 'required' => 'required')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-6">
                                 <div class="form-group">
                                     <label for="email">Motivo de Reseña</label>
-                                    {!! Form::select('id_motivo_resenna', $motivo_resenna, [], array('class' => 'form-control select2')) !!}
+                                    {!! Form::select('id_motivo_resenna', $motivo_resenna, [], array('class' => 'form-control select2', 'placeholder'=>'Seleccione', 'required' => 'required')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-6">
                                 <div class="form-group">
                                     <label for="">Funcionario Aprehensor</label>
-                                    <select name="id_funcionario_aprehensor" id="" class="form-control select2">
+                                    <select name="id_funcionario_aprehensor" id="" class="form-control select2" required>
+                                        <option value="">Seleccione</option>
                                     @foreach ($funcionario_aprehensor as $funcionario)
                                         <option value="{{ $funcionario->id }}"> {{$funcionario->valor.'. '.$funcionario->primer_nombre.' '.$funcionario->primer_apellido }}</option>
                                     @endforeach
@@ -164,7 +166,8 @@
                             <div class="col-xs-12 col-sm-12 col-md-6">
                                 <div class="form-group">
                                     <label for="">Funcionario que Reseña</label>
-                                    <select name="id_funcionario_resenna" id="" class="form-control select2">
+                                    <select name="id_funcionario_resenna" id="" class="form-control select2" required>
+                                        <option value="">Seleccione</option>
                                     @foreach ($funcionario_resenna as $funcionario)
                                         <option value="{{ $funcionario->id }}"> {{$funcionario->valor.'. '.$funcionario->primer_nombre.' '.$funcionario->primer_apellido }}</option>
                                     @endforeach

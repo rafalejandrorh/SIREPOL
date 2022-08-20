@@ -10,6 +10,7 @@ use App\Models\Genero;
 use App\Models\Geografia_Venezuela;
 use App\Models\Person;
 use App\Models\Traza_Resenna;
+use App\ComboDependientes\Nomenclador\NomencladorBase as Nomenclador;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Http\Request;
@@ -24,9 +25,10 @@ use File;
 
 class ResennaController extends Controller
 {
-    function __construct()
+    function __construct(Nomenclador $geografia_venezuela)
     {
 
+        $this->geografia_venezuela = $geografia_venezuela;
         $this->middleware('can:resenna.index')->only('index');
         $this->middleware('can:resenna.create')->only('create');
         $this->middleware('can:resenna.show')->only('show');
@@ -136,6 +138,9 @@ class ResennaController extends Controller
         $estado = Geografia_Venezuela::Where('id_padre', 107)->pluck('valor', 'id')->all();
         $municipio = Geografia_Venezuela::Where('id_padre', 108)->pluck('valor', 'id')->all();
         $documentacion = Documentacion::pluck('valor', 'id')->all();
+
+        $estados = $this->geografia_venezuela->combos();
+
         $funcionario_resenna = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
         ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
         ->select('funcionarios.id', 'persons.primer_nombre', 'persons.primer_apellido', 'jerarquia.valor')->get();
@@ -144,7 +149,7 @@ class ResennaController extends Controller
         ->select('funcionarios.id', 'persons.primer_nombre', 'persons.primer_apellido', 'jerarquia.valor')->get();
 
         return view('resenna.create', compact('genero', 'estado_civil', 'profesion', 'motivo_resenna', 'tez', 'contextura', 
-        'estado', 'municipio', 'funcionario_resenna', 'funcionario_aprehensor', 'documentacion'));
+        'estado', 'estados', 'municipio', 'funcionario_resenna', 'funcionario_aprehensor', 'documentacion'));
     }
 
     /**
@@ -195,7 +200,7 @@ class ResennaController extends Controller
                     $imagen = 'imagenes/resennados/desconocido.png';
                 }
             }
-            $resenna = Resenna::find($id_resenna);
+            $resenna = Resenna::find($id_resenna, ['id']);
             $resenna->update(['url_foto' => 'storage/'.$imagen]);
 
             $caracteristicas_Resennado = Caracteristicas_Resennado::get();
@@ -232,18 +237,18 @@ class ResennaController extends Controller
                 $funcionario_aprehensor = $funcionario_aprehensor['valor'].'. '.$funcionario_aprehensor['primer_nombre'].' '.$funcionario_aprehensor['primer_apellido'];
             }
             $funcionario_resenna_for = $funcionarios->Where('funcionarios.id', $request->id_funcionario_resenna)->get();
-            foreach($funcionario_resenna_for as $funcionario_resenna){
-                $funcionario_resenna = $funcionario_resenna['valor'].'. '.$funcionario_resenna['primer_nombre'].' '.$funcionario_resenna['primer_apellido'];
-            }
-
+            // foreach($funcionario_resenna_for as $fun_resenna){
+            //     $funcionario_resenna = $fun_resenna['valor'].'. '.$fun_resenna['primer_nombre'].' '.$fun_resenna['primer_apellido'];
+            // }
+            // $funcionario_resenna.'
             $id_user = Auth::user()->id;
             $id_Accion = 1; //Registro
             $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
             'valores_modificados' => 'El ciudadano ya posee reseñas en el Sistema. Datos de Reseña: '.
             $request->fecha_resenna.' || '.$obtener_persona[0]['cedula'].' || '.$obtener_persona[0]['primer_nombre'].' || '.
             $obtener_persona[0]['segundo_nombre'].' || '.$obtener_persona[0]['primer_apellido'].' || '.$obtener_persona[0]['segundo_apellido'].' || '.
-            $genero.' || '.$obtener_persona[0]['fecha_nacimiento'].' || '.$estado_civil.' || '.$profesion.' || '.$motivo_resenna.' || '.$tez.' || '.$contextura.' || '.$funcionario_aprehensor.' || '.
-            $funcionario_resenna.' || '.$request->direccion.' || '.$request->observaciones.' || '.$imagen]);
+            $genero.' || '.$obtener_persona[0]['fecha_nacimiento'].' || '.$estado_civil.' || '.$profesion.' || '.$motivo_resenna.' || '.$tez.' || '.$contextura.' || '
+            .$funcionario_aprehensor.' || '.$request->direccion.' || '.$request->observaciones.' || '.$imagen]);
 
             Alert()->success('Reseña creada Satisfactoriamente','Atención: El ciudadano ya posee reseñas en el Sistema!');
             return redirect()->route('resenna.index');  
@@ -293,11 +298,13 @@ class ResennaController extends Controller
                     $imagen = 'imagenes/resennados/desconocido.png';
                 }
             }
-            $resenna = Resenna::find($id_resenna);
+            $resenna = Resenna::find($id_resenna, ['id']);
             $resenna->update(['url_foto' => 'storage/'.$imagen]);
 
             $caracteristicas_Resennado = Caracteristicas_Resennado::get();
             $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
+            ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
+            $funcionarios_resenna = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
             ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
             $generos = Genero::get();
 
@@ -326,12 +333,12 @@ class ResennaController extends Controller
                 $contextura = $contextura['valor'];
             }
             $funcionario_aprehensor_for = $funcionarios->Where('funcionarios.id', $request->id_funcionario_aprehensor)->get();
-            foreach($funcionario_aprehensor_for as $funcionario_aprehensor){
-                $funcionario_aprehensor = $funcionario_aprehensor['valor'].'. '.$funcionario_aprehensor['primer_nombre'].' '.$funcionario_aprehensor['primer_apellido'];
+            foreach($funcionario_aprehensor_for as $fun_aprehensor){
+                $funcionario_aprehensor = $fun_aprehensor['valor'].'. '.$fun_aprehensor['primer_nombre'].' '.$fun_aprehensor['primer_apellido'];
             }
-            $funcionario_resenna_for = $funcionarios->Where('funcionarios.id', $request->id_funcionario_resenna)->get();
-            foreach($funcionario_resenna_for as $funcionario_resenna){
-                $funcionario_resenna = $funcionario_resenna['valor'].'. '.$funcionario_resenna['primer_nombre'].' '.$funcionario_resenna['primer_apellido'];
+            $funcionario_resenna_for = $funcionarios_resenna->Where('funcionarios.id', $request->id_funcionario_resenna)->get();
+            foreach($funcionario_resenna_for as $fun_resenna){
+                $funcionario_resenna = $fun_resenna['valor'].'. '.$fun_resenna['primer_nombre'].' '.$fun_resenna['primer_apellido'];
             }
 
             $id_user = Auth::user()->id;
@@ -368,7 +375,7 @@ class ResennaController extends Controller
         // view('resenna.pdf', compact('resenna'));
         //dd($resenna);die;
         //loadHTML('<h1>Styde.net</h1>')
-        return PDF::loadView('resenna.pdf', compact('resenna'))->stream('resenna.pdf');
+        return PDF::loadView('resenna.pdf', compact('resenna'))->setOption(['dpi' => 100, 'defaultFont' => 'sans-serif'])->stream('resenna.pdf');
     }
 
     /**
@@ -408,8 +415,7 @@ class ResennaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->all();
-        
+
         $person = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
         ->Where('resenna_detenido.id', $id)->select('persons.id')->get();
         foreach($person as $per)
@@ -417,25 +423,30 @@ class ResennaController extends Controller
             $id_person = $per['id'];
         }
 
-        if($request['url_foto'] == null)
-        {
-            $request['url_foto'] = $request['url_foto_actual'];
-            $imagen = $request['url_foto_actual'];
-        }else if($request->hasFile('url_foto')) {
+        if($request->hasFile('url_foto')) {
             $imagen = $request->file('url_foto')->store('imagenes/resennados/'.$id_person.'-'.$request->cedula);
-            $resenna = Resenna::find($id);
+            
+        }else{
+            $imagen = null;
+        }
+
+        if($imagen != null)
+        {
+            $resenna = Resenna::find($id, ['id']);
             $resenna->update(['url_foto' => 'storage/'.$imagen]);
         }
 
         $resenna = Resenna::find($id, ['id']);
         $resenna->update($request->all('fecha_resenna', 'id_estado_civil', 'id_profesion', 'id_motivo_resenna', 'id_tez', 
-        'id_contextura', 'id_funcionario_aprehensor', 'id_funcionario_resenna', 'direccion', 'observaciones', 'url_foto'));
+        'id_contextura', 'id_funcionario_aprehensor', 'id_funcionario_resenna', 'direccion', 'observaciones'));
         $resenna->resennado()->update($request->all('id_tipo_documentacion', 'letra_cedula', 'cedula', 'primer_nombre', 
         'segundo_nombre', 'primer_apellido','segundo_apellido', 'id_genero', 'fecha_nacimiento', 'id_estado_nacimiento',
         'id_municipio_nacimiento'));
 
         $caracteristicas_Resennado = Caracteristicas_Resennado::get();
         $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
+        ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
+        $funcionarios_resenna = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
         ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
         $generos = Genero::get();
 
@@ -467,9 +478,9 @@ class ResennaController extends Controller
         foreach($funcionario_aprehensor_for as $funcionario_aprehensor){
             $funcionario_aprehensor = $funcionario_aprehensor['valor'].'. '.$funcionario_aprehensor['primer_nombre'].' '.$funcionario_aprehensor['primer_apellido'];
         }
-        $funcionario_resenna_for = $funcionarios->Where('funcionarios.id', $request->id_funcionario_resenna)->get();
-        foreach($funcionario_resenna_for as $funcionario_resenna){
-            $funcionario_resenna = $funcionario_resenna['valor'].'. '.$funcionario_resenna['primer_nombre'].' '.$funcionario_resenna['primer_apellido'];
+        $funcionario_resenna_for = $funcionarios_resenna->Where('funcionarios.id', $request->id_funcionario_resenna)->get();
+        foreach($funcionario_resenna_for as $fun_resenna){
+            $funcionario_resenna = $fun_resenna['valor'].'. '.$fun_resenna['primer_nombre'].' '.$fun_resenna['primer_apellido'];
         }
 
         $id_user = Auth::user()->id;
@@ -520,8 +531,8 @@ class ResennaController extends Controller
         $caracteristicas_Resennado = Caracteristicas_Resennado::get();
         $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
         ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
-        $generos = Genero::get();
-
+        $funcionarios_resenna = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
+        ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
         $caracteristicas_Resennado = Caracteristicas_Resennado::get();
         $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
         ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
@@ -555,13 +566,13 @@ class ResennaController extends Controller
         foreach($funcionario_aprehensor_for as $funcionario_aprehensor){
             $funcionario_aprehensor = $funcionario_aprehensor['valor'].'. '.$funcionario_aprehensor['primer_nombre'].' '.$funcionario_aprehensor['primer_apellido'];
         }
-        $funcionario_resenna_for = $funcionarios->Where('funcionarios.id', $id_funcionario_resenna)->get();
-        foreach($funcionario_resenna_for as $funcionario_resenna){
-            $funcionario_resenna = $funcionario_resenna['valor'].'. '.$funcionario_resenna['primer_nombre'].' '.$funcionario_resenna['primer_apellido'];
+        $funcionario_resenna_for = $funcionarios_resenna->Where('funcionarios.id', $id_funcionario_resenna)->get();
+        foreach($funcionario_resenna_for as $fun_resenna){
+            $funcionario_resenna = $fun_resenna['valor'].'. '.$fun_resenna['primer_nombre'].' '.$fun_resenna['primer_apellido'];
         }
-
+        
         $id_user = Auth::user()->id;
-        $id_Accion = 3; //Actualización
+        $id_Accion = 3; //Eliminación
         $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
         'valores_modificados' => 'Datos de Reseña: '.
         $fecha_resenna.' || '.$cedula.' || '.$primer_nombre.' '.$segundo_nombre.' || '.$primer_apellido.' || '.$segundo_apellido.' || '.

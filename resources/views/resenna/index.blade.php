@@ -55,7 +55,7 @@
                                     </div>
                                     <div class="col-xs-3 col-sm-3 col-md-3">
                                         <div class="form-group">
-                                            {!! Form::text('buscador', null, array('class' => 'form-control')) !!}
+                                            {!! Form::text('buscador', null, array('class' => 'form-control', 'onkeyup'=>'mayus(this);')) !!}
                                         </div>
                                     </div>
                                     <div class="col-xs-3 col-sm-3 col-md-3">
@@ -64,7 +64,7 @@
                                 </div>
                                 {!! Form::close() !!}
                                 @can('resenna.create')
-                                <a class="btn btn-success" href="{{ route('resenna.create') }}">Añadir Usuario</a>  
+                                <a class="btn btn-success" href="{{ route('resenna.create') }}">Crear Reseña</a>  
                                 <br>                      
                                 @endcan
                                         <table class="table table-striped mt-2 display dataTable table-hover">
