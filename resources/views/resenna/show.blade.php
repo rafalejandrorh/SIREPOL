@@ -17,6 +17,11 @@
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <a href="{{ route('resenna.index') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
                             </div>
+                        </div>
+                        <br>
+                        
+                        <div class="row">
+
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <i class="fa fa-address-card f-30 text-c-blue"></i>
@@ -87,6 +92,12 @@
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
+                                    <label for="email">Edad</label>
+                                    {!! Form::text('Edad', $edad, array('class' => 'form-control', 'disabled')) !!}
+                                </div>
+                            </div>
+                            <div class="col-xs-3 col-sm-3 col-md-3">
+                                <div class="form-group">
                                     <label for="email">Genero</label>
                                     {!! Form::text('id_genero', $resenna->resennado->genero->valor, ['class'=>'form-control datepicker', 'disabled']) !!}
                                 </div>
@@ -109,7 +120,7 @@
                                     {!! Form::text('id_estado_civil', $resenna->estado_civil->valor, array('class' => 'form-control', 'disabled')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-3 col-sm-3 col-md-3">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label for="email">Estado de Nacimiento</label>
                                     {!! Form::text('estado_nacimiento', $resenna->resennado->estado_nacimiento->valor, array('class' => 'form-control', 'disabled')) !!}

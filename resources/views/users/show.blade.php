@@ -10,13 +10,17 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
- 
-                        {{-- {!! Form::open(array('method' => 'PATCH','route' => 'users.update')) !!} --}}
-                        {!! Form::model($user, ['method' => 'PATCH','route' => ['users.update', $user->id]]) !!}
+
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <a href="{{ route('users.index') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
                             </div>
+                        </div>
+                        <br>
+ 
+                        {{-- {!! Form::open(array('method' => 'PATCH','route' => 'users.update')) !!} --}}
+                        {!! Form::model($user, ['method' => 'PATCH','route' => ['users.update', $user->id]]) !!}
+                        <div class="row">
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label for="">Funcionario Asignado</label>

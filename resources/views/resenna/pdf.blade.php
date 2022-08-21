@@ -65,27 +65,29 @@
         </tr>
 
         <tr role="row" class="headt">
-            <td class="sorting_1" width="5%" colspan="2" height="10px"><center><b>Cédula</b></center></td>
+            <td class="sorting_1" width="5%" colspan="1" height="10px"><center><b>Cédula</b></center></td>
             <td class="sorting_1" colspan="2"><center><b>Estado Civil</b></center></td>
+            <td class="sorting_1" colspan="1"><center><b>Edad</b></center></td>
         </tr>
 
         <tr role="row" class="odd">
-            {{-- <td class="sorting_1" colspan="1"></td>
-            <td class="sorting_1" colspan="1"></td> --}}
-            <td class="sorting_1" width="10%" colspan="2"><center>{{$resenna->resennado->letra_cedula.'-'.$resenna->resennado->cedula}}</center></td>
+            <td class="sorting_1" width="10%" colspan="1"><center>{{$resenna->resennado->letra_cedula.'-'.$resenna->resennado->cedula}}</center></td>
             <td class="sorting_1" colspan="2"><center>{{$resenna->estado_civil->valor}}</center></td>
+            <td class="sorting_1" colspan="1"><center>{{$edad}}</center></td>
         </tr>
 
         <tr role="row" class="odd">
             <td class="sorting_1" colspan="2"><center><b>Nombres</b></center></td>
             <td class="sorting_1" colspan="2"><center><b>Apellidos</b></center></td>
             <td class="sorting_1" colspan="2"><center><b>Fecha de Nacimiento</b></center></td>
+            
         </tr>
 
         <tr role="row" class="odd">
             <td class="sorting_1" colspan="2"><center>{{$resenna->resennado->primer_nombre.' '.$resenna->resennado->segundo_nombre}}</center></td>
             <td class="sorting_1" colspan="2"><center>{{$resenna->resennado->primer_apellido.' '.$resenna->resennado->segundo_apellido}}</center></td>
-            <td class="sorting_1" colspan="2"><center>{{date('d/m/Y', strtotime($resenna->resennado->fecha_nacimiento))}}</center></td> 
+            <td class="sorting_1" colspan="2"><center>{{date('d/m/Y', strtotime($resenna->resennado->fecha_nacimiento))}}</center></td>
+            
         </tr>
         
         <tr role="row" class="odd">

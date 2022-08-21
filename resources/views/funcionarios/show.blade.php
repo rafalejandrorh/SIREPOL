@@ -22,13 +22,17 @@
                             </button>
                             </div>
                         @endif
- 
-                        {{-- {!! Form::open(array('method' => 'PATCH','route' => 'users.update')) !!} --}}
-                        {!! Form::model($funcionario, ['method' => 'PATCH','route' => ['funcionarios.update', $funcionario->id]]) !!}
+
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <a href="{{ route('funcionarios.index') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
                             </div>
+                        </div>
+                        <br>
+ 
+                        {{-- {!! Form::open(array('method' => 'PATCH','route' => 'users.update')) !!} --}}
+                        {!! Form::model($funcionario, ['method' => 'PATCH','route' => ['funcionarios.update', $funcionario->id]]) !!}
+                        <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="name">Credencial</label>

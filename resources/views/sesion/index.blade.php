@@ -23,13 +23,17 @@
                             </div>
                         @endif
                         @foreach ($user as $usr)
-                             
-                        {!! Form::model($usr, ['method' => 'PATCH','route' => ['sesion.update', $usr->id]]) !!}
-                        {{-- {!! Form::open(array('route' => ['sesion.update', $usr->id],'method'=>'POST')) !!} --}}
+
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <a href="{{ route('home') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
                             </div>
+                        </div>
+                        <br>
+                             
+                        {!! Form::model($usr, ['method' => 'PATCH','route' => ['sesion.update', $usr->id]]) !!}
+                        {{-- {!! Form::open(array('route' => ['sesion.update', $usr->id],'method'=>'POST')) !!} --}}
+                        <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="email">Funcionario Asignado</label>

@@ -10,6 +10,14 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
+
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <a href="{{ route('trazas.index') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
+                                </div>
+                            </div>
+                            <br>
+
                             {!! Form::open(array('route' => 'traza_roles.index','method' => 'GET')) !!}
                             <div class="row">
                                 <div class="col-xs-3 col-sm-3 col-md-5">
@@ -37,9 +45,6 @@
                             </div>
                             {!! Form::close() !!}
 
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <a href="{{ route('trazas.index') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
-                            </div>
                                     <table class="table table-striped mt-2 display dataTable table-hover">
                                         <thead>
                                             <tr role="row">

@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Alert;
+use Carbon\Carbon;
 use File;
 
 
@@ -127,8 +128,26 @@ class ResennaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $request->all();
+        
+        if($request->buscador == null)
+        {
+            $request->buscador = null;
+        }
+        if($request->tipo_busqueda == 'cedula_resennado'){
+            $resennado = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
+            ->Where('persons.cedula', '=', $request->buscador)
+            ->select('persons.id_tipo_documentacion', 'persons.letra_cedula', 'persons.cedula', 'persons.primer_nombre',
+            'persons.segundo_nombre', 'persons.primer_apellido', 'persons.segundo_apellido', 'persons.fecha_nacimiento',
+            'persons.id_estado_nacimiento', 'persons.id_municipio_nacimiento', 'resenna_detenido.direccion', 'resenna_detenido.id_estado_civil',
+            'persons.id_genero', 'resenna_detenido.id_tez', 'resenna_detenido.id_contextura', 'resenna_detenido.id_profesion')->first();
+            
+        }else{
+            $resennado = null;
+        }
+        
         $genero = Genero::pluck('valor', 'id')->all();
         $estado_civil = Caracteristicas_Resennado::Where('id_padre', 241)->pluck('valor', 'id')->all();
         $profesion = Caracteristicas_Resennado::Where('id_padre', 234)->pluck('valor', 'id')->all();
@@ -138,6 +157,7 @@ class ResennaController extends Controller
         $estado = Geografia_Venezuela::Where('id_padre', 107)->pluck('valor', 'id')->all();
         $municipio = Geografia_Venezuela::Where('id_padre', 108)->pluck('valor', 'id')->all();
         $documentacion = Documentacion::pluck('valor', 'id')->all();
+        $fecha_hoy = date('Y-m-d');
 
         $estados = $this->geografia_venezuela->combos();
 
@@ -148,7 +168,7 @@ class ResennaController extends Controller
         ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
         ->select('funcionarios.id', 'persons.primer_nombre', 'persons.primer_apellido', 'jerarquia.valor')->get();
 
-        return view('resenna.create', compact('genero', 'estado_civil', 'profesion', 'motivo_resenna', 'tez', 'contextura', 
+        return view('resenna.create', compact('resennado', 'fecha_hoy', 'genero', 'estado_civil', 'profesion', 'motivo_resenna', 'tez', 'contextura', 
         'estado', 'estados', 'municipio', 'funcionario_resenna', 'funcionario_aprehensor', 'documentacion'));
     }
 
@@ -366,7 +386,8 @@ class ResennaController extends Controller
      */
     public function show(Resenna $resenna)
     {
-        return view('resenna.show', compact('resenna'));
+        $edad = Carbon::parse($resenna->resennado->fecha_nacimiento)->age;
+        return view('resenna.show', compact('resenna', 'edad'));
     }
 
     /**
@@ -377,6 +398,7 @@ class ResennaController extends Controller
      */
     public function edit(Resenna $resenna)
     {
+        $edad = Carbon::parse($resenna->resennado->fecha_nacimiento)->age;
         $genero = Genero::pluck('valor', 'id')->all();
         $estado_civil = Caracteristicas_Resennado::Where('id_padre', 241)->pluck('valor', 'id')->all();
         $profesion = Caracteristicas_Resennado::Where('id_padre', 234)->pluck('valor', 'id')->all();
@@ -393,7 +415,7 @@ class ResennaController extends Controller
         ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
         ->select('funcionarios.id', 'persons.primer_nombre', 'persons.primer_apellido', 'jerarquia.valor')->get();
 
-        return view('resenna.edit', compact('genero', 'estado_civil', 'profesion', 'motivo_resenna', 'tez', 'contextura', 
+        return view('resenna.edit', compact('edad', 'genero', 'estado_civil', 'profesion', 'motivo_resenna', 'tez', 'contextura', 
         'estado', 'municipio', 'funcionario_resenna', 'funcionario_aprehensor', 'documentacion', 'resenna'));
     }
 
@@ -578,7 +600,8 @@ class ResennaController extends Controller
 
     public function pdf(Resenna $resenna)
     {
-        return PDF::loadView('resenna.pdf', compact('resenna'))->setOption(['dpi' => 100, 'defaultFont' => 'sans-serif'])
+        $edad = Carbon::parse($resenna->resennado->fecha_nacimiento)->age;
+        return PDF::loadView('resenna.pdf', compact('resenna', 'edad'))->setOption(['dpi' => 100, 'defaultFont' => 'sans-serif'])
         ->stream('Reseña Policial '.$resenna->resennado->letra_cedula.$resenna->resennado->cedula.'-'.$resenna->resennado->primer_nombre.' '.
         $resenna->resennado->primer_apellido.'.pdf');
     }

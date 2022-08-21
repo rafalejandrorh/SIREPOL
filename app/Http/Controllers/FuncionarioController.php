@@ -260,7 +260,7 @@ class FuncionarioController extends Controller
         
         $funcionarios = Funcionario::Find($id, ['id']);
         $funcionarios->update($request->all());
-        //$funcionarios->person()->update($request->all());
+
         $id = $funcionarios->Where('id', $id)->select('id_person')->get();
         foreach($id as $person)
         {
@@ -295,7 +295,7 @@ class FuncionarioController extends Controller
         $id_Accion = 2; //Actualización
         $trazas = Traza_Funcionarios::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
         'valores_modificados' => 'Datos de Usuario: '.
-        'V'.$request['cedula'].' || '.$request['primer_nombre'].' || '.$request['segundo_nombre'].' || '.$request['primer_apellido'].' || '.
+        $request['primer_nombre'].' || '.$request['segundo_nombre'].' || '.$request['primer_apellido'].' || '.
         $request['segundo_apellido'].' || '.$genero.' || '.$request['fecha_nacimiento'].' || '.$estado_nacimiento.' || '.$request['credencial'].' || '.
         $jerarquia.' || '.$request['telefono'].' || '.$estatus_laboral]);
     
@@ -322,10 +322,12 @@ class FuncionarioController extends Controller
             $primer_apellido = $funcionario['primer_apellido'];
             $segundo_apellido = $funcionario['segundo_apellido'];
             $fecha_nacimiento = $funcionario['fecha_nacimiento'];
+            $id_estado_nacimiento = $funcionario['id_estado_nacimiento'];
             $id_genero = $funcionario['id_genero'];
             $credencial = $funcionario['credencial'];
             $id_jerarquia = $funcionario['id_jerarquia'];
             $id_estatus = $funcionario['id_estatus'];
+            $telefono = $funcionario['telefono'];
         }
         
         $jerarquia = Jerarquia::get();
@@ -333,6 +335,7 @@ class FuncionarioController extends Controller
         ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
         $estatus = Estatus_Funcionario::get();
         $generos = Genero::get();
+        $estado_nacimiento = Geografia_Venezuela::get();
 
         $genero_for = $generos->Where('id', $id_genero);
         foreach($genero_for as $genero){
@@ -346,14 +349,18 @@ class FuncionarioController extends Controller
         foreach($estatus_for as $estatus){
             $estatus = $estatus['valor'];
         }
+        $estado_for = $estado_nacimiento->Where('id', $id_estado_nacimiento);
+        foreach($estado_for as $estado){
+            $estado_nacimiento = $estado['valor'];
+        }
         
         $id_user = Auth::user()->id;
         $id_Accion = 3; //Eliminación
         $trazas = Traza_Funcionarios::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
         'valores_modificados' => 'Datos de Reseña: '.
-        $credencial.' || '.$cedula.' || '.$primer_nombre.' '.$segundo_nombre.' || '.$primer_apellido.' || '.
-        $segundo_apellido.' || '.$fecha_nacimiento.' || '.$genero.' || '.$jerarquia.' || '.$estatus.' || '.
-        $estatus]);
+        'V'.$cedula.' || '.$primer_nombre.' '.$segundo_nombre.' || '.$primer_apellido.' || '.
+        $segundo_apellido.' || '.$genero.' || '.$fecha_nacimiento.' || '.$estado_nacimiento.' || '.$credencial.' || '.$jerarquia.' || '.
+        $telefono.' || '.$estatus]);
 
         $funcionarios = Funcionario::find($id);
         $funcionarios->delete();

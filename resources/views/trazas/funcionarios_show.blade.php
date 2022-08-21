@@ -10,12 +10,16 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
- 
-                        {!! Form::model($funcionario, ['method' => 'PATCH','route' => ['traza_funcionarios.update', $funcionario->id]]) !!}
+
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <a href="{{ route('traza_funcionarios.index') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
                             </div>
+                        </div>
+                        <br>
+ 
+                        {!! Form::model($funcionario, ['method' => 'PATCH','route' => ['traza_funcionarios.update', $funcionario->id]]) !!}
+                        <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <label for="name">Usuario</label>

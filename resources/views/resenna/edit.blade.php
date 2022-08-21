@@ -23,12 +23,16 @@
                             </button>
                             </div>
                         @endif
-   
-                        {!! Form::model($resenna, array('method' => 'PATCH','route' => ['resenna.update', $resenna->id], 'files' => true)) !!}
+
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <a href="{{ route('resenna.index') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
                             </div>
+                        </div>
+                        <br>
+   
+                        {!! Form::model($resenna, array('method' => 'PATCH','route' => ['resenna.update', $resenna->id], 'files' => true)) !!}
+                        <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <i class="fa fa-address-card f-30 text-c-blue"></i>
@@ -110,6 +114,12 @@
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
+                                    <label for="email">Edad</label>
+                                    {!! Form::text('fecha_nacimiento', $edad, array('class' => 'form-control', 'disabled')) !!}
+                                </div>
+                            </div>
+                            <div class="col-xs-3 col-sm-3 col-md-3">
+                                <div class="form-group">
                                     <label for="email">Estado de Nacimiento</label>
                                     {!! Form::select('id_estado_nacimiento', $estado, $resenna->resennado->estado_nacimiento->valor, array('class' => 'form-control select2')) !!}
                                 </div>
@@ -120,7 +130,7 @@
                                     {!! Form::select('id_municipio_nacimiento', $municipio, $resenna->resennado->municipio_nacimiento->valor, array('class' => 'form-control select2')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-9 col-sm-9 col-md-9">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label for="email">Dirección</label>
                                     {!! Form::text('direccion', $resenna->direccion, array('class' => 'form-control')) !!}
