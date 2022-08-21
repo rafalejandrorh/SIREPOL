@@ -34,7 +34,7 @@
         {!! htmlScriptTagJsApi(['callback_then' => 'callbackThen', 'callback_catch' => 'callbackCatch']) !!}
 </head>
 
-<body>
+<body> {{-- background="{{ asset('img/bandera.jpg') }}" --}}
 <div id="app">
     <section class="section">
         <div class="container mt-5">
