@@ -198,6 +198,7 @@ return [
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+        Biscolab\ReCaptcha\ReCaptchaServiceProvider::class, 
 
     ],
 
@@ -217,7 +218,7 @@ return [
     ])->toArray(),
 
     'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
-
-    'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class
+    'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+    'ReCaptcha' => Biscolab\ReCaptcha\Facades\ReCaptcha::class,
 
 ];
