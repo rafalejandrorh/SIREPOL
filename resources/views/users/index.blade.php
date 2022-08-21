@@ -41,8 +41,6 @@
                                     <table class="table table-striped mt-2 display dataTable table-hover">
                                         <thead>
                                             <tr role="row">
-                                                <th>Credencial</th>
-                                                <th>Cédula</th>
                                                 <th>Funcionario</th>
                                                 <th>Jerarquía</th>
                                                 <th>Usuario</th>
@@ -52,8 +50,6 @@
                                         <tbody>
                                             @foreach ($Users as $user)
                                             <tr role="row" class="odd">
-                                                <td class="sorting_1">{{$user->funcionario->credencial}}</td>
-                                                <td class="sorting_1">{{$user->funcionario->person->cedula}}</td>
                                                 <td class="sorting_1">{{$user->funcionario->person->primer_nombre.' '.$user->funcionario->person->primer_apellido}}</td>
                                                 <td class="sorting_1">{{$user->funcionario->jerarquia->valor}}</td>
                                                 <td class="sorting_1">{{$user->users}}</td>

@@ -28,85 +28,19 @@
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <a href="{{ route('users.index') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
+                            <div class="col-xs-6 col-sm-6 col-md-4">
                                 <div class="form-group">
-                                    <label for="name">Credencial</label>
-                                    {!! Form::text('credencial', $user->funcionario->credencial, array('class' => 'form-control', 'maxlength' => '10')) !!}
+                                    <label for="">Funcionario Asignado</label>
+                                    <input type="text" class="form-control" value="{{$user->funcionario->jerarquia->valor.'. '.$user->funcionario->person->primer_nombre.' '.$user->funcionario->person->segundo_nombre}}" disabled>
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
-                                <div class="form-group">
-                                    <label for="email">Cédula</label>
-                                    {!! Form::text('cedula', $user->funcionario->person->cedula, array('class' => 'form-control', 'disabled')) !!}
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
-                                <div class="form-group">
-                                    <label for="email">Primer Nombre</label>
-                                    {!! Form::text('primer_nombre', $user->funcionario->person->primer_nombre, array('class' => 'form-control', 'onkeyup'=>'mayus(this);', 'required' => 'required')) !!}
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
-                                <div class="form-group">
-                                    <label for="email">Segundo Nombre</label>
-                                    {!! Form::text('segundo_nombre', $user->funcionario->person->segundo_nombre, array('class' => 'form-control', 'onkeyup'=>'mayus(this);')) !!}
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
-                                <div class="form-group">
-                                    <label for="email">Primer Apellido</label>
-                                    {!! Form::text('primer_apellido', $user->funcionario->person->primer_apellido, array('class' => 'form-control', 'onkeyup'=>'mayus(this);', 'required' => 'required')) !!}
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
-                                <div class="form-group">
-                                    <label for="email">Segundo Apellido</label>
-                                    {!! Form::text('segundo_apellido', $user->funcionario->person->segundo_apellido, array('class' => 'form-control', 'onkeyup'=>'mayus(this);')) !!}
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
-                                <div class="form-group">
-                                    <label for="email">Género</label>
-                                    {!! Form::select('id_genero[]', $genero, $user->funcionario->person->genero, array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
-                                <div class="form-group">
-                                    <label for="email">Fecha de Nacimiento</label>
-                                    {!! Form::date('fecha_nacimiento', $user->funcionario->person->fecha_nacimiento, ['class'=>'form-control datepicker','autocomplete' => 'off']) !!}
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
-                                <div class="form-group">
-                                    <label for="email">Estado de Nacimiento</label>
-                                    {!! Form::select('id_estado_nacimiento', $estado, $user->funcionario->person->estado_nacimiento->valor, array('class' => 'form-control select2')) !!}
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
-                                <div class="form-group">
-                                    <label for="email">Teléfono</label>
-                                    {!! Form::text('telefono', $user->funcionario->telefono, array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
-                                <div class="form-group">
-                                    <label for="email">Jerarquía</label>
-                                    {!! Form::select('id_jerarquia', $jerarquia, $user->funcionario->jerarquia->valor, array('class' => 'form-control')) !!}
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
-                                <div class="form-group">
-                                    <label for="email">Estatus Laboral</label>
-                                    {!! Form::select('id_estatus[]', $estatus, $user->funcionario->estatus->valor, array('class' => 'form-control select2', 'required' => 'required')) !!}
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
+                            <div class="col-xs-12 col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <label for="">Roles</label>
-                                    {!! Form::select('roles[]', $roles, $user->roles, array('class' => 'form-control select2', 'required' => 'required')) !!}
+                                    {!! Form::select('roles', $roles, $user->roles, array('class' => 'form-control select2', 'required' => 'required')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-12 col-md-3">
+                            <div class="col-xs-12 col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <label for="email">Usuario</label>
                                     {!! Form::text('users', $user->users, array('class' => 'form-control', 'required' => 'required')) !!}

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Http\Controllers\RoleController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -47,6 +49,11 @@ class User extends Authenticatable
     public function funcionario()
     {
         return $this->belongsto(Funcionario::class, 'id_funcionario');
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'id');
     }
 
     static function returnValidations(){

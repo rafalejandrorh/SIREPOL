@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\SesionController;
 use App\Http\Controllers\ResennaController;
 use App\Http\Controllers\RoleController;
@@ -28,11 +29,15 @@ Route::get('/historial_sesion', [App\Http\Controllers\TrazasController::class, '
 
 Route::get('/traza_resennas', [App\Http\Controllers\TrazasController::class, 'index_resenna'])->name('traza_resenna.index')->middleware('auth');
 
+Route::get('/traza_funcionarios', [App\Http\Controllers\TrazasController::class, 'index_funcionarios'])->name('traza_funcionarios.index')->middleware('auth');
+
 Route::get('/traza_users', [App\Http\Controllers\TrazasController::class, 'index_usuarios'])->name('traza_user.index')->middleware('auth');
 
 Route::get('/traza_roles', [App\Http\Controllers\TrazasController::class, 'index_roles'])->name('traza_roles.index')->middleware('auth');
 
 Route::get('/traza_resennas/{resenna}', [App\Http\Controllers\TrazasController::class, 'show_resenna'])->name('traza_resenna.show')->middleware('auth');
+
+Route::get('/traza_funcionario/{funcionario}', [App\Http\Controllers\TrazasController::class, 'show_funcionarios'])->name('traza_funcionarios.show')->middleware('auth');
 
 Route::get('/traza_users/{user}', [App\Http\Controllers\TrazasController::class, 'show_usuarios'])->name('traza_user.show')->middleware('auth');
 
@@ -48,6 +53,8 @@ Route::resource('geografia_venezuela',GeografiaVenezuelaController::class);
 
 Route::resource('users', UserController::class)->middleware('auth');
 
+Route::resource('funcionarios', FuncionarioController::class)->middleware('auth');
+
 Route::resource('roles', RoleController::class)->middleware('auth');
 
 Route::resource('resenna', ResennaController::class)->middleware('auth');
@@ -57,6 +64,8 @@ Route::resource('trazas', TrazasController::class)->middleware('auth');
 Route::resource('sesion', SesionController::class)->middleware('auth');
 
 Route::patch('/traza_resennas/{resenna}', [App\Http\Controllers\TrazasController::class, 'update_resenna'])->name('traza_resenna.update')->middleware('auth');
+
+Route::patch('/traza_funcionarios/{funcionario}', [App\Http\Controllers\TrazasController::class, 'update_roles'])->name('traza_funcionarios.update')->middleware('auth');
 
 Route::patch('/traza_users/{user}', [App\Http\Controllers\TrazasController::class, 'update_roles'])->name('traza_user.update')->middleware('auth');
 

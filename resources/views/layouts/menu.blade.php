@@ -3,6 +3,11 @@
         <i class=" fas fa-balance-scale"></i><span>Reseñas</span>
     </a>
 </li>
+<li class="side-menus {{ Request::is('funcionarios') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('funcionarios.index') }}">
+        <i class=" fas fa-users"></i><span>Funcionarios</span>
+    </a>
+</li>
 <li class="side-menus {{ Request::is('users') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('users.index') }}">
         <i class=" fas fa-user"></i><span>Usuarios</span>

@@ -3,14 +3,14 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h3 class="page__heading"><b>Historial de Sesión</b></h3>
+            <h3 class="page__heading"><b>Funcionarios</b></h3>
         </div>
         <div class="section-body">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            {!! Form::open(array('route' => 'historial_sesion.index','method' => 'GET')) !!}
+                            {!! Form::open(array('route' => 'funcionarios.index','method' => 'GET')) !!}
                             <div class="row">
                                 <div class="col-xs-3 col-sm-3 col-md-5">
                                     <div class="form-group">
@@ -18,7 +18,6 @@
                                         'cedula' => 'Cédula',
                                         'credencial' => 'Credencial',
                                         'jerarquia' => 'Jerarquía', 
-                                        'usuario' => 'Usuario', 
                                         'nombre' => 'Primer Nombre del Funcionario',
                                         'apellido' => 'Primer Apellido del Funcionario',], 
                                         'Seleccionar', array('class' => 'form-control select2')) !!}
@@ -26,7 +25,7 @@
                                 </div>
                                 <div class="col-xs-3 col-sm-3 col-md-3">
                                     <div class="form-group">
-                                        {!! Form::text('buscador', null, array('class' => 'form-control')) !!}
+                                        {!! Form::text('buscador', null, array('class' => 'form-control', 'onkeyup'=>'mayus(this);')) !!}
                                     </div>
                                 </div>
                                 <div class="col-xs-3 col-sm-3 col-md-3">
@@ -34,33 +33,41 @@
                                 </div>
                             </div>
                             {!! Form::close() !!}
-
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <a href="{{ route('trazas.index') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
-                            </div>
+                            @can('funcionarios.create')
+                            <a class="btn btn-success" href="{{ route('funcionarios.create') }}">Registrar Funcionario</a>                        
+                            @endcan
                                     <table class="table table-striped mt-2 display dataTable table-hover">
                                         <thead>
                                             <tr role="row">
-                                                <th>Usuario</th>
-                                                <th>Funcionario Asignado</th>
-                                                <th>Inicio de Sesión</th>
-                                                <th>Cierre de Sesión</th>
-                                                <th>MAC</th>
+                                                <th>Credencial</th>
+                                                <th>Cédula</th>
+                                                <th>Funcionario</th>
+                                                <th>Jerarquía</th>
+                                                <th>Estatus Laboral</th>
+                                                <th>Acciones</th>
                                         </thead>
                                         <tbody>
-                                            @foreach ($historial_sesion as $historial)
+                                            @foreach ($funcionarios as $funcionario)
                                             <tr role="row" class="odd">
-                                                <td class="sorting_1">{{$historial->user->users}}</td>
-                                                <td class="sorting_1">{{$historial->user->funcionario->jerarquia->valor.'. '.$historial->user->funcionario->person->primer_nombre.' '.$historial->user->funcionario->person->primer_apellido}}</td>
-                                                <td class="sorting_1">{{$historial->login}}</td>
-                                                <td class="sorting_1">{{$historial->logout}}</td>
-                                                <td class="sorting_1">{{$historial->MAC}}</td>
+                                                <td class="sorting_1">{{$funcionario->credencial}}</td>
+                                                <td class="sorting_1">{{$funcionario->person->cedula}}</td>
+                                                <td class="sorting_1">{{$funcionario->person->primer_nombre.' '.$funcionario->person->primer_apellido}}</td>
+                                                <td class="sorting_1">{{$funcionario->jerarquia->valor}}</td>
+                                                <td class="sorting_1">{{$funcionario->estatus->valor}}</td>
+                                                <td align="center">
+                                                    @can('funcionarios.show')
+                                                        <a class="btn btn-info" href="{{ route('funcionarios.show', $funcionario->id) }}"><i class='fa fa-eye'></i></a>
+                                                    @endcan
+                                                    @can('funcionarios.edit')
+                                                        <a class="btn btn-primary" href="{{ route('funcionarios.edit', $funcionario->id) }}"><i class='fa fa-edit'></i></a>
+                                                    @endcan
+                                                </td>
                                             </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
                                 <div class="pagination justify-content-end">
-                                    {{ $historial_sesion->appends(request()->input())->links() }}
+                                    {{ $funcionarios->appends(request()->input())->links() }}
                                 </div> 
                             </div>
                         </div>

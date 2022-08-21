@@ -59,6 +59,21 @@
                         <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
+                                <center><a class="btn btn-primary" href="{{ route('traza_funcionarios.index') }}"><i class='fa fa-users'> Funcionarios</i></a></center>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
                                 <center><a class="btn btn-primary" href="{{ route('traza_user.index') }}"><i class='fa fa-user'> Usuarios</i></a></center>
                                 <hr>
                             </div>

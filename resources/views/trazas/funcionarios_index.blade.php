@@ -3,14 +3,14 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h3 class="page__heading"><b>Historial de Sesión</b></h3>
+            <h3 class="page__heading"><b>Trazas de Funcionarios</b></h3>
         </div>
         <div class="section-body">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            {!! Form::open(array('route' => 'historial_sesion.index','method' => 'GET')) !!}
+                            {!! Form::open(array('route' => 'traza_funcionarios.index','method' => 'GET')) !!}
                             <div class="row">
                                 <div class="col-xs-3 col-sm-3 col-md-5">
                                     <div class="form-group">
@@ -20,13 +20,15 @@
                                         'jerarquia' => 'Jerarquía', 
                                         'usuario' => 'Usuario', 
                                         'nombre' => 'Primer Nombre del Funcionario',
-                                        'apellido' => 'Primer Apellido del Funcionario',], 
+                                        'apellido' => 'Primer Apellido del Funcionario',
+                                        'accion' => 'Registro, Actualización o Eliminación de Reseña',
+                                        'valores_modificados' => 'Valores Modificados'],
                                         'Seleccionar', array('class' => 'form-control select2')) !!}
                                     </div>
                                 </div>
                                 <div class="col-xs-3 col-sm-3 col-md-3">
                                     <div class="form-group">
-                                        {!! Form::text('buscador', null, array('class' => 'form-control')) !!}
+                                        {!! Form::text('buscador', null, array('class' => 'form-control', 'onkeyup'=>'mayus(this);')) !!}
                                     </div>
                                 </div>
                                 <div class="col-xs-3 col-sm-3 col-md-3">
@@ -42,25 +44,25 @@
                                         <thead>
                                             <tr role="row">
                                                 <th>Usuario</th>
-                                                <th>Funcionario Asignado</th>
-                                                <th>Inicio de Sesión</th>
-                                                <th>Cierre de Sesión</th>
-                                                <th>MAC</th>
+                                                <th>Acción</th>
+                                                <th>Fecha</th>
+                                                <th>Opciones</th>
                                         </thead>
                                         <tbody>
-                                            @foreach ($historial_sesion as $historial)
+                                            @foreach ($funcionario as $policia)
                                             <tr role="row" class="odd">
-                                                <td class="sorting_1">{{$historial->user->users}}</td>
-                                                <td class="sorting_1">{{$historial->user->funcionario->jerarquia->valor.'. '.$historial->user->funcionario->person->primer_nombre.' '.$historial->user->funcionario->person->primer_apellido}}</td>
-                                                <td class="sorting_1">{{$historial->login}}</td>
-                                                <td class="sorting_1">{{$historial->logout}}</td>
-                                                <td class="sorting_1">{{$historial->MAC}}</td>
+                                                <td class="sorting_1">{{$policia->user->users}}</td>
+                                                <td class="sorting_1">{{$policia->acciones->valor}}</td>
+                                                <td class="sorting_1">{{$policia->created_at}}</td>
+                                                <td>
+                                                    <a class="btn btn-info" href="{{ route('traza_funcionarios.show', $policia->id) }}"><i class='fa fa-eye'></i></a>
+                                                </td>
                                             </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
                                 <div class="pagination justify-content-end">
-                                    {{ $historial_sesion->appends(request()->input())->links() }}
+                                    {{ $funcionario->appends(request()->input())->links() }}
                                 </div> 
                             </div>
                         </div>

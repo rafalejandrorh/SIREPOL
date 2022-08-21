@@ -81,7 +81,7 @@ class ResennaController extends Controller
             }
             $resenna = Resenna::join('funcionarios', 'funcionarios.id', '=', $columna)
             ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
-            ->Where('jerarquia.valor', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+            ->Where('jerarquia.valor', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
 
         }else if($request->tipo_busqueda == 'nombre_resennado'){
             $resenna = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
@@ -99,7 +99,7 @@ class ResennaController extends Controller
             }
             $resenna = Resenna::join('funcionarios', 'funcionarios.id', '=', $columna)
             ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
-            ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+            ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
 
         }else if($request->tipo_busqueda == 'apellido_resenna' || $request->tipo_busqueda == 'apellido_aprehensor'){
             if($request->tipo_busqueda == 'apellido_resenna'){
@@ -109,7 +109,7 @@ class ResennaController extends Controller
             }
             $resenna = Resenna::join('funcionarios', 'funcionarios.id', '=', $columna)
             ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
-            ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+            ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
             
         }else if($request->tipo_busqueda == 'motivo_resenna'){
             $resenna = Resenna::join('caracteristicas_resennado', 'caracteristicas_resennado.id', '=', 'resenna_detenido.id_motivo_resenna')
@@ -206,6 +206,8 @@ class ResennaController extends Controller
             $caracteristicas_Resennado = Caracteristicas_Resennado::get();
             $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
             ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
+            $funcionarios_resenna = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
+            ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
             $generos = Genero::get();
 
             $genero_for = $generos->Where('id', $obtener_persona[0]['id_genero']);
@@ -236,11 +238,10 @@ class ResennaController extends Controller
             foreach($funcionario_aprehensor_for as $funcionario_aprehensor){
                 $funcionario_aprehensor = $funcionario_aprehensor['valor'].'. '.$funcionario_aprehensor['primer_nombre'].' '.$funcionario_aprehensor['primer_apellido'];
             }
-            $funcionario_resenna_for = $funcionarios->Where('funcionarios.id', $request->id_funcionario_resenna)->get();
-            // foreach($funcionario_resenna_for as $fun_resenna){
-            //     $funcionario_resenna = $fun_resenna['valor'].'. '.$fun_resenna['primer_nombre'].' '.$fun_resenna['primer_apellido'];
-            // }
-            // $funcionario_resenna.'
+            $funcionario_resenna_for = $funcionarios_resenna->Where('funcionarios.id', $request->id_funcionario_resenna)->get();
+            foreach($funcionario_resenna_for as $fun_resenna){
+                $funcionario_resenna = $fun_resenna['valor'].'. '.$fun_resenna['primer_nombre'].' '.$fun_resenna['primer_apellido'];
+            }
             $id_user = Auth::user()->id;
             $id_Accion = 1; //Registro
             $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
@@ -248,7 +249,7 @@ class ResennaController extends Controller
             $request->fecha_resenna.' || '.$obtener_persona[0]['cedula'].' || '.$obtener_persona[0]['primer_nombre'].' || '.
             $obtener_persona[0]['segundo_nombre'].' || '.$obtener_persona[0]['primer_apellido'].' || '.$obtener_persona[0]['segundo_apellido'].' || '.
             $genero.' || '.$obtener_persona[0]['fecha_nacimiento'].' || '.$estado_civil.' || '.$profesion.' || '.$motivo_resenna.' || '.$tez.' || '.$contextura.' || '
-            .$funcionario_aprehensor.' || '.$request->direccion.' || '.$request->observaciones.' || '.$imagen]);
+            .$funcionario_aprehensor.' || '.$funcionario_resenna.' || '.$request->direccion.' || '.$request->observaciones.' || '.$imagen]);
 
             Alert()->success('Reseña creada Satisfactoriamente','Atención: El ciudadano ya posee reseñas en el Sistema!');
             return redirect()->route('resenna.index');  
