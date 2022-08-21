@@ -5,7 +5,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Reseña Policial {{$resenna->letra_cedula.$resenna->resennado->cedula.' - '.$resenna->resennado->primer_nombre.' '.$resenna->resennado->primer_apellido}}</title>
+    <title>Reseña Policial {{$resenna->resennado->letra_cedula.$resenna->resennado->cedula.' - '.$resenna->resennado->primer_nombre.' '.$resenna->resennado->primer_apellido}}</title>
     <link rel="icon" href="{{ public_path('img/logo_pmcr_sin_fondo.png')}}">
     <!-- Bootstrap 4.1.1 -->
     <link href="{{ public_path('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
@@ -83,8 +83,8 @@
         </tr>
 
         <tr role="row" class="odd">
-            <td class="sorting_1" colspan="2"><center>{{$resenna->resennado->primer_nombre.', '.$resenna->resennado->segundo_nombre}}</center></td>
-            <td class="sorting_1" colspan="2"><center>{{$resenna->resennado->primer_apellido.', '.$resenna->resennado->segundo_apellido}}</center></td>
+            <td class="sorting_1" colspan="2"><center>{{$resenna->resennado->primer_nombre.' '.$resenna->resennado->segundo_nombre}}</center></td>
+            <td class="sorting_1" colspan="2"><center>{{$resenna->resennado->primer_apellido.' '.$resenna->resennado->segundo_apellido}}</center></td>
             <td class="sorting_1" colspan="2"><center>{{date('d/m/Y', strtotime($resenna->resennado->fecha_nacimiento))}}</center></td> 
         </tr>
         

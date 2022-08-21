@@ -578,6 +578,8 @@ class ResennaController extends Controller
 
     public function pdf(Resenna $resenna)
     {
-        return PDF::loadView('resenna.pdf', compact('resenna'))->setOption(['dpi' => 100, 'defaultFont' => 'sans-serif'])->stream('resenna.pdf');
+        return PDF::loadView('resenna.pdf', compact('resenna'))->setOption(['dpi' => 100, 'defaultFont' => 'sans-serif'])
+        ->stream('Reseña Policial '.$resenna->resennado->letra_cedula.$resenna->resennado->cedula.'-'.$resenna->resennado->primer_nombre.' '.
+        $resenna->resennado->primer_apellido.'.pdf');
     }
 }

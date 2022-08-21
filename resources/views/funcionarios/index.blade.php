@@ -61,6 +61,11 @@
                                                     @can('funcionarios.edit')
                                                         <a class="btn btn-primary" href="{{ route('funcionarios.edit', $funcionario->id) }}"><i class='fa fa-edit'></i></a>
                                                     @endcan
+                                                    @can('funcionarios.destroy')
+                                                        {!! Form::open(['method' => 'DELETE','route' => ['funcionarios.destroy', $funcionario->id],'style'=>'display:inline', 'class' => 'eliminar']) !!}
+                                                            {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
+                                                        {!! Form::close() !!}                                                  
+                                                    @endcan
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -77,4 +82,39 @@
         </div>
     </div>
 </section>
+@endsection
+
+@section('scripts')
+
+    @if (session('eliminar') == 'Ok')
+        <script>
+            Swal.fire(
+                'Eliminado!',
+                'La Reseña ha sido Eliminada.',
+                'success'
+            )
+        </script>
+    @endif
+
+    <script>
+        $('.eliminar').submit(function(e){
+            e.preventDefault();
+
+            Swal.fire({
+            title: '¿Estás seguro?',
+            text: "No podrás revertir esto!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, Eliminar!'
+            }).then((result) => {
+            if (result.value) {
+                this.submit();
+            }
+            })
+
+        });
+    </script>
+
 @endsection

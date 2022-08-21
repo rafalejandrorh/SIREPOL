@@ -25,7 +25,6 @@ class FuncionarioController extends Controller
         $this->middleware('can:funcionarios.create')->only('create');
         $this->middleware('can:funcionarios.show')->only('show');
         $this->middleware('can:funcionarios.edit')->only('edit', 'update');
-        $this->middleware('can:funcionarios.update_status')->only('update_status');
  
     }
     /**
