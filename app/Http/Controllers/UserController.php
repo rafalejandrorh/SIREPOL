@@ -122,10 +122,9 @@ class UserController extends Controller
 
             $usuario->assignRole($request['roles']);
 
-            $roles = Role::get();
-            $roles_for = $roles->Where('id', $request['roles']);
-            foreach($roles_for as $roles){
-                $rol = $roles['valor'];
+            $roles = Role::Where('id', $request['roles'])->get();
+            foreach($roles as $role){
+                $rol = $role['name'];
             }
 
             $id_user = Auth::user()->id;
