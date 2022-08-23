@@ -45,82 +45,120 @@ class ResennaController extends Controller
      */
     public function index(Request $request)
     {
+        //dd($request);die;
         $request->all();
-        if($request->buscador == null)
+        if(isset($request->filtro) && $request->filtro == 1)
         {
-            $request->buscador = null;
-        }
-
-        if($request->tipo_busqueda == 'cedula_resennado'){
-            $resenna = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
-            ->Where('persons.cedula', '=', $request->buscador)->paginate(5);
-
-        }else if($request->tipo_busqueda == 'cedula_resenna' || $request->tipo_busqueda == 'cedula_aprehensor'){
-            if($request->tipo_busqueda == 'cedula_resenna'){
-                $columna = 'id_funcionario_resenna';
-            }else if($request->tipo_busqueda == 'cedula_aprehensor'){
-                $columna = 'id_funcionario_aprehensor';
-            }
-            $resenna = Resenna::join('funcionarios', 'funcionarios.id', '=', $columna)
-            ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
-            ->Where('persons.cedula', '=', $request->buscador)->paginate(5);
-
-        }else if($request->tipo_busqueda == 'credencial_resenna' || $request->tipo_busqueda == 'credencial_aprehensor'){
-            if($request->tipo_busqueda == 'credencial_resenna'){
-                $columna = 'id_funcionario_resenna';
-            }else if($request->tipo_busqueda == 'credencial_aprehensor'){
-                $columna = 'id_funcionario_aprehensor';
-            }
-            $resenna = Resenna::join('funcionarios', 'funcionarios.id', '=', $columna)
-            ->Where('funcionarios.credencial', '=', $request->buscador)->paginate(5);
-
-        }else if($request->tipo_busqueda == 'jerarquia_resenna' || $request->tipo_busqueda == 'jerarquia_aprehensor'){
-            if($request->tipo_busqueda == 'jerarquia_resenna'){
-                $columna = 'id_funcionario_resenna';
-            }else if($request->tipo_busqueda == 'jerarquia_aprehensor'){
-                $columna = 'id_funcionario_aprehensor';
-            }
-            $resenna = Resenna::join('funcionarios', 'funcionarios.id', '=', $columna)
-            ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
-            ->Where('jerarquia.valor', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
-
-        }else if($request->tipo_busqueda == 'nombre_resennado'){
-            $resenna = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
-            ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
-
-        }else if($request->tipo_busqueda == 'apellido_resennado'){
-            $resenna = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
-            ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
-
-        }else if($request->tipo_busqueda == 'nombre_resenna' || $request->tipo_busqueda == 'nombre_aprehensor'){
-            if($request->tipo_busqueda == 'nombre_resenna'){
-                $columna = 'id_funcionario_resenna';
-            }else if($request->tipo_busqueda == 'nombre_aprehensor'){
-                $columna = 'id_funcionario_aprehensor';
-            }
-            $resenna = Resenna::join('funcionarios', 'funcionarios.id', '=', $columna)
-            ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
-            ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
-
-        }else if($request->tipo_busqueda == 'apellido_resenna' || $request->tipo_busqueda == 'apellido_aprehensor'){
-            if($request->tipo_busqueda == 'apellido_resenna'){
-                $columna = 'id_funcionario_resenna';
-            }else if($request->tipo_busqueda == 'apellido_aprehensor'){
-                $columna = 'id_funcionario_aprehensor';
-            }
-            $resenna = Resenna::join('funcionarios', 'funcionarios.id', '=', $columna)
-            ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
-            ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
-            
-        }else if($request->tipo_busqueda == 'motivo_resenna'){
-            $resenna = Resenna::join('caracteristicas_resennado', 'caracteristicas_resennado.id', '=', 'resenna_detenido.id_motivo_resenna')
-            ->Where('caracteristicas_resennado.valor', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
-
+                $queryBuilder = Resenna::query();
+                if($request->fecha_inicio != null && $request->fecha_fin != null)    
+                {
+                    $queryBuilder->WhereBetween('fecha_resenna', [$request->fecha_inicio, $request->fecha_fin]);
+                }
+                if($request->id_tez != null)
+                {
+                    $queryBuilder->Where('id_tez', $request->id_tez);
+                }
+                if($request->id_contextura != null)
+                {
+                    $queryBuilder->Where('id_contextura', $request->id_contextura);
+                }
+                if($request->id_genero != null)
+                {
+                    $queryBuilder->join('persons as genero', 'genero.id', '=', 'resenna_detenido.id_person')->Where('genero.id_genero', $request->id_genero);
+                }
+                if($request->id_estado_nacimiento != null)
+                {
+                    $queryBuilder->join('persons as estado', 'estado.id', '=', 'resenna_detenido.id_person')->Where('estado.id_estado_nacimiento', $request->id_estado_nacimiento);
+                }
+                if($request->id_municipio_nacimiento != null)
+                {
+                    $queryBuilder->join('persons as municipio', 'municipio.id', '=', 'resenna_detenido.id_person')->Where('municipio.id_municipio_nacimiento', $request->id_municipio_nacimiento);
+                }
+                if($request->id_motivo_resenna != null)
+                {
+                    $queryBuilder->Where('id_motivo_resenna', $request->id_motivo_resenna);
+                }
+                $resennas = $queryBuilder->paginate(5);
         }else{
-            $resenna = Resenna::orderBy('fecha_resenna', 'desc')->paginate(5);
+
+            if($request->tipo_busqueda == 'cedula_resennado'){
+                $resennas = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
+                ->Where('persons.cedula', '=', $request->buscador)->paginate(5);
+
+            }else if($request->tipo_busqueda == 'cedula_resenna' || $request->tipo_busqueda == 'cedula_aprehensor'){
+                if($request->tipo_busqueda == 'cedula_resenna'){
+                    $columna = 'id_funcionario_resenna';
+                }else if($request->tipo_busqueda == 'cedula_aprehensor'){
+                    $columna = 'id_funcionario_aprehensor';
+                }
+                $resennas = Resenna::join('funcionarios', 'funcionarios.id', '=', $columna)
+                ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+                ->Where('persons.cedula', '=', $request->buscador)->paginate(5);
+
+            }else if($request->tipo_busqueda == 'credencial_resenna' || $request->tipo_busqueda == 'credencial_aprehensor'){
+                if($request->tipo_busqueda == 'credencial_resenna'){
+                    $columna = 'id_funcionario_resenna';
+                }else if($request->tipo_busqueda == 'credencial_aprehensor'){
+                    $columna = 'id_funcionario_aprehensor';
+                }
+                $resennas = Resenna::join('funcionarios', 'funcionarios.id', '=', $columna)
+                ->Where('funcionarios.credencial', '=', $request->buscador)->paginate(5);
+
+            }else if($request->tipo_busqueda == 'jerarquia_resenna' || $request->tipo_busqueda == 'jerarquia_aprehensor'){
+                if($request->tipo_busqueda == 'jerarquia_resenna'){
+                    $columna = 'id_funcionario_resenna';
+                }else if($request->tipo_busqueda == 'jerarquia_aprehensor'){
+                    $columna = 'id_funcionario_aprehensor';
+                }
+                $resennas = Resenna::join('funcionarios', 'funcionarios.id', '=', $columna)
+                ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
+                ->Where('jerarquia.valor', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
+
+            }else if($request->tipo_busqueda == 'nombre_resennado'){
+                $resennas = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
+                ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
+
+            }else if($request->tipo_busqueda == 'apellido_resennado'){
+                $resennas = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
+                ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
+
+            }else if($request->tipo_busqueda == 'nombre_resenna' || $request->tipo_busqueda == 'nombre_aprehensor'){
+                if($request->tipo_busqueda == 'nombre_resenna'){
+                    $columna = 'id_funcionario_resenna';
+                }else if($request->tipo_busqueda == 'nombre_aprehensor'){
+                    $columna = 'id_funcionario_aprehensor';
+                }
+                $resennas = Resenna::join('funcionarios', 'funcionarios.id', '=', $columna)
+                ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+                ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
+
+            }else if($request->tipo_busqueda == 'apellido_resenna' || $request->tipo_busqueda == 'apellido_aprehensor'){
+                if($request->tipo_busqueda == 'apellido_resenna'){
+                    $columna = 'id_funcionario_resenna';
+                }else if($request->tipo_busqueda == 'apellido_aprehensor'){
+                    $columna = 'id_funcionario_aprehensor';
+                }
+                $resennas = Resenna::join('funcionarios', 'funcionarios.id', '=', $columna)
+                ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+                ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
+                
+            }else if($request->tipo_busqueda == 'motivo_resenna'){
+                $resennas = Resenna::join('caracteristicas_resennado', 'caracteristicas_resennado.id', '=', 'resenna_detenido.id_motivo_resenna')
+                ->Where('caracteristicas_resennado.valor', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
+
+            }else{
+                $resennas = Resenna::orderBy('fecha_resenna', 'desc')->paginate(5);
+            }
         }
 
-        return view('resenna.index', ['resennas' => $resenna]);
+        $genero = Genero::pluck('valor', 'id')->all();
+        $motivo_resenna = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 94)->pluck('valor', 'id')->all();
+        $tez = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 240)->pluck('valor', 'id')->all();
+        $contextura = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 243)->pluck('valor', 'id')->all();
+        $estado = Geografia_Venezuela::orderBy('valor', 'asc')->Where('id_padre', 107)->pluck('valor', 'id')->all();
+        $municipio = Geografia_Venezuela::orderBy('valor', 'asc')->Where('id_padre', 108)->pluck('valor', 'id')->all();
+
+        return view('resenna.index', compact('resennas', 'genero', 'motivo_resenna', 'tez', 'contextura', 'estado', 'municipio'));
     }
 
     /**
@@ -149,13 +187,13 @@ class ResennaController extends Controller
         }
         
         $genero = Genero::pluck('valor', 'id')->all();
-        $estado_civil = Caracteristicas_Resennado::Where('id_padre', 241)->pluck('valor', 'id')->all();
-        $profesion = Caracteristicas_Resennado::Where('id_padre', 234)->pluck('valor', 'id')->all();
-        $motivo_resenna = Caracteristicas_Resennado::Where('id_padre', 94)->pluck('valor', 'id')->all();
-        $tez = Caracteristicas_Resennado::Where('id_padre', 240)->pluck('valor', 'id')->all();
-        $contextura = Caracteristicas_Resennado::Where('id_padre', 243)->pluck('valor', 'id')->all();
-        $estado = Geografia_Venezuela::Where('id_padre', 107)->pluck('valor', 'id')->all();
-        $municipio = Geografia_Venezuela::Where('id_padre', 108)->pluck('valor', 'id')->all();
+        $estado_civil = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 241)->pluck('valor', 'id')->all();
+        $profesion = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 234)->pluck('valor', 'id')->all();
+        $motivo_resenna = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 94)->pluck('valor', 'id')->all();
+        $tez = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 240)->pluck('valor', 'id')->all();
+        $contextura = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 243)->pluck('valor', 'id')->all();
+        $estado = Geografia_Venezuela::orderBy('valor', 'asc')->Where('id_padre', 107)->pluck('valor', 'id')->all();
+        $municipio = Geografia_Venezuela::orderBy('valor', 'asc')->Where('id_padre', 108)->pluck('valor', 'id')->all();
         $documentacion = Documentacion::pluck('valor', 'id')->all();
         $fecha_hoy = date('Y-m-d');
 
