@@ -146,6 +146,19 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        $id_user = Auth::user()->id;
+        $id_Accion = 4; //Visualización
+        if($user->status == true)
+        {
+            $estatus = 'Activo';
+        }else{
+            $estatus = 'Inactivo';
+        }
+        $trazas = Traza_User::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+        'valores_modificados' => 'Datos de Usuario: '.
+        $user->funcionario->jerarquia->valor.'. '.$user->funcionario->person->primer_nombre.' '.
+        $user->funcionario->person->primer_apellido.' || '.$estatus.' || '.$user->users]);
+
         $roles = Role::pluck('name','id')->all();
         return view('users.show', compact('user', 'roles'));
     }

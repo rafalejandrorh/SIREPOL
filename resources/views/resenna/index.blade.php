@@ -5,27 +5,6 @@
         <div class="section-header">
             <h3 class="page__heading"><b>Reseñas</b></h3>
         </div>
-        {{-- <div class="section-body">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body">
-                            {!! Form::open(array('route' => 'resenna.store','method' => 'POST')) !!}
-                            <div class="row">
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <div class="form-group">
-                                        {!! Form::text('buscador', null, array('class' => 'form-control')) !!}
-                                    </div>
-                                </div>
-                                <div class="col-xs-3 col-sm-3 col-md-3">
-                                    {!! Form::button('<i class="fa fa-search"> Buscar</i>', ['type' => 'submit', 'class' => 'btn btn-primary']) !!}
-                                </div>
-                            </div>
-                            {!! Form::close() !!}
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
 
             <div class="row">
                 <div class="col-lg-12">

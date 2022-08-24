@@ -230,6 +230,14 @@ class FuncionarioController extends Controller
      */
     public function show(Funcionario $funcionario)
     {
+        $id_user = Auth::user()->id;
+        $id_Accion = 4; //Visualización
+        $trazas = Traza_Funcionarios::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+        'valores_modificados' => 'Datos de Funcionario: '.
+        $funcionario->credencial.' || '.$funcionario->person->letra_cedula.$funcionario->person->cedula.' || '.
+        $funcionario->person->primer_nombre.' '.$funcionario->person->segundo_nombre.' '.$funcionario->person->primer_apellido.' '.
+        $funcionario->person->segundo_apellido.' || '.$funcionario->jerarquia->valor.' || '.$funcionario->estatus->valor]);
+
         return view('funcionarios.show', compact('funcionario'));
     }
 

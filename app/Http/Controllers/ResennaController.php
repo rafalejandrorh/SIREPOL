@@ -50,6 +50,11 @@ class ResennaController extends Controller
         if(isset($request->filtro) && $request->filtro == 1)
         {
                 $queryBuilder = Resenna::query();
+                if($request->fecha_inicio != null && $request->fecha_fin == null)
+                {
+                    Alert()->error('Error en el Filtrado','Atención: Al filtrar por fecha, debes colocar fecha de Inicio y Fin (Desde y Hasta)');
+                    return back();
+                }
                 if($request->fecha_inicio != null && $request->fecha_fin != null)    
                 {
                     $queryBuilder->WhereBetween('fecha_resenna', [$request->fecha_inicio, $request->fecha_fin]);
@@ -78,7 +83,7 @@ class ResennaController extends Controller
                 {
                     $queryBuilder->Where('id_motivo_resenna', $request->id_motivo_resenna);
                 }
-                $resennas = $queryBuilder->paginate(5);
+                $resennas = $queryBuilder->orderBy('fecha_resenna', 'desc')->paginate(5);
         }else{
 
             if($request->tipo_busqueda == 'cedula_resennado'){
@@ -306,8 +311,8 @@ class ResennaController extends Controller
             'valores_modificados' => 'El ciudadano ya posee reseñas en el Sistema. Datos de Reseña: '.
             $request->fecha_resenna.' || '.$obtener_persona[0]['cedula'].' || '.$obtener_persona[0]['primer_nombre'].' || '.
             $obtener_persona[0]['segundo_nombre'].' || '.$obtener_persona[0]['primer_apellido'].' || '.$obtener_persona[0]['segundo_apellido'].' || '.
-            $genero.' || '.$obtener_persona[0]['fecha_nacimiento'].' || '.$estado_civil.' || '.$profesion.' || '.$motivo_resenna.' || '.$tez.' || '.$contextura.' || '
-            .$funcionario_aprehensor.' || '.$funcionario_resenna.' || '.$request->direccion.' || '.$request->observaciones.' || '.$imagen]);
+            $genero.' || '.$obtener_persona[0]['fecha_nacimiento'].' || '.$estado_civil.' || '.$profesion.' || '.$motivo_resenna.' || '.$tez.' || '.$contextura.' || Funcionario Aprehensor: '
+            .$funcionario_aprehensor.' || Funcionario que Reseña: '.$funcionario_resenna.' || '.$request->direccion.' || '.$request->observaciones.' || '.$imagen]);
 
             Alert()->success('Reseña creada Satisfactoriamente','Atención: El ciudadano ya posee reseñas en el Sistema!');
             return redirect()->route('resenna.index');  
@@ -424,6 +429,16 @@ class ResennaController extends Controller
      */
     public function show(Resenna $resenna)
     {
+        $id_user = Auth::user()->id;
+        $id_Accion = 4; //Visualización
+        $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+        'valores_modificados' => 'Datos de Reseña: '.
+        $resenna->fecha_resenna.' || '.$resenna->resennado->letra_cedula.$resenna->resennado->cedula.' || '.
+        $resenna->resennado->primer_nombre.' '.$resenna->resennado->segundo_nombre.' '.$resenna->resennado->primer_apellido.' '.
+        $resenna->resennado->segundo_apellido.' || '.$resenna->motivo_resenna->valor.' || Funcionario Aprehensor: '.
+        $resenna->funcionario_aprehensor->person->primer_nombre.' '.$resenna->funcionario_aprehensor->person->primer_apellido.' || Funcionario que Reseña: '.
+        $resenna->funcionario_resenna->person->primer_nombre.' '.$resenna->funcionario_resenna->person->primer_apellido]);
+
         $edad = Carbon::parse($resenna->resennado->fecha_nacimiento)->age;
         return view('resenna.show', compact('resenna', 'edad'));
     }
@@ -541,7 +556,7 @@ class ResennaController extends Controller
         'valores_modificados' => 'Datos de Reseña: '.
         $request->fecha_resenna.' || '.$request->cedula.' || '.$request->primer_nombre.' '.$request->segundo_nombre.' || '.
         $request->primer_apellido.' || '.$request->segundo_apellido.' || '.$request->fecha_nacimiento.' || '.$genero.' || '.$estado_civil.' || '.$profesion.' || '.$motivo_resenna.' || '.
-        $tez.' || '.$contextura.' || '.$funcionario_aprehensor.' || '.$funcionario_resenna.' || '.$request->direccion.' || '.$request->observaciones.' || '.$imagen]);
+        $tez.' || '.$contextura.' || Funcionario Aprehensor: '.$funcionario_aprehensor.' || Funcionario que Reseña: '.$funcionario_resenna.' || '.$request->direccion.' || '.$request->observaciones.' || '.$imagen]);
 
         Alert()->success('Reseña Actualizada Satisfactoriamente');
         return redirect()->route('resenna.index');
@@ -629,7 +644,7 @@ class ResennaController extends Controller
         'valores_modificados' => 'Datos de Reseña: '.
         $fecha_resenna.' || '.$cedula.' || '.$primer_nombre.' '.$segundo_nombre.' || '.$primer_apellido.' || '.$segundo_apellido.' || '.
         $fecha_nacimiento.' || '.$genero.' || '.$estado_civil.' || '.$profesion.' || '.$motivo_resenna.' || '.
-        $tez.' || '.$contextura.' || '.$funcionario_aprehensor.' || '.$funcionario_resenna.' || '.$direccion.' || '.$observaciones.' || '.$imagen]);
+        $tez.' || '.$contextura.' || Funcionario Aprehensor: '.$funcionario_aprehensor.' || Funcionario que Reseña: '.$funcionario_resenna.' || '.$direccion.' || '.$observaciones.' || '.$imagen]);
 
         $resenna = Resenna::find($id, ['id']);
         $resenna->delete();
