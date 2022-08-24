@@ -10,12 +10,14 @@ use App\Models\Genero;
 use App\Models\Geografia_Venezuela;
 use App\Models\Person;
 use App\Models\Traza_Resenna;
+use App\Mail\ResennaMail;
 use App\ComboDependientes\Nomenclador\NomencladorBase as Nomenclador;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -671,4 +673,5 @@ class ResennaController extends Controller
         ->stream('Reseña Policial '.$resenna->resennado->letra_cedula.$resenna->resennado->cedula.'-'.$resenna->resennado->primer_nombre.' '.
         $resenna->resennado->primer_apellido.'.pdf');
     }
+
 }

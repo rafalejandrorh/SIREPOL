@@ -16,7 +16,7 @@
                                     <center><img src="{{ asset('img/pmcr_y_mpprjip.jpeg') }}" alt="logo" width="530" height="280" class="shadow-light"></center>
                                 </div>
                                 @yield('content')
-
+                                <h6 align="center">{!! $QR !!}</h6>
                             </div>
                         </div>
                     </div>

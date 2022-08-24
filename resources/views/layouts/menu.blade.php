@@ -1,3 +1,8 @@
+<li class="side-menus {{ Request::is('home') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('home') }}">
+        <i class=" fas fa-home"></i><span>Inicio</span>
+    </a>
+</li>
 <li class="side-menus {{ Request::is('resenna') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('resenna.index') }}">
         <i class=" fas fa-balance-scale"></i><span>Reseñas</span>

@@ -67,9 +67,6 @@
                                                     <td class="sorting_1">{{$resenna->resennado->primer_nombre.' '.$resenna->resennado->primer_apellido}}</td>
                                                     <td class="sorting_1">{{$resenna->funcionario_resenna->jerarquia->valor.'. '.$resenna->funcionario_resenna->person->primer_nombre.' '.$resenna->funcionario_resenna->person->primer_apellido}}</td>
                                                     <td align="center">
-                                                        @can('resenna.pdf')
-                                                        <a href="{{ route('resenna.pdf', $resenna->id) }}" target="_blank" class="btn btn-danger"><i class="fa fa-file-pdf"></i></a>
-                                                        @endcan
                                                         @can('resenna.show')
                                                         <a class="btn btn-info" href="{{ route('resenna.show', $resenna->id) }}"><i class='fa fa-eye'></i></a>
                                                         @endcan

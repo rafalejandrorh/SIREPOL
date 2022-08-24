@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class LoginController extends Controller
@@ -47,8 +48,10 @@ class LoginController extends Controller
 
     public function index()
     {
-        $QR = QrCode::size(80)->geo(10.249304786553445, -66.85708425051814);
-        return view('auth.login', compact('QR'));
+        //request:: root o url para ruta de aplicación
+
+        //$QR = QrCode::size(80)->generate($url);
+        return view('auth.login');
     }
 
 }

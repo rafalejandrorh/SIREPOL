@@ -14,7 +14,7 @@
    
                         {{-- {!! Form::open(array('route' => 'resenna.show','method' => 'POST')) !!} --}}
                         <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="col-xs-10 col-sm-10 col-md-10">
                                 <a href="{{ route('resenna.index') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
                             </div>
                         </div>
@@ -33,11 +33,13 @@
                                     <left><img src="{{asset($resenna->url_foto)}}" alt="foto_reseñado"  class="img-responsive" width="150"></left>
                                 </div>
                             </div>
+                            @can('resenna.qr')
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <right><h1>{{ $QR }}</h1></right>
                                 </div>
                             </div>
+                            @endcan
 
                         </div>
 
@@ -168,18 +170,77 @@
                                     <input type="text" class="form-control" value="{{$resenna->funcionario_resenna->jerarquia->valor.'. '.$resenna->funcionario_resenna->person->primer_nombre.' '.$resenna->funcionario_resenna->person->primer_apellido }}" disabled>
                                 </div>
                             </div>
-                            <div class="col-xs-6 col-sm-6 col-md-6">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="email">Observaciones</label>
                                     {!! Form::textarea('observaciones', $resenna->observaciones, array('class' => 'form-control', 'disabled')) !!}
                                 </div>
                             </div>
+                            
+                            <div class="col-xs-9 col-sm-9 col-md-9">
+                                @can('resenna.pdf')
+                                <div class="form-group">
+                                    <a href="{{ route('resenna.pdf', $resenna->id) }}" target="_blank" class="btn btn-danger"><i class="fa fa-file-pdf"></i> Descargar/Imprimir PDF</a>
+                                </div>
+                                @endcan
+                                @can('resenna.whatsapp')
+                                <div class="form-group">
+                                    <a href="#!" class="btn btn-success" data-toggle="modal" data-target="#enviar"><i class="fa fa-share-square"></i> Enviar Vía WhatsApp</a>
+                                </div>
+                                @endcan
+                            </div>
+                            
                         </div>
-                        {{-- {!! Form::close() !!} --}}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        {{-- Modal de WhatsApp --}}
+        <div class="modal fade" id="enviar" tabindex="-1" aria-labelledby="enviar" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                    <div class="modal-header bg-success">
+                        <h3 class="page__heading text-white"><b>Enviar por WhatsApp</b></h3>
+                        <span aria-hidden="true" class="close text-white" data-dismiss="modal" aria-label="Close">&times;</span>
+                    </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <label for="email">Número de Teléfono</label>
+                                {!! Form::text('telefono', null, array('class' => 'form-control', 'placeholder' => 'Ingrese el Número de Teléfono al que desea enviar la información. Ejemplo: +584120000000', 'id' => 'telefono', 'required' => 'required')) !!}
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <label for="email">Información a Enviar</label>
+                                {!! Form::textarea('observaciones', 'Reseña Policial. Fecha: '.date('d/m/Y', strtotime($resenna->fecha_resenna)).'. Hace '.$resenna->fecha_resenna->diff(date('Y-m-d'))->days.' días || Cédula: '.
+                                $resenna->resennado->letra_cedula.$resenna->resennado->cedula.' || Nombre Completo: '.$resenna->resennado->primer_nombre.' '.$resenna->resennado->segundo_nombre.', '.$resenna->resennado->primer_apellido.' '.$resenna->resennado->segundo_apellido.
+                                ' || Género: '.$resenna->resennado->genero->valor.' || Fecha de Nacimiento: '.date('d/m/Y', strtotime($resenna->resennado->fecha_nacimiento)).' || Estado Civil: '.$resenna->estado_civil->valor.' || Profesión: '.$resenna->profesion->valor.
+                                ' || Motivo de Reseña: '.$resenna->motivo_resenna->valor.' || Tez: '.$resenna->tez->valor.' || Contextura: '.$resenna->contextura->valor.' || Funcionario Aprehensor: '
+                                .$resenna->funcionario_aprehensor->jerarquia->valor.'. '.$resenna->funcionario_aprehensor->person->primer_nombre.' '.$resenna->funcionario_aprehensor->person->primer_apellido.
+                                ' || Funcionario que Reseña: '.$resenna->funcionario_resenna->jerarquia->valor.'. '.$resenna->funcionario_resenna->person->primer_nombre.' '.$resenna->funcionario_resenna->person->primer_apellido.
+                                ' || Dirección: '.$resenna->direccion.' || Observaciones: '.$resenna->observaciones, array('class' => 'form-control', 'disabled' => 'disabled', 'id' => 'observaciones')) !!}
+                            </div>
+                        </div>
+                        <div class="col-xs-3 col-sm-3 col-md-3">
+                            <button type="button" class="btn btn-success btn-flat" name="send" id="send"><i class="fa fa-check"> Enviar</i></button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            </div>
+        </div>
+
     </section>
+@endsection
+
+@section('scripts')
+
+    <script src="{{ asset('js/enviar_whatsapp.js') }}"></script>
+
 @endsection
