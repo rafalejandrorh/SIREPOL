@@ -115,7 +115,7 @@
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Edad</label>
-                                    {!! Form::text('fecha_nacimiento', $edad, array('class' => 'form-control', 'disabled')) !!}
+                                    {!! Form::text('fecha_nacimiento', $edad, array('class' => 'form-control', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">

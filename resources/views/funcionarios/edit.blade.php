@@ -41,7 +41,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Cédula</label>
-                                    {!! Form::text('cedula', $funcionario->person->cedula, array('class' => 'form-control', 'disabled')) !!}
+                                    {!! Form::text('cedula', $funcionario->person->cedula, array('class' => 'form-control', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">

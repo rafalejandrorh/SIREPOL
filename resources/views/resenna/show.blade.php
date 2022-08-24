@@ -47,133 +47,133 @@
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="name">Fecha de Reseña</label>
-                                    {!! Form::text('fecha_resenna', date('d/m/Y', strtotime($resenna->fecha_resenna)).'. Hace '.$resenna->fecha_resenna->diff(date('Y-m-d'))->days.' días', array('class' => 'form-control', 'disabled', 'disabled')) !!}
+                                    {!! Form::text('fecha_resenna', date('d/m/Y', strtotime($resenna->fecha_resenna)).'. Hace '.$resenna->fecha_resenna->diff(date('Y-m-d'))->days.' días', array('class' => 'form-control', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Estatus de Documentación</label>
-                                    {!! Form::text('cedula', $resenna->resennado->documentacion->valor, array('class' => 'form-control', 'disabled')) !!}
+                                    {!! Form::text('cedula', $resenna->resennado->documentacion->valor, array('class' => 'form-control', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Letra de Cédula</label>
-                                    {!! Form::text('cedula', $resenna->resennado->letra_cedula, array('class' => 'form-control', 'disabled')) !!}
+                                    {!! Form::text('cedula', $resenna->resennado->letra_cedula, array('class' => 'form-control', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Cédula</label>
-                                    {!! Form::text('cedula', $resenna->resennado->cedula, array('class' => 'form-control', 'disabled')) !!}
+                                    {!! Form::text('cedula', $resenna->resennado->cedula, array('class' => 'form-control', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Primer Nombre</label>
-                                    {!! Form::text('primer_nombre', $resenna->resennado->primer_nombre, array('class' => 'form-control', 'disabled')) !!}
+                                    {!! Form::text('primer_nombre', $resenna->resennado->primer_nombre, array('class' => 'form-control', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Segundo Nombre</label>
-                                    {!! Form::text('segundo_nombre', $resenna->resennado->segundo_nombre, array('class' => 'form-control', 'disabled')) !!}
+                                    {!! Form::text('segundo_nombre', $resenna->resennado->segundo_nombre, array('class' => 'form-control', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Primer Apellido</label>
-                                    {!! Form::text('primer_apellido', $resenna->resennado->primer_apellido, array('class' => 'form-control', 'disabled')) !!}
+                                    {!! Form::text('primer_apellido', $resenna->resennado->primer_apellido, array('class' => 'form-control', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Segundo Apellido</label>
-                                    {!! Form::text('segundo_apellido', $resenna->resennado->segundo_apellido, array('class' => 'form-control', 'disabled')) !!}
+                                    {!! Form::text('segundo_apellido', $resenna->resennado->segundo_apellido, array('class' => 'form-control', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Fecha de Nacimiento</label>
-                                    {!! Form::date('fecha_nacimiento', $resenna->resennado->fecha_nacimiento, array('class' => 'form-control', 'disabled')) !!}
+                                    {!! Form::date('fecha_nacimiento', $resenna->resennado->fecha_nacimiento, array('class' => 'form-control', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Edad</label>
-                                    {!! Form::text('Edad', $edad, array('class' => 'form-control', 'disabled')) !!}
+                                    {!! Form::text('Edad', $edad, array('class' => 'form-control', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Genero</label>
-                                    {!! Form::text('id_genero', $resenna->resennado->genero->valor, ['class'=>'form-control datepicker', 'disabled']) !!}
+                                    {!! Form::text('id_genero', $resenna->resennado->genero->valor, ['class'=>'form-control datepicker', 'readonly']) !!}
                                 </div>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Tez</label>
-                                    {!! Form::text('id_tez', $resenna->tez->valor, array('class' => 'form-control', 'disabled')) !!}
+                                    {!! Form::text('id_tez', $resenna->tez->valor, array('class' => 'form-control', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Contextura</label>
-                                    {!! Form::text('id_contextura', $resenna->contextura->valor, array('class' => 'form-control', 'disabled')) !!}
+                                    {!! Form::text('id_contextura', $resenna->contextura->valor, array('class' => 'form-control', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Estado Civil</label>
-                                    {!! Form::text('id_estado_civil', $resenna->estado_civil->valor, array('class' => 'form-control', 'disabled')) !!}
+                                    {!! Form::text('id_estado_civil', $resenna->estado_civil->valor, array('class' => 'form-control', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label for="email">Estado de Nacimiento</label>
-                                    {!! Form::text('estado_nacimiento', $resenna->resennado->estado_nacimiento->valor, array('class' => 'form-control', 'disabled')) !!}
+                                    {!! Form::text('estado_nacimiento', $resenna->resennado->estado_nacimiento->valor, array('class' => 'form-control', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label for="email">Municipio de Nacimiento</label>
-                                    {!! Form::text('municipio_nacimiento', $resenna->resennado->municipio_nacimiento->valor, array('class' => 'form-control', 'disabled')) !!}
+                                    {!! Form::text('municipio_nacimiento', $resenna->resennado->municipio_nacimiento->valor, array('class' => 'form-control', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label for="email">Dirección</label>
-                                    {!! Form::text('direccion', $resenna->direccion, array('class' => 'form-control', 'disabled')) !!}
+                                    {!! Form::text('direccion', $resenna->direccion, array('class' => 'form-control', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label for="email">Profesión</label>
-                                    {!! Form::text('id_profesion',  $resenna->profesion->valor, array('class' => 'form-control', 'disabled')) !!}
+                                    {!! Form::text('id_profesion',  $resenna->profesion->valor, array('class' => 'form-control', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label for="email">Motivo de Reseña</label>
-                                    {!! Form::text('id_motivo_resenna', $resenna->motivo_resenna->valor, array('class' => 'form-control', 'disabled')) !!}
+                                    {!! Form::text('id_motivo_resenna', $resenna->motivo_resenna->valor, array('class' => 'form-control', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label for="">Funcionario Aprehensor</label>
-                                        <input type="text" class="form-control" value="{{$resenna->funcionario_aprehensor->jerarquia->valor.'. '.$resenna->funcionario_aprehensor->person->primer_nombre.' '.$resenna->funcionario_aprehensor->person->primer_apellido }}" disabled>
+                                        <input type="text" class="form-control" value="{{$resenna->funcionario_aprehensor->jerarquia->valor.'. '.$resenna->funcionario_aprehensor->person->primer_nombre.' '.$resenna->funcionario_aprehensor->person->primer_apellido }}" readonly>
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label for="">Funcionario que Reseña</label>
-                                    <input type="text" class="form-control" value="{{$resenna->funcionario_resenna->jerarquia->valor.'. '.$resenna->funcionario_resenna->person->primer_nombre.' '.$resenna->funcionario_resenna->person->primer_apellido }}" disabled>
+                                    <input type="text" class="form-control" value="{{$resenna->funcionario_resenna->jerarquia->valor.'. '.$resenna->funcionario_resenna->person->primer_nombre.' '.$resenna->funcionario_resenna->person->primer_apellido }}" readonly>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="email">Observaciones</label>
-                                    {!! Form::textarea('observaciones', $resenna->observaciones, array('class' => 'form-control', 'disabled')) !!}
+                                    {!! Form::textarea('observaciones', $resenna->observaciones, array('class' => 'form-control', 'readonly')) !!}
                                 </div>
                             </div>
                             
@@ -223,7 +223,7 @@
                                 ' || Motivo de Reseña: '.$resenna->motivo_resenna->valor.' || Tez: '.$resenna->tez->valor.' || Contextura: '.$resenna->contextura->valor.' || Funcionario Aprehensor: '
                                 .$resenna->funcionario_aprehensor->jerarquia->valor.'. '.$resenna->funcionario_aprehensor->person->primer_nombre.' '.$resenna->funcionario_aprehensor->person->primer_apellido.
                                 ' || Funcionario que Reseña: '.$resenna->funcionario_resenna->jerarquia->valor.'. '.$resenna->funcionario_resenna->person->primer_nombre.' '.$resenna->funcionario_resenna->person->primer_apellido.
-                                ' || Dirección: '.$resenna->direccion.' || Observaciones: '.$resenna->observaciones, array('class' => 'form-control', 'disabled' => 'disabled', 'id' => 'observaciones')) !!}
+                                ' || Dirección: '.$resenna->direccion.' || Observaciones: '.$resenna->observaciones, array('class' => 'form-control', 'readonly' => 'readonly', 'id' => 'observaciones')) !!}
                             </div>
                         </div>
                         <div class="col-xs-3 col-sm-3 col-md-3">

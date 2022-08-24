@@ -23,25 +23,25 @@
                             <div class="col-xs-12 col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <label for="name">Usuario</label>
-                                    {!! Form::text('user', $resenna->user->users, array('class' => 'form-control', 'disabled')) !!}
+                                    {!! Form::text('user', $resenna->user->users, array('class' => 'form-control', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <label for="email">Acción</label>
-                                    {!! Form::text('accion', $resenna->acciones->valor, array('class' => 'form-control', 'disabled')) !!}
+                                    {!! Form::text('accion', $resenna->acciones->valor, array('class' => 'form-control', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <label for="email">Fecha</label>
-                                    {!! Form::text('fecha', $resenna->created_at, array('class' => 'form-control', 'disabled')) !!}
+                                    {!! Form::text('fecha', $resenna->created_at, array('class' => 'form-control', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="email">Valores Modificados</label>
-                                    {!! Form::textarea('valores_modificados', $resenna->valores_modificados, array('class' => 'form-control', 'disabled')) !!}
+                                    {!! Form::textarea('valores_modificados', $resenna->valores_modificados, array('class' => 'form-control', 'readonly')) !!}
                                 </div>
                             </div>
                             

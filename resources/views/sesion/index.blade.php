@@ -37,13 +37,13 @@
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="email">Funcionario Asignado</label>
-                                    {!! Form::text('user', $usr->funcionario->jerarquia->valor.'. '.$usr->funcionario->person->primer_nombre.' '.$usr->funcionario->person->primer_apellido, array('class' => 'form-control', 'disabled')) !!}
+                                    {!! Form::text('user', $usr->funcionario->jerarquia->valor.'. '.$usr->funcionario->person->primer_nombre.' '.$usr->funcionario->person->primer_apellido, array('class' => 'form-control', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="email">Usuario</label>
-                                    {!! Form::text('user', $usr->users, array('class' => 'form-control', 'disabled')) !!}
+                                    {!! Form::text('user', $usr->users, array('class' => 'form-control', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
