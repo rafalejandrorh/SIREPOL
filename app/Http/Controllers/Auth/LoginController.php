@@ -4,10 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\Models\Historial_Sesion;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Arr;
+use Illuminate\Http\JsonResponse;
+use Alert;
 
 class LoginController extends Controller
 {
@@ -52,6 +56,82 @@ class LoginController extends Controller
 
         //$QR = QrCode::size(80)->generate($url);
         return view('auth.login');
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+
+    public function credentials(Request $request)
+    {
+        //return $request->only($this->username(), 'password');
+
+        $credenciales = $request->only($this->username(), 'password');
+        $credenciales = Arr::add($credenciales, 'status', 'true');
+        return $credenciales ;
+        
+    }
+
+    public function sendLoginResponse(Request $request)
+    {
+        $request->session()->regenerate();
+
+        $this->clearLoginAttempts($request);
+
+        if ($response = $this->authenticated($request, $this->guard()->user())) {
+            return $response;
+        }
+
+        Alert()->toast('Inicio de Sesión Exitoso','success');
+        return $request->wantsJson()
+                    ? new JsonResponse([], 204)
+                    : redirect()->intended($this->redirectPath());
+    }
+
+    public function authenticated(Request $request, $user)
+    {
+        $user->last_login = now();
+        $user->save();
+        $id_user = $user->id;
+
+        if(session('id_historial_session') != null)
+        {
+            $sesion = Historial_Sesion::find(session('id_historial_sesion'), ['id']);
+            $sesion->logout = now();
+            $sesion->save();
+            session()->forget('id_historial_sesion');
+        };
+
+        $sesion = new Historial_Sesion();
+        $sesion->id_user = $id_user;
+        $sesion->login = now();
+        $sesion->MAC = exec('getmac');
+        //$sesion->IP = $request->ip();
+        $sesion->save();
+        $id_historial_sesion = $sesion->id;
+        session(['id_historial_sesion' => $id_historial_sesion]);
+
+    }
+
+    public function logout(Request $request)
+    {
+        $sesion = Historial_Sesion::find(session('id_historial_sesion'), ['id']);
+        $sesion->logout = now();
+        $sesion->save();
+        session()->forget('id_historial_sesion');
+        
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        if ($response = $this->loggedOut($request)) {
+            return $response;
+        }
+
+        Alert()->toast('Haz cerrado sesión en el Sistema','info');
+        return $request->wantsJson()
+            ? new JsonResponse([], 204)
+            : redirect('/');
     }
 
 }
