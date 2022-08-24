@@ -28,11 +28,17 @@
                                     <label for="name">Ficha Fotográfica</label>
                                 </div>
                             </div>
-                            <div class="col-xs-2 col-sm-2 col-md-2">
+                            <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
-                                    <center><img src="{{asset($resenna->url_foto)}}" alt="foto_reseñado"  class="img-responsive" width="150"></center>
+                                    <left><img src="{{asset($resenna->url_foto)}}" alt="foto_reseñado"  class="img-responsive" width="150"></left>
                                 </div>
-                            </div>  
+                            </div>
+                            <div class="col-xs-3 col-sm-3 col-md-3">
+                                <div class="form-group">
+                                    <right><h1>{{ $QR }}</h1></right>
+                                </div>
+                            </div>
+
                         </div>
 
                         <div class="row">

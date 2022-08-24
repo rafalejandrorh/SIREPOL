@@ -30,9 +30,9 @@
 <body>
     <img src="{{ public_path('img/logo_pmcr_sin_fondo.png') }}" width="100">
     <img src="{{ public_path('img/logo_mpprijp.png') }}" width="125" align="right">
-
-    <h2 align="center" style="color:#000000"><b>Reseña Policial</b></h2>
-    <h3 align="center" style="color:#000000"><b>{{$resenna->resennado->letra_cedula.$resenna->resennado->cedula.' - '.$resenna->resennado->primer_nombre.' '.$resenna->resennado->primer_apellido}}</b></h3>
+    
+    <h3 align="center" style="color:#000000"><b>Reseña Policial</b></h3>
+    <h4 align="center" style="color:#000000"><b>{{$resenna->resennado->letra_cedula.$resenna->resennado->cedula.' - '.$resenna->resennado->primer_nombre.' '.$resenna->resennado->primer_apellido}}</b></h4>
     <hr>
 
     {{-- <div class="row">
@@ -51,7 +51,7 @@
     </div> --}}
 
     <table class="table table-striped mt-2 display dataTable table-hover" cellspacing="3" cellpadding="3">
-        
+
         <tr role="row" class="headt">
             <td class="sorting_1" width="5%" colspan="2"><center><b>Ficha Fotográfica</b></center></center></td>
             <td class="sorting_1" width="5%" colspan="2"><center><b>Fecha de Reseña</b></center></td>
@@ -135,9 +135,9 @@
         <tr>
             <td class="sorting_1" colspan="6"><center>{{$resenna->observaciones}}</center></td>
         </tr>
-        
     </table>  
     <hr>
+    
 </body>
 </html>
 

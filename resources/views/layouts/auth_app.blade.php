@@ -38,7 +38,7 @@
 <div id="app">
     <section class="section">
         <div class="container mt-5">
-            {{-- <h6 align="right">{!! $QR !!}</h6> --}}
+            <h6 align="right">{!! $QR !!}</h6>
             <div class="row">
                 <div class="col-md-6 offset-md-3">
                     <div class="login-brand">

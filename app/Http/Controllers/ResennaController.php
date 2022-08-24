@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Alert;
 use Carbon\Carbon;
@@ -440,7 +441,19 @@ class ResennaController extends Controller
         $resenna->funcionario_resenna->person->primer_nombre.' '.$resenna->funcionario_resenna->person->primer_apellido]);
 
         $edad = Carbon::parse($resenna->resennado->fecha_nacimiento)->age;
-        return view('resenna.show', compact('resenna', 'edad'));
+
+        $QR = QrCode::size(150)->style('round')->generate('Resenna Policial. Fecha: '.date('d/m/Y', strtotime($resenna->fecha_resenna)).'. Hace '.$resenna->fecha_resenna->diff(date('Y-m-d'))->days.' dias. Estatus de Documentacion: '.
+        $resenna->resennado->documentacion->valor.', Cedula: '.$resenna->resennado->letra_cedula.$resenna->resennado->cedula.
+        ', Nombre Completo: '.$resenna->resennado->primer_nombre.' '.$resenna->resennado->segundo_nombre.', '.$resenna->resennado->primer_apellido.' '.
+        $resenna->resennado->segundo_apellido.', Fecha de Nacimiento: '.date('d/m/Y', strtotime($resenna->resennado->fecha_nacimiento)).', Edad: '.$edad.', Genero: '.
+        $resenna->resennado->genero->valor.', Tez: '.$resenna->tez->valor.', Contextura: '.$resenna->contextura->valor.', Estado Civil: '.
+        $resenna->estado_civil->valor.', Estado de Nacimiento: '.$resenna->resennado->estado_nacimiento->valor.', Municipio de Nacimiento: '.
+        $resenna->resennado->municipio_nacimiento->valor.', Direccion: '.$resenna->direccion.', Profesion: '.$resenna->profesion->valor.
+        ', Motivo de Resenna: '.$resenna->motivo_resenna->valor.', Funcionario Aprehensor: '.
+        $resenna->funcionario_aprehensor->jerarquia->valor.'. '.$resenna->funcionario_aprehensor->person->primer_nombre.' '.$resenna->funcionario_aprehensor->person->primer_apellido.
+        ', Funcionario que Resenna: '.$resenna->funcionario_resenna->jerarquia->valor.'. '.$resenna->funcionario_resenna->person->primer_nombre.' '.$resenna->funcionario_resenna->person->primer_apellido);
+
+        return view('resenna.show', compact('resenna', 'edad', 'QR'));
     }
 
     /**

@@ -47,10 +47,7 @@ class LoginController extends Controller
 
     public function index()
     {
-        $QR = QrCode::generate('http://localhost:8000/');
-        //$QR = QrCode::gradient('radial');
-        //$QR = QrCode::style('dot')
-        //$QR = QrCode::format('png')->merge('\img\logo_PMCR')->generate();
+        $QR = QrCode::size(80)->geo(10.249304786553445, -66.85708425051814);
         return view('auth.login', compact('QR'));
     }
 
