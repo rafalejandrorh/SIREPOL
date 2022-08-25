@@ -125,14 +125,14 @@
                                 <div class="col-xs-12 col-sm-12 col-md-3">
                                     <div class="form-group">
                                         <label for="email">Estado de Nacimiento</label>
-                                        {!! Form::select('id_estado_nacimiento', $estados['estados'], $resennado->id_estado_nacimiento, array('class' => 'form-control select2', 'placeholder'=>'Seleccione', 'id'=>'estados')) !!}
+                                        {!! Form::select('id_estado_nacimiento', $estados['estados'], $resennado->id_estado_nacimiento, array('class' => 'form-control', 'placeholder' => 'Seleccione', 'id'=>'estados1')) !!}
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-3">
                                     <div class="form-group">
                                         <label for="email">Municipio de Nacimiento</label>
-                                        {!! Form::select('id_municipio_nacimiento', $estados['municipios'], $resennado->id_municipio_nacimiento, array('class' => 'form-control select2', 
-                                        'id'=>'municipios','title'=>'Municipio', 'placeholder'=>'Seleccione', 'onchange'=>"cargarCombo(109,this.value,'#parroquias')")) !!}
+                                        {!! Form::select('id_municipio_nacimiento', $estados['municipios'], $resennado->id_municipio_nacimiento, array('class' => 'form-control', 
+                                        'id'=>'municipios1','title'=>'Municipio', 'placeholder'=>'Seleccione', 'onchange'=>"cargarCombo(109,this.value,'#parroquias')")) !!}
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-9">
@@ -225,14 +225,14 @@
                                 <div class="col-xs-12 col-sm-12 col-md-3">
                                     <div class="form-group">
                                         <label for="email">Estado de Nacimiento</label>
-                                        {!! Form::select('id_estado_nacimiento', $estados['estados'], [], array('class' => 'form-control select2', 'placeholder'=>'Seleccione', 'id'=>'estados')) !!}
+                                        {!! Form::select('id_estado_nacimiento', $estados['estados'], [], array('class' => 'form-control', 'placeholder'=>'Seleccione', 'id'=>'estados')) !!}
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-3">
                                     <div class="form-group">
                                         <label for="email">Municipio de Nacimiento</label>
-                                        {!! Form::select('id_municipio_nacimiento', $estados['municipios'], [], array('class' => 'form-control select2', 
-                                        'id'=>'municipios','title'=>'Municipio', 'placeholder'=>'Seleccione', 'onchange'=>"cargarCombo(109,this.value,'#parroquias')")) !!}
+                                        {!! Form::select('id_municipio_nacimiento', [], array('class' => 'form-control ', 'placeholder'=>'Seleccione',
+                                        'id'=>'municipios','title'=>'Municipio', 'onchange'=>"cargarCombo(109,this.value,'#parroquias')")) !!}
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-9">
@@ -320,4 +320,10 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('scripts')
+
+<script src="{{ asset('js/funcionesAjaxs.js')}}"></script>
+
 @endsection

@@ -12,7 +12,7 @@ class GeografiaVenezuelaController extends Controller
     {
         // dd($tipo.'-'.$id);
       if($id == 9865879){
-        $arreglo = Geografia_Venezuela::all()->where('id_padre','=',$tipo)->pluck('valor','id');
+        $arreglo = Geografia_Venezuela::where('id_padre','=',$tipo)->pluck('valor','id')->get();
         foreach ($arreglo as $code => $name) {
             echo "<option value=\"$code\">$name</option>";
         }

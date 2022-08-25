@@ -11,13 +11,13 @@ $("#guardarGrupo").on('click', function() {
     var url = 'grupo.edit';
     guardarRegistro(url);
 });
-$("#estados").change(function() {
+$('#estados').change(function() {
     var tipo;
     var id;
     var campo;
     tipo = 108;
     campo = '#municipios';
-    id = $("#estados").val();
+    id = $('#estados').val();
     cargarCombo(tipo, id, campo);
 });
 $("#estados1").change(function() {
@@ -30,55 +30,6 @@ $("#estados1").change(function() {
     cargarCombo(tipo, id, campo);
 });
 
-$("#caracteristica").change(function() {
-    var tipo;
-    var id;
-    var campo;
-    tipo = 239;
-    campo = '#descripcion';
-    id = $("#caracteristica").val();
-    cargarCombo(tipo, id, campo);
-});
-$("#caracteristica1").change(function() {
-    var tipo;
-    var id;
-    var campo;
-    tipo = 239;
-    campo = '#descripcion1';
-    id = $("#caracteristica1").val();
-    cargarCombo(tipo, id, campo);
-});
-
-$("#participacion").change(function() {
-    var tipo;
-    var id;
-    var campo;
-    tipo = 32;
-    campo = '#rango35';
-    id = $("#participacion").val();
-    cargarCombo(tipo, id, campo);
-});
-
-$("#participacion1").change(function() {
-    var tipo;
-    var id;
-    var campo;
-    tipo = 32;
-    campo = '#rango1';
-    id = $("#participacion1").val();
-    cargarCombo1(tipo, id, campo);
-});
-
-$("#participacion2").change(function() {
-    var tipo;
-    var id;
-    var campo;
-    tipo = 32;
-    campo = '#rango2';
-    id = $("#participacion2").val();
-    cargarCombo(tipo, id, campo);
-});
-
 $(".forml").on('submit', function(e) {
     e.preventDefault();
     var url = $(this).attr("action");
@@ -86,107 +37,13 @@ $(".forml").on('submit', function(e) {
     datosUsuario(url, forml);
 });
 
-$(".form2").on('submit', function(e) {
-    e.preventDefault();
-    var url2 = $(this).attr("action");
-    var form2 = $(this);
-    dastosPersona(url2, form2);
-});
-
-$(".form3").on('submit', function(e) {
-    e.preventDefault();
-    var url3 = $(this).attr("action");
-    var form3 = $(this);
-    datosVehiculos(url3, form3);
-});
-
-$(".formlDinamic").on('submit', function(e) {
-
-    e.preventDefault();
-    var id = $(this).attr('id');
-    var url = $(this).attr("action");
-    var method = $(this).attr("method");
-    var forml = $(this);
-    if (id == 'consultaPersona') {
-        datosPersona(id, url, forml);
-    }
-    if (id == 'consultavehiculo') {
-        datosVehiculo(url, forml);
-    }
-    if (id == 'guardarRegistro') {
-        guardarDatos(url, forml,method);
-    }
-    if (id == 'borrarRegistro'){
-        borrarRegistro(url,forml,method);
-    }
-});
 //Funciones
 //-----------------------------------------------------------------------------------------------------
 function mostrarAlert(){
     $('#alerts').delay(1000).show('swing');
     $('#alerts').delay(10000).hide('swing');
 }
-/**
- * [modal para los casos de edit y show se usa el mismo modal]
- * @param  {[type]} url   [ruta del formulario]
- * @param  {[type]} modal [nombre del modal]
- * @param  {[type]} tipo  [ver o editar]
- * @return {[type]}       [description]
- */
- function modal(url,modal,tipo)
- {
-    var form = $('.' + modal);
-    $('#alerts').hide('swing');
-    if (tipo == 'ver') {
-        $('.modal-title').html("<i class='glyphicon glyphicon-eye-open text-info'></i> Registro Detallado");
-        $('.modal-footer').html('<button type="button" class="btn btn-default" data-dismiss="modal"><i class="glyphicon glyphicon-remove"> </i>Cerrar</button>')
-    }else{
-        $('.modal-title').html("<i class='glyphicon glyphicon-pencil text-info'></i> Editar Registro");
-        form.attr('action',url);
-        $('.modal-footer').html('<button type="button" class="btn btn-default" data-dismiss="modal"><i class="glyphicon glyphicon-remove"> </i>Cerrar</button><button type="submit" class="btn btn-primary btn-flat" id="guardar"><i class="fa fa-floppy-o"> </i>Guardar</button>')
-    }
-    $.get(url, function(data) {
-        $.each(data, function(key, value) {
-            $('#'+key).val(value);
-        });
-    });
-    $('#editVictima').modal('show');
-}
-/**
- * [borrarRegistro description]
- * @param  {[type]} url    [description]
- * @param  {[type]} form   [description]
- * @param  {[type]} method [description]
- * @return {[type]}        [description]
- */
- function borrarRegistro(url,forml,method){
-    $.ajax({
-        url: url,
-        type: method,
-        data: forml.serialize(),
-        cache: false,
-        success: function(result) {
-            location.reload(true);
-        },
-        timeout: 15000
-    });
-}
-
-/**
- * [mostrarLesion description]
- * @param  {[type]} div [description]
- * @param  {[type]} val [description]
- * @return {[type]}     [description]
- */
- function mostrarLesion(div,val)
- {
-    // alert(val);
-    if (val == 9865700){
-        $('#'+div).show('fast').focus();  
-    }else{
-        $('#'+div).hide('fast');    
-    }
-}    
+ 
 /**
  * [status description]
  * @return {[type]} [description]
@@ -196,21 +53,7 @@ function mostrarAlert(){
     alert(valor);
 }
 /**
- * [combosOrganismos description]
- * @param  {[type]} tipo [description]
- * @param  {[type]} id   [description]
- * @return {[type]}      [description]
- */
- function combosOrganismos(tipo, id) {
-    var campo;
-    campo = '#rangos';
-    cargarCombo(tipo, id, campo);
-    campo = '#ubicacion';
-    tipo = 9865784;
-    cargarCombo(tipo, id, campo);
-}
-/**
- * [argarCombo]
+ * [CargarCombo]
  * [recibe 3 parametros desde un select para activar un combo dependiente]
  * @param  {[integer]} tipo  [tipo de nomeclador]
  * @param  {[integer]} id    [id de nomenclador]
@@ -218,8 +61,8 @@ function mostrarAlert(){
  * @return {[function]}      [data]
  */
  function cargarCombo(tipo, id, campo) {
-    var url = "create/combosBox/" + tipo + "/" + id;
-    //alert(url);
+    var url = "create/combosBox/"+tipo+"/"+id;
+    alert(url);
     $.get(url, function(data) {
         $(campo).empty();
         $(campo).append('<option value="">Seleccione</option>');
@@ -575,145 +418,6 @@ function datosVehiculos(url3, form3) {
         timeout: 15000
     });
  }
-/**
- * [guardarRegistro description]
- * @param  {[type]} url [description]
- * @return {[type]}     [description]
- */
- function guardarRegistro(url, forml, method) {
-    alert(url+'pase');
-    $.ajax({
-        beforeSend: function() {
-            $('#alerta').removeClass();
-            $('#alerta').html('<div class="alert alert-info alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span asira-hidden="true">&times;</span></button><p><strong><i class="fa fa-spinner fa-lg fa-spin"></i> </strong> Buscando datos... </p></div>');
-            $('#alerta').show("fast");
-        },
-        url: url,
-        type: method,
-        data: forml.serialize(),
-        cache: false,
-        success: function(result) {
-            // alert(result);
-            $('#myModal').modal('hide');
-            location.reload(true);
-        },
-        error: function(msj) {
-            var status = msj.statusText;
-            if (status != "Internal Server Error") {
-                var errors = $.parseJSON(msj.responseText);
-                $.each(errors, function(key, value) {
-                    $("#" + key + "_group").addClass("has-error");
-                    $("#" + key + "_span").text(value);
-                });
-            } else {
-                $('#alerta').html('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span asira-hidden="true">&times;</span></button><p><strong><i class="glyphicon glyphicon-ban-circle"></i> ERROR: </strong> No se ha podido establecer conexión con el servicio, verifique que el equipo este conectado a la red local.</p></div>');
-                $('#alerta').show("fast");
-            }
-        },
-        timeout: 15000
-    });
-}
-/**
- *  
- * @param  {[type]} url   [description]
- * @param  {[type]} forml [description]
- * @return {[type]}       [description]
- */
- function datosPersona(id, url, forml) {
-    // alert('pase'+url+' '+forml);
-    $.ajax({
-        beforeSend: function() {
-            $('#alerta').removeClass();
-            $('#alerta').html('<div class="alert alert-info alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span asira-hidden="true">&times;</span></button><p><strong><i class="fa fa-spinner fa-lg fa-spin"></i> </strong> Buscando datos... </p></div>');
-            $('#alerta').show("fast");
-        },
-        url: url,
-        type: 'POST',
-        data: forml.serialize(),
-        cache: false,
-        success: function(data) {
-            if (data != false) {
-                // var fechanac = data.fechanac;
-                // var fechanac = fechanac.substr(1 ,9);
-                $('#alerta').hide('fast');
-                $.each(data.persona, function(key,value){
-                    $('#'+key).val(value);
-                });
-            }else{
-                $('#alerta').html('<div class="alert alert-warning alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span asira-hidden="true">&times;</span></button><p><strong><i class="glyphicon glyphicon-warning-sign"></i> </strong> No se encontraron datos asociado a ese número de cédula..</p></div>');
-                $('#alerta').show("fast");
-            }
-            
-        },
-        error: function(msj) {
-            console.log(msj);
-            var status = msj.statusText;
-            if (status != "Internal Server Error") {
-                var errors = $.parseJSON(msj.responseText);
-                $.each(errors, function(key, value) {
-                    $("#"+key+"_group").addClass("has-error");
-                    $("#"+key+"_span").text(value);
-                });
-                $('#alerta').html('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span asira-hidden="true">&times;</span></button><p><strong><i class="glyphicon glyphicon-ban-circle"></i> ERROR: </strong> Los campos remarcados en color rojo son obligatorios.</p></div>');
-                // $('#alerta').show("fast");
-            } else {
-                $('#alerta').html('<div class="alert alert-danger alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span asira-hidden="true">&times;</span></button><p><strong><i class="glyphicon glyphicon-ban-circle"></i> ERROR: </strong> No se ha podido establecer conexión con el servicio, verifique que el equipo este conectado a la red local.</p></div>');
-                $('#alerta').show("fast");
-            }
-        },
-        timeout: 15000
-    });
-}
-/**
- *  
- * @param  {[type]} url   [description]
- * @param  {[type]} forml [description]
- * @return {[type]}       [description]
- */
- function guardarDatos(url, forml, method) {
-    // alert('pase '+url+' '+forml+ ' '+method);
-    // var token = $("#token").val();
-    $.ajax({
-        beforeSend: function() {
-            $('#alerta').removeClass();
-            $('#alerta').html('<div class="alert alert-info alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span asira-hidden="true">&times;</span></button><p><strong><i class="fa fa-spinner fa-lg fa-spin"></i> </strong> Buscando datos... </p></div>');
-            $('#alerta').show("fast");
-        },
-        // headers: {
-        //     'X-CSRF-Token': token
-        // },
-        url: url,
-        type: method,
-        data: forml.serialize(),
-        cache: false,
-        success: function(result) {
-            $('.modal').modal('hide');
-            $('#guardarRegistro')[0].reset()
-            $('#alerta').hide("fast");
-            $('#alerts').load(" #alert");
-            $('#victimasPN').load(' #body');
-            // mostrarAlert();
-            // location.reload(true);
-        },
-        error: function(msj) {
-            var status = msj.statusText;
-            var errors = $.parseJSON(msj.responseText);
-            $.each(errors, function(key, value) {
-                if (key == 'customError') {
-                toastr.warning(value ,"Error");
-                $("#cedula_group").removeClass(" has-error").addClass("has-warning");
-                }else{
-                toastr.error(value,"Error");
-                $("#" + key + "_group").addClass("has-error");
-                $("." + key + "_span").html(value);
-            }
-            $('#alerta').hide("fast");
-            });
-            
-        },
-        timeout: 15000
-    });
-}
 
 function redirect(e) {
     window.location = e.value;

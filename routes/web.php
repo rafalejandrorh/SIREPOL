@@ -47,9 +47,9 @@ Route::get('/traza_roles/{role}', [App\Http\Controllers\TrazasController::class,
 
 Route::get('/resenna_pdf/{resenna}', [App\Http\Controllers\ResennaController::class, 'pdf'])->name('resenna.pdf')->middleware('auth');
 
-Route::get('resenna/create/combosBox/{id}/{tipo}', [App\Http\Controllers\GeografiaVenezuelaController::class, 'getCombos']);
+Route::get('resenna/create/combosBox/{tipo}/{id}', [App\Http\Controllers\GeografiaVenezuelaController::class, 'getCombos']);
 
-Route::get('bandas/create/combosBox/{id}/{tipo}', [App\Http\Controllers\GeografiaVenezuelaController::class, 'getCombos']);
+Route::get('bandas/create/combosBox/{tipo}/{id}', [App\Http\Controllers\GeografiaVenezuelaController::class, 'getCombos']);
 
 Route::resource('geografia_venezuela',GeografiaVenezuelaController::class);
 
