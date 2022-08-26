@@ -42,11 +42,23 @@ class FuncionarioController extends Controller
             'funcionarios.telefono', 'funcionarios.id_person')
             ->Where('persons.cedula', '=', $request->buscador)->paginate(10);
 
+            $id_user = Auth::user()->id;
+            $id_Accion = 5; //Búsqueda
+            $trazas = Traza_Funcionarios::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+            'valores_modificados' => 'Tipo de Búsqueda: '.
+            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
+
         }else if($request->tipo_busqueda == 'credencial'){
             $funcionarios = Funcionario::Where('funcionarios.credencial', '=', $request->buscador)
             ->select('funcionarios.id', 'funcionarios.id_jerarquia', 'funcionarios.id_estatus', 'funcionarios.credencial',
             'funcionarios.telefono', 'funcionarios.id_person')
             ->paginate(10);
+
+            $id_user = Auth::user()->id;
+            $id_Accion = 5; //Búsqueda
+            $trazas = Traza_Funcionarios::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+            'valores_modificados' => 'Tipo de Búsqueda: '.
+            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
 
         }else if($request->tipo_busqueda == 'jerarquia'){
             $funcionarios = Funcionario::join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
@@ -54,8 +66,20 @@ class FuncionarioController extends Controller
             'funcionarios.telefono', 'funcionarios.id_person')
             ->Where('jerarquia.valor', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
 
+            $id_user = Auth::user()->id;
+            $id_Accion = 5; //Búsqueda
+            $trazas = Traza_Funcionarios::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+            'valores_modificados' => 'Tipo de Búsqueda: '.
+            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
+
         }else if($request->tipo_busqueda == 'usuario'){
             $funcionarios = Funcionario::Where('users', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+
+            $id_user = Auth::user()->id;
+            $id_Accion = 5; //Búsqueda
+            $trazas = Traza_Funcionarios::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+            'valores_modificados' => 'Tipo de Búsqueda: '.
+            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
 
         }else if($request->tipo_busqueda == 'estatus'){
             if($request->buscador == 'activo' || $request->buscador == 'Activo' || $request->buscador == 'ACTIVO'){
@@ -65,17 +89,35 @@ class FuncionarioController extends Controller
             }
             $funcionarios = Funcionario::Where('status', '=', $status)->paginate(10);
 
+            $id_user = Auth::user()->id;
+            $id_Accion = 5; //Búsqueda
+            $trazas = Traza_Funcionarios::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+            'valores_modificados' => 'Tipo de Búsqueda: '.
+            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
+
         }else if($request->tipo_busqueda == 'nombre'){
             $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
             ->select('funcionarios.id', 'funcionarios.id_jerarquia', 'funcionarios.id_estatus', 'funcionarios.credencial',
             'funcionarios.telefono', 'funcionarios.id_person')
-            ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
+            ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+
+            $id_user = Auth::user()->id;
+            $id_Accion = 5; //Búsqueda
+            $trazas = Traza_Funcionarios::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+            'valores_modificados' => 'Tipo de Búsqueda: '.
+            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
 
         }else if($request->tipo_busqueda == 'apellido'){
             $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
             ->select('funcionarios.id', 'funcionarios.id_jerarquia', 'funcionarios.id_estatus', 'funcionarios.credencial',
             'funcionarios.telefono', 'funcionarios.id_person')
-            ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
+            ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+
+            $id_user = Auth::user()->id;
+            $id_Accion = 5; //Búsqueda
+            $trazas = Traza_Funcionarios::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+            'valores_modificados' => 'Tipo de Búsqueda: '.
+            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
 
         }else{
             $funcionarios = Funcionario::paginate(10);

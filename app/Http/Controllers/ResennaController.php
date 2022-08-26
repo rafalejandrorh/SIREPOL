@@ -94,6 +94,12 @@ class ResennaController extends Controller
                 'resenna_detenido.id_person')
                 ->Where('persons.cedula', '=', $request->buscador)->paginate(5);
 
+                $id_user = Auth::user()->id;
+                $id_Accion = 5; //Búsqueda
+                $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+                'valores_modificados' => 'Tipo de Búsqueda: '.
+                $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
+
             }else if($request->tipo_busqueda == 'cedula_resenna' || $request->tipo_busqueda == 'cedula_aprehensor'){
                 if($request->tipo_busqueda == 'cedula_resenna'){
                     $columna = 'id_funcionario_resenna';
@@ -106,6 +112,12 @@ class ResennaController extends Controller
                 'resenna_detenido.id_person')
                 ->Where('persons.cedula', '=', $request->buscador)->paginate(5);
 
+                $id_user = Auth::user()->id;
+                $id_Accion = 5; //Búsqueda
+                $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+                'valores_modificados' => 'Tipo de Búsqueda: '.
+                $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
+
             }else if($request->tipo_busqueda == 'credencial_resenna' || $request->tipo_busqueda == 'credencial_aprehensor'){
                 if($request->tipo_busqueda == 'credencial_resenna'){
                     $columna = 'id_funcionario_resenna';
@@ -116,6 +128,12 @@ class ResennaController extends Controller
                 ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
                 'resenna_detenido.id_person')
                 ->Where('funcionarios.credencial', '=', $request->buscador)->paginate(5);
+
+                $id_user = Auth::user()->id;
+                $id_Accion = 5; //Búsqueda
+                $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+                'valores_modificados' => 'Tipo de Búsqueda: '.
+                $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
 
             }else if($request->tipo_busqueda == 'jerarquia_resenna' || $request->tipo_busqueda == 'jerarquia_aprehensor'){
                 if($request->tipo_busqueda == 'jerarquia_resenna'){
@@ -129,17 +147,35 @@ class ResennaController extends Controller
                 'resenna_detenido.id_person')
                 ->Where('jerarquia.valor', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
 
+                $id_user = Auth::user()->id;
+                $id_Accion = 5; //Búsqueda
+                $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+                'valores_modificados' => 'Tipo de Búsqueda: '.
+                $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
+
             }else if($request->tipo_busqueda == 'nombre_resennado'){
                 $resennas = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
                 ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
                 'resenna_detenido.id_person')
                 ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
 
+                $id_user = Auth::user()->id;
+                $id_Accion = 5; //Búsqueda
+                $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+                'valores_modificados' => 'Tipo de Búsqueda: '.
+                $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
+
             }else if($request->tipo_busqueda == 'apellido_resennado'){
                 $resennas = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
                 ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
                 'resenna_detenido.id_person')
                 ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
+
+                $id_user = Auth::user()->id;
+                $id_Accion = 5; //Búsqueda
+                $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+                'valores_modificados' => 'Tipo de Búsqueda: '.
+                $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
 
             }else if($request->tipo_busqueda == 'nombre_resenna' || $request->tipo_busqueda == 'nombre_aprehensor'){
                 if($request->tipo_busqueda == 'nombre_resenna'){
@@ -153,6 +189,12 @@ class ResennaController extends Controller
                 'resenna_detenido.id_person')
                 ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
 
+                $id_user = Auth::user()->id;
+                $id_Accion = 5; //Búsqueda
+                $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+                'valores_modificados' => 'Tipo de Búsqueda: '.
+                $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
+
             }else if($request->tipo_busqueda == 'apellido_resenna' || $request->tipo_busqueda == 'apellido_aprehensor'){
                 if($request->tipo_busqueda == 'apellido_resenna'){
                     $columna = 'id_funcionario_resenna';
@@ -164,6 +206,12 @@ class ResennaController extends Controller
                 ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
                 'resenna_detenido.id_person')
                 ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
+
+                $id_user = Auth::user()->id;
+                $id_Accion = 5; //Búsqueda
+                $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+                'valores_modificados' => 'Tipo de Búsqueda: '.
+                $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
                 
             }else if($request->tipo_busqueda == 'motivo_resenna'){
                 $resennas = Resenna::join('caracteristicas_resennado', 'caracteristicas_resennado.id', '=', 'resenna_detenido.id_motivo_resenna')
@@ -171,6 +219,12 @@ class ResennaController extends Controller
                 'resenna_detenido.id_person')
                 ->Where('caracteristicas_resennado.valor', 'LIKE', '%'.$request->buscador.'%')
                 ->paginate(5);
+
+                $id_user = Auth::user()->id;
+                $id_Accion = 5; //Búsqueda
+                $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+                'valores_modificados' => 'Tipo de Búsqueda: '.
+                $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
 
             }else{
                 $resennas = Resenna::orderBy('fecha_resenna', 'desc')->paginate(5);

@@ -43,19 +43,47 @@ class UserController extends Controller
             ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
             ->select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
             ->Where('persons.cedula', '=', $request->buscador)->paginate(10);
+
+            $id_user = Auth::user()->id;
+            $id_Accion = 5; //Búsqueda
+            $trazas = Traza_User::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+            'valores_modificados' => 'Tipo de Búsqueda: '.
+            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
+            
         }else if($request->tipo_busqueda == 'credencial'){
             $user = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
             ->select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
             ->Where('funcionarios.credencial', '=', $request->buscador)->paginate(10);
+
+            $id_user = Auth::user()->id;
+            $id_Accion = 5; //Búsqueda
+            $trazas = Traza_User::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+            'valores_modificados' => 'Tipo de Búsqueda: '.
+            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
+
         }else if($request->tipo_busqueda == 'jerarquia'){
             $user = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
             ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
             ->select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
             ->Where('jerarquia.valor', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+
+            $id_user = Auth::user()->id;
+            $id_Accion = 5; //Búsqueda
+            $trazas = Traza_User::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+            'valores_modificados' => 'Tipo de Búsqueda: '.
+            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
+
         }else if($request->tipo_busqueda == 'usuario'){
             $user = User::select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
             ->Where('users', 'LIKE', '%'.$request->buscador.'%')
             ->paginate(10);
+
+            $id_user = Auth::user()->id;
+            $id_Accion = 5; //Búsqueda
+            $trazas = Traza_User::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+            'valores_modificados' => 'Tipo de Búsqueda: '.
+            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
+
         }else if($request->tipo_busqueda == 'estatus'){
             if($request->buscador == 'activo' || $request->buscador == 'Activo' || $request->buscador == 'ACTIVO'){
                 $status = true;
@@ -65,17 +93,36 @@ class UserController extends Controller
             $user = User::select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
             ->Where('status', '=', $status)
             ->paginate(10);
+
+            $id_user = Auth::user()->id;
+            $id_Accion = 5; //Búsqueda
+            $trazas = Traza_User::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+            'valores_modificados' => 'Tipo de Búsqueda: '.
+            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
+
         }else if($request->tipo_busqueda == 'nombre'){
             $user = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
             ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
             ->select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
             ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
 
+            $id_user = Auth::user()->id;
+            $id_Accion = 5; //Búsqueda
+            $trazas = Traza_User::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+            'valores_modificados' => 'Tipo de Búsqueda: '.
+            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
+
         }else if($request->tipo_busqueda == 'apellido'){
             $user = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
             ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
             ->select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
             ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
+
+            $id_user = Auth::user()->id;
+            $id_Accion = 5; //Búsqueda
+            $trazas = Traza_User::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+            'valores_modificados' => 'Tipo de Búsqueda: '.
+            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
 
         }else{
             $user = User::paginate(10);
