@@ -41,31 +41,40 @@ class UserController extends Controller
         if($request->tipo_busqueda == 'cedula'){
             $user = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
             ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+            ->select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
             ->Where('persons.cedula', '=', $request->buscador)->paginate(10);
         }else if($request->tipo_busqueda == 'credencial'){
             $user = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+            ->select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
             ->Where('funcionarios.credencial', '=', $request->buscador)->paginate(10);
         }else if($request->tipo_busqueda == 'jerarquia'){
             $user = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
             ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
+            ->select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
             ->Where('jerarquia.valor', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
         }else if($request->tipo_busqueda == 'usuario'){
-            $user = User::Where('users', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+            $user = User::select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
+            ->Where('users', 'LIKE', '%'.$request->buscador.'%')
+            ->paginate(10);
         }else if($request->tipo_busqueda == 'estatus'){
             if($request->buscador == 'activo' || $request->buscador == 'Activo' || $request->buscador == 'ACTIVO'){
                 $status = true;
             }else if($request->buscador == 'inactivo' || $request->buscador == 'Inactivo' || $request->buscador == 'INACTIVO'){
                 $status = false;
             }
-            $user = User::Where('status', '=', $status)->paginate(10);
+            $user = User::select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
+            ->Where('status', '=', $status)
+            ->paginate(10);
         }else if($request->tipo_busqueda == 'nombre'){
             $user = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
             ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+            ->select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
             ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
 
         }else if($request->tipo_busqueda == 'apellido'){
             $user = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
             ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+            ->select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
             ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
 
         }else{
