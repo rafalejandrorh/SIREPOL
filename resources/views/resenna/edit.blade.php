@@ -121,13 +121,14 @@
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Estado de Nacimiento</label>
-                                    {!! Form::select('id_estado_nacimiento', $estado, $resenna->resennado->estado_nacimiento->valor, array('class' => 'form-control select2')) !!}
+                                    {!! Form::select('id_estado_nacimiento', $estados['estados'], $resenna->resennado->id_estado_nacimiento, array('class' => 'form-control select2', 'placeholder' => 'Seleccione', 'id'=>'estados2')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Municipio de Nacimiento</label>
-                                    {!! Form::select('id_municipio_nacimiento', $municipio, $resenna->resennado->municipio_nacimiento->valor, array('class' => 'form-control select2')) !!}
+                                    {!! Form::select('id_municipio_nacimiento', $estados['municipios'], $resenna->resennado->id_municipio_nacimiento, array('class' => 'form-control select2', 'placeholder'=>'Seleccione', 
+                                    'id'=>'municipios2','title'=>'Municipio', 'onchange'=>"cargarCombo(109,this.value,'#parroquias')")) !!}
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6">
@@ -139,37 +140,37 @@
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Estado Civil</label>
-                                    {!! Form::select('id_estado_civil', $estado_civil, $resenna->estado_civil->valor, array('class' => 'form-control select2')) !!}
+                                    {!! Form::select('id_estado_civil', $estado_civil, $resenna->id_estado_civil, array('class' => 'form-control select2')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Genero</label>
-                                    {!! Form::select('id_genero', $genero, $resenna->resennado->genero->valor, ['class'=>'form-control select2', 'required' => 'required']) !!}
+                                    {!! Form::select('id_genero', $genero, $resenna->resennado->id_genero, ['class'=>'form-control select2', 'required' => 'required']) !!}
                                 </div>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Tez</label>
-                                    {!! Form::select('id_tez', $tez, $resenna->tez->valor, array('class' => 'form-control select2', 'required' => 'required')) !!}
+                                    {!! Form::select('id_tez', $tez, $resenna->id_tez, array('class' => 'form-control select2', 'required' => 'required')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Contextura</label>
-                                    {!! Form::select('id_contextura', $contextura, $resenna->contextura->valor, array('class' => 'form-control select2', 'required' => 'required')) !!}
+                                    {!! Form::select('id_contextura', $contextura, $resenna->id_contextura, array('class' => 'form-control select2', 'required' => 'required')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label for="email">Profesión</label>
-                                    {!! Form::select('id_profesion', $profesion, $resenna->profesion->valor, array('class' => 'form-control select2')) !!}
+                                    {!! Form::select('id_profesion', $profesion, $resenna->id_profesion, array('class' => 'form-control select2')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label for="email">Motivo de Reseña</label>
-                                    {!! Form::select('id_motivo_resenna', $motivo_resenna, $resenna->motivo_resenna->valor, array('class' => 'form-control select2', 'required' => 'required')) !!}
+                                    {!! Form::select('id_motivo_resenna', $motivo_resenna, $resenna->id_motivo_resenna, array('class' => 'form-control select2', 'required' => 'required')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6">

@@ -36,8 +36,7 @@ class Funcionario extends Model
     static function returnValidations(){
 
         return $validations=[
-            'credencial'          => 'unique:credencial',
-            'id_person' => 'unique:id_person'
+            'credencial'          => 'unique:funcionarios',
         ];
         
     }
@@ -45,9 +44,7 @@ class Funcionario extends Model
     static function  returnMessages(){
 
         return $messages=[
-                'id_person.unique'      =>'Esta Persona ya se encuentra registrada como Funcionario',
                 'credencial.unique'     =>'Otro Funcionario posee esta Credencial',
-
         ];
     } 
     

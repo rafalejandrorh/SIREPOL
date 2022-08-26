@@ -8,17 +8,17 @@ use App\Models\Geografia_Venezuela;
 class GeografiaVenezuelaController extends Controller
 {
 
-    public function getCombos($tipo,$id)
+    public function getCombos($id, $tipo, $id_hijo)
     {
         // dd($tipo.'-'.$id);
-      if($id == 9865879){
+      if($id_hijo == 9865879){
         $arreglo = Geografia_Venezuela::where('id_padre','=',$tipo)->pluck('valor','id')->get();
         foreach ($arreglo as $code => $name) {
             echo "<option value=\"$code\">$name</option>";
         }
       }else{
         $arreglo = Geografia_Venezuela::all()
-        ->where('id_hijo','=',$id)
+        ->where('id_hijo','=',$id_hijo)
         ->where('id_padre','=',$tipo)
         ->pluck('valor','id');
         foreach ($arreglo as $code => $name) {

@@ -9,12 +9,14 @@
     <!-- Bootstrap 4.1.1 -->
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css"/>
     <!-- Ionicons -->
-    <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+    {{-- <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet"> --}}
     <link href="{{ asset('assets/css/@fortawesome/fontawesome-free/css/all.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ asset('assets/css/iziToast.min.css') }}">
     <link href="{{ asset('assets/css/sweetalert.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/js/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('assets/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="{{ asset('css/jquery-confirm.min.css')}}" type="text/css">
+
 
 @yield('page_css')
 <!-- Template CSS -->
@@ -61,6 +63,8 @@
 <script src="{{ asset('web/js/scripts.js') }}"></script>
 <script src="{{ mix('assets/js/profile.js') }}"></script>
 <script src="{{ mix('assets/js/custom/custom.js') }}"></script>
+<script src="{{ asset('js/jquery-confirm.min.js')}}"></script>
+<script src="{{ asset('js/funcionesAjaxs.js')}}"></script>
 
 @include('sweetalert::alert')
 
@@ -89,5 +93,43 @@
         e.value = e.value.toUpperCase();
         //e.value = e.value.toLowerCase();
     }
+
+    var timeout;
+    document.onmousemove = function(){ 
+        clearTimeout(timeout); 
+        contadorSesion(); //aqui cargamos la funcion de inactividad
+    } 
+
+function contadorSesion() {
+   timeout = setTimeout(function () {
+        $.confirm({
+            title: 'Alerta de Inactividad!',
+            content: 'La sesión esta a punto de expirar.',
+            autoClose: 'expirar|10000',//cuanto tiempo necesitamos para cerrar la sess automaticamente
+            type: 'red',
+            icon: 'fa fa-spinner fa-spin',
+            buttons: {
+                expirar: {
+                    text: 'Cerrar Sesión',
+                    btnClass: 'btn-red',
+                    action: function () {
+                        salir();
+                        
+                    }
+                },
+                permanecer: function () {
+                    contadorSesion(); //reinicia el conteo
+                    $.alert('La Sesión ha sido reiniciada!'); //mensaje
+                }
+            }
+        });
+    }, 2100000);//3 segundos para no demorar tanto
+}
+
+function salir() {
+    $("#logout-formactivar").click();
+    //onclick="event.preventDefault(); document.getElementById('logout-form').submit();"  
+   // window.location.href = "/login"; //esta función te saca
+}
 </script>
 </html>

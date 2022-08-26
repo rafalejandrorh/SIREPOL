@@ -95,7 +95,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Jerarquía</label>
-                                    {!! Form::select('id_jerarquia', $jerarquia,[], array('class' => 'form-control select2', 'placeholder'=>'Seleccione')) !!}
+                                    {!! Form::select('id_jerarquia', $jerarquia,[], array('class' => 'form-control select2', 'placeholder'=>'Seleccione', 'required')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">

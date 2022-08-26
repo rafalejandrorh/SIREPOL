@@ -35,21 +35,21 @@ class FuncionarioController extends Controller
     public function index(Request $request)
     {
         $request->all();
-        if($request->buscador == null)
-        {
-            $request->buscador = null;
-        }
 
         if($request->tipo_busqueda == 'cedula'){
             $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
             ->Where('persons.cedula', '=', $request->buscador)->paginate(10);
+
         }else if($request->tipo_busqueda == 'credencial'){
             $funcionarios = Funcionario::Where('funcionarios.credencial', '=', $request->buscador)->paginate(10);
+
         }else if($request->tipo_busqueda == 'jerarquia'){
             $funcionarios = Funcionario::join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
             ->Where('jerarquia.valor', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+
         }else if($request->tipo_busqueda == 'usuario'){
             $funcionarios = Funcionario::Where('users', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+
         }else if($request->tipo_busqueda == 'estatus'){
             if($request->buscador == 'activo' || $request->buscador == 'Activo' || $request->buscador == 'ACTIVO'){
                 $status = true;
@@ -57,6 +57,7 @@ class FuncionarioController extends Controller
                 $status = false;
             }
             $funcionarios = Funcionario::Where('status', '=', $status)->paginate(10);
+
         }else if($request->tipo_busqueda == 'nombre'){
             $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
             ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
@@ -94,6 +95,10 @@ class FuncionarioController extends Controller
      */
     public function store(Request $request)
     {
+        $request = $request->all();
+
+        $validacion = Validator::make($request,Funcionario::returnValidations(),Funcionario::returnMessages())->validate();
+
         $person = new Person();
         $funcionario = new Funcionario();
 
@@ -110,7 +115,6 @@ class FuncionarioController extends Controller
         }     
 
         if($validar_persona == false){
-            $request = $request->all();
 
             if($request['cedula'] != null){
                 $cedulado = 37;
@@ -170,15 +174,12 @@ class FuncionarioController extends Controller
             $jerarquia.' || '.$request['telefono'].' || '.$estatus_laboral]);
 
             Alert()->success('Usuario Creado Satisfactoriamente');
-            return redirect()->route('users.index');
+            return redirect()->route('funcionarios.index');
         }
 
         if($validar_persona == true and $validar_funcionario == false){
 
             $obtener_funcionario = $funcionario->where('id_person','=',$obtener_persona[0]['id'])->get();
-
-            $request = $request->all();
-            $request['password'] = bcrypt($request['password']);
 
             $funcionario->credencial = $request['credencial'];
             $funcionario->id_jerarquia = $request['id_jerarquia'];
@@ -217,7 +218,7 @@ class FuncionarioController extends Controller
             $estado_nacimiento.' || '.$request['credencial'].' || '.$jerarquia.' || '.$request['telefono'].' || '.$estatus_laboral]);
 
             Alert()->success('Usuario Creado Satisfactoriamente','Atención: El ciudadano que registró no poseía registro como funcionario, se actualizó como funcionario y se asignó el Usuario');
-            return redirect()->route('users.index');
+            return redirect()->route('funcionarios.index');
         }
 
     }

@@ -483,8 +483,10 @@ class ResennaController extends Controller
         ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
         ->select('funcionarios.id', 'persons.primer_nombre', 'persons.primer_apellido', 'jerarquia.valor')->get();
 
+        $estados = $this->geografia_venezuela->combos();
+
         return view('resenna.edit', compact('edad', 'genero', 'estado_civil', 'profesion', 'motivo_resenna', 'tez', 'contextura', 
-        'estado', 'municipio', 'funcionario_resenna', 'funcionario_aprehensor', 'documentacion', 'resenna'));
+        'estado', 'municipio', 'estados', 'funcionario_resenna', 'funcionario_aprehensor', 'documentacion', 'resenna'));
     }
 
     /**
