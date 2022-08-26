@@ -742,6 +742,13 @@ class ResennaController extends Controller
 
     public function pdf(Resenna $resenna)
     {
+        $id_user = Auth::user()->id;
+        $id_Accion = 6; //PDF
+        $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
+        'valores_modificados' => 'Visualización/Impresión de PDF de Reseña. Fecha de Reseña:'.
+        $resenna->fecha_resenna.' || Cédula del Reseñado'.$resenna->resennado->letra_cedula.$resenna->resennado->cedula.
+        ' || Nombre completo del Reseñado'.$resenna->resennado->primer_nombre.' '.$resenna->resennado->primer_apellido]);
+
         $edad = Carbon::parse($resenna->resennado->fecha_nacimiento)->age;
         return PDF::loadView('resenna.pdf', compact('resenna', 'edad'))->setOption(['dpi' => 100, 'defaultFont' => 'sans-serif'])
         ->stream('Reseña Policial '.$resenna->resennado->letra_cedula.$resenna->resennado->cedula.'-'.$resenna->resennado->primer_nombre.' '.
