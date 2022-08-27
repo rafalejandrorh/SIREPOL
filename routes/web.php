@@ -61,7 +61,7 @@ Route::get('/traza_roles/{role}', [App\Http\Controllers\TrazasController::class,
 
 Route::get('/resenna_pdf/{resenna}', [App\Http\Controllers\ResennaController::class, 'pdf'])->name('resenna.pdf')->middleware('auth');
 
-Route::get('resenna/create/select/{id}/{id_hijo}', [App\Http\Controllers\GeografiaVenezuelaController::class, 'getCombos']);
+Route::get('resenna/create/select/{id}/{id_hijo}', [App\Http\Controllers\GeografiaVenezuelaController::class, 'getCombo']);
 
 Route::get('resenna/{id}/edit/select/{tipo}/{id_hijo}', [App\Http\Controllers\GeografiaVenezuelaController::class, 'getCombos']);
 

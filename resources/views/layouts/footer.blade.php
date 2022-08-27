@@ -3,5 +3,5 @@
 </div>
 
 <div class="footer-right">
-    Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }}) <b>Version SIREPOL</b> 1.0.9
+    Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }}) <b>SIREPOL</b> 1.0.9
 </div>

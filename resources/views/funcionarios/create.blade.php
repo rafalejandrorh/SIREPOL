@@ -83,7 +83,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label for="email">Estado de Nacimiento</label>
-                                    {!! Form::select('id_estado_nacimiento', $estado, [], ['class' => 'form-control select2', 'placeholder'=>'Seleccione']) !!}
+                                    {!! Form::select('id_estado_nacimiento', $estado, [], ['class' => 'form-control select2', 'placeholder'=>'Seleccione', 'required']) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-3">

@@ -6,7 +6,7 @@
     <div class="login-main-text">
         <div class="title text-center">
             <h2 style="color:#000000"><b>Sistema de Reseña Policial</b></h2>
-            <h2 style="color:#000000"><b>Coordinación de Investigaciones</b></h2>
+            <h2 style="color:#000000"><b>Servicio de Investigación Penal</b></h2>
         </div>  
     </div>
     <div class="card card-primary">
