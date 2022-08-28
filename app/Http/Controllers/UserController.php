@@ -159,14 +159,22 @@ class UserController extends Controller
         
         $usuario = new User();
 
-        $obtener_usuario = $usuario->where('id_funcionario','=',$request['id_funcionario'])->get();
-        $validar_usuario = $usuario->where('id_funcionario','=',$request['id_funcionario'])->exists();
+        $obtener_usuario = $usuario->where('id_funcionario', $request['id_funcionario'])->get();
+        $validar_usuario = $usuario->where('id_funcionario', $request['id_funcionario'])->exists();
         if($validar_usuario == true){
             Alert()->info('El funcionario ya posee un Usuario.');
             return redirect()->route('users.index');
         } 
 
         if($validar_usuario == false){
+
+            $funcionario = new Funcionario();
+            $obtener_funcionario = $funcionario->where('id', $request['id_funcionario'])->get();
+
+            $id_estatus = $obtener_funcionario[0]['id_estatus'];
+
+            if($id_estatus == 1310000 || $id_estatus == 1310005)
+            {
 
             $request['password'] = bcrypt($request['password']);
             
@@ -179,9 +187,7 @@ class UserController extends Controller
             $usuario->assignRole($request['roles']);
 
             $roles = Role::Where('id', $request['roles'])->get();
-            foreach($roles as $role){
-                $rol = $role['name'];
-            }
+            $rol = $roles[0]['name'];
 
             $id_user = Auth::user()->id;
             $id_Accion = 1; //Registro
@@ -190,6 +196,11 @@ class UserController extends Controller
 
             Alert()->success('Usuario Creado Satisfactoriamente');
             return redirect()->route('users.index');
+
+            }else{
+                Alert()->error('No se creó el Usuario', 'El Funcionario no se encuentra Activo, por lo que no se puede asignar un Usuario');
+                return back();
+            }
         }
 
     }
@@ -246,9 +257,7 @@ class UserController extends Controller
         $user->roles()->sync($request->roles);
 
         $roles = Role::Where('id', $request['roles'])->get();
-        foreach($roles as $role){
-            $rol = $role['name'];
-        }
+        $rol = $roles[0]['name'];
 
         $id_user = Auth::user()->id;
         $id_Accion = 2; //Actualización
@@ -292,20 +301,26 @@ class UserController extends Controller
     public function update_status($id)
     {
         $user = User::Where('id', $id)->get();
-        
-        foreach($user as $usr)
-        {
-            $status = $usr['status'];
-            $usuario = $usr['users'];
-        }
+
+        $id_funcionario = $user[0]['id_funcionario'];
+        $status = $user[0]['status'];
+        $usuario = $user[0]['users'];
+
+        $funcionario = new Funcionario();
+        $obtener_funcionario = $funcionario->where('id', $id_funcionario)->get();
+
+        $id_estatus = $obtener_funcionario[0]['id_estatus'];
 
         if($status == true)
         {
             $estatus = false;
             $notificacion = 'Inactivo';
-        }else{
+        }else if($status == false && $id_estatus == 1310000 || $id_estatus == 1310005){
             $estatus = true;
             $notificacion = 'Activo';
+        }else{
+            Alert()->error('No se actualizó el Estatus del Usuario', 'El Funcionario no se encuentra Activo, por lo que no se puede activar su Usuario');
+            return back();
         }
         $users = User::find($id, ['id']);
         $users->update(['status' => $estatus]);
