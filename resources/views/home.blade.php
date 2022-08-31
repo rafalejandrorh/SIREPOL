@@ -13,7 +13,7 @@
                             <h3 class="text-center" style="color:#000000"><b>Bienvenido al Sistema de Reseña Policial</b></h3>
                             <div class="col-md-6 offset-md-3">
                                 <div class="login-brand">
-                                    <center><img src="{{ asset('img/pmcr_y_mpprjip.jpeg') }}" alt="logo" width="530" height="280" class="shadow-light"></center>
+                                    <center><img src="{{ asset('public/img/pmcr_y_mpprjip.jpeg') }}" alt="logo" width="530" height="280" class="shadow-light"></center>
                                 </div>
                                 @yield('content')
                                 <h6 align="center">{!! $QR !!}</h6>

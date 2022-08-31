@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
-                                <img src="{{asset($resenna->url_foto)}}" alt="foto_reseñado"  width="150">
+                                <img src="{{asset('public/'.$resenna->url_foto)}}" alt="foto_reseñado"  width="150">
                             </div>
                             <br>
                             <div class="col-xs-6 col-sm-6 col-md-6">

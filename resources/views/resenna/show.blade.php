@@ -30,7 +30,7 @@
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-3">
                                 <div class="form-group">
-                                    <left><img src="{{asset($resenna->url_foto)}}" alt="foto_reseñado"  class="img-responsive" width="150"></left>
+                                    <left><img src="{{asset('public/'.$resenna->url_foto)}}" alt="foto_reseñado"  class="img-responsive" width="150"></left>
                                 </div>
                             </div>
                             @can('resenna.qr')

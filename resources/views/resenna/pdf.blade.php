@@ -35,21 +35,6 @@
     <h4 align="center" style="color:#000000"><b>{{$resenna->resennado->letra_cedula.$resenna->resennado->cedula.' - '.$resenna->resennado->primer_nombre.' '.$resenna->resennado->primer_apellido}}</b></h4>
     <hr>
 
-    {{-- <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <i class="fa fa-address-card f-30 text-c-blue"></i>
-                {{-- <label for="name">Ficha Fotográfica</label> --}}
-                {{-- <span><b>Ficha Fotográfica</b></span>
-            </div>
-        </div>
-        <div class="col-xs-2 col-sm-2 col-md-2">
-            <div class="form-group">
-                <center><img src="{{ public_path($resenna->url_foto) }}" class="img-responsive" width="100" height="110"></center>
-            </div>
-        </div>  
-    </div> --}}
-
     <table class="table table-striped mt-2 display dataTable table-hover" cellspacing="3" cellpadding="3">
 
         <tr role="row" class="headt">
