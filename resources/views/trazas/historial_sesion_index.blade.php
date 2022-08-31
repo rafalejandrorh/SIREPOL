@@ -61,8 +61,13 @@
                                             <tr role="row" class="odd">
                                                 <td class="sorting_1">{{$historial->user->users}}</td>
                                                 <td class="sorting_1">{{$historial->user->funcionario->person->primer_nombre.' '.$historial->user->funcionario->person->primer_apellido}}</td>
-                                                <td class="sorting_1">{{$historial->login}}</td>
-                                                <td class="sorting_1">{{$historial->logout}}</td>
+                                                <td class="sorting_1">{{ date('d/m/Y H:i:s', strtotime($historial->login)) }}</td>
+                                                @if ($historial->logou)
+                                                    <td class="sorting_1">{{ date('d/m/Y H:i:s', strtotime($historial->logout)) }}</td>
+                                                @else
+                                                    <td class="sorting_1"> - </td>
+                                                @endif
+                                                
                                                 @if ($historial->tipo_logout == 1)
                                                     <td class="sorting_1">Finalizada por el Usuario</td>
                                                 @elseif ($historial->tipo_logout == 2)

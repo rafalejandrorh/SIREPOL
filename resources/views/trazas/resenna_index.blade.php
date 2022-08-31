@@ -61,7 +61,7 @@
                                             <tr role="row" class="odd">
                                                 <td class="sorting_1">{{$resenna->user->users}}</td>
                                                 <td class="sorting_1">{{$resenna->acciones->valor}}</td>
-                                                <td class="sorting_1">{{$resenna->created_at}}</td>
+                                                <td class="sorting_1">{{ date('d/m/Y H:i:s', strtotime($resenna->created_at)) }}</td>
                                                 <td>
                                                     <a class="btn btn-info" href="{{ route('traza_resenna.show', $resenna->id) }}"><i class='fa fa-eye'></i></a>
                                                 </td>

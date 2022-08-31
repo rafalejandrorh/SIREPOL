@@ -61,7 +61,7 @@
                                             <tr role="row" class="odd">
                                                 <td class="sorting_1">{{$rol->user->users}}</td>
                                                 <td class="sorting_1">{{$rol->acciones->valor}}</td>
-                                                <td class="sorting_1">{{$rol->created_at}}</td>
+                                                <td class="sorting_1">{{ date('d/m/Y H:i:s', strtotime($rol->created_at)) }}</td>
                                                 <td>
                                                     <a class="btn btn-info" href="{{ route('traza_roles.show', $rol->id) }}"><i class='fa fa-eye'></i></a>
                                                 </td>

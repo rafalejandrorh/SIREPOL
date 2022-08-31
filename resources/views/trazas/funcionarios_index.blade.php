@@ -61,7 +61,7 @@
                                             <tr role="row" class="odd">
                                                 <td class="sorting_1">{{$policia->user->users}}</td>
                                                 <td class="sorting_1">{{$policia->acciones->valor}}</td>
-                                                <td class="sorting_1">{{$policia->created_at}}</td>
+                                                <td class="sorting_1">{{ date('d/m/Y H:i:s', strtotime($policia->created_at)) }}</td>
                                                 <td>
                                                     <a class="btn btn-info" href="{{ route('traza_funcionarios.show', $policia->id) }}"><i class='fa fa-eye'></i></a>
                                                 </td>
