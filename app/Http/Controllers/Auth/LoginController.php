@@ -100,10 +100,13 @@ class LoginController extends Controller
             session()->forget('id_historial_sesion');
         };
 
+        $explode = explode(' ', exec('getmac'));
+        $MAC = $explode[0];
+
         $sesion = new Historial_Sesion();
         $sesion->id_user = $id_user;
         $sesion->login = now();
-        $sesion->MAC = exec('getmac');
+        $sesion->MAC = $MAC;
         //$sesion->IP = $request->ip();
         $sesion->save();
         $id_historial_sesion = $sesion->id;

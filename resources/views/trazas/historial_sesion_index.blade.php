@@ -70,11 +70,7 @@
                                                 @else
                                                     <td class="sorting_1">Sin Finalizar</td>
                                                 @endif
-                                                @php
-                                                    $explode = explode(' ', $historial->MAC);
-                                                    $MAC = $explode[0];
-                                                @endphp
-                                                <td class="sorting_1">{{$MAC}}</td>
+                                                <td class="sorting_1">{{$historial->MAC}}</td>
                                             </tr>
                                             @endforeach
                                         </tbody>
