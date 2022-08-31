@@ -115,6 +115,7 @@ class LoginController extends Controller
     {
         $sesion = Historial_Sesion::find(session('id_historial_sesion'), ['id']);
         $sesion->logout = now();
+        $sesion->tipo_logout = $request->id;
         $sesion->save();
         session()->forget('id_historial_sesion');
         

@@ -123,7 +123,7 @@ function contadorSesion() {
                 }
             }
         });
-    }, 2100000);//3 segundos para no demorar tanto
+    }, 2100000);//2100000 son 35 minutos
 }
 
 function salir() {

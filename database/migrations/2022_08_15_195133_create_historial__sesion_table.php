@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedInteger('id_user');
             $table->dateTime('login')->nullable();
             $table->dateTime('logout')->nullable();
+            $table->integer('tipo_logout')->nullable();
             $table->timestamps();
         });
     }

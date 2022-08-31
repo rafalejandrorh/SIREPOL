@@ -17,15 +17,22 @@
 
             <div class="dropdown-menu dropdown-menu-right">
                 <a class="dropdown-item has-icon" href="{{ route('sesion.index') }}"><i class="fa fa-lock"></i>Cambiar Contraseña </a>
-                <a id="logout-formactivar" href="{{ url('logout') }}" class="dropdown-item has-icon text-danger"
+                <a href="{{ url('logout') }}" class="dropdown-item has-icon text-danger"
                    onclick="event.preventDefault(); localStorage.clear();  document.getElementById('logout-form').submit();">
                     <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
                 </a>
-                <form id="logout-form" action="{{ url('/logout') }}" method="POST" class="d-none">
+                <form id="logout-form" action="{{ url('/logout/1') }}" method="POST" class="d-none">
                     {{ csrf_field() }}
                 </form>
             </div>
         </li>
+
+        <a id="logout-formactivar" href="{{ url('logout') }}" 
+            onclick="event.preventDefault(); localStorage.clear();  document.getElementById('logout-expire').submit();">
+        </a>
+        <form id="logout-expire" action="{{ url('/logout/2') }}" method="POST" class="d-none">
+            {{ csrf_field() }}
+        </form>
     @else
         <li class="dropdown"><a href="#" data-toggle="dropdown"
                                 class="nav-link dropdown-toggle nav-link-lg nav-link-user">

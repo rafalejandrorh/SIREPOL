@@ -77,4 +77,6 @@ Route::patch('/reset{user}', [UserController::class, 'ResetPassword'])->name('us
 
 Route::patch('/user/{user}/status', [UserController::class, 'update_status'])->name('users.update_status')->middleware('auth');
 
+Route::post('logout/{id}', [LoginController::class, 'logout']);
+
 Auth::routes();

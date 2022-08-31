@@ -53,16 +53,28 @@
                                                 <th>Funcionario Asignado</th>
                                                 <th>Inicio de Sesión</th>
                                                 <th>Cierre de Sesión</th>
+                                                <th>Tipo de Cierre</th>
                                                 <th>MAC</th>
                                         </thead>
                                         <tbody>
                                             @foreach ($historial_sesion as $historial)
                                             <tr role="row" class="odd">
                                                 <td class="sorting_1">{{$historial->user->users}}</td>
-                                                <td class="sorting_1">{{$historial->user->funcionario->jerarquia->valor.'. '.$historial->user->funcionario->person->primer_nombre.' '.$historial->user->funcionario->person->primer_apellido}}</td>
+                                                <td class="sorting_1">{{$historial->user->funcionario->person->primer_nombre.' '.$historial->user->funcionario->person->primer_apellido}}</td>
                                                 <td class="sorting_1">{{$historial->login}}</td>
                                                 <td class="sorting_1">{{$historial->logout}}</td>
-                                                <td class="sorting_1">{{$historial->MAC}}</td>
+                                                @if ($historial->tipo_logout == 1)
+                                                    <td class="sorting_1">Finalizada por el Usuario</td>
+                                                @elseif ($historial->tipo_logout == 2)
+                                                    <td class="sorting_1">Finalizada por el Sistema</td>
+                                                @else
+                                                    <td class="sorting_1">Sin Finalizar</td>
+                                                @endif
+                                                @php
+                                                    $explode = explode(' ', $historial->MAC);
+                                                    $MAC = $explode[0];
+                                                @endphp
+                                                <td class="sorting_1">{{$MAC}}</td>
                                             </tr>
                                             @endforeach
                                         </tbody>
