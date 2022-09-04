@@ -88,9 +88,6 @@ class LoginController extends Controller
 
     public function authenticated(Request $request, $user)
     {
-        $user->last_login = now();
-        $user->save();
-        $id_user = $user->id;
 
         if(session('id_historial_session') != null)
         {
@@ -104,7 +101,7 @@ class LoginController extends Controller
         $MAC = $explode[0];
 
         $sesion = new Historial_Sesion();
-        $sesion->id_user = $id_user;
+        $sesion->id_user = $user->id;
         $sesion->login = now();
         $sesion->MAC = $MAC;
         //$sesion->IP = $request->ip();
