@@ -29,7 +29,7 @@
                                         'usuario' => 'Usuario', 
                                         'nombre' => 'Primer Nombre del Funcionario',
                                         'apellido' => 'Primer Apellido del Funcionario',
-                                        'accion' => 'Registro, Actualización o Eliminación de Reseña',
+                                        'accion' => 'Acción del Usuario',
                                         'valores_modificados' => 'Valores Modificados'],
                                         'Seleccionar', array('class' => 'form-control select2')) !!}
                                     </div>
