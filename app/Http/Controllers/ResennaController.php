@@ -737,7 +737,8 @@ class ResennaController extends Controller
 
         $resenna = Resenna::find($id, ['id']);
         $resenna->delete();
-        return redirect()->route('resenna.index')->with('eliminar', 'Ok');
+        Alert()->success('La Reseña ha sido Eliminada');
+        return redirect()->route('resenna.index');
     }
 
     public function pdf(Resenna $resenna)

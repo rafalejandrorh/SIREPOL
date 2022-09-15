@@ -178,18 +178,7 @@
 
 @section('scripts')
 
-    @if (session('eliminar') == 'Ok')
-        <script>
-            Swal.fire(
-                'Eliminado!',
-                'La Reseña ha sido Eliminada.',
-                'success'
-            )
-        </script>
-    @endif
-
     <script>
-
         $('.eliminar').submit(function(e){
             e.preventDefault();
 
@@ -207,7 +196,6 @@
             }
             })
         });
-
     </script>
 
 @endsection
