@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
-    <title>SIREPOL</title>
+    <title>@yield('title', 'SIREPOL')</title>
     <link rel="icon" href="{{ asset('public/img/logo_pmcr_sin_fondo.png')}}">
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 4.1.1 -->

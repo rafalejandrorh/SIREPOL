@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@extends('users.partials.header')
 @section('content')
     <section class="section">
         <div class="section-header">
@@ -90,6 +90,8 @@
                                                 </td>
                                             </tr>
                                             @endforeach
+
+                                            
                                         </tbody>
                                     </table>
                                 <div class="pagination justify-content-end">

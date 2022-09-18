@@ -67,7 +67,7 @@ class SesionController extends Controller
                 $user = User::find($id, ['id']);
                 $user->update(['password' => $request['password']]);
                 Alert()->success('Cambio de Contraseña Exitoso');
-                return back();
+                return redirect()->route('home');
             }else{
                 Alert()->warning('Lo sentimos', 'La nueva Contraseña coincide con la Actual. Por favor, inserta una Contraseña distinta.');
                 return back();
