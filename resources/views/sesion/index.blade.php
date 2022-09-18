@@ -22,7 +22,6 @@
                             </button>
                             </div>
                         @endif
-                        @foreach ($user as $usr)
 
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -31,9 +30,7 @@
                         </div>
                         <br>
                              
-                        @include('sesion.forms.index', ['user' => $usr])
-
-                        @endforeach   
+                        @each('sesion.forms.index', $user, 'user')
                         </div>
                     </div>
                 </div>
