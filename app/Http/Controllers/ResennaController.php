@@ -237,7 +237,7 @@ class ResennaController extends Controller
         $contextura = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 243)->pluck('valor', 'id')->all();
         $estado = Geografia_Venezuela::orderBy('valor', 'asc')->Where('id_padre', 107)->pluck('valor', 'id')->all();
         $municipio = Geografia_Venezuela::orderBy('valor', 'asc')->Where('id_padre', 108)->pluck('valor', 'id')->all();
-
+        
         return view('resenna.index', compact('resennas', 'genero', 'motivo_resenna', 'tez', 'contextura', 'estado', 'municipio'));
     }
 
