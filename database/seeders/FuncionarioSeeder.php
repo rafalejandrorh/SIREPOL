@@ -15,6 +15,12 @@ class FuncionarioSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Funcionario::create([
+            'credencial' => null,
+            'id_jerarquia' => 14002,
+            'telefono' => null,
+            'id_person' => 1,
+            'id_estatus' => 1310000
+        ]);
     }
 }

@@ -15,12 +15,10 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        
         User::create([
             'users' => 'Superadmin',
-            'id_funcionario' => null,
-            'password' => bcrypt('12345678')
+            'id_funcionario' => 1,
+            'password' => bcrypt('sup3r4dm1n*2022')
         ])->assignRole('Superadmin');
-
     }
 }

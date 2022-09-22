@@ -51,41 +51,41 @@ class ResennaController extends Controller
         $request->all();
         if(isset($request->filtro) && $request->filtro == 1)
         {
-                $queryBuilder = Resenna::query();
-                if($request->fecha_inicio != null && $request->fecha_fin == null)
-                {
-                    Alert()->error('Error en el Filtrado','Atención: Al filtrar por fecha, debes colocar fecha de Inicio y Fin (Desde y Hasta)');
-                    return back();
-                }
-                if($request->fecha_inicio != null && $request->fecha_fin != null)    
-                {
-                    $queryBuilder->WhereBetween('fecha_resenna', [$request->fecha_inicio, $request->fecha_fin]);
-                }
-                if($request->id_tez != null)
-                {
-                    $queryBuilder->Where('id_tez', $request->id_tez);
-                }
-                if($request->id_contextura != null)
-                {
-                    $queryBuilder->Where('id_contextura', $request->id_contextura);
-                }
-                if($request->id_genero != null)
-                {
-                    $queryBuilder->join('persons as genero', 'genero.id', '=', 'resenna_detenido.id_person')->Where('genero.id_genero', $request->id_genero);
-                }
-                if($request->id_estado_nacimiento != null)
-                {
-                    $queryBuilder->join('persons as estado', 'estado.id', '=', 'resenna_detenido.id_person')->Where('estado.id_estado_nacimiento', $request->id_estado_nacimiento);
-                }
-                if($request->id_municipio_nacimiento != null)
-                {
-                    $queryBuilder->join('persons as municipio', 'municipio.id', '=', 'resenna_detenido.id_person')->Where('municipio.id_municipio_nacimiento', $request->id_municipio_nacimiento);
-                }
-                if($request->id_motivo_resenna != null)
-                {
-                    $queryBuilder->Where('id_motivo_resenna', $request->id_motivo_resenna);
-                }
-                $resennas = $queryBuilder->orderBy('fecha_resenna', 'desc')->paginate(5);
+            $queryBuilder = Resenna::query();
+            if($request->fecha_inicio != null && $request->fecha_fin == null)
+            {
+                Alert()->error('Error en el Filtrado','Atención: Al filtrar por fecha, debes colocar fecha de Inicio y Fin (Desde y Hasta)');
+                return back();
+            }
+            if($request->fecha_inicio != null && $request->fecha_fin != null)    
+            {
+                $queryBuilder->WhereBetween('fecha_resenna', [$request->fecha_inicio, $request->fecha_fin]);
+            }
+            if($request->id_tez != null)
+            {
+                $queryBuilder->Where('id_tez', $request->id_tez);
+            }
+            if($request->id_contextura != null)
+            {
+                $queryBuilder->Where('id_contextura', $request->id_contextura);
+            }
+            if($request->id_genero != null)
+            {
+                $queryBuilder->join('persons as genero', 'genero.id', '=', 'resenna_detenido.id_person')->Where('genero.id_genero', $request->id_genero);
+            }
+            if($request->id_estado_nacimiento != null)
+            {
+                $queryBuilder->join('persons as estado', 'estado.id', '=', 'resenna_detenido.id_person')->Where('estado.id_estado_nacimiento', $request->id_estado_nacimiento);
+            }
+            if($request->id_municipio_nacimiento != null)
+            {
+                $queryBuilder->join('persons as municipio', 'municipio.id', '=', 'resenna_detenido.id_person')->Where('municipio.id_municipio_nacimiento', $request->id_municipio_nacimiento);
+            }
+            if($request->id_motivo_resenna != null)
+            {
+                $queryBuilder->Where('id_motivo_resenna', $request->id_motivo_resenna);
+            }
+            $resennas = $queryBuilder->orderBy('fecha_resenna', 'desc')->paginate(5);
         }else{
 
             if($request->tipo_busqueda == 'cedula_resennado'){
@@ -261,7 +261,6 @@ class ResennaController extends Controller
             'persons.segundo_nombre', 'persons.primer_apellido', 'persons.segundo_apellido', 'persons.fecha_nacimiento',
             'persons.id_estado_nacimiento', 'persons.id_municipio_nacimiento', 'resenna_detenido.direccion', 'resenna_detenido.id_estado_civil',
             'persons.id_genero', 'resenna_detenido.id_tez', 'resenna_detenido.id_contextura', 'resenna_detenido.id_profesion')->first();
-            
         }else{
             $resennado = null;
         }

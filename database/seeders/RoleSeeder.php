@@ -18,26 +18,33 @@ class RoleSeeder extends Seeder
     {
         $role1 = Role::create(['name' => 'Superadmin']);
 
-        Permission::create(['name' => 'users.index', 'description' => 'Ver listado de usuarios'])->syncRoles([$role1]);
-        Permission::create(['name' => 'users.create', 'description' => 'Crear usuarios'])->syncRoles([$role1]);
-        Permission::create(['name' => 'users.edit', 'description' => 'Editar usuarios'])->syncRoles([$role1]);
-        Permission::create(['name' => 'users.show', 'description' => 'ver usuarios'])->syncRoles([$role1]);
-        Permission::create(['name' => 'users.destroy', 'description' => 'Eliminar usuarios'])->syncRoles([$role1]);;
+        Permission::create(['name' => 'users.index', 'description' => 'Ver listado de Usuarios'])->syncRoles([$role1]);
+        Permission::create(['name' => 'users.create', 'description' => 'Crear Usuarios'])->syncRoles([$role1]);
+        Permission::create(['name' => 'users.edit', 'description' => 'Editar Usuarios'])->syncRoles([$role1]);
+        Permission::create(['name' => 'users.show', 'description' => 'Ver usuarios'])->syncRoles([$role1]);
+        Permission::create(['name' => 'users.password', 'description' => 'Cambiar Contraseña de Usuario Propio'])->syncRoles([$role1]);
+        Permission::create(['name' => 'users.update_status', 'description' => 'Modificar Estatus de Usuarios'])->syncRoles([$role1]);
 
-        Permission::create(['name' => 'roles.index', 'description' => 'Ver listado de roles'])->syncRoles([$role1]);
-        Permission::create(['name' => 'roles.edit', 'description' => 'Editar roles'])->syncRoles([$role1]);
-        Permission::create(['name' => 'roles.show', 'description' => 'Ver roles'])->syncRoles([$role1]);
-        Permission::create(['name' => 'roles.create', 'description' => 'Crear roles'])->syncRoles([$role1]);
-        Permission::create(['name' => 'roles.destroy', 'description' => 'Eliminar roles'])->syncRoles([$role1]);
+        Permission::create(['name' => 'roles.index', 'description' => 'Ver listado de Roles'])->syncRoles([$role1]);
+        Permission::create(['name' => 'roles.edit', 'description' => 'Editar Roles'])->syncRoles([$role1]);
+        Permission::create(['name' => 'roles.show', 'description' => 'Ver Roles'])->syncRoles([$role1]);
+        Permission::create(['name' => 'roles.create', 'description' => 'Crear Roles'])->syncRoles([$role1]);
+        Permission::create(['name' => 'roles.destroy', 'description' => 'Eliminar Roles'])->syncRoles([$role1]);
 
-        Permission::create(['name' => 'resenna.index', 'description' => 'Ver listado de reseñas'])->syncRoles([$role1]);
-        Permission::create(['name' => 'resenna.create', 'description' => 'Crear reseña'])->syncRoles([$role1]);
-        Permission::create(['name' => 'resenna.edit', 'description' => 'Editar reseña'])->syncRoles([$role1]);
-        Permission::create(['name' => 'resenna.show', 'description' => 'ver reseña'])->syncRoles([$role1]);
-        Permission::create(['name' => 'resenna.destroy', 'description' => 'Eliminar reseña'])->syncRoles([$role1]);
-        Permission::create(['name' => 'resenna.pdf', 'description' => 'Imprimir - Descargar PDF de Reseña'])->syncRoles([$role1]);
-        
-        Permission::create(['name' => 'trazas.index', 'description' => 'Ver listado de trazas'])->syncRoles([$role1]);
+        Permission::create(['name' => 'resenna.index', 'description' => 'Ver listado de Reseñas'])->syncRoles([$role1]);
+        Permission::create(['name' => 'resenna.create', 'description' => 'Crear Reseñas'])->syncRoles([$role1]);
+        Permission::create(['name' => 'resenna.edit', 'description' => 'Editar Reseñas'])->syncRoles([$role1]);
+        Permission::create(['name' => 'resenna.show', 'description' => 'Ver Reseñas'])->syncRoles([$role1]);
+        Permission::create(['name' => 'resenna.destroy', 'description' => 'Eliminar Reseñas'])->syncRoles([$role1]);
+        Permission::create(['name' => 'resenna.pdf', 'description' => 'Imprimir - Descargar PDF de Reseñas'])->syncRoles([$role1]);
+        Permission::create(['name' => 'resenna.qr', 'description' => 'Escanear Código QR de Reseña'])->syncRoles([$role1]);
+        Permission::create(['name' => 'resenna.whatsapp', 'description' => 'Enviar Reseñas vía WhatsApp'])->syncRoles([$role1]);
 
+        Permission::create(['name' => 'funcionarios.index', 'description' => 'Ver listado de Funcionarios'])->syncRoles([$role1]);
+        Permission::create(['name' => 'funcionarios.edit', 'description' => 'Editar Funcionarios'])->syncRoles([$role1]);
+        Permission::create(['name' => 'funcionarios.show', 'description' => 'Ver Funcionarios'])->syncRoles([$role1]);
+        Permission::create(['name' => 'funcionarios.create', 'description' => 'Crear Funcionarios'])->syncRoles([$role1]);
+
+        Permission::create(['name' => 'trazas.index', 'description' => 'Ver listado de Trazas'])->syncRoles([$role1]);
     }
 }
