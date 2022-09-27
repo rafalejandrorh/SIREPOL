@@ -145,7 +145,7 @@ class ResennaController extends Controller
                 ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
                 ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
                 'resenna_detenido.id_person')
-                ->Where('jerarquia.valor', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
+                ->Where('jerarquia.valor', 'ilike', '%'.$request->buscador.'%')->paginate(5);
 
                 $id_user = Auth::user()->id;
                 $id_Accion = 5; //Búsqueda
@@ -157,7 +157,7 @@ class ResennaController extends Controller
                 $resennas = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
                 ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
                 'resenna_detenido.id_person')
-                ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
+                ->Where('persons.primer_nombre', 'ilike', '%'.$request->buscador.'%')->paginate(5);
 
                 $id_user = Auth::user()->id;
                 $id_Accion = 5; //Búsqueda
@@ -169,7 +169,7 @@ class ResennaController extends Controller
                 $resennas = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
                 ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
                 'resenna_detenido.id_person')
-                ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
+                ->Where('persons.primer_apellido', 'ilike', '%'.$request->buscador.'%')->paginate(5);
 
                 $id_user = Auth::user()->id;
                 $id_Accion = 5; //Búsqueda
@@ -187,7 +187,7 @@ class ResennaController extends Controller
                 ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
                 ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
                 'resenna_detenido.id_person')
-                ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
+                ->Where('persons.primer_nombre', 'ilike', '%'.$request->buscador.'%')->paginate(5);
 
                 $id_user = Auth::user()->id;
                 $id_Accion = 5; //Búsqueda
@@ -205,7 +205,7 @@ class ResennaController extends Controller
                 ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
                 ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
                 'resenna_detenido.id_person')
-                ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
+                ->Where('persons.primer_apellido', 'ilike', '%'.$request->buscador.'%')->paginate(5);
 
                 $id_user = Auth::user()->id;
                 $id_Accion = 5; //Búsqueda
@@ -217,7 +217,7 @@ class ResennaController extends Controller
                 $resennas = Resenna::join('caracteristicas_resennado', 'caracteristicas_resennado.id', '=', 'resenna_detenido.id_motivo_resenna')
                 ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
                 'resenna_detenido.id_person')
-                ->Where('caracteristicas_resennado.valor', 'LIKE', '%'.$request->buscador.'%')
+                ->Where('caracteristicas_resennado.valor', 'ilike', '%'.$request->buscador.'%')
                 ->paginate(5);
 
                 $id_user = Auth::user()->id;

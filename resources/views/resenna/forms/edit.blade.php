@@ -52,25 +52,25 @@
         <div class="col-xs-3 col-sm-3 col-md-3">
             <div class="form-group">
                 <label for="email">Primer Nombre</label>
-                {!! Form::text('primer_nombre', $resenna->resennado->primer_nombre, array('class' => 'form-control', 'onkeyup'=>'mayus(this);', 'required' => 'required')) !!}
+                {!! Form::text('primer_nombre', $resenna->resennado->primer_nombre, array('class' => 'form-control', 'required' => 'required')) !!}
             </div>
         </div>
         <div class="col-xs-3 col-sm-3 col-md-3">
             <div class="form-group">
                 <label for="email">Segundo Nombre</label>
-                {!! Form::text('segundo_nombre', $resenna->resennado->segundo_nombre, array('class' => 'form-control', 'onkeyup'=>'mayus(this);')) !!}
+                {!! Form::text('segundo_nombre', $resenna->resennado->segundo_nombre, array('class' => 'form-control')) !!}
             </div>
         </div>
         <div class="col-xs-3 col-sm-3 col-md-3">
             <div class="form-group">
                 <label for="email">Primer Apellido</label>
-                {!! Form::text('primer_apellido', $resenna->resennado->primer_apellido, array('class' => 'form-control', 'onkeyup'=>'mayus(this);', 'required' => 'required')) !!}
+                {!! Form::text('primer_apellido', $resenna->resennado->primer_apellido, array('class' => 'form-control', 'required' => 'required')) !!}
             </div>
         </div>
         <div class="col-xs-3 col-sm-3 col-md-3">
             <div class="form-group">
                 <label for="email">Segundo Apellido</label>
-                {!! Form::text('segundo_apellido', $resenna->resennado->segundo_apellido, array('class' => 'form-control', 'onkeyup'=>'mayus(this);')) !!}
+                {!! Form::text('segundo_apellido', $resenna->resennado->segundo_apellido, array('class' => 'form-control')) !!}
             </div>
         </div>
         <div class="col-xs-3 col-sm-3 col-md-3">

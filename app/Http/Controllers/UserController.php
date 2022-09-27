@@ -65,7 +65,7 @@ class UserController extends Controller
             $user = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
             ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
             ->select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
-            ->Where('jerarquia.valor', 'LIKE', '%'.$request->buscador.'%')->paginate(10);
+            ->Where('jerarquia.valor', 'ilike', '%'.$request->buscador.'%')->paginate(10);
 
             $id_user = Auth::user()->id;
             $id_Accion = 5; //Búsqueda
@@ -75,7 +75,7 @@ class UserController extends Controller
 
         }else if($request->tipo_busqueda == 'usuario'){
             $user = User::select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
-            ->Where('users', 'LIKE', '%'.$request->buscador.'%')
+            ->Where('users', 'ilike', '%'.$request->buscador.'%')
             ->paginate(10);
 
             $id_user = Auth::user()->id;
@@ -104,7 +104,7 @@ class UserController extends Controller
             $user = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
             ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
             ->select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
-            ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
+            ->Where('persons.primer_nombre', 'ilike', '%'.$request->buscador.'%')->paginate(5);
 
             $id_user = Auth::user()->id;
             $id_Accion = 5; //Búsqueda
@@ -116,7 +116,7 @@ class UserController extends Controller
             $user = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
             ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
             ->select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
-            ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')->paginate(5);
+            ->Where('persons.primer_apellido', 'ilike', '%'.$request->buscador.'%')->paginate(5);
 
             $id_user = Auth::user()->id;
             $id_Accion = 5; //Búsqueda

@@ -44,25 +44,25 @@
                 <div class="col-xs-12 col-sm-12 col-md-3">
                     <div class="form-group">
                         <label for="email">Primer Nombre</label>
-                        {!! Form::text('primer_nombre', isset($resennado->primer_nombre) ? $resennado->primer_nombre : null, array('class' => 'form-control', 'onkeyup'=>'mayus(this);', 'required' => 'required')) !!}
+                        {!! Form::text('primer_nombre', isset($resennado->primer_nombre) ? $resennado->primer_nombre : null, array('class' => 'form-control', 'required' => 'required')) !!}
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-3">
                     <div class="form-group">
                         <label for="email">Segundo Nombre</label>
-                        {!! Form::text('segundo_nombre', isset($resennado->segundo_nombre) ? $resennado->segundo_nombre : null, array('class' => 'form-control', 'onkeyup'=>'mayus(this);')) !!}
+                        {!! Form::text('segundo_nombre', isset($resennado->segundo_nombre) ? $resennado->segundo_nombre : null, array('class' => 'form-control')) !!}
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-3">
                     <div class="form-group">
                         <label for="email">Primer Apellido</label>
-                        {!! Form::text('primer_apellido', isset($resennado->primer_apellido) ? $resennado->primer_apellido : null, array('class' => 'form-control', 'onkeyup'=>'mayus(this);', 'required' => 'required')) !!}
+                        {!! Form::text('primer_apellido', isset($resennado->primer_apellido) ? $resennado->primer_apellido : null, array('class' => 'form-control', 'required' => 'required')) !!}
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-3">
                     <div class="form-group">
                         <label for="email">Segundo Apellido</label>
-                        {!! Form::text('segundo_apellido', isset($resennado->segundo_apellido) ? $resennado->segundo_apellido : null, array('class' => 'form-control', 'onkeyup'=>'mayus(this);')) !!}
+                        {!! Form::text('segundo_apellido', isset($resennado->segundo_apellido) ? $resennado->segundo_apellido : null, array('class' => 'form-control')) !!}
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-3">

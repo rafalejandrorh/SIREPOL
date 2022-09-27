@@ -83,14 +83,14 @@ class TrazasController extends Controller
             }else if($request->tipo_busqueda == 'usuario'){
                 $resennas = Traza_Resenna::join('users', 'users.id', '=', 'traza_resenna.id_user')
                 ->select('traza_resenna.id', 'traza_resenna.id_user', 'traza_resenna.id_accion', 'traza_resenna.valores_modificados', 'traza_resenna.created_at')
-                ->Where('users', 'LIKE', '%'.$request->buscador.'%')->orderBy('traza_resenna.created_at', 'desc')->paginate(10);
+                ->Where('users', 'ilike', '%'.$request->buscador.'%')->orderBy('traza_resenna.created_at', 'desc')->paginate(10);
 
             }else if($request->tipo_busqueda == 'nombre'){
                 $resennas = Traza_Resenna::join('users', 'users.id', '=', 'traza_resenna.id_user')
                 ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
                 ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
                 ->select('traza_resenna.id', 'traza_resenna.id_user', 'traza_resenna.id_accion', 'traza_resenna.valores_modificados', 'traza_resenna.created_at')
-                ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')
+                ->Where('persons.primer_nombre', 'ilike', '%'.$request->buscador.'%')
                 ->orderBy('traza_resenna.created_at', 'desc')->paginate(10);
 
             }else if($request->tipo_busqueda == 'apellido'){
@@ -98,17 +98,17 @@ class TrazasController extends Controller
                 ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
                 ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
                 ->select('traza_resenna.id', 'traza_resenna.id_user', 'traza_resenna.id_accion', 'traza_resenna.valores_modificados', 'traza_resenna.created_at')
-                ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')
+                ->Where('persons.primer_apellido', 'ilike', '%'.$request->buscador.'%')
                 ->orderBy('traza_resenna.created_at', 'desc')->paginate(10);
 
             }else if($request->tipo_busqueda == 'accion'){
                 $resennas = Traza_Resenna::join('traza_acciones', 'traza_acciones.id', '=', 'traza_resenna.id_accion')
                 ->select('traza_resenna.id', 'traza_resenna.id_user', 'traza_resenna.id_accion', 'traza_resenna.valores_modificados', 'traza_resenna.created_at')
-                ->Where('traza_acciones.valor', 'LIKE', '%'.$request->buscador.'%')->orderBy('created_at', 'desc')->paginate(10);
+                ->Where('traza_acciones.valor', 'ilike', '%'.$request->buscador.'%')->orderBy('created_at', 'desc')->paginate(10);
 
             }else if($request->tipo_busqueda == 'valores_modificados'){
                 $resennas = Traza_Resenna::select('traza_resenna.id', 'traza_resenna.id_user', 'traza_resenna.id_accion', 'traza_resenna.valores_modificados', 'traza_resenna.created_at')
-                ->Where('valores_modificados', 'LIKE', '%'.$request->buscador.'%')->
+                ->Where('valores_modificados', 'ilike', '%'.$request->buscador.'%')->
                 orderBy('traza_resenna.created_at', 'desc')->paginate(10);
 
             }else{
@@ -178,14 +178,14 @@ class TrazasController extends Controller
             }else if($request->tipo_busqueda == 'usuario'){
                 $users = Traza_User::join('users', 'users.id', '=', 'traza_users.id_user')
                 ->select('traza_users.id', 'traza_users.id_user', 'traza_users.id_accion', 'traza_users.valores_modificados', 'traza_users.created_at')
-                ->Where('users', 'LIKE', '%'.$request->buscador.'%')->orderBy('traza_users.created_at', 'desc')->paginate(10);
+                ->Where('users', 'ilike', '%'.$request->buscador.'%')->orderBy('traza_users.created_at', 'desc')->paginate(10);
 
             }else if($request->tipo_busqueda == 'nombre'){
                 $users = Traza_User::join('users', 'users.id', '=', 'traza_users.id_user')
                 ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
                 ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
                 ->select('traza_users.id', 'traza_users.id_user', 'traza_users.id_accion', 'traza_users.valores_modificados', 'traza_users.created_at')
-                ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')
+                ->Where('persons.primer_nombre', 'ilike', '%'.$request->buscador.'%')
                 ->orderBy('traza_users.created_at', 'desc')->paginate(10);
 
             }else if($request->tipo_busqueda == 'apellido'){
@@ -193,18 +193,18 @@ class TrazasController extends Controller
                 ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
                 ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
                 ->select('traza_users.id', 'traza_users.id_user', 'traza_users.id_accion', 'traza_users.valores_modificados', 'traza_users.created_at')
-                ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')
+                ->Where('persons.primer_apellido', 'ilike', '%'.$request->buscador.'%')
                 ->orderBy('traza_users.created_at', 'desc')->paginate(10);
 
             }else if($request->tipo_busqueda == 'accion'){
                 $users = Traza_User::join('traza_acciones', 'traza_acciones.id', '=', 'traza_users.id_accion')
                 ->select('traza_users.id', 'traza_users.id_user', 'traza_users.id_accion', 'traza_users.valores_modificados', 'traza_users.created_at')
-                ->Where('traza_acciones.valor', 'LIKE', '%'.$request->buscador.'%')
+                ->Where('traza_acciones.valor', 'ilike', '%'.$request->buscador.'%')
                 ->orderBy('traza_users.created_at', 'desc')->paginate(10);
 
             }else if($request->tipo_busqueda == 'valores_modificados'){
                 $users = Traza_User::select('traza_users.id', 'traza_users.id_user', 'traza_users.id_accion', 'traza_users.valores_modificados', 'traza_users.created_at')
-                ->Where('valores_modificados', 'LIKE', '%'.$request->buscador.'%')
+                ->Where('valores_modificados', 'ilike', '%'.$request->buscador.'%')
                 ->orderBy('traza_users.created_at', 'desc')->paginate(10);
 
             }else{
@@ -274,14 +274,14 @@ class TrazasController extends Controller
             }else if($request->tipo_busqueda == 'usuario'){
                 $funcionario = Traza_Funcionarios::join('users', 'users.id', '=', 'trazas_funcionarios.id_user')
                 ->select('trazas_funcionarios.id', 'trazas_funcionarios.id_user', 'trazas_funcionarios.id_accion', 'trazas_funcionarios.valores_modificados', 'trazas_funcionarios.created_at')
-                ->Where('users', 'LIKE', '%'.$request->buscador.'%')->orderBy('trazas_funcionarios.created_at', 'desc')->paginate(10);
+                ->Where('users', 'ilike', '%'.$request->buscador.'%')->orderBy('trazas_funcionarios.created_at', 'desc')->paginate(10);
 
             }else if($request->tipo_busqueda == 'nombre'){
                 $funcionario = Traza_Funcionarios::join('users', 'users.id', '=', 'trazas_funcionarios.id_user')
                 ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
                 ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
                 ->select('trazas_funcionarios.id', 'trazas_funcionarios.id_user', 'trazas_funcionarios.id_accion', 'trazas_funcionarios.valores_modificados', 'trazas_funcionarios.created_at')
-                ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')
+                ->Where('persons.primer_nombre', 'ilike', '%'.$request->buscador.'%')
                 ->orderBy('trazas_funcionarios.created_at', 'desc')->paginate(10);
 
             }else if($request->tipo_busqueda == 'apellido'){
@@ -289,18 +289,18 @@ class TrazasController extends Controller
                 ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
                 ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
                 ->select('trazas_funcionarios.id', 'trazas_funcionarios.id_user', 'trazas_funcionarios.id_accion', 'trazas_funcionarios.valores_modificados', 'trazas_funcionarios.created_at')
-                ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')
+                ->Where('persons.primer_apellido', 'ilike', '%'.$request->buscador.'%')
                 ->orderBy('trazas_funcionarios.created_at', 'desc')->paginate(10);
 
             }else if($request->tipo_busqueda == 'accion'){
                 $funcionario = Traza_Funcionarios::join('traza_acciones', 'traza_acciones.id', '=', 'trazas_funcionarios.id_accion')
                 ->select('trazas_funcionarios.id', 'trazas_funcionarios.id_user', 'trazas_funcionarios.id_accion', 'trazas_funcionarios.valores_modificados', 'trazas_funcionarios.created_at')
-                ->Where('traza_acciones.valor', 'LIKE', '%'.$request->buscador.'%')
+                ->Where('traza_acciones.valor', 'ilike', '%'.$request->buscador.'%')
                 ->orderBy('trazas_funcionarios.created_at', 'desc')->paginate(10);
 
             }else if($request->tipo_busqueda == 'valores_modificados'){
                 $funcionario = Traza_Funcionarios::select('trazas_funcionarios.id', 'trazas_funcionarios.id_user', 'trazas_funcionarios.id_accion', 'trazas_funcionarios.valores_modificados', 'trazas_funcionarios.created_at')
-                ->Where('valores_modificados', 'LIKE', '%'.$request->buscador.'%')
+                ->Where('valores_modificados', 'ilike', '%'.$request->buscador.'%')
                 ->orderBy('trazas_funcionarios.created_at', 'desc')->paginate(10);
 
             }else{
@@ -367,25 +367,25 @@ class TrazasController extends Controller
 
             }else if($request->tipo_busqueda == 'usuario'){
                 $roles = Traza_Roles::join('users', 'users.id', '=', 'traza_roles.id_user')
-                ->Where('users', 'LIKE', '%'.$request->buscador.'%')->orderBy('traza_roles.created_at', 'desc')->paginate(10);
+                ->Where('users', 'ilike', '%'.$request->buscador.'%')->orderBy('traza_roles.created_at', 'desc')->paginate(10);
 
             }else if($request->tipo_busqueda == 'nombre'){
                 $roles = Traza_Roles::join('users', 'users.id', '=', 'traza_roles.id_user')
                 ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
                 ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
-                ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')
+                ->Where('persons.primer_nombre', 'ilike', '%'.$request->buscador.'%')
                 ->orderBy('traza_roles.created_at', 'desc')->paginate(10);
 
             }else if($request->tipo_busqueda == 'apellido'){
                 $roles = Traza_Roles::join('users', 'users.id', '=', 'traza_roles.id_user')
                 ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
                 ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
-                ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')
+                ->Where('persons.primer_apellido', 'ilike', '%'.$request->buscador.'%')
                 ->orderBy('traza_roles.created_at', 'desc')->paginate(10);
 
             }else if($request->tipo_busqueda == 'accion'){
                 $roles = Traza_Roles::join('traza_acciones', 'traza_acciones.id', '=', 'traza_roles.id_accion')
-                ->Where('traza_acciones.valor', 'LIKE', '%'.$request->buscador.'%')
+                ->Where('traza_acciones.valor', 'ilike', '%'.$request->buscador.'%')
                 ->orderBy('traza_roles.created_at', 'desc')->paginate(10);
 
             }else{
@@ -448,20 +448,20 @@ class TrazasController extends Controller
                 $historial_sesion = Historial_Sesion::join('users', 'users.id', '=', 'historial_sesion.id_user')
                 ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
                 ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
-                ->Where('jerarquia.valor', 'LIKE', '%'.$request->buscador.'%')->orderBy('login', 'DESC')->paginate(10);
+                ->Where('jerarquia.valor', 'ilike', '%'.$request->buscador.'%')->orderBy('login', 'DESC')->paginate(10);
             }else if($request->tipo_busqueda == 'usuario'){
-                $historial_sesion = Historial_Sesion::Where('users', 'LIKE', '%'.$request->buscador.'%')->orderBy('login', 'DESC')->paginate(10);
+                $historial_sesion = Historial_Sesion::Where('users', 'ilike', '%'.$request->buscador.'%')->orderBy('login', 'DESC')->paginate(10);
             }else if($request->tipo_busqueda == 'nombre'){
                 $historial_sesion = Historial_Sesion::join('users', 'users.id', '=', 'historial_sesion.id_user')
                 ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
                 ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
-                ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')->orderBy('login', 'DESC')->paginate(10);
+                ->Where('persons.primer_nombre', 'ilike', '%'.$request->buscador.'%')->orderBy('login', 'DESC')->paginate(10);
 
             }else if($request->tipo_busqueda == 'apellido'){
                 $historial_sesion = Historial_Sesion::join('users', 'users.id', '=', 'historial_sesion.id_user')
                 ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
                 ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
-                ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')->orderBy('login', 'DESC')->paginate(10);
+                ->Where('persons.primer_apellido', 'ilike', '%'.$request->buscador.'%')->orderBy('login', 'DESC')->paginate(10);
 
             }else{
                 $historial_sesion = Historial_Sesion::orderBy('login', 'DESC')->paginate(10);
