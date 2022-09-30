@@ -44,7 +44,7 @@ class Funcionario extends Model
     static function  returnMessages(){
 
         return $messages=[
-                'credencial.unique'     =>'Otro Funcionario posee esta Credencial',
+                'credencial.unique'     => 'Otro Funcionario posee esta Credencial',
         ];
     } 
     
