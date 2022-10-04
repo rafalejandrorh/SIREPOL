@@ -1,5 +1,7 @@
 <?php
 
+use App\Events\PrivateNotification;
+use App\Events\PublicNotification;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\SesionController;
@@ -9,7 +11,6 @@ use App\Http\Controllers\TrazasController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GeografiaVenezuelaController;
-use App\Mail\ResennaMail;
 use Illuminate\Support\Facades\Mail;
 
 /*
@@ -80,3 +81,15 @@ Route::patch('/user/{user}/status', [UserController::class, 'update_status'])->n
 Route::post('logout/{id}', [LoginController::class, 'logout']);
 
 Auth::routes();
+
+// Route::get('/notification/{message}', function($message){ 
+//     event(new PublicNotification($message)); 
+//     dd('Notificación Pública');
+//     Alert()->success('Usuario Creado Satisfactoriamente');
+//     return redirect()->route('users.index'); 
+// })->name('notification');
+
+// Route::get('/private-notification', function(){ 
+//     event(new PrivateNotification(auth()->user()));
+//     dd('Notificación Privada'); 
+// });

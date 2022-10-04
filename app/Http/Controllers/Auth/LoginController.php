@@ -130,9 +130,11 @@ class LoginController extends Controller
         }
 
         Alert()->toast('Haz cerrado sesión en el Sistema','info');
-        return $request->wantsJson()
-            ? new JsonResponse([], 204)
-            : redirect('/');
+        // return $request->wantsJson()
+        //     ? new JsonResponse([], 204)
+        //     : redirect('/');
+
+        return redirect('/');
     }
 
 }

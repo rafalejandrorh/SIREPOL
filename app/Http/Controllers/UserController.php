@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Alert;
+use App\Events\PublicNotification;
 
 class UserController extends Controller
 {
@@ -193,8 +194,11 @@ class UserController extends Controller
             $id_Accion = 1; //Registro
             $trazas = Traza_User::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
             'valores_modificados' => 'Datos de Usuario: '.$request['users'].' || Activo || '.$rol]);
-
-            Alert()->success('Usuario Creado Satisfactoriamente');
+            
+            //$message = '';
+            //redirect()->route('notification', $message);
+            event(new PublicNotification());
+            Alert()->success('Usuario Creado Satisfactoriamente'); 
             return redirect()->route('users.index');
 
             }else{

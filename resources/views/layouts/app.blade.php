@@ -49,6 +49,12 @@
 </div>
 
 </body>
+<script>
+    window.laravelEchoPort = '{{ env("LARAVEL_ECHO_PORT") }}';
+</script>
+<script src="//{{request()->getHost() }}:{{ env("LARAVEL_ECHO_PORT") }}/socket.io/socket.io.js"></script>
+<script src="{{ asset('public/js/app.js') }}"></script>
+
 <script src="{{ asset('public/assets/js/sweetalert2/sweetalert2.min.js') }}"></script>
 <script src="{{ asset('public/assets/js/jquery.min.js') }}"></script>
 <script src="{{ asset('public/assets/js/popper.min.js') }}"></script>
@@ -70,6 +76,21 @@
 
 @yield('page_js')
 @yield('scripts')
+
+<script>
+    //const userId = '{{ auth()->id() }}'
+
+    window.Echo.channel('public-notification-channel')
+    .listen('.NotificationEvent', (data) => {
+        $("#notification").append('<div class="alert alert-success">' + data.message + '</div>');
+    });
+
+    // window.Echo.private('notification-channel'+userId)
+    // .listen('.NotificationEvent', (data) => {
+    //     $("#notification").append('<div class="alert alert-warning">'+data.message+'</div>');
+    // });
+</script>
+
 <script>
     let loggedInUser =@json(\Illuminate\Support\Facades\Auth::user());
     let loginUrl = '{{ route('login') }}';
@@ -100,36 +121,36 @@
         contadorSesion(); //aqui cargamos la funcion de inactividad
     } 
 
-function contadorSesion() {
-   timeout = setTimeout(function () {
-        $.confirm({
-            title: 'Alerta de Inactividad!',
-            content: 'La sesión esta a punto de expirar.',
-            autoClose: 'expirar|10000',//cuanto tiempo necesitamos para cerrar la sess automaticamente
-            type: 'red',
-            icon: 'fa fa-spinner fa-spin',
-            buttons: {
-                expirar: {
-                    text: 'Cerrar Sesión',
-                    btnClass: 'btn-red',
-                    action: function () {
-                        salir();
-                        
+    function contadorSesion() {
+    timeout = setTimeout(function () {
+            $.confirm({
+                title: 'Alerta de Inactividad!',
+                content: 'La sesión esta a punto de expirar.',
+                autoClose: 'expirar|10000',//cuanto tiempo necesitamos para cerrar la sess automaticamente
+                type: 'red',
+                icon: 'fa fa-spinner fa-spin',
+                buttons: {
+                    expirar: {
+                        text: 'Cerrar Sesión',
+                        btnClass: 'btn-red',
+                        action: function () {
+                            salir();
+                            
+                        }
+                    },
+                    permanecer: function () {
+                        contadorSesion(); //reinicia el conteo
+                        $.alert('La Sesión ha sido reiniciada!'); //mensaje
                     }
-                },
-                permanecer: function () {
-                    contadorSesion(); //reinicia el conteo
-                    $.alert('La Sesión ha sido reiniciada!'); //mensaje
                 }
-            }
-        });
-    }, 2100000);//2100000 son 35 minutos
-}
+            });
+        }, 2100000);//2100000 son 35 minutos
+    }
 
-function salir() {
-    $("#logout-formactivar").click();
-    //onclick="event.preventDefault(); document.getElementById('logout-form').submit();"  
-   // window.location.href = "/login"; //esta función te saca
-}
+    function salir() {
+        $("#logout-formactivar").click();
+        //onclick="event.preventDefault(); document.getElementById('logout-form').submit();"  
+        // window.location.href = "/login"; //esta función te saca
+    }
 </script>
 </html>
