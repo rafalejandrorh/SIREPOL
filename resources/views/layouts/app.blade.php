@@ -144,7 +144,7 @@
                     }
                 }
             });
-        }, 2100000);//2100000 son 35 minutos
+        }, 1800);//2100000 son 35 minutos
     }
 
     function salir() {
