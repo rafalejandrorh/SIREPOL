@@ -3,37 +3,37 @@
             <div class="col-xs-3 col-sm-3 col-md-3">
                 <div class="form-group">
                     <label for="name">Credencial</label>
-                    {!! Form::text('credencial', $funcionario->credencial, array('class' => 'form-control', 'maxlength' => '10')) !!}
+                    {!! Form::text('credencial', $funcionario->credencial, array('class' => 'form-control numero', 'maxlength' => '10')) !!}
                 </div>
             </div>
             <div class="col-xs-3 col-sm-3 col-md-3">
                 <div class="form-group">
                     <label for="email">Cédula</label>
-                    {!! Form::text('cedula', $funcionario->person->cedula, array('class' => 'form-control', 'readonly')) !!}
+                    {!! Form::text('cedula', $funcionario->person->cedula, array('class' => 'form-control numero', 'readonly')) !!}
                 </div>
             </div>
             <div class="col-xs-3 col-sm-3 col-md-3">
                 <div class="form-group">
                     <label for="email">Primer Nombre</label>
-                    {!! Form::text('primer_nombre', $funcionario->person->primer_nombre, array('class' => 'form-control', 'required' => 'required')) !!}
+                    {!! Form::text('primer_nombre', $funcionario->person->primer_nombre, array('class' => 'form-control letras', 'required' => 'required')) !!}
                 </div>
             </div>
             <div class="col-xs-3 col-sm-3 col-md-3">
                 <div class="form-group">
                     <label for="email">Segundo Nombre</label>
-                    {!! Form::text('segundo_nombre', $funcionario->person->segundo_nombre, array('class' => 'form-control',)) !!}
+                    {!! Form::text('segundo_nombre', $funcionario->person->segundo_nombre, array('class' => 'form-control letras',)) !!}
                 </div>
             </div>
             <div class="col-xs-3 col-sm-3 col-md-3">
                 <div class="form-group">
                     <label for="email">Primer Apellido</label>
-                    {!! Form::text('primer_apellido', $funcionario->person->primer_apellido, array('class' => 'form-control', 'required' => 'required')) !!}
+                    {!! Form::text('primer_apellido', $funcionario->person->primer_apellido, array('class' => 'form-control letras', 'required' => 'required')) !!}
                 </div>
             </div>
             <div class="col-xs-3 col-sm-3 col-md-3">
                 <div class="form-group">
                     <label for="email">Segundo Apellido</label>
-                    {!! Form::text('segundo_apellido', $funcionario->person->segundo_apellido, array('class' => 'form-control',)) !!}
+                    {!! Form::text('segundo_apellido', $funcionario->person->segundo_apellido, array('class' => 'form-control letras',)) !!}
                 </div>
             </div>
             <div class="col-xs-3 col-sm-3 col-md-3">
@@ -57,7 +57,7 @@
             <div class="col-xs-3 col-sm-3 col-md-3">
                 <div class="form-group">
                     <label for="email">Teléfono</label>
-                    {!! Form::text('telefono', $funcionario->telefono, array('class' => 'form-control')) !!}
+                    {!! Form::text('telefono', $funcionario->telefono, array('class' => 'form-control numero')) !!}
                 </div>
             </div>
             <div class="col-xs-3 col-sm-3 col-md-3">

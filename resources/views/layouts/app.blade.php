@@ -112,8 +112,27 @@
 <script>
     function mayus(e) {
         e.value = e.value.toUpperCase();
-        //e.value = e.value.toLowerCase();
     }
+
+    function minus(e) {
+        e.value = e.value.toLowerCase();
+    }
+
+    $('.numero').on('input', function () 
+    { 
+        this.value = this.value.replace(/[^0-9]/g,'');
+    });
+  
+    $('.letras').on('input', function () 
+    { 
+        this.value = this.value.replace(/[^a-zA-Z ]+$/,'');
+    });
+  
+    $('.mail').blur('input', function () { 
+        if($(".mail").val().indexOf('@', 0) == -1 || $(".mail").val().indexOf('.', 0) == -1) {
+            alert('El correo electrónico introducido no es correcto.');
+        }
+    });
 
     var timeout;
     document.onmousemove = function(){ 
@@ -144,7 +163,7 @@
                     }
                 }
             });
-        }, 1800);//2100000 son 35 minutos
+        }, 2100000);//2100000 son 35 minutos
     }
 
     function salir() {

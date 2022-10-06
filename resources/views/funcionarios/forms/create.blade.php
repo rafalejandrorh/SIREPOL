@@ -3,37 +3,37 @@
     <div class="col-xs-12 col-sm-12 col-md-3">
         <div class="form-group">
             <label for="name">Credencial</label>
-            {!! Form::text('credencial', null, array('class' => 'form-control', 'maxlength' => '10')) !!}
+            {!! Form::text('credencial', null, array('class' => 'form-control numero', 'maxlength' => '10')) !!}
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-3">
         <div class="form-group">
             <label for="email">Cédula</label>
-            {!! Form::text('cedula', null, array('class' => 'form-control', 'required' => 'required', 'maxlength' => '10')) !!}
+            {!! Form::text('cedula', null, array('class' => 'form-control numero', 'required' => 'required', 'maxlength' => '10')) !!}
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-3">
         <div class="form-group">
             <label for="email">Primer Nombre</label>
-            {!! Form::text('primer_nombre', null, array('class' => 'form-control', 'required' => 'required')) !!}
+            {!! Form::text('primer_nombre', null, array('class' => 'form-control letras', 'required' => 'required')) !!}
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-3">
         <div class="form-group">
             <label for="email">Segundo Nombre</label>
-            {!! Form::text('segundo_nombre', null, array('class' => 'form-control')) !!}
+            {!! Form::text('segundo_nombre', null, array('class' => 'form-control letras')) !!}
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-3">
         <div class="form-group">
             <label for="email">Primer Apellido</label>
-            {!! Form::text('primer_apellido', null, array('class' => 'form-control', 'required' => 'required')) !!}
+            {!! Form::text('primer_apellido', null, array('class' => 'form-control letras', 'required' => 'required')) !!}
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-3">
         <div class="form-group">
             <label for="email">Segundo Apellido</label>
-            {!! Form::text('segundo_apellido', null, array('class' => 'form-control')) !!}
+            {!! Form::text('segundo_apellido', null, array('class' => 'form-control letras')) !!}
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-3">
@@ -57,7 +57,7 @@
     <div class="col-xs-12 col-sm-12 col-md-3">
         <div class="form-group">
             <label for="email">Teléfono</label>
-            {!! Form::text('telefono', null, array('class' => 'form-control')) !!}
+            {!! Form::text('telefono', null, array('class' => 'form-control numero')) !!}
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-3">
