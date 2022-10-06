@@ -40,7 +40,7 @@
                                     <div class="col-xs-3 col-sm-3 col-md-3">
                                         {!! Form::button('<i class="fa fa-search"> Buscar</i>', ['type' => 'submit', 'class' => 'btn btn-primary']) !!}
                                     </div>
-                                    <div class="col-xs-2 col-sm-2 col-md-2">
+                                    <div class="col-xs-2 col-sm-2 col-md-2"> 
                                         <a href="#!" class="btn btn-primary" data-toggle="modal" data-target="#filtrar"><i class="fa fa-filter"></i> Filtro</a>
                                     </div>
                                 </div>

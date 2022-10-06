@@ -226,7 +226,7 @@ class FuncionarioController extends Controller
             $request['segundo_apellido'].' || '.$genero.' || '.$request['fecha_nacimiento'].' || '.$estado_nacimiento.' || '.$request['credencial'].' || '.
             $jerarquia.' || '.$request['telefono'].' || '.$estatus_laboral]);
 
-            Alert()->success('Usuario Creado Satisfactoriamente');
+            Alert()->success('Funcionario ingresado Satisfactoriamente');
             return redirect()->route('funcionarios.index');
         }
 
@@ -270,7 +270,7 @@ class FuncionarioController extends Controller
             $obtener_persona[0]['primer_apellido'].' || '.$obtener_persona[0]['segundo_apellido'].' || '.$genero.' || '.$obtener_persona[0]['fecha_nacimiento'].' || '.
             $estado_nacimiento.' || '.$request['credencial'].' || '.$jerarquia.' || '.$request['telefono'].' || '.$estatus_laboral]);
 
-            Alert()->success('Usuario Creado Satisfactoriamente','Atención: El ciudadano que registró no poseía registro como funcionario, se actualizó como funcionario y se asignó el Usuario');
+            Alert()->success('Funcionario ingresado Satisfactoriamente');
             return redirect()->route('funcionarios.index');
         }
 

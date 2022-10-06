@@ -56,14 +56,12 @@
                                                 @can('users.update_status')
                                                     @if($user->status == true)
                                                         <td class="sorting_1">
-                                                            {{-- {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!} --}}
                                                             {!! Form::model($user, ['method' => 'PATCH','route' => ['users.update_status', $user->id]]) !!}
                                                                 {!! Form::button('Activo', ['type' => 'submit', 'class' => 'btn btn-info']) !!}
                                                             {!! Form::close() !!} 
                                                         </td>
                                                     @else
                                                         <td class="sorting_1">                                                        
-                                                            {{-- {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!} --}}
                                                             {!! Form::model($user, ['method' => 'PATCH','route' => ['users.update_status', $user->id]]) !!}    
                                                                 {!! Form::button('Inactivo', ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
                                                             {!! Form::close() !!} 
