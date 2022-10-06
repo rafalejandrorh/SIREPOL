@@ -38,13 +38,13 @@
                 <div class="col-xs-12 col-sm-12 col-md-3">
                     <div class="form-group">
                         <label for="email">Cédula</label>
-                        {!! Form::text('cedula', isset($resennado->cedula) ? $resennado->cedula : null, array('class' => 'form-control numero', 'maxlength' => '10')) !!}
+                        {!! Form::text('cedula', isset($resennado->cedula) ? $resennado->cedula : null, array('class' => 'form-control numero cedula', 'maxlength' => '10')) !!}
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-3">
                     <div class="form-group">
                         <label for="email">Primer Nombre</label>
-                        {!! Form::text('primer_nombre', isset($resennado->primer_nombre) ? $resennado->primer_nombre : null, array('class' => 'form-control letras', 'required' => 'required')) !!}
+                        {!! Form::text('primer_nombre', isset($resennado->primer_nombre) ? $resennado->primer_nombre : null, array('class' => 'form-control letras', 'required' => 'required', 'id' => 'primer_nombre')) !!}
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-3">
@@ -56,7 +56,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-3">
                     <div class="form-group">
                         <label for="email">Primer Apellido</label>
-                        {!! Form::text('primer_apellido', isset($resennado->primer_apellido) ? $resennado->primer_apellido : null, array('class' => 'form-control letras', 'required' => 'required')) !!}
+                        {!! Form::text('primer_apellido', isset($resennado->primer_apellido) ? $resennado->primer_apellido : null, array('class' => 'form-control letras', 'required' => 'required', 'id' => 'primer_apellido')) !!}
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-3">

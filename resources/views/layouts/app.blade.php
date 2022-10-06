@@ -110,29 +110,62 @@
 </script>
 
 <script>
-    function mayus(e) {
+    function mayus(e){
         e.value = e.value.toUpperCase();
     }
 
-    function minus(e) {
+    function minus(e){
         e.value = e.value.toLowerCase();
     }
 
-    $('.numero').on('input', function () 
-    { 
+    $('.numero').on('input', function () { 
         this.value = this.value.replace(/[^0-9]/g,'');
     });
   
-    $('.letras').on('input', function () 
-    { 
+    $('.letras').on('input', function () { 
         this.value = this.value.replace(/[^a-zA-Z ]+$/,'');
     });
   
-    $('.mail').blur('input', function () { 
+    $('.mail').blur('input', function (){ 
         if($(".mail").val().indexOf('@', 0) == -1 || $(".mail").val().indexOf('.', 0) == -1) {
             alert('El correo electrónico introducido no es correcto.');
         }
     });
+
+    // $("document").ready(function(){
+    //     console.log('holamundo');
+    //     $('#cedula').on("click", function(){
+    //         console.log('holamundo2');
+    //         $.post("localhost/SIREPOL/resenna/search/", { id:$('#cedula').val() }, function(data){
+    //             //var id = $(this).data('id');
+    //             var obj = jQuery.parseJSON( data );
+    //             console.log(obj);
+    //             $('#primer_nombre').val(obj['primer_nombre']);
+    //             $('#primer_apellido').val(obj['primer_apellido']);
+    //         });
+    //     });
+    // })
+
+    $(document).ready(function(){
+         $("#cedula").keyup(function(){
+              var parametros = $(this).val()
+              $.ajax({
+                    data:  parametros,
+                    url:   'localhost/SIREPOL/resenna/search/',
+                    type:  'post',
+                    dataType: 'json',
+                    beforeSend: function () { },
+                    success:  function (response) {                 
+                        $("#primer_nombre").val(response.primer_nombre);
+                },
+                  error:function(){
+                       alert("error")
+                    }
+               });
+         })
+    })
+
+
 
     var timeout;
     document.onmousemove = function(){ 
