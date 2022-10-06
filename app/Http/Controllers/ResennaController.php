@@ -289,6 +289,25 @@ class ResennaController extends Controller
         'estado', 'estados', 'municipio', 'funcionario_resenna', 'funcionario_aprehensor', 'documentacion'));
     }
 
+        /**
+     * Search a resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $resennado = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
+        ->Where('persons.cedula', '=', $request->cedula)
+        ->select('persons.id_tipo_documentacion', 'persons.letra_cedula', 'persons.cedula', 'persons.primer_nombre',
+        'persons.segundo_nombre', 'persons.primer_apellido', 'persons.segundo_apellido', 'persons.fecha_nacimiento',
+        'persons.id_estado_nacimiento', 'persons.id_municipio_nacimiento', 'resenna_detenido.direccion', 'resenna_detenido.id_estado_civil',
+        'persons.id_genero', 'resenna_detenido.id_tez', 'resenna_detenido.id_contextura', 'resenna_detenido.id_profesion')->first();
+
+        //dd($resennado);die;
+
+        return response($resennado);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

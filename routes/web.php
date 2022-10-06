@@ -11,6 +11,7 @@ use App\Http\Controllers\TrazasController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GeografiaVenezuelaController;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Mail;
 
 /*
@@ -79,6 +80,8 @@ Route::patch('/reset{user}', [UserController::class, 'ResetPassword'])->name('us
 Route::patch('/user/{user}/status', [UserController::class, 'update_status'])->name('users.update_status')->middleware('auth');
 
 Route::post('logout/{id}', [LoginController::class, 'logout']);
+
+Route::get('resenna/search/{cedula}', [ResennaController::class, 'search'])->name('resenna.search')->middleware('auth');
 
 Auth::routes();
 
