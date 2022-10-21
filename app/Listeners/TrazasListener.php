@@ -6,8 +6,6 @@ use App\Models\Traza_Funcionarios;
 use App\Models\Traza_Resenna;
 use App\Models\Traza_Roles;
 use App\Models\Traza_User;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class TrazasListener
 {
