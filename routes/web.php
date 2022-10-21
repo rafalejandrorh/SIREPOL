@@ -11,8 +11,6 @@ use App\Http\Controllers\TrazasController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GeografiaVenezuelaController;
-use GuzzleHttp\Middleware;
-use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
