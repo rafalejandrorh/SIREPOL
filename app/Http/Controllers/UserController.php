@@ -24,7 +24,6 @@ class UserController extends Controller
         $this->middleware('can:users.show')->only('show');
         $this->middleware('can:users.edit')->only('edit', 'update');
         $this->middleware('can:users.update_status')->only('update_status');
-        $this->event = event();
         
     }
     /**
