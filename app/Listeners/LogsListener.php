@@ -30,10 +30,5 @@ class LogsListener
         $data = $event->getData();
         $module = $event->getModule();
         Log::debug($module, $data);
-        // Traza_Funcionarios::create([
-        //     'id_user' => $data['id_user'],
-        //     'id_accion' => 5,
-        //     'valores_modificados' => 'Prueba de Listener y Eventos' 
-        // ]);
     }
 }
