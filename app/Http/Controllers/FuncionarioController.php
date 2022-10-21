@@ -14,6 +14,8 @@ use App\Models\Estatus_Funcionario;
 use App\Models\Person;
 use App\Models\Funcionario;
 use Alert;
+use App\Events\LogsEvent;
+use App\Events\TrazasEvent;
 use App\Models\Traza_Funcionarios;
 
 class FuncionarioController extends Controller
@@ -25,6 +27,7 @@ class FuncionarioController extends Controller
         $this->middleware('can:funcionarios.create')->only('create');
         $this->middleware('can:funcionarios.show')->only('show');
         $this->middleware('can:funcionarios.edit')->only('edit', 'update');
+        $this->header_log = 'Módulo de Funcionarios';
  
     }
     /**
@@ -44,9 +47,8 @@ class FuncionarioController extends Controller
 
             $id_user = Auth::user()->id;
             $id_Accion = 5; //Búsqueda
-            $trazas = Traza_Funcionarios::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-            'valores_modificados' => 'Tipo de Búsqueda: '.
-            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
+            $valores_modificados = 'Tipo de Búsqueda: '.$request->tipo_busqueda.'. Valor Buscado: '.$request->buscador;
+            event(new LogsEvent($this->header_log, Auth::user()->id, 'Búsqueda de Funcionario por Cédula'));
 
         }else if($request->tipo_busqueda == 'credencial'){
             $funcionarios = Funcionario::Where('funcionarios.credencial', '=', $request->buscador)
@@ -56,9 +58,8 @@ class FuncionarioController extends Controller
 
             $id_user = Auth::user()->id;
             $id_Accion = 5; //Búsqueda
-            $trazas = Traza_Funcionarios::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-            'valores_modificados' => 'Tipo de Búsqueda: '.
-            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
+            $valores_modificados = 'Tipo de Búsqueda: '.$request->tipo_busqueda.'. Valor Buscado: '.$request->buscador;
+            event(new LogsEvent($this->header_log, Auth::user()->id, 'Búsqueda de Funcionario por Credencial'));
 
         }else if($request->tipo_busqueda == 'jerarquia'){
             $funcionarios = Funcionario::join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
@@ -68,18 +69,16 @@ class FuncionarioController extends Controller
 
             $id_user = Auth::user()->id;
             $id_Accion = 5; //Búsqueda
-            $trazas = Traza_Funcionarios::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-            'valores_modificados' => 'Tipo de Búsqueda: '.
-            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
+            $valores_modificados = 'Tipo de Búsqueda: '.$request->tipo_busqueda.'. Valor Buscado: '.$request->buscador;
+            event(new LogsEvent($this->header_log, Auth::user()->id, 'Búsqueda de Funcionario por Jerarquía'));
 
         }else if($request->tipo_busqueda == 'usuario'){
             $funcionarios = Funcionario::Where('users', 'ilike', '%'.$request->buscador.'%')->paginate(10);
 
             $id_user = Auth::user()->id;
             $id_Accion = 5; //Búsqueda
-            $trazas = Traza_Funcionarios::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-            'valores_modificados' => 'Tipo de Búsqueda: '.
-            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
+            $valores_modificados = 'Tipo de Búsqueda: '.$request->tipo_busqueda.'. Valor Buscado: '.$request->buscador;
+            event(new LogsEvent($this->header_log, Auth::user()->id, 'Búsqueda de Funcionario por Usuario'));
 
         }else if($request->tipo_busqueda == 'estatus'){
             if($request->buscador == 'activo' || $request->buscador == 'Activo' || $request->buscador == 'ACTIVO'){
@@ -91,9 +90,8 @@ class FuncionarioController extends Controller
 
             $id_user = Auth::user()->id;
             $id_Accion = 5; //Búsqueda
-            $trazas = Traza_Funcionarios::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-            'valores_modificados' => 'Tipo de Búsqueda: '.
-            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
+            $valores_modificados = 'Tipo de Búsqueda: '.$request->tipo_busqueda.'. Valor Buscado: '.$request->buscador;
+            event(new LogsEvent($this->header_log, Auth::user()->id, 'Búsqueda de Funcionario por Estatus'));
 
         }else if($request->tipo_busqueda == 'nombre'){
             $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
@@ -103,9 +101,8 @@ class FuncionarioController extends Controller
 
             $id_user = Auth::user()->id;
             $id_Accion = 5; //Búsqueda
-            $trazas = Traza_Funcionarios::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-            'valores_modificados' => 'Tipo de Búsqueda: '.
-            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
+            $valores_modificados = 'Tipo de Búsqueda: '.$request->tipo_busqueda.'. Valor Buscado: '.$request->buscador;
+            event(new LogsEvent($this->header_log, Auth::user()->id, 'Búsqueda de Funcionario por nombre'));
 
         }else if($request->tipo_busqueda == 'apellido'){
             $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
@@ -115,14 +112,22 @@ class FuncionarioController extends Controller
 
             $id_user = Auth::user()->id;
             $id_Accion = 5; //Búsqueda
-            $trazas = Traza_Funcionarios::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-            'valores_modificados' => 'Tipo de Búsqueda: '.
-            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
+            $valores_modificados = 'Tipo de Búsqueda: '.$request->tipo_busqueda.'. Valor Buscado: '.$request->buscador;
+            event(new LogsEvent($this->header_log, Auth::user()->id, 'Búsqueda de Funcionario por apellido'));
 
         }else{
             $funcionarios = Funcionario::paginate(10);
+            event(new LogsEvent($this->header_log, Auth::user()->id, 'Ingreso a Lista de Funcionarios'));
         }
-        
+
+        // Pasar las trazas a un Listener
+        // Definir solamente las variables id_user, id_accion y valores_modificados
+        // Colocar el event al final, antes del return con un if que valide si existen las tres variables previas
+        // Si existen ejecuta el evento, sino, no
+        if(isset($id_user) && isset($id_Accion) && isset($valores_modificados))
+        {
+            event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Funcionarios'));
+        }
         return view('funcionarios.index', ['funcionarios' => $funcionarios]);
     }
 
@@ -137,6 +142,7 @@ class FuncionarioController extends Controller
         $jerarquia = Jerarquia::pluck('valor', 'id')->all();
         $estatus = Estatus_Funcionario::pluck('valor', 'id')->all();
         $estado = Geografia_Venezuela::Where('id_padre', 107)->pluck('valor', 'id')->all();
+        event(new LogsEvent($this->header_log, Auth::user()->id, 'Ingreso a Registrar Funcionario'));
         return view('funcionarios.create',compact('genero', 'jerarquia', 'estatus', 'estado'));
     }
 
@@ -162,6 +168,7 @@ class FuncionarioController extends Controller
             $obtener_funcionario = $funcionario->where('id_person','=',$obtener_persona[0]['id'])->get();
             $validar_funcionario = $funcionario->where('id_person','=',$obtener_persona[0]['id'])->exists();
             if($validar_funcionario == true){
+                    event(new LogsEvent($this->header_log, Auth::user()->id, 'Creación de Nuevo Funcionario'));
                     Alert()->warning('El funcionario ya se encuentra registrado en el Sistema.', 'No se realizó el registro de la información ingresada');
                     return redirect()->route('funcionarios.index');
             }
@@ -220,11 +227,11 @@ class FuncionarioController extends Controller
 
             $id_user = Auth::user()->id;
             $id_Accion = 1; //Registro
-            $trazas = Traza_Funcionarios::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-            'valores_modificados' => 'Datos de Usuario: '.
-            'V'.$request['cedula'].' || '.$request['primer_nombre'].' || '.$request['segundo_nombre'].' || '.$request['primer_apellido'].' || '.
+            $valores_modificados = 'Datos de Funcionario: V'.$request['cedula'].' || '.$request['primer_nombre'].' || '.$request['segundo_nombre'].' || '.$request['primer_apellido'].' || '.
             $request['segundo_apellido'].' || '.$genero.' || '.$request['fecha_nacimiento'].' || '.$estado_nacimiento.' || '.$request['credencial'].' || '.
-            $jerarquia.' || '.$request['telefono'].' || '.$estatus_laboral]);
+            $jerarquia.' || '.$request['telefono'].' || '.$estatus_laboral;
+            event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Funcionarios'));
+            event(new LogsEvent($this->header_log, Auth::user()->id, 'Creación de Nuevo Funcionario'));
 
             Alert()->success('Funcionario ingresado Satisfactoriamente');
             return redirect()->route('funcionarios.index');
@@ -264,11 +271,11 @@ class FuncionarioController extends Controller
 
             $id_user = Auth::user()->id;
             $id_Accion = 1; //Registro
-            $trazas = Traza_Funcionarios::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-            'valores_modificados' => 'Datos de Usuario: La Persona que intentas registrar ya está registrada, se agregó solamente la información del Funcionario.'.
-            'V'.$obtener_persona[0]['cedula'].' || '.$obtener_persona[0]['primer_nombre'].' || '.$obtener_persona[0]['segundo_nombre'].' || '.
+            $valores_modificados = 'Datos de Funcionario: La Persona que intentas registrar ya está registrada, se agregó solamente la información del Funcionario - V'.$obtener_persona[0]['cedula'].' || '.$obtener_persona[0]['primer_nombre'].' || '.$obtener_persona[0]['segundo_nombre'].' || '.
             $obtener_persona[0]['primer_apellido'].' || '.$obtener_persona[0]['segundo_apellido'].' || '.$genero.' || '.$obtener_persona[0]['fecha_nacimiento'].' || '.
-            $estado_nacimiento.' || '.$request['credencial'].' || '.$jerarquia.' || '.$request['telefono'].' || '.$estatus_laboral]);
+            $estado_nacimiento.' || '.$request['credencial'].' || '.$jerarquia.' || '.$request['telefono'].' || '.$estatus_laboral;
+            event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Funcionarios'));
+            event(new LogsEvent($this->header_log, Auth::user()->id, 'Creación de Nuevo Funcionario'));
 
             Alert()->success('Funcionario ingresado Satisfactoriamente');
             return redirect()->route('funcionarios.index');
@@ -286,11 +293,12 @@ class FuncionarioController extends Controller
     {
         $id_user = Auth::user()->id;
         $id_Accion = 4; //Visualización
-        $trazas = Traza_Funcionarios::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-        'valores_modificados' => 'Datos de Funcionario: '.
+        $valores_modificados = 'Datos de Funcionario: '.
         $funcionario->credencial.' || '.$funcionario->person->letra_cedula.$funcionario->person->cedula.' || '.
         $funcionario->person->primer_nombre.' '.$funcionario->person->segundo_nombre.' '.$funcionario->person->primer_apellido.' '.
-        $funcionario->person->segundo_apellido.' || '.$funcionario->jerarquia->valor.' || '.$funcionario->estatus->valor]);
+        $funcionario->person->segundo_apellido.' || '.$funcionario->jerarquia->valor.' || '.$funcionario->estatus->valor;
+        event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Funcionarios'));
+        event(new LogsEvent($this->header_log, Auth::user()->id, 'Ver Información de Funcionario'));
 
         return view('funcionarios.show', compact('funcionario'));
     }
@@ -307,6 +315,8 @@ class FuncionarioController extends Controller
         $jerarquia = Jerarquia::pluck('valor', 'id')->all();
         $estatus = Estatus_Funcionario::pluck('valor', 'id')->all();
         $estado = Geografia_Venezuela::Where('id_padre', 107)->pluck('valor', 'id')->all();
+        event(new LogsEvent($this->header_log, Auth::user()->id, 'Editar Funcionario'));
+
         return view('funcionarios.edit', compact('funcionario', 'genero', 'jerarquia', 'estatus', 'estado'));
     }
 
@@ -355,11 +365,12 @@ class FuncionarioController extends Controller
 
         $id_user = Auth::user()->id;
         $id_Accion = 2; //Actualización
-        $trazas = Traza_Funcionarios::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-        'valores_modificados' => 'Datos de Usuario: '.
+        $valores_modificados = 'Datos de Funcionario: '.
         $request['primer_nombre'].' || '.$request['segundo_nombre'].' || '.$request['primer_apellido'].' || '.
         $request['segundo_apellido'].' || '.$genero.' || '.$request['fecha_nacimiento'].' || '.$estado_nacimiento.' || '.$request['credencial'].' || '.
-        $jerarquia.' || '.$request['telefono'].' || '.$estatus_laboral]);
+        $jerarquia.' || '.$request['telefono'].' || '.$estatus_laboral;
+        event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Funcionarios'));
+        event(new LogsEvent($this->header_log, Auth::user()->id, 'Actualización de Funcionario'));
     
         Alert()->success('Usuario Actualizado Satisfactoriamente');
         return redirect()->route('funcionarios.index');
@@ -418,14 +429,16 @@ class FuncionarioController extends Controller
         
         $id_user = Auth::user()->id;
         $id_Accion = 3; //Eliminación
-        $trazas = Traza_Funcionarios::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-        'valores_modificados' => 'Datos de Reseña: '.
+        $valores_modificados = 'Datos de Funcionario: '.
         'V'.$cedula.' || '.$primer_nombre.' '.$segundo_nombre.' || '.$primer_apellido.' || '.
         $segundo_apellido.' || '.$genero.' || '.$fecha_nacimiento.' || '.$estado_nacimiento.' || '.$credencial.' || '.$jerarquia.' || '.
-        $telefono.' || '.$estatus]);
+        $telefono.' || '.$estatus;
+        event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Funcionarios'));
 
         $funcionarios = Funcionario::find($id);
         $funcionarios->delete();
+        event(new LogsEvent($this->header_log, Auth::user()->id, 'Eliminar Funcionario'));
+
         return redirect()->route('funcionarios.index')->with('eliminar', 'Ok');
     }
 }
