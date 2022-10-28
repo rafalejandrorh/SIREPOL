@@ -441,4 +441,39 @@ class FuncionarioController extends Controller
 
         return redirect()->route('funcionarios.index')->with('eliminar', 'Ok');
     }
+
+    public function SearchFuncionario($tipo, $valor, $usuario)
+    {
+        $response['Code'] = 200;
+        if($tipo == 'cedula'){
+            $response['Data'] = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
+            ->join('estatus_funcionario', 'estatus_funcionario.id', '=', 'funcionarios.id_estatus')
+            ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
+            ->select('persons.cedula', 'funcionarios.credencial', 'persons.primer_nombre', 
+            'persons.segundo_nombre', 'persons.primer_apellido', 'persons.segundo_apellido', 
+            'estatus_funcionario.valor as estatus_funcionario', 'jerarquia.valor as jerarquia')
+            ->Where('persons.cedula', '=', $valor)->first();
+
+            // $id_user = Auth::user()->id;
+            // $id_Accion = 5; //Búsqueda
+            // $valores_modificados = 'Tipo de Búsqueda: '.$tipo.'. Valor Buscado: '.$valor;
+            // event(new LogsEvent($this->header_log, Auth::user()->id, 'Búsqueda de Funcionario por Cédula'));
+
+        }else if($tipo == 'credencial'){
+            $response['Data'] = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
+            ->join('estatus_funcionario', 'estatus_funcionario.id', '=', 'funcionarios.id_estatus')
+            ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
+            ->select('persons.cedula', 'funcionarios.credencial', 'persons.primer_nombre', 
+            'persons.segundo_nombre', 'persons.primer_apellido', 'persons.segundo_apellido', 
+            'estatus_funcionario.valor as estatus_funcionario', 'jerarquia.valor as jerarquia')
+            ->Where('funcionarios.credencial', '=', $valor)->first();
+
+            // $id_user = Auth::user()->id;
+            // $id_Accion = 5; //Búsqueda
+            // $valores_modificados = 'Tipo de Búsqueda: '.$tipo.'. Valor Buscado: '.$valor;
+            // event(new LogsEvent($this->header_log, Auth::user()->id, 'Búsqueda de Funcionario por Credencial'));
+        };
+        //dd($response);die;
+        return response()->json($response);
+    }
 }
