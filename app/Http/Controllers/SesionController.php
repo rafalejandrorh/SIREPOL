@@ -55,7 +55,6 @@ class SesionController extends Controller
      */
     public function update(Request $request, $id)
     {
-       
         $persona = User::where('id', '=', $id)->first();
         $validacion_password = Hash::check(request('curr_password'), $persona->password);
         if($validacion_password == true)
@@ -72,13 +71,9 @@ class SesionController extends Controller
                 Alert()->warning('Lo sentimos', 'La nueva Contraseña coincide con la Actual. Por favor, inserta una Contraseña distinta.');
                 return back();
             }
-            
-
         }else{
             Alert()->error('La Contraseña Actual indicada no coincide con nuestros registros.');
             return back()->with('error', 'Ok');
         }
-
     }
-
 }

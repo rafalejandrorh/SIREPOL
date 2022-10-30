@@ -442,38 +442,63 @@ class FuncionarioController extends Controller
         return redirect()->route('funcionarios.index')->with('eliminar', 'Ok');
     }
 
-    public function SearchFuncionario($tipo, $valor, $usuario)
+    ////////////////////////////////////////////////////// SERVICIOS DE API //////////////////////////////////////////////////////
+
+    public function SearchFuncionario($parametros)
     {
-        $response['Code'] = 200;
-        if($tipo == 'cedula'){
-            $response['Data'] = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
-            ->join('estatus_funcionario', 'estatus_funcionario.id', '=', 'funcionarios.id_estatus')
-            ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
-            ->select('persons.cedula', 'funcionarios.credencial', 'persons.primer_nombre', 
-            'persons.segundo_nombre', 'persons.primer_apellido', 'persons.segundo_apellido', 
-            'estatus_funcionario.valor as estatus_funcionario', 'jerarquia.valor as jerarquia')
-            ->Where('persons.cedula', '=', $valor)->first();
+        $result['Exist'] = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
+        ->Where('persons.cedula', '=', $parametros['valor'])->exists();
+        
+        if($result['Exist'] == true)
+        {
+            if($parametros['tipo'] == 'cedula'){
+                $result['Query'] = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
+                ->join('estatus_funcionario', 'estatus_funcionario.id', '=', 'funcionarios.id_estatus')
+                ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
+                ->select('persons.cedula', 'funcionarios.credencial', 'persons.primer_nombre', 
+                'persons.segundo_nombre', 'persons.primer_apellido', 'persons.segundo_apellido', 
+                'estatus_funcionario.valor as estatus_funcionario', 'jerarquia.valor as jerarquia')
+                ->Where('persons.cedula', '=', $parametros['valor'])->first();
 
-            // $id_user = Auth::user()->id;
-            // $id_Accion = 5; //Búsqueda
-            // $valores_modificados = 'Tipo de Búsqueda: '.$tipo.'. Valor Buscado: '.$valor;
-            // event(new LogsEvent($this->header_log, Auth::user()->id, 'Búsqueda de Funcionario por Cédula'));
+                // $id_user = Auth::user()->id;
+                // $id_Accion = 5; //Búsqueda
+                // $valores_modificados = 'Tipo de Búsqueda: '.$parametros['tipo'].'. Valor Buscado: '.$parametros['valor'];
+                // event(new LogsEvent($this->header_log, Auth::user()->id, 'Búsqueda de Funcionario por Cédula'));
 
-        }else if($tipo == 'credencial'){
-            $response['Data'] = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
-            ->join('estatus_funcionario', 'estatus_funcionario.id', '=', 'funcionarios.id_estatus')
-            ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
-            ->select('persons.cedula', 'funcionarios.credencial', 'persons.primer_nombre', 
-            'persons.segundo_nombre', 'persons.primer_apellido', 'persons.segundo_apellido', 
-            'estatus_funcionario.valor as estatus_funcionario', 'jerarquia.valor as jerarquia')
-            ->Where('funcionarios.credencial', '=', $valor)->first();
+            }else if($parametros['tipo'] == 'credencial'){
+                $result['Query'] = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
+                ->join('estatus_funcionario', 'estatus_funcionario.id', '=', 'funcionarios.id_estatus')
+                ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
+                ->select('persons.cedula', 'funcionarios.credencial', 'persons.primer_nombre', 
+                'persons.segundo_nombre', 'persons.primer_apellido', 'persons.segundo_apellido', 
+                'estatus_funcionario.valor as estatus_funcionario', 'jerarquia.valor as jerarquia')
+                ->Where('funcionarios.credencial', '=', $parametros['valor'])->first();
+            };
 
-            // $id_user = Auth::user()->id;
-            // $id_Accion = 5; //Búsqueda
-            // $valores_modificados = 'Tipo de Búsqueda: '.$tipo.'. Valor Buscado: '.$valor;
-            // event(new LogsEvent($this->header_log, Auth::user()->id, 'Búsqueda de Funcionario por Credencial'));
-        };
-        //dd($response);die;
-        return response()->json($response);
+            $response = array(
+                'Datos del Funcionario' => array(
+                    'Cedula' => $result['Query']['cedula'],
+                    'Credencial' => $result['Query']['credencial'],
+                    'Nombre Completo' => $result['Query']['primer_nombre'].' '.$result['Query']['segundo_nombre'].
+                    ', '.$result['Query']['primer_apellido'].' '.$result['Query']['segundo_apellido'],
+                    'Jerarquia' => $result['Query']['jerarquia'],
+                    'Estatus' => $result['Query']['estatus_funcionario'],
+                )
+            );
+
+        }else{
+            if($parametros['tipo'] == 'cedula')
+            {
+                $mensaje = 'La Cedula no pertenece a ningun Funcionario';
+            }else{
+                $mensaje = 'Credencial Inexistente';
+            }
+
+            $response = array(
+                'Datos del Funcionario' => $mensaje
+            );
+        }
+        return $response;
     }
+
 }

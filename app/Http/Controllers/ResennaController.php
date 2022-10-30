@@ -774,4 +774,60 @@ class ResennaController extends Controller
         $resenna->resennado->primer_apellido.'.pdf');
     }
 
+        ////////////////////////////////////////////////////// SERVICIOS DE API //////////////////////////////////////////////////////
+
+        public function SearchResennado($parametros)
+        {
+            $result['Count'] = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
+            ->Where('persons.cedula', $parametros['cedula'])->count();
+
+            $i = 0;
+            if($result['Count'] > 0)
+            {
+                $result['Query'] = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
+                ->join('caracteristicas_resennado AS Motivo_Resenna', 'Motivo_Resenna.id', '=', 'resenna_detenido.id_motivo_resenna')
+                ->join('caracteristicas_resennado AS Tez', 'Tez.id', '=', 'resenna_detenido.id_tez')
+                ->join('caracteristicas_resennado AS Contextura', 'Contextura.id', '=', 'resenna_detenido.id_contextura')
+                ->join('funcionarios as funcionario_aprehensor', 'funcionario_aprehensor.id', '=', 'resenna_detenido.id_funcionario_aprehensor')
+                ->join('jerarquia', 'jerarquia.id', '=', 'funcionario_aprehensor.id_jerarquia')
+                ->join('persons as person_funcionario_aprehensor', 'person_funcionario_aprehensor.id', '=', 'funcionario_aprehensor.id_person')
+                ->select(
+                'resenna_detenido.fecha_resenna', 
+                'persons.cedula', 'persons.primer_nombre', 'persons.segundo_nombre', 'persons.primer_apellido', 'persons.segundo_apellido', 
+                'Tez.valor as Tez', 'Contextura.valor as Contextura', 'Motivo_Resenna.valor as Motivo_Resenna',
+                'person_funcionario_aprehensor.primer_nombre AS Pnombre_funcionario_aprehensor', 
+                'person_funcionario_aprehensor.primer_apellido AS Papellido_funcionario_aprehensor',
+                'funcionario_aprehensor.credencial', 'jerarquia.valor AS jerarquia'
+                )
+                ->Where('persons.cedula', '=', $parametros['cedula'])->get();
+
+                while($i<$result['Count'])
+                {
+                    $response['Reseñas'][$i] = array(
+                        'Datos del Reseñado' => array(
+                            'Fecha de Reseña' => $result['Query'][$i]['fecha_resenna'],
+                            'Cedula' => $result['Query'][$i]['cedula'],
+                            'Nombre Completo' => $result['Query'][$i]['primer_nombre'].' '.$result['Query'][$i]['segundo_nombre'].
+                            ', '.$result['Query'][$i]['primer_apellido'].' '.$result['Query'][$i]['segundo_apellido'],
+                            'Tez' => $result['Query'][$i]['Tez'],
+                            'Contextura' => $result['Query'][$i]['Contextura'],
+                            'Motivo de Reseña' => $result['Query'][$i]['Motivo_Resenna']
+                        ),
+                        'Funcionario Aprehensor' => array(
+                            'Nombre Completo' => $result['Query'][$i]['Pnombre_funcionario_aprehensor'].' '.$result['Query'][$i]['Papellido_funcionario_aprehensor'],
+                            'Jerarquia' => $result['Query'][$i]['jerarquia'],
+                            'Credencial' => $result['Query'][$i]['credencial']
+                        )
+                    );
+                    $i++;
+                }
+            }else{
+                $response['Reseñas'] = array(
+                    'Datos del Reseñado' => 'El Ciudadano no posee Reseñas'
+                );
+            }
+
+            return $response;
+        }
+
 }

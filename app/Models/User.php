@@ -2,17 +2,13 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
-use App\Events\LogsEvent;
-use App\Events\SaveUserLogEvent;
-use App\Http\Controllers\RoleController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
+
 
 class User extends Authenticatable
 {
@@ -61,8 +57,8 @@ class User extends Authenticatable
     static function returnValidations(){
 
         return $validations=[
-            'users'          => 'string|max:50|unique:users',
-            'password'       => 'required|min:6',
+            'users'    => 'string|max:50|unique:users',
+            'password' => 'required|min:6',
         ];
         
     }
@@ -70,9 +66,8 @@ class User extends Authenticatable
     static function  returnMessages(){
 
         return $messages=[
-                'users.unique'          =>'Nombre de usuario en uso, ingrese otro por favor!',
-                'password.min'          =>'Tu contraseña debe ser de mínimo 6 caracteres.',
-
+            'users.unique' =>'Nombre de usuario en uso, ingrese otro por favor!',
+            'password.min' =>'Tu contraseña debe ser de mínimo 6 caracteres.',
         ];
     } 
 }

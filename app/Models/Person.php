@@ -50,5 +50,4 @@ class Person extends Model
     {
         return $this->belongsto(Geografia_Venezuela::class,'id_pais_nacimiento');
     }
-
 }

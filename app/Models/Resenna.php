@@ -65,4 +65,5 @@ class Resenna extends Model
     {
         return Storage::url($this->url_foto);
     }
+
 }

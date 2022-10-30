@@ -1,6 +1,8 @@
 <?php
 
-use App\Http\Controllers\FuncionarioController;
+use App\Http\Controllers\Services\AuthServicesController;
+use App\Http\Controllers\Services\FuncionarioServicesController;
+use App\Http\Controllers\Services\ResennaServicesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,8 +17,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
-Route::get('/ConsultaFuncionario/{tipo}/{valor}/{usuario}', [FuncionarioController::class, 'SearchFuncionario'])->name('ConsultaFuncionario');//->middleware('auth')
+Route::post('/Login/{user}/{password}', [AuthServicesController::class, 'login'])->name('login');
+
+Route::post('/Logout', [AuthServicesController::class, 'logout'])->name('logout')->middleware('auth:sanctum');
+
+Route::get('/ConsultaFuncionario/{tipo}/{valor}/{id_usuario}', [FuncionarioServicesController::class, 'SearchFuncionario'])->name('ConsultaFuncionario')->middleware('auth:sanctum');//['auth:sanctum', 'abilities:Funcionario:Consultar']
+
+Route::get('/ConsultaResennado/{cedula}/{id_usuario}', [ResennaServicesController::class, 'SearchResennado'])->name('ConsultaResennado')->middleware('auth:sanctum');
+
