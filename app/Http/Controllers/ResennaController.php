@@ -823,7 +823,7 @@ class ResennaController extends Controller
                 }
             }else{
                 $response['Reseñas'] = array(
-                    'Datos del Reseñado' => 'El Ciudadano no posee Reseñas'
+                    'Message' => 'El Ciudadano no posee Reseñas'
                 );
             }
 

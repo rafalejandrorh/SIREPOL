@@ -36,15 +36,12 @@ class AuthServicesController extends Controller
                 $token = null;
                 $token = $user->createToken('auth_token', ['*'], $date_expire_token)->plainTextToken;
                 $user->withAccessToken($token);
-                $ex = explode('|', $token);
-                $token_id = $ex[0];
                 
                 $data = array(
                     'Message' => 'Inicio de Sesión Exitoso',
                     'User_id' => $user['id'],
                     'Name_Funcionario' => $data_user['jerarquia'].' '.$data_user['primer_nombre'].' '.$data_user['primer_apellido'],
-                    'Token_id' => $token_id,
-                    'Token Bearer' => $token
+                    'Token_Bearer' => $token
                 );
                 $response = $this->dataservices->okCodeAuth($data);
             }else{

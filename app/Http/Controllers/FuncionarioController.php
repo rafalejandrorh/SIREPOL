@@ -495,7 +495,7 @@ class FuncionarioController extends Controller
             }
 
             $response = array(
-                'Datos del Funcionario' => $mensaje
+                'Message' => $mensaje
             );
         }
         return $response;
