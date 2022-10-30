@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Auth;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Alert;
+use App\Events\TrazasEvent;
 use Carbon\Carbon;
 use File;
 
@@ -86,6 +87,7 @@ class ResennaController extends Controller
                 $queryBuilder->Where('id_motivo_resenna', $request->id_motivo_resenna);
             }
             $resennas = $queryBuilder->orderBy('fecha_resenna', 'desc')->paginate(5);
+
         }else{
 
             if($request->tipo_busqueda == 'cedula_resennado'){
@@ -93,12 +95,6 @@ class ResennaController extends Controller
                 ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
                 'resenna_detenido.id_person')
                 ->Where('persons.cedula', '=', $request->buscador)->paginate(5);
-
-                $id_user = Auth::user()->id;
-                $id_Accion = 5; //Búsqueda
-                $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-                'valores_modificados' => 'Tipo de Búsqueda: '.
-                $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
 
             }else if($request->tipo_busqueda == 'cedula_resenna' || $request->tipo_busqueda == 'cedula_aprehensor'){
                 if($request->tipo_busqueda == 'cedula_resenna'){
@@ -112,12 +108,6 @@ class ResennaController extends Controller
                 'resenna_detenido.id_person')
                 ->Where('persons.cedula', '=', $request->buscador)->paginate(5);
 
-                $id_user = Auth::user()->id;
-                $id_Accion = 5; //Búsqueda
-                $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-                'valores_modificados' => 'Tipo de Búsqueda: '.
-                $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
-
             }else if($request->tipo_busqueda == 'credencial_resenna' || $request->tipo_busqueda == 'credencial_aprehensor'){
                 if($request->tipo_busqueda == 'credencial_resenna'){
                     $columna = 'id_funcionario_resenna';
@@ -128,12 +118,6 @@ class ResennaController extends Controller
                 ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
                 'resenna_detenido.id_person')
                 ->Where('funcionarios.credencial', '=', $request->buscador)->paginate(5);
-
-                $id_user = Auth::user()->id;
-                $id_Accion = 5; //Búsqueda
-                $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-                'valores_modificados' => 'Tipo de Búsqueda: '.
-                $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
 
             }else if($request->tipo_busqueda == 'jerarquia_resenna' || $request->tipo_busqueda == 'jerarquia_aprehensor'){
                 if($request->tipo_busqueda == 'jerarquia_resenna'){
@@ -147,35 +131,17 @@ class ResennaController extends Controller
                 'resenna_detenido.id_person')
                 ->Where('jerarquia.valor', 'ilike', '%'.$request->buscador.'%')->paginate(5);
 
-                $id_user = Auth::user()->id;
-                $id_Accion = 5; //Búsqueda
-                $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-                'valores_modificados' => 'Tipo de Búsqueda: '.
-                $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
-
             }else if($request->tipo_busqueda == 'nombre_resennado'){
                 $resennas = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
                 ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
                 'resenna_detenido.id_person')
                 ->Where('persons.primer_nombre', 'ilike', '%'.$request->buscador.'%')->paginate(5);
 
-                $id_user = Auth::user()->id;
-                $id_Accion = 5; //Búsqueda
-                $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-                'valores_modificados' => 'Tipo de Búsqueda: '.
-                $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
-
             }else if($request->tipo_busqueda == 'apellido_resennado'){
                 $resennas = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
                 ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
                 'resenna_detenido.id_person')
                 ->Where('persons.primer_apellido', 'ilike', '%'.$request->buscador.'%')->paginate(5);
-
-                $id_user = Auth::user()->id;
-                $id_Accion = 5; //Búsqueda
-                $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-                'valores_modificados' => 'Tipo de Búsqueda: '.
-                $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
 
             }else if($request->tipo_busqueda == 'nombre_resenna' || $request->tipo_busqueda == 'nombre_aprehensor'){
                 if($request->tipo_busqueda == 'nombre_resenna'){
@@ -189,12 +155,6 @@ class ResennaController extends Controller
                 'resenna_detenido.id_person')
                 ->Where('persons.primer_nombre', 'ilike', '%'.$request->buscador.'%')->paginate(5);
 
-                $id_user = Auth::user()->id;
-                $id_Accion = 5; //Búsqueda
-                $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-                'valores_modificados' => 'Tipo de Búsqueda: '.
-                $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
-
             }else if($request->tipo_busqueda == 'apellido_resenna' || $request->tipo_busqueda == 'apellido_aprehensor'){
                 if($request->tipo_busqueda == 'apellido_resenna'){
                     $columna = 'id_funcionario_resenna';
@@ -206,12 +166,6 @@ class ResennaController extends Controller
                 ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
                 'resenna_detenido.id_person')
                 ->Where('persons.primer_apellido', 'ilike', '%'.$request->buscador.'%')->paginate(5);
-
-                $id_user = Auth::user()->id;
-                $id_Accion = 5; //Búsqueda
-                $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-                'valores_modificados' => 'Tipo de Búsqueda: '.
-                $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
                 
             }else if($request->tipo_busqueda == 'motivo_resenna'){
                 $resennas = Resenna::join('caracteristicas_resennado', 'caracteristicas_resennado.id', '=', 'resenna_detenido.id_motivo_resenna')
@@ -220,14 +174,16 @@ class ResennaController extends Controller
                 ->Where('caracteristicas_resennado.valor', 'ilike', '%'.$request->buscador.'%')
                 ->paginate(5);
 
-                $id_user = Auth::user()->id;
-                $id_Accion = 5; //Búsqueda
-                $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-                'valores_modificados' => 'Tipo de Búsqueda: '.
-                $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
-
             }else{
                 $resennas = Resenna::orderBy('fecha_resenna', 'desc')->paginate(5);
+            }
+
+            if(isset($request->tipo_busqueda) && isset($request->buscador))
+            {
+                $id_user = Auth::user()->id;
+                $id_Accion = 5; //Búsqueda
+                $valores_modificados = 'Tipo de Búsqueda: '.$request->tipo_busqueda.'. Valor Buscado: '.$request->buscador;
+                event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Resenna'));
             }
         }
 
@@ -287,25 +243,6 @@ class ResennaController extends Controller
 
         return view('resenna.create', compact('resennado', 'fecha_hoy', 'genero', 'estado_civil', 'profesion', 'motivo_resenna', 'tez', 'contextura', 
         'estado', 'estados', 'municipio', 'funcionario_resenna', 'funcionario_aprehensor', 'documentacion'));
-    }
-
-        /**
-     * Search a resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function search(Request $request)
-    {
-        $resennado = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
-        ->Where('persons.cedula', '=', $request->cedula)
-        ->select('persons.id_tipo_documentacion', 'persons.letra_cedula', 'persons.cedula', 'persons.primer_nombre',
-        'persons.segundo_nombre', 'persons.primer_apellido', 'persons.segundo_apellido', 'persons.fecha_nacimiento',
-        'persons.id_estado_nacimiento', 'persons.id_municipio_nacimiento', 'resenna_detenido.direccion', 'resenna_detenido.id_estado_civil',
-        'persons.id_genero', 'resenna_detenido.id_tez', 'resenna_detenido.id_contextura', 'resenna_detenido.id_profesion')->first();
-
-        //dd($resennado);die;
-
-        return response($resennado);
     }
 
     /**
@@ -400,18 +337,18 @@ class ResennaController extends Controller
             }
             $id_user = Auth::user()->id;
             $id_Accion = 1; //Registro
-            $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-            'valores_modificados' => 'El ciudadano ya posee reseñas en el Sistema. Datos de Reseña: '.
+            $valores_modificados = 'El ciudadano ya posee reseñas en el Sistema. Datos de Reseña: '.
             $request->fecha_resenna.' || '.$obtener_persona[0]['cedula'].' || '.$obtener_persona[0]['primer_nombre'].' || '.
             $obtener_persona[0]['segundo_nombre'].' || '.$obtener_persona[0]['primer_apellido'].' || '.$obtener_persona[0]['segundo_apellido'].' || '.
             $genero.' || '.$obtener_persona[0]['fecha_nacimiento'].' || '.$estado_civil.' || '.$profesion.' || '.$motivo_resenna.' || '.$tez.' || '.$contextura.' || Funcionario Aprehensor: '
-            .$funcionario_aprehensor.' || Funcionario que Reseña: '.$funcionario_resenna.' || '.$request->direccion.' || '.$request->observaciones.' || '.$imagen]);
+            .$funcionario_aprehensor.' || Funcionario que Reseña: '.$funcionario_resenna.' || '.$request->direccion.' || '.$request->observaciones.' || '.$imagen;
+            event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Resenna'));
 
             Alert()->success('Reseña creada Satisfactoriamente','Atención: El ciudadano ya posee reseñas en el Sistema!');
             return redirect()->route('resenna.index');  
 
-        }else if($validar_persona == false)
-        {
+        }else if($validar_persona == false){
+            
             $persona = new Person();
             $persona->id_tipo_documentacion = $request->id_tipo_documentacion;
             $persona->letra_cedula = $request->letra_cedula;
@@ -500,16 +437,15 @@ class ResennaController extends Controller
 
             $id_user = Auth::user()->id;
             $id_Accion = 1; //Registro
-            $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-            'valores_modificados' => 'Datos de Reseña: '.
+            $valores_modificados = 'Datos de Reseña: '.
             $request->fecha_resenna.' || '.$request->cedula.' || '.$request->primer_nombre.' '.$request->segundo_nombre.' || '.
             $request->primer_apellido.' || '.$request->segundo_apellido.' || '.$request->fecha_nacimiento.' || '.$genero.' || '.$estado_civil.' || '.$profesion.' || '.$motivo_resenna.' || '.
-            $tez.' || '.$contextura.' || '.$funcionario_aprehensor.' || '.$funcionario_resenna.' || '.$request->direccion.' || '.$request->observaciones.' || '.$imagen]);
-
+            $tez.' || '.$contextura.' || '.$funcionario_aprehensor.' || '.$funcionario_resenna.' || '.$request->direccion.' || '.$request->observaciones.' || '.$imagen;
+            event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Resenna'));
+            
             Alert()->success('Reseña creada Satisfactoriamente','Ciudadano: '.$request->primer_nombre.' '.$request->primer_apellido.
             '. Portador de la Cédula de Identidad:'.$request->cedula);
             return redirect()->route('resenna.index');
-
         };
 
     }
@@ -524,13 +460,13 @@ class ResennaController extends Controller
     {
         $id_user = Auth::user()->id;
         $id_Accion = 4; //Visualización
-        $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-        'valores_modificados' => 'Datos de Reseña: '.
+        $valores_modificados = 'Datos de Reseña: '.
         $resenna->fecha_resenna.' || '.$resenna->resennado->letra_cedula.$resenna->resennado->cedula.' || '.
         $resenna->resennado->primer_nombre.' '.$resenna->resennado->segundo_nombre.' '.$resenna->resennado->primer_apellido.' '.
         $resenna->resennado->segundo_apellido.' || '.$resenna->motivo_resenna->valor.' || Funcionario Aprehensor: '.
         $resenna->funcionario_aprehensor->person->primer_nombre.' '.$resenna->funcionario_aprehensor->person->primer_apellido.' || Funcionario que Reseña: '.
-        $resenna->funcionario_resenna->person->primer_nombre.' '.$resenna->funcionario_resenna->person->primer_apellido]);
+        $resenna->funcionario_resenna->person->primer_nombre.' '.$resenna->funcionario_resenna->person->primer_apellido;
+        event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Resenna'));
 
         $edad = Carbon::parse($resenna->resennado->fecha_nacimiento)->age;
 
@@ -659,12 +595,14 @@ class ResennaController extends Controller
 
         $id_user = Auth::user()->id;
         $id_Accion = 2; //Actualización
-        $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-        'valores_modificados' => 'Datos de Reseña: '.
+        $valores_modificados = 'Datos de Reseña: '.
         $request->fecha_resenna.' || '.$request->cedula.' || '.$request->primer_nombre.' '.$request->segundo_nombre.' || '.
-        $request->primer_apellido.' || '.$request->segundo_apellido.' || '.$request->fecha_nacimiento.' || '.$genero.' || '.$estado_civil.' || '.$profesion.' || '.$motivo_resenna.' || '.
-        $tez.' || '.$contextura.' || Funcionario Aprehensor: '.$funcionario_aprehensor.' || Funcionario que Reseña: '.$funcionario_resenna.' || '.$request->direccion.' || '.$request->observaciones.' || '.$imagen]);
-
+        $request->primer_apellido.' || '.$request->segundo_apellido.' || '.$request->fecha_nacimiento.' || '.$genero.' || '.
+        $estado_civil.' || '.$profesion.' || '.$motivo_resenna.' || '.$tez.' || '.$contextura.' || Funcionario Aprehensor: '.
+        $funcionario_aprehensor.' || Funcionario que Reseña: '.$funcionario_resenna.' || '.$request->direccion.' || '.
+        $request->observaciones.' || '.$imagen;
+        event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Resenna'));
+        
         Alert()->success('Reseña Actualizada Satisfactoriamente');
         return redirect()->route('resenna.index');
     }
@@ -747,12 +685,13 @@ class ResennaController extends Controller
         
         $id_user = Auth::user()->id;
         $id_Accion = 3; //Eliminación
-        $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-        'valores_modificados' => 'Datos de Reseña: '.
+        $valores_modificados = 'Datos de Reseña: '.
         $fecha_resenna.' || '.$cedula.' || '.$primer_nombre.' '.$segundo_nombre.' || '.$primer_apellido.' || '.$segundo_apellido.' || '.
         $fecha_nacimiento.' || '.$genero.' || '.$estado_civil.' || '.$profesion.' || '.$motivo_resenna.' || '.
-        $tez.' || '.$contextura.' || Funcionario Aprehensor: '.$funcionario_aprehensor.' || Funcionario que Reseña: '.$funcionario_resenna.' || '.$direccion.' || '.$observaciones.' || '.$imagen]);
-
+        $tez.' || '.$contextura.' || Funcionario Aprehensor: '.$funcionario_aprehensor.' || Funcionario que Reseña: '.
+        $funcionario_resenna.' || '.$direccion.' || '.$observaciones.' || '.$imagen;
+        event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Resenna'));
+        
         $resenna = Resenna::find($id, ['id']);
         $resenna->delete();
         Alert()->success('La Reseña ha sido Eliminada');
@@ -763,10 +702,10 @@ class ResennaController extends Controller
     {
         $id_user = Auth::user()->id;
         $id_Accion = 6; //PDF
-        $trazas = Traza_Resenna::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-        'valores_modificados' => 'Visualización/Impresión de PDF de Reseña. Fecha de Reseña:'.
+        $valores_modificados = 'Visualización/Impresión de PDF de Reseña. Fecha de Reseña:'.
         $resenna->fecha_resenna.' || Cédula del Reseñado'.$resenna->resennado->letra_cedula.$resenna->resennado->cedula.
-        ' || Nombre completo del Reseñado'.$resenna->resennado->primer_nombre.' '.$resenna->resennado->primer_apellido]);
+        ' || Nombre completo del Reseñado'.$resenna->resennado->primer_nombre.' '.$resenna->resennado->primer_apellido;
+        event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Resenna'));
 
         $edad = Carbon::parse($resenna->resennado->fecha_nacimiento)->age;
         return PDF::loadView('resenna.pdf', compact('resenna', 'edad'))->setOption(['dpi' => 100, 'defaultFont' => 'sans-serif'])
@@ -776,58 +715,62 @@ class ResennaController extends Controller
 
         ////////////////////////////////////////////////////// SERVICIOS DE API //////////////////////////////////////////////////////
 
-        public function SearchResennado($parametros)
+    public function SearchResennado($parametros)
+    {
+        $result['Count'] = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
+        ->Where('persons.cedula', $parametros['cedula'])->count();
+
+        $i = 0;
+        if($result['Count'] > 0)
         {
-            $result['Count'] = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
-            ->Where('persons.cedula', $parametros['cedula'])->count();
+            $result['Query'] = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
+            ->join('caracteristicas_resennado AS Motivo_Resenna', 'Motivo_Resenna.id', '=', 'resenna_detenido.id_motivo_resenna')
+            ->join('caracteristicas_resennado AS Tez', 'Tez.id', '=', 'resenna_detenido.id_tez')
+            ->join('caracteristicas_resennado AS Contextura', 'Contextura.id', '=', 'resenna_detenido.id_contextura')
+            ->join('funcionarios as funcionario_aprehensor', 'funcionario_aprehensor.id', '=', 'resenna_detenido.id_funcionario_aprehensor')
+            ->join('jerarquia', 'jerarquia.id', '=', 'funcionario_aprehensor.id_jerarquia')
+            ->join('persons as person_funcionario_aprehensor', 'person_funcionario_aprehensor.id', '=', 'funcionario_aprehensor.id_person')
+            ->select(
+            'resenna_detenido.fecha_resenna', 
+            'persons.cedula', 'persons.primer_nombre', 'persons.segundo_nombre', 'persons.primer_apellido', 'persons.segundo_apellido', 
+            'Tez.valor as Tez', 'Contextura.valor as Contextura', 'Motivo_Resenna.valor as Motivo_Resenna',
+            'person_funcionario_aprehensor.primer_nombre AS Pnombre_funcionario_aprehensor', 
+            'person_funcionario_aprehensor.primer_apellido AS Papellido_funcionario_aprehensor',
+            'funcionario_aprehensor.credencial', 'jerarquia.valor AS jerarquia'
+            )
+            ->Where('persons.cedula', '=', $parametros['cedula'])->get();
 
-            $i = 0;
-            if($result['Count'] > 0)
+            $id_Accion = 5; //Búsqueda
+            $valores_modificados = 'Tipo de Búsqueda: '.$parametros['tipo'].'. Valor Buscado: '.$parametros['valor'];
+            event(new TrazasEvent($parametros['id_user'], $id_Accion, $valores_modificados, 'Traza_Resenna'));
+
+            while($i<$result['Count'])
             {
-                $result['Query'] = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
-                ->join('caracteristicas_resennado AS Motivo_Resenna', 'Motivo_Resenna.id', '=', 'resenna_detenido.id_motivo_resenna')
-                ->join('caracteristicas_resennado AS Tez', 'Tez.id', '=', 'resenna_detenido.id_tez')
-                ->join('caracteristicas_resennado AS Contextura', 'Contextura.id', '=', 'resenna_detenido.id_contextura')
-                ->join('funcionarios as funcionario_aprehensor', 'funcionario_aprehensor.id', '=', 'resenna_detenido.id_funcionario_aprehensor')
-                ->join('jerarquia', 'jerarquia.id', '=', 'funcionario_aprehensor.id_jerarquia')
-                ->join('persons as person_funcionario_aprehensor', 'person_funcionario_aprehensor.id', '=', 'funcionario_aprehensor.id_person')
-                ->select(
-                'resenna_detenido.fecha_resenna', 
-                'persons.cedula', 'persons.primer_nombre', 'persons.segundo_nombre', 'persons.primer_apellido', 'persons.segundo_apellido', 
-                'Tez.valor as Tez', 'Contextura.valor as Contextura', 'Motivo_Resenna.valor as Motivo_Resenna',
-                'person_funcionario_aprehensor.primer_nombre AS Pnombre_funcionario_aprehensor', 
-                'person_funcionario_aprehensor.primer_apellido AS Papellido_funcionario_aprehensor',
-                'funcionario_aprehensor.credencial', 'jerarquia.valor AS jerarquia'
-                )
-                ->Where('persons.cedula', '=', $parametros['cedula'])->get();
-
-                while($i<$result['Count'])
-                {
-                    $response['Reseñas'][$i] = array(
-                        'Datos del Reseñado' => array(
-                            'Fecha de Reseña' => $result['Query'][$i]['fecha_resenna'],
-                            'Cedula' => $result['Query'][$i]['cedula'],
-                            'Nombre Completo' => $result['Query'][$i]['primer_nombre'].' '.$result['Query'][$i]['segundo_nombre'].
-                            ', '.$result['Query'][$i]['primer_apellido'].' '.$result['Query'][$i]['segundo_apellido'],
-                            'Tez' => $result['Query'][$i]['Tez'],
-                            'Contextura' => $result['Query'][$i]['Contextura'],
-                            'Motivo de Reseña' => $result['Query'][$i]['Motivo_Resenna']
-                        ),
-                        'Funcionario Aprehensor' => array(
-                            'Nombre Completo' => $result['Query'][$i]['Pnombre_funcionario_aprehensor'].' '.$result['Query'][$i]['Papellido_funcionario_aprehensor'],
-                            'Jerarquia' => $result['Query'][$i]['jerarquia'],
-                            'Credencial' => $result['Query'][$i]['credencial']
-                        )
-                    );
-                    $i++;
-                }
-            }else{
-                $response['Reseñas'] = array(
-                    'Message' => 'El Ciudadano no posee Reseñas'
+                $response['Reseñas'][$i] = array(
+                    'Datos del Reseñado' => array(
+                        'Fecha de Reseña' => $result['Query'][$i]['fecha_resenna'],
+                        'Cedula' => $result['Query'][$i]['cedula'],
+                        'Nombre Completo' => $result['Query'][$i]['primer_nombre'].' '.$result['Query'][$i]['segundo_nombre'].
+                        ', '.$result['Query'][$i]['primer_apellido'].' '.$result['Query'][$i]['segundo_apellido'],
+                        'Tez' => $result['Query'][$i]['Tez'],
+                        'Contextura' => $result['Query'][$i]['Contextura'],
+                        'Motivo de Reseña' => $result['Query'][$i]['Motivo_Resenna']
+                    ),
+                    'Funcionario Aprehensor' => array(
+                        'Nombre Completo' => $result['Query'][$i]['Pnombre_funcionario_aprehensor'].' '.$result['Query'][$i]['Papellido_funcionario_aprehensor'],
+                        'Jerarquia' => $result['Query'][$i]['jerarquia'],
+                        'Credencial' => $result['Query'][$i]['credencial']
+                    )
                 );
+                $i++;
             }
-
-            return $response;
+        }else{
+            $response['Reseñas'] = array(
+                'Message' => 'El Ciudadano no posee Reseñas'
+            );
         }
+
+        return $response;
+    }
 
 }

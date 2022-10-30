@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Caracteristicas_Resennado;
 use App\Models\Traza_Roles;
 Use Alert;
-
+use App\Events\TrazasEvent;
 
 class RoleController extends Controller
 {
@@ -80,8 +80,8 @@ class RoleController extends Controller
 
         $id_user = Auth::user()->id;
         $id_Accion = 1; //Registro
-        $trazas = Traza_Roles::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-        'valores_modificados' => 'Rol: '.$request['name'].' || Permisos: '.$roles]);
+        $valores_modificados = 'Rol: '.$request['name'].' || Permisos: '.$roles;
+        event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Roles'));
 
         Alert()->success('Rol Creado Satisfactoriamente','Ahora puedes asignar el siguiente rol: '.$request->input('name'));
         return redirect()->route('roles.index');                        
@@ -150,8 +150,8 @@ class RoleController extends Controller
 
         $id_user = Auth::user()->id;
         $id_Accion = 2; //Actualización
-        $trazas = Traza_Roles::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-        'valores_modificados' => 'Rol: '.$request['name'].' || Permisos: '.$roles]);
+        $valores_modificados = 'Rol: '.$request['name'].' || Permisos: '.$roles;
+        event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Roles'));
 
         Alert()->success('Rol de '.$request->input('name'),  'Actualizado Satisfactoriamente.');
         return redirect()->route('roles.index');                        
@@ -187,8 +187,8 @@ class RoleController extends Controller
 
         $id_user = Auth::user()->id;
         $id_Accion = 3; //Eliminación
-        $trazas = Traza_Roles::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-        'valores_modificados' => 'Rol: '.$role->name.' || Permisos: '.$roles]);
+        $valores_modificados = 'Rol: '.$role->name.' || Permisos: '.$roles;
+        event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Roles'));
 
         $role->delete();
 

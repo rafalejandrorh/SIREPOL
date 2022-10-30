@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Alert;
 use App\Events\PublicNotification;
+use App\Events\TrazasEvent;
 
 class UserController extends Controller
 {
@@ -44,23 +45,11 @@ class UserController extends Controller
             ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
             ->select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
             ->Where('persons.cedula', '=', $request->buscador)->paginate(10);
-
-            $id_user = Auth::user()->id;
-            $id_Accion = 5; //Búsqueda
-            $trazas = Traza_User::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-            'valores_modificados' => 'Tipo de Búsqueda: '.
-            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
             
         }else if($request->tipo_busqueda == 'credencial'){
             $user = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
             ->select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
             ->Where('funcionarios.credencial', '=', $request->buscador)->paginate(10);
-
-            $id_user = Auth::user()->id;
-            $id_Accion = 5; //Búsqueda
-            $trazas = Traza_User::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-            'valores_modificados' => 'Tipo de Búsqueda: '.
-            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
 
         }else if($request->tipo_busqueda == 'jerarquia'){
             $user = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
@@ -68,22 +57,10 @@ class UserController extends Controller
             ->select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
             ->Where('jerarquia.valor', 'ilike', '%'.$request->buscador.'%')->paginate(10);
 
-            $id_user = Auth::user()->id;
-            $id_Accion = 5; //Búsqueda
-            $trazas = Traza_User::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-            'valores_modificados' => 'Tipo de Búsqueda: '.
-            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
-
         }else if($request->tipo_busqueda == 'usuario'){
             $user = User::select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
             ->Where('users', 'ilike', '%'.$request->buscador.'%')
             ->paginate(10);
-
-            $id_user = Auth::user()->id;
-            $id_Accion = 5; //Búsqueda
-            $trazas = Traza_User::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-            'valores_modificados' => 'Tipo de Búsqueda: '.
-            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
 
         }else if($request->tipo_busqueda == 'estatus'){
             if($request->buscador == 'activo' || $request->buscador == 'Activo' || $request->buscador == 'ACTIVO'){
@@ -95,23 +72,11 @@ class UserController extends Controller
             ->Where('status', '=', $status)
             ->paginate(10);
 
-            $id_user = Auth::user()->id;
-            $id_Accion = 5; //Búsqueda
-            $trazas = Traza_User::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-            'valores_modificados' => 'Tipo de Búsqueda: '.
-            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
-
         }else if($request->tipo_busqueda == 'nombre'){
             $user = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
             ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
             ->select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
             ->Where('persons.primer_nombre', 'ilike', '%'.$request->buscador.'%')->paginate(5);
-
-            $id_user = Auth::user()->id;
-            $id_Accion = 5; //Búsqueda
-            $trazas = Traza_User::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-            'valores_modificados' => 'Tipo de Búsqueda: '.
-            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
 
         }else if($request->tipo_busqueda == 'apellido'){
             $user = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
@@ -119,14 +84,16 @@ class UserController extends Controller
             ->select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
             ->Where('persons.primer_apellido', 'ilike', '%'.$request->buscador.'%')->paginate(5);
 
-            $id_user = Auth::user()->id;
-            $id_Accion = 5; //Búsqueda
-            $trazas = Traza_User::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-            'valores_modificados' => 'Tipo de Búsqueda: '.
-            $request->tipo_busqueda.'. Valor Buscado: '.$request->buscador]);
-
         }else{
             $user = User::paginate(10);
+        }
+
+        if(isset($request->tipo_busqueda) && isset($request->buscador))
+        {
+            $id_user = Auth::user()->id;
+            $id_Accion = 5; //Búsqueda
+            $valores_modificados = 'Tipo de Búsqueda: '.$request->tipo_busqueda.'. Valor Buscado: '.$request->buscador;
+            event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_User'));
         }
         
         return view('users.index', ['Users' => $user]);
@@ -192,9 +159,8 @@ class UserController extends Controller
 
             $id_user = Auth::user()->id;
             $id_Accion = 1; //Registro
-            $trazas = Traza_User::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-            'valores_modificados' => 'Datos de Usuario: '.$request['users'].' || Activo || '.$rol]);
-            
+            $valores_modificados = 'Datos de Usuario: '.$request['users'].' || Activo || '.$rol;
+            event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_User'));
             //$message = '';
             //redirect()->route('notification', $message);
             event(new PublicNotification());
@@ -225,10 +191,10 @@ class UserController extends Controller
         }else{
             $estatus = 'Inactivo';
         }
-        $trazas = Traza_User::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-        'valores_modificados' => 'Datos de Usuario: '.
+        $valores_modificados ='Datos de Usuario: '.
         $user->funcionario->jerarquia->valor.'. '.$user->funcionario->person->primer_nombre.' '.
-        $user->funcionario->person->primer_apellido.' || '.$estatus.' || '.$user->users]);
+        $user->funcionario->person->primer_apellido.' || '.$estatus.' || '.$user->users;
+        event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_User'));
 
         $roles = Role::pluck('name','id')->all();
         return view('users.show', compact('user', 'roles'));
@@ -265,8 +231,8 @@ class UserController extends Controller
 
         $id_user = Auth::user()->id;
         $id_Accion = 2; //Actualización
-        $trazas = Traza_User::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-        'valores_modificados' => 'Datos de Usuario: '.$request['users'].' || Activo || '.$rol]);
+        $valores_modificados = 'Datos de Usuario: '.$request['users'].' || Activo || '.$rol;
+        event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_User'));
     
         Alert()->success('Usuario Actualizado Satisfactoriamente');
         return redirect()->route('users.index');
@@ -288,9 +254,8 @@ class UserController extends Controller
 
         $id_user = Auth::user()->id;
         $id_Accion = 2; //Actualización
-        $trazas = Traza_User::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-        'valores_modificados' => 'Se reseteó la contraseña del Usuario: '.
-        $usuario.'. Se colocó la contraseña genérica']);
+        $valores_modificados = 'Se reseteó la contraseña del Usuario: '.$usuario.'. Se colocó la contraseña genérica';
+        event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_User'));
 
         Alert()->success('Reinicio de Contraseña realizado', 'Nueva Contraseña: '.$password);
         return back(); 
@@ -331,9 +296,8 @@ class UserController extends Controller
 
         $id_user = Auth::user()->id;
         $id_Accion = 2; //Actualización
-        $trazas = Traza_User::create(['id_user' => $id_user, 'id_accion' => $id_Accion, 
-        'valores_modificados' => 'Datos de Usuario: '.
-        $usuario.' || '.$notificacion]);
+        $valores_modificados = 'Datos de Usuario: '.$usuario.' || '.$notificacion;
+        event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_User'));
 
         Alert()->success('Estatus de Usuario Actualizado', 'Nuevo Estatus: '.$notificacion);
         return redirect()->route('users.index');

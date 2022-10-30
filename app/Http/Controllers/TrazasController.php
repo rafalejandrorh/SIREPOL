@@ -440,17 +440,21 @@ class TrazasController extends Controller
                 ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
                 ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
                 ->Where('persons.cedula', '=', $request->buscador)->orderBy('login', 'DESC')->paginate(10);
+                
             }else if($request->tipo_busqueda == 'credencial'){
                 $historial_sesion = Historial_Sesion::join('users', 'users.id', '=', 'historial_sesion.id_user')
                 ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
                 ->Where('funcionarios.credencial', '=', $request->buscador)->orderBy('login', 'DESC')->paginate(10);
+
             }else if($request->tipo_busqueda == 'jerarquia'){
                 $historial_sesion = Historial_Sesion::join('users', 'users.id', '=', 'historial_sesion.id_user')
                 ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
                 ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
                 ->Where('jerarquia.valor', 'ilike', '%'.$request->buscador.'%')->orderBy('login', 'DESC')->paginate(10);
+
             }else if($request->tipo_busqueda == 'usuario'){
                 $historial_sesion = Historial_Sesion::Where('users', 'ilike', '%'.$request->buscador.'%')->orderBy('login', 'DESC')->paginate(10);
+
             }else if($request->tipo_busqueda == 'nombre'){
                 $historial_sesion = Historial_Sesion::join('users', 'users.id', '=', 'historial_sesion.id_user')
                 ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
