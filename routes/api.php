@@ -25,7 +25,7 @@ Route::post('/Login/{user}/{password}', [AuthServicesController::class, 'login']
 
 Route::post('/Logout', [AuthServicesController::class, 'logout'])->name('logout')->middleware('auth:sanctum');
 
-Route::get('/ConsultaFuncionario/{tipo}/{valor}/{id_usuario}', [FuncionarioServicesController::class, 'SearchFuncionario'])->name('ConsultaFuncionario')->middleware('auth:sanctum');//['auth:sanctum', 'abilities:Funcionario:Consultar']
+Route::get('/ConsultaFuncionario/{tipo}/{valor}', [FuncionarioServicesController::class, 'SearchFuncionario'])->name('ConsultaFuncionario')->middleware('auth:sanctum');//['auth:sanctum', 'abilities:Funcionario:Consultar']
 
-Route::get('/ConsultaResennado/{cedula}/{id_usuario}', [ResennaServicesController::class, 'SearchResennado'])->name('ConsultaResennado')->middleware('auth:sanctum');
+Route::get('/ConsultaResennado/{cedula}', [ResennaServicesController::class, 'SearchResennado'])->name('ConsultaResennado')->middleware('auth:sanctum');
 

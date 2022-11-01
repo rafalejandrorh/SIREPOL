@@ -14,8 +14,9 @@ class ResennaServicesController extends Controller
         $this->user = $user;
     }
 
-    public function SearchResennado($cedula, $id_user)
+    public function SearchResennado($cedula)
     {
+        $id_user = 2;
         $ip = '192.168.0.101';
         $mac = '00:00:00:00';
         $metodo = ConsultaResennado;
@@ -27,7 +28,7 @@ class ResennaServicesController extends Controller
         $token = $this->dataservices->validarToken();
         // if($this->user->tokenCan(ConsultarResennados))
         // {
-            if(isset($cedula) && isset($id_user))
+            if(isset($cedula))
             {
                 $response = $this->dataservices->validarRequest($parametros_servicio, $metodo, $token);
             }else{

@@ -16,8 +16,9 @@ class FuncionarioServicesController extends Controller
         $this->user = $user;
     }
 
-    public function SearchFuncionario($tipo, $valor, $id_user)
+    public function SearchFuncionario($tipo, $valor)
     {
+        $id_user = 2;
         $ip = '192.168.0.101';
         $mac = '00:00:00:00';
         $metodo = ConsultaFuncionario;
