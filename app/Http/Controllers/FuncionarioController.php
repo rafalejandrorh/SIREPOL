@@ -400,8 +400,20 @@ class FuncionarioController extends Controller
 
     public function SearchFuncionario($parametros)
     {
-        $result['Exist'] = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
-        ->Where('persons.cedula', '=', $parametros['valor'])->exists();
+    
+        if($parametros['tipo'] == 'cedula')
+        {
+            $result['Exist'] = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
+            ->Where('persons.cedula', '=', $parametros['valor'])->exists();
+            $mensaje_error = 'La Cedula no pertenece a ningun Funcionario';
+        }else if($parametros['tipo'] == 'credencial'){
+            $result['Exist'] = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
+            ->Where('funcionarios.credencial', '=', $parametros['valor'])->exists();
+            $mensaje_error = 'Credencial Inexistente';
+        }else{
+            $result['Exist'] = false;
+            $mensaje_error = 'Búsqueda no válida';
+        }
         
         if($result['Exist'] == true)
         {
@@ -439,17 +451,9 @@ class FuncionarioController extends Controller
                     'Estatus' => $result['Query']['estatus_funcionario'],
                 )
             );
-
         }else{
-            if($parametros['tipo'] == 'cedula')
-            {
-                $mensaje = 'La Cedula no pertenece a ningun Funcionario';
-            }else{
-                $mensaje = 'Credencial Inexistente';
-            }
-
             $response = array(
-                'Message' => $mensaje
+                'Message' => $mensaje_error
             );
         }
         return $response;

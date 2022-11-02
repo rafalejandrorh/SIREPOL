@@ -3,6 +3,7 @@
 use App\Events\PrivateNotification;
 use App\Events\PublicNotification;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\SesionController;
 use App\Http\Controllers\ResennaController;
@@ -64,6 +65,10 @@ Route::get('/resenna_pdf/{resenna}', [App\Http\Controllers\ResennaController::cl
 Route::get('resenna/create/select/{id}/{id_hijo}', [App\Http\Controllers\GeografiaVenezuelaController::class, 'getCombo']);
 
 Route::get('resenna/{id}/edit/select/{tipo}/{id_hijo}', [App\Http\Controllers\GeografiaVenezuelaController::class, 'getCombos']);
+
+Route::get('/resenna/mail', [EmailController::class, 'index'])->name('resenna.mail')->middleware('auth');
+
+//Route::get('/users/reset-password')
 
 Route::patch('/traza_resennas/{resenna}', [App\Http\Controllers\TrazasController::class, 'update_resenna'])->name('traza_resenna.update')->middleware('auth');
 
