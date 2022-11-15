@@ -127,13 +127,13 @@ class LoginController extends Controller
         if ($response = $this->loggedOut($request)) {
             return $response;
         }
-
-        Alert()->toast('Haz cerrado sesión en el Sistema','info');
-        // return $request->wantsJson()
-        //     ? new JsonResponse([], 204)
-        //     : redirect('/');
-
-        return redirect('/');
+        
+        if($request->id == 1){
+            Alert()->toast('Haz cerrado sesión en el Sistema','info');
+        }else if($request->id == 2){
+            Alert()->toast('Cierre de Sesión por período de Inactividad','info');
+        }
+        return $request->wantsJson() ? new JsonResponse([], 204) : redirect('/');
     }
 
 }

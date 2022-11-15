@@ -1,5 +1,5 @@
 {
-	"authHost": "http://127.0.0.1/SIREPOL",
+	"authHost": "http://localhost",
 	"authEndpoint": "/broadcasting/auth",
 	"clients": [],
 	"database": "redis",
@@ -9,8 +9,8 @@
 			"databasePath": "/database/laravel-echo-server.sqlite"
 		}
 	},
-	"devMode": true,
-	"host": "127.0.0.1",
+	"devMode": false,
+	"host": "http://localhost",
 	"port": "6001",
 	"protocol": "http",
 	"socketio": {},

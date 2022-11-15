@@ -19,17 +19,16 @@
                 @can('users.password')
                 <a class="dropdown-item has-icon" href="{{ route('sesion.index') }}"><i class="fa fa-lock"></i>Cambiar Contraseña </a>
                 @endcan
-                <a class="dropdown-item has-icon text-danger"
-                   onclick="event.preventDefault(); localStorage.clear();  document.getElementById('logout-form').submit();">
-                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-                </a>
+                <a class="dropdown-item text-danger"
+                    onclick="event.preventDefault(); localStorage.clear();  document.getElementById('logout-form').submit();">
+                <i class="fas fa-sign-out-alt"></i>  Cerrar Sesión</a>
                 <form id="logout-form" action="{{ url('/logout/1') }}" method="POST" class="d-none">
                     {{ csrf_field() }}
                 </form>
             </div>
         </li>
 
-        <a id="logout-formactivar"
+        <a id="logout-formactivar" 
             onclick="event.preventDefault(); localStorage.clear();  document.getElementById('logout-expire').submit();">
         </a>
         <form id="logout-expire" action="{{ url('/logout/2') }}" method="POST" class="d-none">
