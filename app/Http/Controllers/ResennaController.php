@@ -723,49 +723,74 @@ class ResennaController extends Controller
         $i = 0;
         if($result['Count'] > 0)
         {
-            $result['Query'] = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
-            ->join('caracteristicas_resennado AS Motivo_Resenna', 'Motivo_Resenna.id', '=', 'resenna_detenido.id_motivo_resenna')
+            $result['QueryPerson'] = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
+            ->join('geografia_venezuela as estado', 'estado.id', '=', 'persons.id_estado_nacimiento')
+            ->join('geografia_venezuela as municipio', 'municipio.id', '=', 'persons.id_municipio_nacimiento')
+            ->join('tipo_documentacion', 'tipo_documentacion.id', '=', 'persons.id_tipo_documentacion')
+            ->join('genero', 'genero.id', '=', 'persons.id_genero')
+            ->select(
+                'persons.id', 'persons.letra_cedula', 'persons.cedula', 'persons.primer_nombre', 'persons.segundo_nombre', 
+                'persons.primer_apellido', 'persons.segundo_apellido', 'persons.fecha_nacimiento', 'tipo_documentacion.valor AS documentacion',
+                'estado.valor AS estado_nacimiento', 'municipio.valor AS municipio_nacimiento', 'genero.valor as genero'
+            )
+            ->Where('persons.cedula', '=', $parametros['cedula'])->first();
+
+            $result['QueryResenna'] = Resenna::join('caracteristicas_resennado AS Motivo_Resenna', 'Motivo_Resenna.id', '=', 'resenna_detenido.id_motivo_resenna')
             ->join('caracteristicas_resennado AS Tez', 'Tez.id', '=', 'resenna_detenido.id_tez')
             ->join('caracteristicas_resennado AS Contextura', 'Contextura.id', '=', 'resenna_detenido.id_contextura')
+            ->join('caracteristicas_resennado as profesion', 'profesion.id', '=', 'resenna_detenido.id_profesion')
+            ->join('caracteristicas_resennado as estado_civil', 'estado_civil.id', '=', 'resenna_detenido.id_estado_civil')
             ->join('funcionarios as funcionario_aprehensor', 'funcionario_aprehensor.id', '=', 'resenna_detenido.id_funcionario_aprehensor')
             ->join('jerarquia', 'jerarquia.id', '=', 'funcionario_aprehensor.id_jerarquia')
             ->join('persons as person_funcionario_aprehensor', 'person_funcionario_aprehensor.id', '=', 'funcionario_aprehensor.id_person')
             ->select(
-            'resenna_detenido.fecha_resenna', 
-            'persons.cedula', 'persons.primer_nombre', 'persons.segundo_nombre', 'persons.primer_apellido', 'persons.segundo_apellido', 
+            'resenna_detenido.fecha_resenna', 'resenna_detenido.direccion', 
             'Tez.valor as Tez', 'Contextura.valor as Contextura', 'Motivo_Resenna.valor as Motivo_Resenna',
-            'person_funcionario_aprehensor.primer_nombre AS Pnombre_funcionario_aprehensor', 
-            'person_funcionario_aprehensor.primer_apellido AS Papellido_funcionario_aprehensor',
-            'funcionario_aprehensor.credencial', 'jerarquia.valor AS jerarquia'
+            'person_funcionario_aprehensor.primer_nombre AS Pnombre_funcionario_aprehensor', 'resenna_detenido.observaciones',
+            'person_funcionario_aprehensor.primer_apellido AS Papellido_funcionario_aprehensor', 'profesion.valor AS profesion',
+            'funcionario_aprehensor.credencial', 'jerarquia.valor AS jerarquia', 'estado_civil.valor AS estado_civil',
             )
-            ->Where('persons.cedula', '=', $parametros['cedula'])->get();
+            ->Where('resenna_detenido.id_person', '=', $result['QueryPerson']['id'])->get();
 
             $id_Accion = 5; //Búsqueda
-            $valores_modificados = 'Tipo de Búsqueda: '.$parametros['tipo'].'. Valor Buscado: '.$parametros['valor'];
+            $valores_modificados = 'Tipo de Búsqueda: Reseñado. Valor Buscado: '.$parametros['cedula'];
             event(new TrazasEvent($parametros['id_user'], $id_Accion, $valores_modificados, 'Traza_Resenna'));
+
+            $response['Persona']['Datos'] = array(
+                    'Estatus de Documentación' => $result['QueryPerson']['documentacion'],
+                    'Cedula' => "".$result['QueryPerson']['letra_cedula'].$result['QueryPerson']['cedula']."",
+                    'Nombre Completo' => $result['QueryPerson']['primer_nombre'].' '.$result['QueryPerson']['segundo_nombre'].
+                    ', '.$result['QueryPerson']['primer_apellido'].' '.$result['QueryPerson']['segundo_apellido'],
+                    'Género' => $result['QueryPerson']['genero'],
+                    'Edad' => "".Carbon::parse($result['QueryPerson']['fecha_nacimiento'])->age."",
+                    'Fecha de Nacimiento' => date('d/m/Y', strtotime($result['QueryPerson']['fecha_nacimiento'])),
+                    'Estado de Nacimiento' => $result['QueryPerson']['estado_nacimiento'],
+                    'Municipio de Nacimiento' => $result['QueryPerson']['municipio_nacimiento']
+            );
 
             while($i<$result['Count'])
             {
                 $response['Reseñas'][$i] = array(
-                    'Datos del Reseñado' => array(
-                        'Fecha de Reseña' => $result['Query'][$i]['fecha_resenna'],
-                        'Cedula' => $result['Query'][$i]['cedula'],
-                        'Nombre Completo' => $result['Query'][$i]['primer_nombre'].' '.$result['Query'][$i]['segundo_nombre'].
-                        ', '.$result['Query'][$i]['primer_apellido'].' '.$result['Query'][$i]['segundo_apellido'],
-                        'Tez' => $result['Query'][$i]['Tez'],
-                        'Contextura' => $result['Query'][$i]['Contextura'],
-                        'Motivo de Reseña' => $result['Query'][$i]['Motivo_Resenna']
+                    'Datos' => array(
+                        'Fecha de Reseña' => date('d/m/Y', strtotime($result['QueryResenna'][$i]['fecha_resenna'])).'. Hace '.$result['QueryResenna'][$i]['fecha_resenna']->diff(date('Y-m-d'))->days.' días',
+                        'Motivo de Reseña' => $result['QueryResenna'][$i]['Motivo_Resenna'],
+                        'Tez' => $result['QueryResenna'][$i]['Tez'],
+                        'Contextura' => $result['QueryResenna'][$i]['Contextura'],
+                        'Estado Civil' => $result['QueryResenna'][$i]['estado_civil'],
+                        'Profesión' => $result['QueryResenna'][$i]['profesion'],
+                        'Dirección' => $result['QueryResenna'][$i]['direccion'],
+                        'Observaciones' => $result['QueryResenna'][$i]['observaciones']
                     ),
                     'Funcionario Aprehensor' => array(
-                        'Nombre Completo' => $result['Query'][$i]['Pnombre_funcionario_aprehensor'].' '.$result['Query'][$i]['Papellido_funcionario_aprehensor'],
-                        'Jerarquia' => $result['Query'][$i]['jerarquia'],
-                        'Credencial' => $result['Query'][$i]['credencial']
+                        'Nombre Completo' => $result['QueryResenna'][$i]['Pnombre_funcionario_aprehensor'].' '.$result['QueryResenna'][$i]['Papellido_funcionario_aprehensor'],
+                        'Jerarquia' => $result['QueryResenna'][$i]['jerarquia'],
+                        'Credencial' => "".$result['QueryResenna'][$i]['credencial'].""
                     )
                 );
                 $i++;
             }
         }else{
-            $response['Reseñas'] = array(
+            $response = array(
                 'Message' => 'El Ciudadano no posee Reseñas'
             );
         }

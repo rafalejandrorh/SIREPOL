@@ -441,15 +441,13 @@ class FuncionarioController extends Controller
             $valores_modificados = 'Tipo de Búsqueda: '.$parametros['tipo'].'. Valor Buscado: '.$parametros['valor'];
             event(new TrazasEvent($parametros['id_user'], $id_Accion, $valores_modificados, 'Traza_Funcionarios'));
 
-            $response = array(
-                'Datos del Funcionario' => array(
-                    'Cedula' => $result['Query']['cedula'],
-                    'Credencial' => $result['Query']['credencial'],
+            $response['Funcionario']['Datos'] = array(
+                    'Cedula' => "".$result['Query']['cedula']."",
+                    'Credencial' => "".$result['Query']['credencial']."",
                     'Nombre Completo' => $result['Query']['primer_nombre'].' '.$result['Query']['segundo_nombre'].
                     ', '.$result['Query']['primer_apellido'].' '.$result['Query']['segundo_apellido'],
                     'Jerarquia' => $result['Query']['jerarquia'],
                     'Estatus' => $result['Query']['estatus_funcionario'],
-                )
             );
         }else{
             $response = array(

@@ -95,7 +95,7 @@ class DataServicesController extends Controller
     public function okCodeAuth($data)
     {
         $response = [
-            'Code' => OK_CODE_AUTH,
+            'Code' => "".OK_CODE_AUTH."",
             'Status' => OK_DESCRIPTION_AUTH,
             'Data' => $data
         ];
@@ -105,7 +105,7 @@ class DataServicesController extends Controller
     public function errorCodeAuth($data)
     {
         $response = [
-            'Code' => ERROR_CODE_AUTH,
+            'Code' => "".ERROR_CODE_AUTH."",
             'Status' => ERROR_DESCRIPTION_AUTH,
             'Data' => $data
         ];
@@ -115,7 +115,7 @@ class DataServicesController extends Controller
     private function okCodeService($data)
     {
         $response = [
-            'Code' => OK_CODE_SERVICE,
+            'Code' => "".OK_CODE_SERVICE."",
             'Status' => OK_DESCRIPTION_SERVICE,
             'Data' => $data
         ];
@@ -125,7 +125,7 @@ class DataServicesController extends Controller
     private function errorCodeService()
     {
         $response = [
-            'Code' => ERROR_CODE_SERVICE,
+            'Code' => "".ERROR_CODE_SERVICE."",
             'Status' => ERROR_DESCRIPTION_SERVICE,
             'Description' => 'El Servicio  que intenta consultar no existe o no se encuentra disponible',
         ];
@@ -135,7 +135,7 @@ class DataServicesController extends Controller
     private function errorCodeRequest($data)
     {
         $response = [
-            'Code' => ERROR_CODE_REQUEST,
+            'Code' => "".ERROR_CODE_REQUEST."",
             'Status' => ERROR_DESCRIPTION_REQUEST,
             'Request' => $data
         ];
@@ -145,7 +145,7 @@ class DataServicesController extends Controller
     public function errorCodeUnauthorizedService()
     {
         $response = [
-            'Code' => ERROR_CODE_UNAUTHORIZED_SERVICE,
+            'Code' => "".ERROR_CODE_UNAUTHORIZED_SERVICE."",
             'Status' => ERROR_DESCRIPTION_UNAUTHORIZED_SERVICE,
             'Message' => 'No posee Autorizacion para consultar este servicio',
         ];
@@ -155,7 +155,7 @@ class DataServicesController extends Controller
     private function okCodeToken()
     {
         $response = [
-            'Code' => OK_CODE_TOKEN,
+            'Code' => "".OK_CODE_TOKEN."",
             'Status' => OK_DESCRIPTION_TOKEN,
         ];
         return $response;
@@ -164,7 +164,7 @@ class DataServicesController extends Controller
     private function errorCodeToken()
     {
         $response = [
-            'Code' => ERROR_CODE_TOKEN,
+            'Code' => "".ERROR_CODE_TOKEN."",
             'Status' => ERROR_DESCRIPTION_TOKEN,
         ];
         return $response;
@@ -173,7 +173,7 @@ class DataServicesController extends Controller
     private function errorCodeNoTokenBearer()
     {
         $response = [
-            'Code' => ERROR_CODE_NO_TOKEN_BEARER,
+            'Code' => "".ERROR_CODE_NO_TOKEN_BEARER."",
             'Status' => ERROR_DESCRIPTION_NO_TOKEN_BEARER,
         ];
         return $response;
@@ -182,7 +182,7 @@ class DataServicesController extends Controller
     private function errorCodeTokenExpire()
     {
         $response = [
-            'Code' => ERROR_CODE_TOKEN_EXPIRE,
+            'Code' => "".ERROR_CODE_TOKEN_EXPIRE."",
             'Status' => ERROR_DESCRIPTION_TOKEN_EXPIRE,
         ];
         return $response;
@@ -191,7 +191,7 @@ class DataServicesController extends Controller
     private function errorCodeNoToken()
     {
         $response = [
-            'Code' => ERROR_CODE_NO_TOKEN,
+            'Code' => "".ERROR_CODE_NO_TOKEN."",
             'Status' => ERROR_DESCRIPTION_NO_TOKEN,
         ];
         return $response;
@@ -200,7 +200,7 @@ class DataServicesController extends Controller
     public function errorInvalidRequest()
     {
         $response = [
-            'Code' => ERROR_CODE_INVALID_REQUEST,
+            'Code' => "".ERROR_CODE_INVALID_REQUEST."",
             'Status' => ERROR_DESCRIPTION_INVALID_REQUEST,
         ];
         return $response;
@@ -209,7 +209,7 @@ class DataServicesController extends Controller
     public function errorUnauthorizedAction()
     {
         $response = [
-            'Code' => ERROR_UNAUTHORIZED_ACTION,
+            'Code' => "".ERROR_UNAUTHORIZED_ACTION."",
             'Status' => ERROR_DESCRIPTION_UNAUTHORIZED_ACTION,
             'Description' => 'La Accion que pretende realizar no se encuentra permitida en este servicio. El incidente sera reportado.'
         ];
@@ -219,7 +219,7 @@ class DataServicesController extends Controller
     private function errorCodeInactiveToken()
     {
         $response = [
-            'Code' => ERROR_CODE_INACTIVE_TOKEN,
+            'Code' => "".ERROR_CODE_INACTIVE_TOKEN."",
             'Status' => ERROR_DESCRIPTION_INACTIVE_TOKEN,
         ];
         return $response;  
@@ -228,7 +228,7 @@ class DataServicesController extends Controller
     private function errorCodeInactiveService($data)
     {
         $response = [
-            'Code' => ERROR_CODE_INACTIVE_SERVICE,
+            'Code' => "".ERROR_CODE_INACTIVE_SERVICE."",
             'Status' => ERROR_DESCRIPTION_INACTIVE_SERVICE,
             'Description' => 'El Servicio que intenta Consultar se encuentra Inactivo',
             'Request' => $data
@@ -239,7 +239,7 @@ class DataServicesController extends Controller
     private function okWelcome()
     {
         $response = [
-            'Code' => OK_CODE_SERVICE,
+            'Code' => "".OK_CODE_SERVICE."",
             'Status' => OK_DESCRIPTION_SERVICE,
             'Description' => 'Revisa la Documentacion para utilizar el Servicio.'
         ];

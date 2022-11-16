@@ -34,7 +34,7 @@ class AuthServicesController extends Controller
                 $date_now = date('d-m-Y H:i:s');
                 $date_expire_token = date('d-m-Y H:i:s', strtotime($date_now."+ 12 hour"));
                 $token = null;
-                $token = $user->createToken('auth_token', ['*'], $date_expire_token)->plainTextToken;
+                $token = $user->createToken('authTokenApp', ['*'], $date_expire_token)->plainTextToken;
                 $user->withAccessToken($token);
                 
                 $data = array(
