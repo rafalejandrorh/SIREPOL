@@ -110,6 +110,35 @@ class LoginController extends Controller
 
     }
 
+    // public function logout(Request $request)
+    // {
+    //     $sesion = Historial_Sesion::find(session('id_historial_sesion'), ['id']);
+    //     $sesion->logout = now();
+    //     $sesion->tipo_logout = $request->id;
+    //     $sesion->save();
+    //     session()->forget('id_historial_sesion');
+
+    //     if ($response = $this->loggedOut($request)) {
+    //         return $response;
+    //     }
+        
+    //     $this->guard()->logout();
+
+    //     $request->session()->invalidate();
+
+    //     $request->session()->regenerateToken();
+
+    //     if($request->id == 1){
+    //         Alert()->toast('Haz cerrado sesión en el Sistema','info');
+    //     }else if($request->id == 2){
+    //         Alert()->toast('Cierre de Sesión por período de Inactividad','info');
+    //     }
+
+    //     return $request->wantsJson()
+    //         ? new JsonResponse([], 204)
+    //         : redirect('/');
+    // }
+
     public function logout(Request $request)
     {
         $sesion = Historial_Sesion::find(session('id_historial_sesion'), ['id']);
@@ -127,13 +156,16 @@ class LoginController extends Controller
         if ($response = $this->loggedOut($request)) {
             return $response;
         }
-        
+
         if($request->id == 1){
             Alert()->toast('Haz cerrado sesión en el Sistema','info');
         }else if($request->id == 2){
             Alert()->toast('Cierre de Sesión por período de Inactividad','info');
         }
-        return $request->wantsJson() ? new JsonResponse([], 204) : redirect('/');
+        
+        return $request->wantsJson()
+            ? new JsonResponse([], 204)
+            : redirect('/');
     }
 
 }

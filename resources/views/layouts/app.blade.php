@@ -82,7 +82,17 @@
 
     window.Echo.channel('public-notification-channel')
     .listen('.NotificationEvent', (data) => {
-        $("#notification").append('<div class="alert alert-success">' + data.message + '</div>');
+        //$("#notification").append('<div class="alert alert-success">' + data.message + '</div>');
+        if(data.code == '1')
+        {
+            Swal.fire({
+            position: 'top-end',
+            icon: data.icon,
+            title: data.message,
+            showConfirmButton: false,
+            timer: 3000
+            })
+        }
     });
 
     // window.Echo.private('notification-channel'+userId)

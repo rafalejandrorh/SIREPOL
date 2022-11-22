@@ -161,9 +161,8 @@ class UserController extends Controller
             $id_Accion = 1; //Registro
             $valores_modificados = 'Datos de Usuario: '.$request['users'].' || Activo || '.$rol;
             event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_User'));
-            //$message = '';
-            //redirect()->route('notification', $message);
-            event(new PublicNotification());
+
+            event(new PublicNotification(Auth::user()->users, $request['users'], 'Usuarios', $id_Accion));
             Alert()->success('Usuario Creado Satisfactoriamente'); 
             return redirect()->route('users.index');
 

@@ -18,7 +18,14 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class,
             FuncionarioSeeder::class,
-            PersonSeeder::class
+            PersonSeeder::class,
+            CaracteristicasResennadoSeeder::class,
+            EstatusFuncionarioSeeder::class,
+            GeneroSeeder::class,
+            GeografiaVenezuelaSeeder::class,
+            JerarquiaSeeder::class,
+            TipoDocumentacionSeeder::class,
+            
         ]);
     }
 }

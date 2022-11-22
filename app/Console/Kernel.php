@@ -15,8 +15,17 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        // Windows
+        //$schedule->exec('cd D:\Web Applications\SIREPOL && queue:work --daemon &')->everyMinute();
+        //$schedule->exec('cd D:\Web Applications\SIREPOL && laravel-echo-server start')->everyMinute();
+
+        // Linux
+        //$schedule->command('queue:work --daemon &')->everyMinute();  
+        //$schedule->exec('cd var/www/html/SIREPOL && laravel-echo-server start')->everyMinute();
+        //Programar CRON de Linux: * * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
+
         // $schedule->command('inspire')->hourly();
-        $schedule->command('sanctum:prune-expired --hours=24')->daily();
+        //$schedule->command('sanctum:prune-expired --hours=24')->daily();
 
         // Ejecutar Jobs y Colas cada cierto tiempo
         //use App\Jobs\Heartbeat;
@@ -24,7 +33,7 @@ class Kernel extends ConsoleKernel
         //$schedule->job(new Heartbeat, 'heartbeats', 'sqs')->everyFiveMinutes();
 
         // Ejecutar comandos en el Sistema Operativo
-        $schedule->exec('node /home/forge/script.js')->daily();
+        //$schedule->exec('node /home/forge/script.js')->daily();
     }
 
     /**

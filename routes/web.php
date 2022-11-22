@@ -2,7 +2,9 @@
 
 use App\Events\PrivateNotification;
 use App\Events\PublicNotification;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\SesionController;
@@ -68,7 +70,11 @@ Route::get('resenna/{id}/edit/select/{tipo}/{id_hijo}', [App\Http\Controllers\Ge
 
 Route::get('/resenna/mail', [EmailController::class, 'index'])->name('resenna.mail')->middleware('auth');
 
-//Route::get('/users/reset-password')
+Route::get('/password/forgot', [ForgotPasswordController::class, 'index'])->name('password.forgot');
+
+Route::post('/password/mail', [ForgotPasswordController::class, 'sendMail'])->name('password.mail');
+
+Route::post('/password/reset', [ResetPasswordController::class, 'index'])->name('password.reset');
 
 Route::patch('/traza_resennas/{resenna}', [App\Http\Controllers\TrazasController::class, 'update_resenna'])->name('traza_resenna.update')->middleware('auth');
 
@@ -88,14 +94,18 @@ Route::get('resenna/search/{cedula}', [ResennaController::class, 'search'])->nam
 
 Auth::routes();
 
-// Route::get('/notification/{message}', function($message){ 
-//     event(new PublicNotification($message)); 
-//     dd('Notificación Pública');
-//     Alert()->success('Usuario Creado Satisfactoriamente');
-//     return redirect()->route('users.index'); 
-// })->name('notification');
+Route::get('/notification/{message}', function($message){ 
+    event(new PublicNotification($message)); 
+    dd('Notificación Pública');
+    Alert()->success('Usuario Creado Satisfactoriamente');
+    return redirect()->route('users.index'); 
+})->name('notification');
 
-// Route::get('/private-notification', function(){ 
-//     event(new PrivateNotification(auth()->user()));
-//     dd('Notificación Privada'); 
-// });
+Route::get('/private-notification', function(){ 
+    event(new PrivateNotification(auth()->user()));
+    dd('Notificación Privada'); 
+});
+
+//// En General ////
+
+// Preferiblemente realizar controladores propios para envio de link a correo para reestablecer contraseña

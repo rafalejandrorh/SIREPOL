@@ -54,6 +54,11 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class, 'id');
     }
 
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify();//new ResetPassword($token)
+    } 
+
     static function returnValidations(){
 
         return $validations=[

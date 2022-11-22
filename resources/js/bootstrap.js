@@ -20,6 +20,6 @@ import Echo from 'laravel-echo';
 
 window.Echo = new Echo({
     broadcaster: 'socket.io',
-    host: '127.0.0.1:6001',
+    host: '192.168.0.101:6001',
     transports: ['websocket']
 });
