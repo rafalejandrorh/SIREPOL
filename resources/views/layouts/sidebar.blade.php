@@ -8,7 +8,9 @@
             <img class="navbar-brand-full" src="{{ asset('public/img/logo_pmcr_sin_fondo.png') }}" width="45px" alt=""/>
         </a>
     </div>
-    <ul class="sidebar-menu">
-        @include('layouts.menu')
-    </ul>
+    @if (!isset($password_status) || $password_status == false)
+        <ul class="sidebar-menu">
+            @include('layouts.menu')
+        </ul>
+    @endif
 </aside>

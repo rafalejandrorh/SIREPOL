@@ -17,7 +17,9 @@
 
             <div class="dropdown-menu dropdown-menu-right">
                 @can('users.password')
-                <a class="dropdown-item has-icon" href="{{ route('sesion.index') }}"><i class="fa fa-lock"></i> Ajustes</a>
+                    @if (!isset($password_status) || $password_status == false)
+                        <a class="dropdown-item has-icon" href="{{ route('sesion.index') }}"><i class="fa fa-lock"></i> Ajustes</a>
+                    @endif
                 @endcan
                 <a class="dropdown-item text-danger"
                     onclick="event.preventDefault(); localStorage.clear();  document.getElementById('logout-form').submit();">

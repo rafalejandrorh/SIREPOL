@@ -249,7 +249,10 @@ class UserController extends Controller
         }
         $bcrypt = bcrypt($password);
         $reset_password = User::find($id, ['id']);
-        $reset_password->update(['password'=>$bcrypt]);
+        $reset_password->update([
+            'password' => $bcrypt,
+            'password_status' => true
+        ]);
 
         $id_user = Auth::user()->id;
         $id_Accion = 2; //Actualización

@@ -17,11 +17,11 @@ class SesionController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index()
+    public function index($password_status = null)
     {
         $data = Auth::user()->id;
         $user = User::Where('id', $data)->get();
-        return view('sesion.index', compact('user', 'data'));
+        return view('sesion.index', compact('user', 'data', 'password_status'));
     }
 
     /**
@@ -64,7 +64,10 @@ class SesionController extends Controller
             {
                 $request['password'] = bcrypt($request['password']);
                 $user = User::find($id, ['id']);
-                $user->update(['password' => $request['password']]);
+                $user->update([
+                    'password' => $request['password'],
+                    'password_status' => false
+                ]);
                 Alert()->success('Cambio de Contraseña Exitoso');
                 return redirect()->route('home');
             }else{

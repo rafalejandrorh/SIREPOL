@@ -62,11 +62,11 @@
                     </button>
                 </div>
 
-                <div class="form-group">
+                {{-- <div class="form-group">
                     <p class="mt-3 mb-1">
                         <a href="{{ route('password.forgot') }}">Olvide mi Contraseña</a>
                     </p>
-                </div>
+                </div> --}}
             </form>
         </div>
     </div>

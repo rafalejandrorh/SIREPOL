@@ -23,13 +23,15 @@
                             </div>
                         @endif
 
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <a href="{{ route('home') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
-                            </div>
-                        </div>
+                        @if (!isset($password_status) || $password_status == false)
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <a href="{{ route('home') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
+                                </div>
+                            </div>  
+                        @endif
+
                         <br>
-                             
                         @each('sesion.forms.index', $user, 'user')
                         </div>
                     </div>

@@ -13,6 +13,7 @@ use Illuminate\Http\JsonResponse;
 use Alert;
 use App\Events\LoginHistorialEvent;
 use App\Events\LogoutHistorialEvent;
+use App\Http\Controllers\SesionController;
 
 class LoginController extends Controller
 {
@@ -77,14 +78,18 @@ class LoginController extends Controller
 
         $this->clearLoginAttempts($request);
 
-        if ($response = $this->authenticated($request, $this->guard()->user())) {
-            return $response;
-        }
+        $response = $this->authenticated($request, $this->guard()->user());
 
-        Alert()->toast('Inicio de Sesión Exitoso','success');
-        return $request->wantsJson()
-                    ? new JsonResponse([], 204)
-                    : redirect()->intended($this->redirectPath());
+        if($response)
+        {
+            Alert()->warning('Atención', 'Por Razones de Seguridad, debe cambiar su contraseña.');
+            return app(SesionController::class)->index($response);
+        }else{
+            Alert()->toast('Inicio de Sesión Exitoso','success');
+            return $request->wantsJson()
+            ? new JsonResponse([], 204)
+            : redirect()->intended($this->redirectPath());
+        }
     }
 
     public function authenticated(Request $request, $user)
@@ -104,6 +109,7 @@ class LoginController extends Controller
         $id_historial_sesion = event(new LoginHistorialEvent($user->id, $MAC));
         session(['id_historial_sesion' => $id_historial_sesion[0]]);
 
+        return $user->password_status;
     }
 
     public function logout(Request $request)
