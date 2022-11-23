@@ -74,7 +74,7 @@
                                                         <a class="btn btn-primary" href="{{ route('resenna.edit', $resenna->id) }}"><i class='fa fa-edit'></i></a>
                                                         @endcan
                                                         @can('resenna.destroy')
-                                                        {!! Form::open(['method' => 'DELETE','route' => ['resenna.destroy', $resenna->id],'style'=>'display:inline', 'class' => 'eliminar']) !!}
+                                                        {!! Form::open(['method' => 'DELETE', 'route' => ['resenna.destroy', $resenna->id], 'style'=>'display:inline', 'class' => 'eliminar']) !!}
                                                             {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
                                                         {!! Form::close() !!}                                                  
                                                         @endcan

@@ -25,10 +25,33 @@
     </div>
 {!! Form::close() !!}
 
-{!! Form::model($user, ['method' => 'PATCH','route' => ['users.reset', $user->id]]) !!}
+{!! Form::model($user, ['method' => 'PATCH','route' => ['users.reset', $user->id], 'class' => 'contrasenna']) !!}
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
             {!! Form::button('<i class="fa fa-reply"> Reestablecer Contraseña</i>', ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
         </div>
     </div>
 {!! Form::close() !!}
+
+@section('scripts')
+
+    <script>
+        $('.contrasenna').submit(function(e){
+            e.preventDefault();
+
+            Swal.fire({
+            title: '¿Estás seguro?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '¡Sí, estoy seguro!'
+            }).then((result) => {
+            if (result.value) {
+                this.submit();
+            }
+            })
+        });
+    </script>
+
+@endsection
