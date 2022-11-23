@@ -6,39 +6,40 @@
             <input type="text" class="form-control" value="{{$user->funcionario->jerarquia->valor.'. '.$user->funcionario->person->primer_nombre.' '.$user->funcionario->person->segundo_nombre}}" readonly>
         </div>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-3">
+    <div class="col-xs-3 col-sm-3 col-md-3">
         <div class="form-group">
             <label for="">Roles</label>
             {!! Form::select('roles', $roles, $user->role, array('class' => 'form-control', 'readonly')) !!}
         </div>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-3">
+    <div class="col-xs-3 col-sm-3 col-md-3">
         <div class="form-group">
             <label for="email">Teléfono</label>
             {!! Form::text('telefono', $user->funcionario->person->telefono, array('class' => 'form-control', 'readonly')) !!}
         </div>
     </div>
-    @if($user->status == true)
-        <div class="col-xs-12 col-sm-12 col-md-3">
-            <div class="form-group">
-                <label for="email">Estatus</label>
-                {!! Form::text('id_estatus', 'Activo', array('class' => 'form-control', 'readonly')) !!}
-            </div>
+    
+    <div class="col-xs-3 col-sm-3 col-md-3">
+        <div class="form-group">
+            <label for="email">Estatus</label>
+            {!! Form::text('id_estatus', $user->status ? 'Activo' : 'Inactivo', array('class' => 'form-control', 'readonly')) !!}
         </div>
-    @else
-        <div class="col-xs-12 col-sm-12 col-md-3">
-            <div class="form-group">
-                <label for="email">Estatus</label>
-                {!! Form::text('id_estatus', 'Inactivo', array('class' => 'form-control', 'readonly')) !!}
-            </div>
-        </div>
-    @endif 
-    <div class="col-xs-12 col-sm-12 col-md-3">
+    </div>
+    
+    <div class="col-xs-3 col-sm-3 col-md-3">
         <div class="form-group">
             <label for="email">Usuario</label>
             {!! Form::text('users', $user->users, array('class' => 'form-control', 'readonly')) !!}
         </div>
     </div> 
+
+    <div class="col-xs-6 col-sm-6 col-md-6">
+        <div class="form-group">
+            <label for="email">Último Inicio de Sesión</label>
+            {!! Form::text('users', $user->last_login, array('class' => 'form-control', 'readonly')) !!}
+        </div>
+    </div>
+
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
             {!! Form::button('<i class="fa fa-save"> Guardar</i>', ['type' => 'submit', 'class' => 'btn btn-primary']) !!}

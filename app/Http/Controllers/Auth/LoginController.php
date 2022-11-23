@@ -11,6 +11,8 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Arr;
 use Illuminate\Http\JsonResponse;
 use Alert;
+use App\Events\LoginHistorialEvent;
+use App\Events\LogoutHistorialEvent;
 
 class LoginController extends Controller
 {
@@ -99,52 +101,14 @@ class LoginController extends Controller
         $explode = explode(' ', exec('getmac'));
         $MAC = $explode[0];
 
-        $sesion = new Historial_Sesion();
-        $sesion->id_user = $user->id;
-        $sesion->login = now();
-        $sesion->MAC = $MAC;
-        //$sesion->IP = $request->ip();
-        $sesion->save();
-        $id_historial_sesion = $sesion->id;
-        session(['id_historial_sesion' => $id_historial_sesion]);
+        $id_historial_sesion = event(new LoginHistorialEvent($user->id, $MAC));
+        session(['id_historial_sesion' => $id_historial_sesion[0]]);
 
     }
 
-    // public function logout(Request $request)
-    // {
-    //     $sesion = Historial_Sesion::find(session('id_historial_sesion'), ['id']);
-    //     $sesion->logout = now();
-    //     $sesion->tipo_logout = $request->id;
-    //     $sesion->save();
-    //     session()->forget('id_historial_sesion');
-
-    //     if ($response = $this->loggedOut($request)) {
-    //         return $response;
-    //     }
-        
-    //     $this->guard()->logout();
-
-    //     $request->session()->invalidate();
-
-    //     $request->session()->regenerateToken();
-
-    //     if($request->id == 1){
-    //         Alert()->toast('Haz cerrado sesión en el Sistema','info');
-    //     }else if($request->id == 2){
-    //         Alert()->toast('Cierre de Sesión por período de Inactividad','info');
-    //     }
-
-    //     return $request->wantsJson()
-    //         ? new JsonResponse([], 204)
-    //         : redirect('/');
-    // }
-
     public function logout(Request $request)
     {
-        $sesion = Historial_Sesion::find(session('id_historial_sesion'), ['id']);
-        $sesion->logout = now();
-        $sesion->tipo_logout = $request->id;
-        $sesion->save();
+        event(new LogoutHistorialEvent(session('id_historial_sesion'), $request->id));
         session()->forget('id_historial_sesion');
         
         $this->guard()->logout();

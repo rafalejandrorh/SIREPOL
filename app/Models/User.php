@@ -23,6 +23,7 @@ class User extends Authenticatable
         'users',
         'password',
         'status',
+        'last_login'
     ];
 
     /**
@@ -56,7 +57,7 @@ class User extends Authenticatable
 
     public function sendPasswordResetNotification($token)
     {
-        $this->notify();//new ResetPassword($token)
+        //$this->notify();//new ResetPassword($token)
     } 
 
     static function returnValidations(){
