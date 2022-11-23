@@ -1,1 +1,1 @@
-@section('title', 'SIREPOL | Contraseña')
+@section('title', 'SIREPOL | Ajustes')
