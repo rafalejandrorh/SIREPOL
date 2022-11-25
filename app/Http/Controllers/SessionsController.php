@@ -65,7 +65,7 @@ class SessionsController extends Controller
             ->paginate(10);
         }
 
-        return view('sessions.index', ['sessions' => $sessions]);
+        return view('sessions.index', compact('sessions'));
     }
 
     /**
