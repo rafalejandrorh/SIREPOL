@@ -32,7 +32,6 @@ class ResennaController extends Controller
 {
     function __construct(Nomenclador $geografia_venezuela)
     {
-
         $this->geografia_venezuela = $geografia_venezuela;
         $this->middleware('can:resenna.index')->only('index');
         $this->middleware('can:resenna.create')->only('create');
@@ -40,7 +39,6 @@ class ResennaController extends Controller
         $this->middleware('can:resenna.edit')->only('edit', 'update');
         $this->middleware('can:resenna.destroy')->only('destroy');
         $this->middleware('can:resenna.pdf')->only('pdf');
- 
     }
     /**
      * Display a listing of the resource.

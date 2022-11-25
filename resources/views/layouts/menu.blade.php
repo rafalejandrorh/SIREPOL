@@ -31,6 +31,14 @@
     </a>
 </li>
 @endcan
+@can('sessions.index') 
+<li class="side-menus {{ Request::is('sessions') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('sessions.index') }}">
+        <i class=" fas fa-clock"></i>
+        <span>Sesiones</span>
+    </a>
+</li>
+@endcan
 @can('trazas.index') 
 <li class="side-menus {{ Request::is('trazas') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('trazas.index') }}">
@@ -39,12 +47,12 @@
     </a>
 </li>
 @endcan
-{{-- @can('logs.index')  --}}
+@can('logs.index') 
 <li class="side-menus {{ Request::is('logs') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('logs') }}">
         <i class=" fas fa-file-code"></i>
         <span>Logs</span>
     </a>
 </li>
-{{-- @endcan --}}
+@endcan
 

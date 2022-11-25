@@ -108,7 +108,7 @@
 
             Swal.fire({
             title: '¿Estás seguro?',
-            text: "No podrás revertir esto!",
+            text: "No podrás revertir esta Acción",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

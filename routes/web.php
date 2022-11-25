@@ -11,9 +11,12 @@ use App\Http\Controllers\SesionController;
 use App\Http\Controllers\ResennaController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TrazasController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GeografiaVenezuelaController;
+use App\Http\Controllers\SessionsController;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +42,8 @@ Route::resource('resenna', ResennaController::class)->middleware('auth');
 Route::resource('trazas', TrazasController::class)->middleware('auth');
 
 Route::resource('sesion', SesionController::class)->middleware('auth');
+
+Route::resource('sessions', SessionsController::class)->middleware('auth');
 
 Route::get('/', [LoginController::class, 'index']);
 
@@ -72,6 +77,8 @@ Route::get('/resenna/mail', [EmailController::class, 'index'])->name('resenna.ma
 
 Route::get('/password/forgot', [ForgotPasswordController::class, 'index'])->name('password.forgot');
 
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('logs')->middleware('auth');
+
 Route::post('/password/mail', [ForgotPasswordController::class, 'sendMail'])->name('password.mail');
 
 Route::post('/password/reset', [ResetPasswordController::class, 'index'])->name('password.reset');
@@ -90,9 +97,8 @@ Route::patch('/user/{user}/status', [UserController::class, 'update_status'])->n
 
 Route::post('logout/{id}', [LoginController::class, 'logout']);
 
-Route::get('resenna/search/{cedula}', [ResennaController::class, 'search'])->name('resenna.search')->middleware('auth');
-
-Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('logs')->middleware('auth');
+// Ruta para colocar buscador en tiempo real 
+//Route::get('resenna/search/{cedula}', [ResennaController::class, 'search'])->name('resenna.search')->middleware('auth');
 
 Auth::routes();
 
