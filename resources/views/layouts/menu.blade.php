@@ -39,4 +39,12 @@
     </a>
 </li>
 @endcan
+{{-- @can('logs.index')  --}}
+<li class="side-menus {{ Request::is('logs') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('logs') }}">
+        <i class=" fas fa-file-code"></i>
+        <span>Logs</span>
+    </a>
+</li>
+{{-- @endcan --}}
 

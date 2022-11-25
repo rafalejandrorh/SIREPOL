@@ -92,19 +92,21 @@ Route::post('logout/{id}', [LoginController::class, 'logout']);
 
 Route::get('resenna/search/{cedula}', [ResennaController::class, 'search'])->name('resenna.search')->middleware('auth');
 
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('logs')->middleware('auth');
+
 Auth::routes();
 
-Route::get('/notification/{message}', function($message){ 
-    event(new PublicNotification($message)); 
-    dd('Notificación Pública');
-    Alert()->success('Usuario Creado Satisfactoriamente');
-    return redirect()->route('users.index'); 
-})->name('notification');
+// Route::get('/notification/{message}', function($message){ 
+//     event(new PublicNotification($message)); 
+//     dd('Notificación Pública');
+//     Alert()->success('Usuario Creado Satisfactoriamente');
+//     return redirect()->route('users.index'); 
+// })->name('notification');
 
-Route::get('/private-notification', function(){ 
-    event(new PrivateNotification(auth()->user()));
-    dd('Notificación Privada'); 
-});
+// Route::get('/private-notification', function(){ 
+//     event(new PrivateNotification(auth()->user()));
+//     dd('Notificación Privada'); 
+// });
 
 //// En General ////
 

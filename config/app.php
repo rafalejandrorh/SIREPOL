@@ -199,6 +199,8 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         Biscolab\ReCaptcha\ReCaptchaServiceProvider::class, 
+        Barryvdh\Debugbar\ServiceProvider::class,
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
 
     ],
 
@@ -220,5 +222,6 @@ return [
     'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
     'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
     'ReCaptcha' => Biscolab\ReCaptcha\Facades\ReCaptcha::class,
+    'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
 ];
