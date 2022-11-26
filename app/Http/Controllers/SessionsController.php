@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\TrazasEvent;
 use App\Models\Sessions;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SessionsController extends Controller
 {
@@ -24,12 +26,14 @@ class SessionsController extends Controller
             $sessions = Sessions::join('users', 'users.id', '=', 'sessions.user_id')
             ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
             ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+            ->select('sessions.id AS session_id', 'sessions.ip_address', 'sessions.last_activity', 'sessions.user_id')
             ->orderBy('last_activity', 'DESC')
             ->Where('persons.cedula', '=', $request->buscador)->paginate(10);
 
         }else if($request->tipo_busqueda == 'credencial'){
             $sessions = Sessions::join('users', 'users.id', '=', 'sessions.user_id')
             ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+            ->select('sessions.id AS session_id', 'sessions.ip_address', 'sessions.last_activity', 'sessions.user_id')
             ->orderBy('last_activity', 'DESC')
             ->Where('funcionarios.credencial', '=', $request->buscador)
             ->paginate(10);
@@ -38,18 +42,21 @@ class SessionsController extends Controller
             $sessions = Sessions::join('users', 'users.id', '=', 'sessions.user_id')
             ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
             ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
+            ->select('sessions.id AS session_id', 'sessions.ip_address', 'sessions.last_activity', 'sessions.user_id')
             ->orderBy('last_activity', 'DESC')
             ->Where('jerarquia.valor', 'ilike', '%'.$request->buscador.'%')
             ->paginate(10);
 
         }else if($request->tipo_busqueda == 'usuario'){
             $sessions = Sessions::join('users', 'users.id', '=', 'sessions.user_id')
+            ->select('sessions.id AS session_id', 'sessions.ip_address', 'sessions.last_activity', 'sessions.user_id')
             ->Where('users.users', 'ilike', '%'.$request->buscador.'%')->paginate(10);
 
         }else if($request->tipo_busqueda == 'nombre'){
             $sessions = Sessions::join('users', 'users.id', '=', 'sessions.user_id')
             ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
             ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+            ->select('sessions.id AS session_id', 'sessions.ip_address', 'sessions.last_activity', 'sessions.user_id')
             ->Where('persons.primer_nombre', 'ilike', '%'.$request->buscador.'%')
             ->paginate(10);
 
@@ -57,15 +64,25 @@ class SessionsController extends Controller
             $sessions = Sessions::join('users', 'users.id', '=', 'sessions.user_id')
             ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
             ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+            ->select('sessions.id AS session_id', 'sessions.ip_address', 'sessions.last_activity', 'sessions.user_id')
             ->Where('persons.primer_apellido', 'ilike', '%'.$request->buscador.'%')
             ->paginate(10);
 
         }else{
             $sessions = Sessions::orderBy('last_activity', 'DESC')
+            ->select('sessions.id AS session_id', 'sessions.ip_address', 'sessions.last_activity', 'sessions.user_id')
             ->paginate(10);
         }
 
-        return view('sessions.index', compact('sessions'));
+        if(isset($request->tipo_busqueda) && isset($request->buscador))
+        {
+            $id_user = Auth::user()->id;
+            $id_Accion = 5; //Búsqueda
+            $valores_modificados = 'Tipo de Búsqueda: '.$request->tipo_busqueda.'. Valor Buscado: '.$request->buscador;
+            event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Sessions'));
+        }
+
+        return view('sessions.index', ['sessions' => $sessions]);
     }
 
     /**
@@ -110,6 +127,16 @@ class SessionsController extends Controller
      */
     public function destroy(Request $request)
     {
+        $session = Sessions::Where('sessions.id', $request->session)
+        ->join('users', 'users.id', '=', 'sessions.user_id')
+        ->select('users.users', 'sessions.ip_address')
+        ->first();
+
+        $id_user = Auth::user()->id;
+        $id_Accion = 3; //Búsqueda
+        $valores_modificados = 'Datos de Sesión: '.$session['users'].' || '.$session['ip_address'];
+        event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Sessions'));
+
         Sessions::where('id', $request->session)->delete();
 
         Alert()->success('La Sesión ha sido finalizada Exitosamente');

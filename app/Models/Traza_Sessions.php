@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Traza_Roles extends Model
+class Traza_Sessions extends Model
 {
     use HasFactory;
 
-    protected $table = 'traza_roles';
+    protected $table = 'traza_sessions';
 
     protected $fillable = ['id_user','id_accion', 'valores_modificados'];
 

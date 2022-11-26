@@ -48,9 +48,9 @@
                                                 <td class="sorting_1">{{$session->user ? $session->user->users : 'Sin Inicio de Sesión'}}</td>
                                                 <td class="sorting_1">{{$session->ip_address}}</td>
                                                 <td class="sorting_1">{{\Carbon\Carbon::createFromTimeStamp($session->last_activity)->diffForhumans()}}</td>
-                                                <td align="center">
+                                                <td class="sorting_1">
                                                     @can('sessions.destroy')
-                                                        {!! Form::open(['method' => 'DELETE', 'route' => ['sessions.destroy', $session->id], 'style'=>'display:inline', 'class' => 'eliminar']) !!}
+                                                        {!! Form::open(['method' => 'DELETE', 'route' => ['sessions.destroy', $session->session_id], 'style'=>'display:inline', 'class' => 'eliminar']) !!}
                                                             {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
                                                         {!! Form::close() !!}                                                  
                                                     @endcan
