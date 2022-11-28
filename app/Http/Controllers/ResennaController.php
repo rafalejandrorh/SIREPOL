@@ -88,89 +88,101 @@ class ResennaController extends Controller
 
         }else{
 
-            if($request->tipo_busqueda == 'cedula_resennado'){
-                $resennas = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
-                ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
-                'resenna_detenido.id_person')
-                ->Where('persons.cedula', '=', $request->buscador)->paginate(5);
+            if(isset($request->buscador) && is_numeric($request->buscador))
+            {
+                if($request->tipo_busqueda == 'cedula_resennado'){
+                    $resennas = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
+                    ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
+                    'resenna_detenido.id_person')
+                    ->Where('persons.cedula', '=', $request->buscador)->paginate(5);
 
-            }else if($request->tipo_busqueda == 'cedula_resenna' || $request->tipo_busqueda == 'cedula_aprehensor'){
-                if($request->tipo_busqueda == 'cedula_resenna'){
-                    $columna = 'id_funcionario_resenna';
-                }else if($request->tipo_busqueda == 'cedula_aprehensor'){
-                    $columna = 'id_funcionario_aprehensor';
+                }else if($request->tipo_busqueda == 'cedula_resenna' || $request->tipo_busqueda == 'cedula_aprehensor'){
+                    if($request->tipo_busqueda == 'cedula_resenna'){
+                        $columna = 'id_funcionario_resenna';
+                    }else if($request->tipo_busqueda == 'cedula_aprehensor'){
+                        $columna = 'id_funcionario_aprehensor';
+                    }
+                    $resennas = Resenna::join('funcionarios', 'funcionarios.id', '=', $columna)
+                    ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+                    ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
+                    'resenna_detenido.id_person')
+                    ->Where('persons.cedula', '=', $request->buscador)->paginate(5);
+
+                }else if($request->tipo_busqueda == 'credencial_resenna' || $request->tipo_busqueda == 'credencial_aprehensor'){
+                    if($request->tipo_busqueda == 'credencial_resenna'){
+                        $columna = 'id_funcionario_resenna';
+                    }else if($request->tipo_busqueda == 'credencial_aprehensor'){
+                        $columna = 'id_funcionario_aprehensor';
+                    }
+                    $resennas = Resenna::join('funcionarios', 'funcionarios.id', '=', $columna)
+                    ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
+                    'resenna_detenido.id_person')
+                    ->Where('funcionarios.credencial', '=', $request->buscador)->paginate(5);
+
+                }else{
+                    Alert()->warning('Búsqueda no permitida');
+                    $resennas = Resenna::orderBy('fecha_resenna', 'desc')->paginate(5);
                 }
-                $resennas = Resenna::join('funcionarios', 'funcionarios.id', '=', $columna)
-                ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
-                ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
-                'resenna_detenido.id_person')
-                ->Where('persons.cedula', '=', $request->buscador)->paginate(5);
+            }else if(isset($request->buscador) && is_string($request->buscador)){
 
-            }else if($request->tipo_busqueda == 'credencial_resenna' || $request->tipo_busqueda == 'credencial_aprehensor'){
-                if($request->tipo_busqueda == 'credencial_resenna'){
-                    $columna = 'id_funcionario_resenna';
-                }else if($request->tipo_busqueda == 'credencial_aprehensor'){
-                    $columna = 'id_funcionario_aprehensor';
+                if($request->tipo_busqueda == 'jerarquia_resenna' || $request->tipo_busqueda == 'jerarquia_aprehensor'){
+                    if($request->tipo_busqueda == 'jerarquia_resenna'){
+                        $columna = 'id_funcionario_resenna';
+                    }else if($request->tipo_busqueda == 'jerarquia_aprehensor'){
+                        $columna = 'id_funcionario_aprehensor';
+                    }
+                    $resennas = Resenna::join('funcionarios', 'funcionarios.id', '=', $columna)
+                    ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
+                    ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
+                    'resenna_detenido.id_person')
+                    ->Where('jerarquia.valor', 'ilike', '%'.$request->buscador.'%')->paginate(5);
+
+                }else if($request->tipo_busqueda == 'nombre_resennado'){
+                    $resennas = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
+                    ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
+                    'resenna_detenido.id_person')
+                    ->Where('persons.primer_nombre', 'ilike', '%'.$request->buscador.'%')->paginate(5);
+
+                }else if($request->tipo_busqueda == 'apellido_resennado'){
+                    $resennas = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
+                    ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
+                    'resenna_detenido.id_person')
+                    ->Where('persons.primer_apellido', 'ilike', '%'.$request->buscador.'%')->paginate(5);
+
+                }else if($request->tipo_busqueda == 'nombre_resenna' || $request->tipo_busqueda == 'nombre_aprehensor'){
+                    if($request->tipo_busqueda == 'nombre_resenna'){
+                        $columna = 'id_funcionario_resenna';
+                    }else if($request->tipo_busqueda == 'nombre_aprehensor'){
+                        $columna = 'id_funcionario_aprehensor';
+                    }
+                    $resennas = Resenna::join('funcionarios', 'funcionarios.id', '=', $columna)
+                    ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+                    ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
+                    'resenna_detenido.id_person')
+                    ->Where('persons.primer_nombre', 'ilike', '%'.$request->buscador.'%')->paginate(5);
+
+                }else if($request->tipo_busqueda == 'apellido_resenna' || $request->tipo_busqueda == 'apellido_aprehensor'){
+                    if($request->tipo_busqueda == 'apellido_resenna'){
+                        $columna = 'id_funcionario_resenna';
+                    }else if($request->tipo_busqueda == 'apellido_aprehensor'){
+                        $columna = 'id_funcionario_aprehensor';
+                    }
+                    $resennas = Resenna::join('funcionarios', 'funcionarios.id', '=', $columna)
+                    ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+                    ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
+                    'resenna_detenido.id_person')
+                    ->Where('persons.primer_apellido', 'ilike', '%'.$request->buscador.'%')->paginate(5);
+                    
+                }else if($request->tipo_busqueda == 'motivo_resenna'){
+                    $resennas = Resenna::join('caracteristicas_resennado', 'caracteristicas_resennado.id', '=', 'resenna_detenido.id_motivo_resenna')
+                    ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
+                    'resenna_detenido.id_person')
+                    ->Where('caracteristicas_resennado.valor', 'ilike', '%'.$request->buscador.'%')
+                    ->paginate(5);
+                }else{
+                    Alert()->warning('Búsqueda no permitida');
+                    $resennas = Resenna::orderBy('fecha_resenna', 'desc')->paginate(5);
                 }
-                $resennas = Resenna::join('funcionarios', 'funcionarios.id', '=', $columna)
-                ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
-                'resenna_detenido.id_person')
-                ->Where('funcionarios.credencial', '=', $request->buscador)->paginate(5);
-
-            }else if($request->tipo_busqueda == 'jerarquia_resenna' || $request->tipo_busqueda == 'jerarquia_aprehensor'){
-                if($request->tipo_busqueda == 'jerarquia_resenna'){
-                    $columna = 'id_funcionario_resenna';
-                }else if($request->tipo_busqueda == 'jerarquia_aprehensor'){
-                    $columna = 'id_funcionario_aprehensor';
-                }
-                $resennas = Resenna::join('funcionarios', 'funcionarios.id', '=', $columna)
-                ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
-                ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
-                'resenna_detenido.id_person')
-                ->Where('jerarquia.valor', 'ilike', '%'.$request->buscador.'%')->paginate(5);
-
-            }else if($request->tipo_busqueda == 'nombre_resennado'){
-                $resennas = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
-                ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
-                'resenna_detenido.id_person')
-                ->Where('persons.primer_nombre', 'ilike', '%'.$request->buscador.'%')->paginate(5);
-
-            }else if($request->tipo_busqueda == 'apellido_resennado'){
-                $resennas = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
-                ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
-                'resenna_detenido.id_person')
-                ->Where('persons.primer_apellido', 'ilike', '%'.$request->buscador.'%')->paginate(5);
-
-            }else if($request->tipo_busqueda == 'nombre_resenna' || $request->tipo_busqueda == 'nombre_aprehensor'){
-                if($request->tipo_busqueda == 'nombre_resenna'){
-                    $columna = 'id_funcionario_resenna';
-                }else if($request->tipo_busqueda == 'nombre_aprehensor'){
-                    $columna = 'id_funcionario_aprehensor';
-                }
-                $resennas = Resenna::join('funcionarios', 'funcionarios.id', '=', $columna)
-                ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
-                ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
-                'resenna_detenido.id_person')
-                ->Where('persons.primer_nombre', 'ilike', '%'.$request->buscador.'%')->paginate(5);
-
-            }else if($request->tipo_busqueda == 'apellido_resenna' || $request->tipo_busqueda == 'apellido_aprehensor'){
-                if($request->tipo_busqueda == 'apellido_resenna'){
-                    $columna = 'id_funcionario_resenna';
-                }else if($request->tipo_busqueda == 'apellido_aprehensor'){
-                    $columna = 'id_funcionario_aprehensor';
-                }
-                $resennas = Resenna::join('funcionarios', 'funcionarios.id', '=', $columna)
-                ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
-                ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
-                'resenna_detenido.id_person')
-                ->Where('persons.primer_apellido', 'ilike', '%'.$request->buscador.'%')->paginate(5);
-                
-            }else if($request->tipo_busqueda == 'motivo_resenna'){
-                $resennas = Resenna::join('caracteristicas_resennado', 'caracteristicas_resennado.id', '=', 'resenna_detenido.id_motivo_resenna')
-                ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
-                'resenna_detenido.id_person')
-                ->Where('caracteristicas_resennado.valor', 'ilike', '%'.$request->buscador.'%')
-                ->paginate(5);
 
             }else{
                 $resennas = Resenna::orderBy('fecha_resenna', 'desc')->paginate(5);

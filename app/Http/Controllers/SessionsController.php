@@ -22,52 +22,67 @@ class SessionsController extends Controller
     public function index(Request $request)
     {
 
-        if($request->tipo_busqueda == 'cedula'){
-            $sessions = Sessions::join('users', 'users.id', '=', 'sessions.user_id')
-            ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
-            ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
-            ->select('sessions.id AS session_id', 'sessions.ip_address', 'sessions.last_activity', 'sessions.user_id')
-            ->orderBy('last_activity', 'DESC')
-            ->Where('persons.cedula', '=', $request->buscador)->paginate(10);
+        if(isset($request->buscador) && is_numeric($request->buscador))
+        {
+            if($request->tipo_busqueda == 'cedula'){
+                $sessions = Sessions::join('users', 'users.id', '=', 'sessions.user_id')
+                ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+                ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+                ->select('sessions.id AS session_id', 'sessions.ip_address', 'sessions.last_activity', 'sessions.user_id')
+                ->orderBy('last_activity', 'DESC')
+                ->Where('persons.cedula', '=', $request->buscador)->paginate(10);
 
-        }else if($request->tipo_busqueda == 'credencial'){
-            $sessions = Sessions::join('users', 'users.id', '=', 'sessions.user_id')
-            ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
-            ->select('sessions.id AS session_id', 'sessions.ip_address', 'sessions.last_activity', 'sessions.user_id')
-            ->orderBy('last_activity', 'DESC')
-            ->Where('funcionarios.credencial', '=', $request->buscador)
-            ->paginate(10);
+            }else if($request->tipo_busqueda == 'credencial'){
+                $sessions = Sessions::join('users', 'users.id', '=', 'sessions.user_id')
+                ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+                ->select('sessions.id AS session_id', 'sessions.ip_address', 'sessions.last_activity', 'sessions.user_id')
+                ->orderBy('last_activity', 'DESC')
+                ->Where('funcionarios.credencial', '=', $request->buscador)
+                ->paginate(10);
 
-        }else if($request->tipo_busqueda == 'jerarquia'){
-            $sessions = Sessions::join('users', 'users.id', '=', 'sessions.user_id')
-            ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
-            ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
-            ->select('sessions.id AS session_id', 'sessions.ip_address', 'sessions.last_activity', 'sessions.user_id')
-            ->orderBy('last_activity', 'DESC')
-            ->Where('jerarquia.valor', 'ilike', '%'.$request->buscador.'%')
-            ->paginate(10);
+            }else{
+                Alert()->warning('Búsqueda no permitida');
+                $sessions = Sessions::orderBy('last_activity', 'DESC')
+                ->select('sessions.id AS session_id', 'sessions.ip_address', 'sessions.last_activity', 'sessions.user_id')
+                ->paginate(10);
+            }
+        }else if(isset($request->buscador) && is_string($request->buscador)){
+            
+            if($request->tipo_busqueda == 'jerarquia'){
+                $sessions = Sessions::join('users', 'users.id', '=', 'sessions.user_id')
+                ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+                ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
+                ->select('sessions.id AS session_id', 'sessions.ip_address', 'sessions.last_activity', 'sessions.user_id')
+                ->orderBy('last_activity', 'DESC')
+                ->Where('jerarquia.valor', 'ilike', '%'.$request->buscador.'%')
+                ->paginate(10);
 
-        }else if($request->tipo_busqueda == 'usuario'){
-            $sessions = Sessions::join('users', 'users.id', '=', 'sessions.user_id')
-            ->select('sessions.id AS session_id', 'sessions.ip_address', 'sessions.last_activity', 'sessions.user_id')
-            ->Where('users.users', 'ilike', '%'.$request->buscador.'%')->paginate(10);
+            }else if($request->tipo_busqueda == 'usuario'){
+                $sessions = Sessions::join('users', 'users.id', '=', 'sessions.user_id')
+                ->select('sessions.id AS session_id', 'sessions.ip_address', 'sessions.last_activity', 'sessions.user_id')
+                ->Where('users.users', 'ilike', '%'.$request->buscador.'%')->paginate(10);
 
-        }else if($request->tipo_busqueda == 'nombre'){
-            $sessions = Sessions::join('users', 'users.id', '=', 'sessions.user_id')
-            ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
-            ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
-            ->select('sessions.id AS session_id', 'sessions.ip_address', 'sessions.last_activity', 'sessions.user_id')
-            ->Where('persons.primer_nombre', 'ilike', '%'.$request->buscador.'%')
-            ->paginate(10);
+            }else if($request->tipo_busqueda == 'nombre'){
+                $sessions = Sessions::join('users', 'users.id', '=', 'sessions.user_id')
+                ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+                ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+                ->select('sessions.id AS session_id', 'sessions.ip_address', 'sessions.last_activity', 'sessions.user_id')
+                ->Where('persons.primer_nombre', 'ilike', '%'.$request->buscador.'%')
+                ->paginate(10);
 
-        }else if($request->tipo_busqueda == 'apellido'){
-            $sessions = Sessions::join('users', 'users.id', '=', 'sessions.user_id')
-            ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
-            ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
-            ->select('sessions.id AS session_id', 'sessions.ip_address', 'sessions.last_activity', 'sessions.user_id')
-            ->Where('persons.primer_apellido', 'ilike', '%'.$request->buscador.'%')
-            ->paginate(10);
-
+            }else if($request->tipo_busqueda == 'apellido'){
+                $sessions = Sessions::join('users', 'users.id', '=', 'sessions.user_id')
+                ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+                ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+                ->select('sessions.id AS session_id', 'sessions.ip_address', 'sessions.last_activity', 'sessions.user_id')
+                ->Where('persons.primer_apellido', 'ilike', '%'.$request->buscador.'%')
+                ->paginate(10);
+            }else{
+                Alert()->warning('Búsqueda no permitida');
+                $sessions = Sessions::orderBy('last_activity', 'DESC')
+                ->select('sessions.id AS session_id', 'sessions.ip_address', 'sessions.last_activity', 'sessions.user_id')
+                ->paginate(10);
+            }
         }else{
             $sessions = Sessions::orderBy('last_activity', 'DESC')
             ->select('sessions.id AS session_id', 'sessions.ip_address', 'sessions.last_activity', 'sessions.user_id')

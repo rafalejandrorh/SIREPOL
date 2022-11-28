@@ -37,47 +37,58 @@ class FuncionarioController extends Controller
     {
         $request->all();
 
-        if($request->tipo_busqueda == 'cedula'){
-            $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
-            ->select('funcionarios.id', 'funcionarios.id_jerarquia', 'funcionarios.id_estatus', 'funcionarios.credencial',
-            'funcionarios.telefono', 'funcionarios.id_person')
-            ->Where('persons.cedula', '=', $request->buscador)->paginate(10);
+        if(isset($request->buscador) && is_numeric($request->buscador))
+        {
+            if($request->tipo_busqueda == 'cedula'){
+                $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
+                ->select('funcionarios.id', 'funcionarios.id_jerarquia', 'funcionarios.id_estatus', 'funcionarios.credencial',
+                'funcionarios.telefono', 'funcionarios.id_person')
+                ->Where('persons.cedula', '=', $request->buscador)->paginate(10);
 
-        }else if($request->tipo_busqueda == 'credencial'){
-            $funcionarios = Funcionario::Where('funcionarios.credencial', '=', $request->buscador)
-            ->select('funcionarios.id', 'funcionarios.id_jerarquia', 'funcionarios.id_estatus', 'funcionarios.credencial',
-            'funcionarios.telefono', 'funcionarios.id_person')
-            ->paginate(10);
+            }else if($request->tipo_busqueda == 'credencial'){
+                $funcionarios = Funcionario::Where('funcionarios.credencial', '=', $request->buscador)
+                ->select('funcionarios.id', 'funcionarios.id_jerarquia', 'funcionarios.id_estatus', 'funcionarios.credencial',
+                'funcionarios.telefono', 'funcionarios.id_person')
+                ->paginate(10);
 
-        }else if($request->tipo_busqueda == 'jerarquia'){
-            $funcionarios = Funcionario::join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
-            ->select('funcionarios.id', 'funcionarios.id_jerarquia', 'funcionarios.id_estatus', 'funcionarios.credencial',
-            'funcionarios.telefono', 'funcionarios.id_person')
-            ->Where('jerarquia.valor', 'ilike', '%'.$request->buscador.'%')->paginate(10);
-
-        }else if($request->tipo_busqueda == 'usuario'){
-            $funcionarios = Funcionario::Where('users', 'ilike', '%'.$request->buscador.'%')->paginate(10);
-
-        }else if($request->tipo_busqueda == 'estatus'){
-            if($request->buscador == 'activo' || $request->buscador == 'Activo' || $request->buscador == 'ACTIVO'){
-                $status = true;
-            }else if($request->buscador == 'inactivo' || $request->buscador == 'Inactivo' || $request->buscador == 'INACTIVO'){
-                $status = false;
+            }else{
+                Alert()->warning('Búsqueda no permitida');
+                $funcionarios = Funcionario::paginate(10);
             }
-            $funcionarios = Funcionario::Where('status', '=', $status)->paginate(10);
+        }else if(isset($request->buscador) && is_string($request->buscador)){
+            
+            if($request->tipo_busqueda == 'jerarquia'){
+                $funcionarios = Funcionario::join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
+                ->select('funcionarios.id', 'funcionarios.id_jerarquia', 'funcionarios.id_estatus', 'funcionarios.credencial',
+                'funcionarios.telefono', 'funcionarios.id_person')
+                ->Where('jerarquia.valor', 'ilike', '%'.$request->buscador.'%')->paginate(10);
 
-        }else if($request->tipo_busqueda == 'nombre'){
-            $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
-            ->select('funcionarios.id', 'funcionarios.id_jerarquia', 'funcionarios.id_estatus', 'funcionarios.credencial',
-            'funcionarios.telefono', 'funcionarios.id_person')
-            ->Where('persons.primer_nombre', 'ilike', '%'.$request->buscador.'%')->paginate(10);
+            }else if($request->tipo_busqueda == 'usuario'){
+                $funcionarios = Funcionario::Where('users', 'ilike', '%'.$request->buscador.'%')->paginate(10);
 
-        }else if($request->tipo_busqueda == 'apellido'){
-            $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
-            ->select('funcionarios.id', 'funcionarios.id_jerarquia', 'funcionarios.id_estatus', 'funcionarios.credencial',
-            'funcionarios.telefono', 'funcionarios.id_person')
-            ->Where('persons.primer_apellido', 'ilike', '%'.$request->buscador.'%')->paginate(10);
+            }else if($request->tipo_busqueda == 'estatus'){
+                if($request->buscador == 'activo' || $request->buscador == 'Activo' || $request->buscador == 'ACTIVO'){
+                    $status = true;
+                }else if($request->buscador == 'inactivo' || $request->buscador == 'Inactivo' || $request->buscador == 'INACTIVO'){
+                    $status = false;
+                }
+                $funcionarios = Funcionario::Where('status', '=', $status)->paginate(10);
 
+            }else if($request->tipo_busqueda == 'nombre'){
+                $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
+                ->select('funcionarios.id', 'funcionarios.id_jerarquia', 'funcionarios.id_estatus', 'funcionarios.credencial',
+                'funcionarios.telefono', 'funcionarios.id_person')
+                ->Where('persons.primer_nombre', 'ilike', '%'.$request->buscador.'%')->paginate(10);
+
+            }else if($request->tipo_busqueda == 'apellido'){
+                $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
+                ->select('funcionarios.id', 'funcionarios.id_jerarquia', 'funcionarios.id_estatus', 'funcionarios.credencial',
+                'funcionarios.telefono', 'funcionarios.id_person')
+                ->Where('persons.primer_apellido', 'ilike', '%'.$request->buscador.'%')->paginate(10);
+            }else{
+                Alert()->warning('Búsqueda no permitida');
+                $funcionarios = Funcionario::paginate(10);
+            }
         }else{
             $funcionarios = Funcionario::paginate(10);
         }
