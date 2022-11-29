@@ -11,7 +11,7 @@ class Traza_Sessions extends Model
 
     protected $table = 'traza_sessions';
 
-    protected $fillable = ['id_user','id_accion', 'valores_modificados'];
+    protected $fillable = ['id_user','id_accion', 'valores_modificados', 'id'];
 
     public function acciones()
     {

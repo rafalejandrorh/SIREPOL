@@ -10,6 +10,7 @@ use App\Models\Traza_Acciones;
 use App\Models\Traza_Funcionarios;
 use App\Models\Traza_Resenna;
 use App\Models\Traza_Roles;
+use App\Models\Traza_Sessions;
 use App\Models\Traza_User;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
@@ -521,13 +522,112 @@ class TrazasController extends Controller
             }else{
                 $historial_sesion = Historial_Sesion::orderBy('login', 'DESC')->paginate(10);
             }
-
         }
 
         $accion = Traza_Acciones::pluck('valor', 'id')->all();
         $user = User::pluck('users', 'id')->all();
 
         return view('trazas.historial_sesion_index', compact('historial_sesion', 'user', 'accion'));
+    }
+
+    public function index_sesiones(Request $request)
+    {
+        $request->all();
+        if(isset($request->filtro) && $request->filtro == 1)
+        {
+            if($request->fecha_inicio != null && $request->fecha_fin == null)
+            {
+                Alert()->error('Error en el Filtrado','Atención: Al filtrar por fecha, debes colocar fecha de Inicio y Fin (Desde y Hasta)');
+                return back();
+            }
+            $queryBuilder = Traza_Sessions::query();
+            if($request->fecha_inicio != null && $request->fecha_fin != null)    
+            {
+                $inicio = date('Y-m-d H:i:s', strtotime($request->fecha_inicio));
+                $fin = date('Y-m-d H:i:s', strtotime($request->fecha_fin.' 23:59:59'));
+                $queryBuilder->WhereBetween('created_at', [$inicio, $fin]);
+            }
+            if($request->id_accion != null)
+            {
+                $queryBuilder->Where('id_accion', $request->id_accion);
+            }
+            if($request->id_usuario != null)
+            {
+                $queryBuilder->Where('id_user', $request->id_usuario);
+            }
+            $sesiones = $queryBuilder->orderBy('created_at', 'desc')->paginate(10);
+        }else{
+
+            if(isset($request->buscador) && is_numeric($request->buscador))
+            {
+                if($request->tipo_busqueda == 'cedula'){
+                    $sesiones = Traza_Sessions::join('users', 'users.id', '=', 'traza_sessions.id_user')
+                    ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+                    ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+                    ->select('traza_sessions.id', 'traza_sessions.id_user', 'traza_sessions.id_accion', 'traza_sessions.valores_modificados', 'traza_sessions.created_at')
+                    ->Where('persons.cedula', '=', $request->buscador)->orderBy('traza_sessions.created_at', 'desc')->paginate(10);
+
+                }else if($request->tipo_busqueda == 'credencial'){
+                    $sesiones = Traza_Sessions::join('users', 'users.id', '=', 'traza_sessions.id_user')
+                    ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+                    ->select('traza_sessions.id', 'traza_sessions.id_user', 'traza_sessions.id_accion', 'traza_sessions.valores_modificados', 'traza_sessions.created_at')
+                    ->Where('funcionarios.credencial', '=', $request->buscador)->orderBy('traza_sessions.created_at', 'desc')->paginate(10);
+                }else{
+                    Alert()->warning('Búsqueda no permitida');
+                    $sesiones = Traza_Sessions::orderBy('created_at', 'desc')->paginate(10);
+                }
+            }else if(isset($request->buscador) && is_string($request->buscador)){
+
+                if($request->tipo_busqueda == 'usuario'){
+                    $sesiones = Traza_Sessions::join('users', 'users.id', '=', 'traza_sessions.id_user')
+                    ->select('traza_sessions.id', 'traza_sessions.id_user', 'traza_sessions.id_accion', 'traza_sessions.valores_modificados', 'traza_sessions.created_at')
+                    ->Where('users', 'LIKE', '%'.$request->buscador.'%')->orderBy('traza_sessions.created_at', 'desc')->paginate(10);
+
+                }else if($request->tipo_busqueda == 'nombre'){
+                    $sesiones = Traza_Sessions::join('users', 'users.id', '=', 'traza_sessions.id_user')
+                    ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+                    ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+                    ->select('traza_sessions.id', 'traza_sessions.id_user', 'traza_sessions.id_accion', 'traza_sessions.valores_modificados', 'traza_sessions.created_at')
+                    ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')
+                    ->orderBy('traza_sessions.created_at', 'desc')->paginate(10);
+
+                }else if($request->tipo_busqueda == 'apellido'){
+                    $sesiones = Traza_Sessions::join('users', 'users.id', '=', 'traza_sessions.id_user')
+                    ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+                    ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+                    ->select('traza_sessions.id', 'traza_sessions.id_user', 'traza_sessions.id_accion', 'traza_sessions.valores_modificados', 'traza_sessions.created_at')
+                    ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')
+                    ->orderBy('traza_sessions.created_at', 'desc')->paginate(10);
+
+                }else if($request->tipo_busqueda == 'accion'){
+                    $sesiones = Traza_Sessions::join('traza_acciones', 'traza_acciones.id', '=', 'traza_sessions.id_accion')
+                    ->select('traza_sessions.id', 'traza_sessions.id_user', 'traza_sessions.id_accion', 'traza_sessions.valores_modificados', 'traza_sessions.created_at')
+                    ->Where('traza_acciones.valor', 'LIKE', '%'.$request->buscador.'%')
+                    ->orderBy('traza_sessions.created_at', 'desc')->paginate(10);
+
+                }else if($request->tipo_busqueda == 'valores_modificados'){
+                    $sesiones = Traza_Sessions::select('traza_sessions.id', 'traza_sessions.id_user', 'traza_sessions.id_accion', 'traza_sessions.valores_modificados', 'traza_sessions.created_at')
+                    ->Where('valores_modificados', 'LIKE', '%'.$request->buscador.'%')
+                    ->orderBy('traza_sessions.created_at', 'desc')->paginate(10);
+
+                }else{
+                    Alert()->warning('Búsqueda no permitida');
+                    $sesiones = Traza_Sessions::orderBy('created_at', 'desc')->paginate(10);
+                }
+            }else{
+                $sesiones = Traza_Sessions::orderBy('created_at', 'desc')->paginate(10);
+            }
+        }
+
+        $accion = Traza_Acciones::pluck('valor', 'id')->all();
+        $user = User::pluck('users', 'id')->all();
+
+        return view('trazas.sesiones_index', compact('sesiones', 'user', 'accion'));
+    }
+
+    public function show_sesiones(Traza_Sessions $sesiones)
+    {
+        return view('trazas.sesiones_show', compact('sesiones'));
     }
 
 }
