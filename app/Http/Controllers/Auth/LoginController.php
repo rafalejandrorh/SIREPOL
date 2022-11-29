@@ -14,6 +14,9 @@ use Alert;
 use App\Events\LoginHistorialEvent;
 use App\Events\LogoutHistorialEvent;
 use App\Http\Controllers\SesionController;
+use App\Models\Sessions;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -61,6 +64,61 @@ class LoginController extends Controller
     }
 
     ///////////////////////////////////////////////////////////////////////
+
+    public function login(Request $request)
+    {
+        $validacion_user = User::Where('users', $request->users)->exists();
+        if($validacion_user == true)
+        {
+            $users = User::Where('users', '=', $request->users)->get();
+            $id_user = $users[0]['id'];
+            $password = $users[0]['password'];
+
+            $validacion_sesion = Sessions::Where('user_id', $id_user)->exists();
+            if($validacion_sesion == false)
+            {   
+                $validacion_password = Hash::check(request('password'), $password);
+                if($validacion_password == true)
+                {
+                    $this->validateLogin($request);
+
+                    // If the class is using the ThrottlesLogins trait, we can automatically throttle
+                    // the login attempts for this application. We'll key this by the username and
+                    // the IP address of the client making these requests into this application.
+                    if (method_exists($this, 'hasTooManyLoginAttempts') &&
+                        $this->hasTooManyLoginAttempts($request)) {
+                        $this->fireLockoutEvent($request);
+
+                        return $this->sendLockoutResponse($request);
+                    }
+
+                    if ($this->attemptLogin($request)) {
+                        if ($request->hasSession()) {
+                            $request->session()->put('auth.password_confirmed_at', time());
+                        }
+
+                        return $this->sendLoginResponse($request);
+                    }
+
+                    // If the login attempt was unsuccessful we will increment the number of attempts
+                    // to login and redirect the user back to the login form. Of course, when this
+                    // user surpasses their maximum number of attempts they will get locked out.
+                    $this->incrementLoginAttempts($request);
+
+                    return $this->sendFailedLoginResponse($request);
+                }else{
+                    Alert()->warning('Contraseña Incorrecta');
+                    return back();
+                }
+            }else{
+                Alert()->warning('El Usuario ya posee una sesión activa');
+                return back(); 
+            }
+        }else{
+            Alert()->warning('Usuario Incorrecto');
+            return back();
+        }
+    }
 
     public function credentials(Request $request)
     {
