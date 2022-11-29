@@ -28,10 +28,20 @@ class LogoutHistorialListener
     {
         $id_user = $event->getIdUser();
         $tipo_logout = $event->getTipoLogout();
+        $id_historial_sesion = $event->getIdHistorialSesion();
 
-        $sesion = Historial_Sesion::find($id_user, ['id']);
-        $sesion->logout = now();
-        $sesion->tipo_logout = $tipo_logout;
-        $sesion->save();
+        if($id_historial_sesion == null)
+        {
+            $sessions = Historial_Sesion::where('id_user', $id_user)->orderBy('id', 'DESC')->first();
+            $sessions->logout = now();
+            $sessions->tipo_logout = $tipo_logout;
+            $sessions->save();
+        }else{
+            $sesion = Historial_Sesion::find($id_historial_sesion, ['id']);
+            $sesion->update([
+                'logout' => now(),
+                'tipo_logout' => $tipo_logout
+            ]);
+        }
     }
 }

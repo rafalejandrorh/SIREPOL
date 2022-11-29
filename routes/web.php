@@ -98,7 +98,7 @@ Route::patch('/user/{user}/status', [UserController::class, 'update_status'])->n
 Route::post('logout/{id}', [LoginController::class, 'logout']);
 
 // Ruta para colocar buscador en tiempo real 
-//Route::get('resenna/search/{cedula}', [ResennaController::class, 'search'])->name('resenna.search')->middleware('auth');
+// Route::get('resenna/search/{cedula}', [ResennaController::class, 'search'])->name('resenna.search')->middleware('auth');
 
 Auth::routes();
 

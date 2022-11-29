@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\LogoutHistorialEvent;
 use App\Events\TrazasEvent;
 use App\Models\Sessions;
 use Illuminate\Http\Request;
@@ -152,7 +153,10 @@ class SessionsController extends Controller
         $valores_modificados = 'Datos de Sesión: '.$session['users'].' || '.$session['ip_address'];
         event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Sessions'));
 
-        Sessions::where('id', $request->session)->delete();
+        $session = Sessions::find($request->session, ['id']);
+        $user = $session->first();
+        $session->delete();
+        event(new LogoutHistorialEvent(null, 3, $user['user_id']));
 
         Alert()->success('La Sesión ha sido finalizada Exitosamente');
         return redirect()->route('sessions.index');

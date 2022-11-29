@@ -114,7 +114,7 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        event(new LogoutHistorialEvent(session('id_historial_sesion'), $request->id));
+        event(new LogoutHistorialEvent(session('id_historial_sesion'), $request->id, null));
         session()->forget('id_historial_sesion');
         
         $this->guard()->logout();

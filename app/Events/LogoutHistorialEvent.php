@@ -19,10 +19,16 @@ class LogoutHistorialEvent
      *
      * @return void
      */
-    public function __construct($id_user, $tipo_logout)
+    public function __construct($id_historial_sesion, $tipo_logout, $id_user)
     {
+        $this->id_historial_sesion = $id_historial_sesion;
         $this->id_user = $id_user;
         $this->tipo_logout = $tipo_logout;
+    }
+
+    public function getIdHistorialSesion()
+    {
+        return $this->id_historial_sesion;
     }
 
     public function getIdUser()
