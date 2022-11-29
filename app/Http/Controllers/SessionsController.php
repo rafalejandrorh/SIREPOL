@@ -153,8 +153,10 @@ class SessionsController extends Controller
         $valores_modificados = 'Datos de Sesión: '.$session['users'].' || '.$session['ip_address'];
         event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Sessions'));
 
-        $session = Sessions::find($request->session, ['id']);
+        $session = Sessions::Where('id', $request->session);
         $user = $session->first();
+
+        $session = Sessions::find($request->session, ['id']);
         $session->delete();
         event(new LogoutHistorialEvent(null, 3, $user['user_id']));
 

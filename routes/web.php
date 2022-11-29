@@ -59,6 +59,8 @@ Route::get('/traza_users', [App\Http\Controllers\TrazasController::class, 'index
 
 Route::get('/traza_roles', [App\Http\Controllers\TrazasController::class, 'index_roles'])->name('traza_roles.index')->middleware('auth');
 
+Route::get('/traza_sesiones', [App\Http\Controllers\TrazasController::class, 'index_sesiones'])->name('traza_sesiones.index')->middleware('auth');
+
 Route::get('/traza_resennas/{resenna}', [App\Http\Controllers\TrazasController::class, 'show_resenna'])->name('traza_resenna.show')->middleware('auth');
 
 Route::get('/traza_funcionario/{funcionario}', [App\Http\Controllers\TrazasController::class, 'show_funcionarios'])->name('traza_funcionarios.show')->middleware('auth');
@@ -66,6 +68,8 @@ Route::get('/traza_funcionario/{funcionario}', [App\Http\Controllers\TrazasContr
 Route::get('/traza_users/{user}', [App\Http\Controllers\TrazasController::class, 'show_usuarios'])->name('traza_user.show')->middleware('auth');
 
 Route::get('/traza_roles/{role}', [App\Http\Controllers\TrazasController::class, 'show_roles'])->name('traza_roles.show')->middleware('auth');
+
+Route::get('/traza_sesiones/{sesion}', [App\Http\Controllers\TrazasController::class, 'show_sesiones'])->name('traza_sesiones.show')->middleware('auth');
 
 Route::get('/resenna_pdf/{resenna}', [App\Http\Controllers\ResennaController::class, 'pdf'])->name('resenna.pdf')->middleware('auth');
 
