@@ -11,7 +11,7 @@ class Traza_Sessions extends Model
 
     protected $table = 'traza_sessions';
 
-    protected $fillable = ['id_user','id_accion', 'valores_modificados', 'id'];
+    protected $fillable = ['id_user','id_accion', 'valores_modificados'];
 
     public function acciones()
     {
@@ -22,4 +22,5 @@ class Traza_Sessions extends Model
     {
         return $this->belongsto(User::class, 'id_user');
     }   
+    
 }

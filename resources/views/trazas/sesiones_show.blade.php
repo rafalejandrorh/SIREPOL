@@ -16,7 +16,7 @@
                                 </div>
                             </div>
                             <br>
-                            @include('trazas.forms.show', ['data' => $sesiones])
+                            @include('trazas.forms.show', ['data' => $sesion])
                         </div>
                     </div>
                 </div>

@@ -625,9 +625,9 @@ class TrazasController extends Controller
         return view('trazas.sesiones_index', compact('sesiones', 'user', 'accion'));
     }
 
-    public function show_sesiones(Traza_Sessions $sesiones)
+    public function show_sesiones(Traza_Sessions $sesion)
     {
-        return view('trazas.sesiones_show', compact('sesiones'));
+        return view('trazas.sesiones_show', compact('sesion'));
     }
 
 }
