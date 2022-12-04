@@ -11,7 +11,7 @@
                         </div>
                     </div>
                     <div class="card-block">
-                        {!! Form::file('url_foto', ['class' => 'form-control-file', 'id'=>'url', 'accept' => 'image/*']) !!}
+                        {!! Form::file('url_foto', ['class' => 'form-control-file upload', 'id'=>'url', 'accept' => 'image/*']) !!}
                     </div>
                 </div>
             </div>  
@@ -157,7 +157,7 @@
                 </div>
 
                 <div class="col-xs-12 col-sm-12 col-md-12">
-                    {!! Form::button('<i class="fa fa-save"> Guardar</i>', ['type' => 'submit', 'class' => 'btn btn-primary']) !!}
+                    {!! Form::button('<i class="fa fa-save"> Guardar</i>', ['type' => 'submit', 'class' => 'btn btn-primary', 'id' => 'submit']) !!}
                 </div>
         </div>
     {!! Form::close() !!}
