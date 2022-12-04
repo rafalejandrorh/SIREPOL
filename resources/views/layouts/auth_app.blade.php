@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>@yield('title')</title>
+    <title>@yield('title', 'SIREPOL')</title>
 
     <!-- General CSS Files -->
     <link rel="icon" href="{{ asset('public/img/logo_pmcr_sin_fondo.png')}}">
@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="{{ asset('public/assets/css/iziToast.min.css') }}">
     <link href="{{ asset('public/assets/css/sweetalert.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('public/assets/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
-    <script type="text/javascript">
+    {{-- <script type="text/javascript">
         function callbackThen(response){
             // read HTTP status
             console.log(response.status);
@@ -30,14 +30,13 @@
             console.error('Error:', error)
         }
     </script>
-        {!! htmlScriptTagJsApi(['callback_then' => 'callbackThen', 'callback_catch' => 'callbackCatch']) !!}
+        {!! htmlScriptTagJsApi(['callback_then' => 'callbackThen', 'callback_catch' => 'callbackCatch']) !!} --}}
 </head>
 
-<body> {{-- background="{{ asset('img/bandera.jpg') }}" --}}
+<body>
 <div id="app">
     <section class="section">
         <div class="container mt-5">
-            {{-- <h6 align="right">{!! $QR !!}</h6> --}}
             <div class="row">
                 <div class="col-md-6 offset-md-3">
                     <div class="login-brand">
@@ -45,7 +44,7 @@
                     </div>
                     @yield('content')
                     <div class="simple-footer">
-                        Policía del Municipio Cristóbal Rojas
+                       Policía del Municipio Cristóbal Rojas
                        <br>
                        Desarrollado por: Rafael Rivero - rafalejandrorivero@gmail.com
                        <br>
