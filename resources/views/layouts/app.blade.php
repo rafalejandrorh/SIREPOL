@@ -188,7 +188,6 @@
                         btnClass: 'btn-red',
                         action: function () {
                             salir();
-                            
                         }
                     },
                     permanecer: function () {

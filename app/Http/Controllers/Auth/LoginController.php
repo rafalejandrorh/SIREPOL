@@ -191,9 +191,7 @@ class LoginController extends Controller
             Alert()->toast('Cierre de Sesión por período de Inactividad','info');
         }
         
-        return $request->wantsJson()
-            ? new JsonResponse([], 204)
-            : redirect('/');
+        return redirect('/');
     }
 
 }
