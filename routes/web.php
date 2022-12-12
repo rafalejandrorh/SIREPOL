@@ -13,6 +13,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TrazasController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GeografiaVenezuelaController;
+use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\SessionsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
@@ -44,6 +45,8 @@ Route::resource('trazas', TrazasController::class)->middleware('auth');
 Route::resource('sesion', SesionController::class)->middleware('auth');
 
 Route::resource('sessions', SessionsController::class)->middleware('auth');
+
+Route::resource('messages', MessagesController::class)->middleware('auth');
 
 Route::get('/', [LoginController::class, 'index']);
 
@@ -82,6 +85,8 @@ Route::get('/resenna/mail', [EmailController::class, 'index'])->name('resenna.ma
 Route::get('/password/forgot', [ForgotPasswordController::class, 'index'])->name('password.forgot');
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('logs')->middleware('auth');
+
+Route::get('/abstract_messages', [MessagesController::class, 'abstract'])->name('messages.abstract')->middleware('auth');
 
 Route::post('/password/mail', [ForgotPasswordController::class, 'sendMail'])->name('password.mail');
 

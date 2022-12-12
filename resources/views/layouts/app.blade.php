@@ -18,10 +18,11 @@
     <link rel="stylesheet" href="{{ asset('public/css/jquery-confirm.min.css')}}" type="text/css">
 
 
-@yield('page_css')
-<!-- Template CSS -->
+    @yield('page_css')
+    <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('public/web/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('public/web/css/components.css')}}">
+    
     @yield('page_css')
 
     @yield('css')
@@ -29,6 +30,7 @@
 <body>
 
 <div id="app">
+
     <div class="main-wrapper main-wrapper-1">
         <div class="navbar-bg"></div>
         <nav class="navbar navbar-expand-lg main-navbar">
@@ -38,10 +40,27 @@
         <div class="main-sidebar main-sidebar-postion">
             @include('layouts.sidebar')
         </div>
+
         <!-- Main Content -->
         <div class="main-content">
+            {{-- Notificaciones Emergentes / Por acomodar en cuanto a posición  --}}
+            {{-- <div class="toast">
+                <div class="toast-header">
+                    <div class="rounded mr-2" style="height: 16px;width: 16px;background-color: red;"></div>
+                    <strong class="mr-auto">Título de la notificación</strong>
+                    <small>Hace 2 segundos</small>
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="toast-body">
+                    Cuerpo de la notificación
+                </div>
+            </div> --}}
+
             @yield('content')
         </div>
+        
         <footer class="main-footer">
             @include('layouts.footer')
         </footer>
@@ -52,7 +71,8 @@
 <script>
     window.laravelEchoPort = '{{ env("LARAVEL_ECHO_PORT") }}';
 </script>
-<script src="//{{request()->getHost() }}:{{ env("LARAVEL_ECHO_PORT") }}/socket.io/socket.io.js"></script>
+{{-- Socket.io --}}
+{{-- <script src="//{{request()->getHost() }}:{{ env("LARAVEL_ECHO_PORT") }}/socket.io/socket.io.js"></script> --}}
 <script src="{{ asset('public/js/app.js') }}"></script>
 
 <script src="{{ asset('public/assets/js/sweetalert2/sweetalert2.min.js') }}"></script>
@@ -77,7 +97,8 @@
 @yield('page_js')
 @yield('scripts')
 
-<script>
+{{-- Notificaciones en Tiempo real con Redis y Socket.io --}}
+{{-- <script>
     //const userId = '{{ auth()->id() }}'
 
     window.Echo.channel('public-notification-channel')
@@ -99,7 +120,7 @@
     // .listen('.NotificationEvent', (data) => {
     //     $("#notification").append('<div class="alert alert-warning">'+data.message+'</div>');
     // });
-</script>
+</script> --}}
 
 <script>
     let loggedInUser =@json(\Illuminate\Support\Facades\Auth::user());
@@ -120,6 +141,11 @@
 </script>
 
 <script>
+    $('.toast').toast({
+        autohide: true,
+        delay: 5000
+    });
+
     function mayus(e){
         e.value = e.value.toUpperCase();
     }
@@ -204,5 +230,21 @@
         //onclick="event.preventDefault(); document.getElementById('logout-form').submit();"  
         // window.location.href = "/login"; //esta función te saca
     }
+
+    messageList = document.querySelector(".messageList");
+
+    setInterval(() =>{
+        const options = {
+            method: "GET"
+        };
+        const url = "abstract_messages/";
+        const request = fetch(url, options)
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+                $('.toast').toast('show');
+                messageList.innerHTML = data;
+            });
+    }, 5000);
 </script>
 </html>
