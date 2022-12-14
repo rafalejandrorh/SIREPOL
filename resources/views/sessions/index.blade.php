@@ -12,7 +12,7 @@
                         <div class="card-body">
                             {!! Form::open(array('route' => 'sessions.index','method' => 'GET')) !!}
                             <div class="row">
-                                <div class="col-xs-3 col-sm-3 col-md-5">
+                                <div class="col-xs-3 col-sm-3 col-md-3">
                                     <div class="form-group">
                                         {!! Form::select('tipo_busqueda', ['' => 'Ver todos',
                                         'usuario' => 'Usuario', 
@@ -44,19 +44,20 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($sessions as $session)
-                                            <tr role="row" class="odd">
-                                                <td class="sorting_1">{{$session->user ? $session->user->users : 'Sin Inicio de Sesión'}}</td>
-                                                <td class="sorting_1">{{$session->ip_address}}</td>
-                                                <td class="sorting_1">{{\Carbon\Carbon::createFromTimeStamp($session->last_activity)->diffForhumans()}}</td>
-                                                <td class="sorting_1">
-                                                    @can('sessions.destroy')
-                                                        {!! Form::open(['method' => 'DELETE', 'route' => ['sessions.destroy', $session->session_id], 'style'=>'display:inline', 'class' => 'eliminar']) !!}
-                                                            {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
-                                                        {!! Form::close() !!}                                                  
-                                                    @endcan
-                                                </td>
-                                                
-                                            </tr>
+                                            @if (isset($session->user))
+                                                <tr role="row" class="odd">
+                                                    <td class="sorting_1">{{$session->user ? $session->user->users : 'Sin Inicio de Sesión'}}</td>
+                                                    <td class="sorting_1">{{$session->ip_address}}</td>
+                                                    <td class="sorting_1">{{\Carbon\Carbon::createFromTimeStamp($session->last_activity)->diffForhumans()}}</td>
+                                                    <td class="sorting_1">
+                                                        @can('sessions.destroy')
+                                                            {!! Form::open(['method' => 'DELETE', 'route' => ['sessions.destroy', $session->session_id], 'style'=>'display:inline', 'class' => 'eliminar']) !!}
+                                                                {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
+                                                            {!! Form::close() !!}                                                  
+                                                        @endcan
+                                                    </td>
+                                                </tr>
+                                            @endif
                                             @endforeach
                                         </tbody>
                                     </table>
