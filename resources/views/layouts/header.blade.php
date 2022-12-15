@@ -11,13 +11,31 @@
                class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                <i class="fas fa-envelope"></i>
                 <div class="d-sm-none d-lg-inline-block">
-                    Mensajes
                 </div>
             </a>
 
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="messageList">
                     <a class="dropdown-item has-icon"> Sin Mensajes</a>
+                </div>
+
+                <form id="logout-form" action="{{ url('logout/1') }}" method="POST" class="d-none">
+                    {{ csrf_field() }}
+                </form>
+            </div>
+        </li>
+
+        <li class="dropdown">
+            <a href="#" data-toggle="dropdown"
+               class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+               <i class="fas fa-bell"></i>
+                <div class="d-sm-none d-lg-inline-block">
+                </div>
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-right">
+                <div class="messageList">
+                    <a class="dropdown-item has-icon"> Sin Notificaciones</a>
                 </div>
 
                 <form id="logout-form" action="{{ url('logout/1') }}" method="POST" class="d-none">

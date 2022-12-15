@@ -10,22 +10,85 @@
         
         <div class="section-body">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                     <div class="card">
                         <div class="card-body">
                             <h3 class="text-center" style="color:#000000"><b>Bienvenido al Sistema de Reseña Policial</b></h3>
-                            <div class="col-md-6 offset-md-3">
+                            <div class="col-md-12 col-xl-12">
                                 <div class="login-brand">
-                                    <center><img src="{{ asset('public/img/pmcr_y_mpprjip.jpeg') }}" alt="logo" width="530" height="280" class="shadow-light"></center>
+                                    <center><img src="{{ asset('public/img/pmcr_y_mpprjip.jpeg') }}" alt="logo" width="430" height="220" class="shadow-light"></center>
                                 </div>
                                 @yield('content')
-                                <h6 align="center">{!! $QR !!}</h6>
+                                <h5 align="center">{!! $QR !!}</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 col-xl-12">
+                                    <div class="card bg-primary order-card">
+                                        <div class="card-block">
+                                            <h4>Reseñas Hoy</h4>
+                                            <h2 class="text-left"><span>{{$countResennasDia}}</span></h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-xl-12">
+                                    <div class="card bg-primary order-card">
+                                        <div class="card-block">
+                                            <h4>Reseñas del Mes</h4>
+                                            <h2 class="text-left"><span>{{$countResennasMes}}</span></h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-xl-12">
+                                    <div class="card bg-primary order-card">
+                                        <div class="card-block">
+                                            <h4>Reseñas del Año</h4>
+                                            <h2 class="text-left"><span>{{$countResennasAnno}}</span></h2>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        {{-- <div class="section-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 col-xl-6">
+                                    <div class="card bg-info order-card">
+                                        <div class="card-block">
+                                            <h4>Sesiones Activas</h4>
+                                            <h2 class="text-left"><span>{{$countSessions}}</span></h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-xl-6">
+                                    <div class="card bg-info order-card">
+                                        <div class="card-block">
+                                            <h4>Usuarios Activos</h4>
+                                            <h2 class="text-left"><span>{{$countUsers}}</span></h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> --}}
+
     </section>
 @endsection
 

@@ -46,7 +46,6 @@ class MessagesController extends Controller
 
             // Falta pasar los usuarios en lugar de los user_id
     
-            dd($data);die;
         }    
 
 

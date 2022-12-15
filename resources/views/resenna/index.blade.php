@@ -12,7 +12,7 @@
                         <div class="card-body">
                                 {!! Form::open(array('route' => 'resenna.index','method' => 'GET')) !!}
                                 <div class="row">
-                                    <div class="col-4 col-auto">
+                                    <div class="col-xs-4 col-sm-4 col-md-4">
                                         <div class="form-group">
                                             {!! Form::select('tipo_busqueda', ['' => 'Ver todos',
                                             'motivo_resenna' => 'Motivo de Reseña',
@@ -32,18 +32,16 @@
                                             'Seleccionar', array('class' => 'form-control select2')) !!}
                                         </div>
                                     </div>
-                                    <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-auto">
+                                    <div class="col-xs-3 col-sm-3 col-md-3">
                                         <div class="form-group">
                                             {!! Form::text('buscador', null, array('class' => 'form-control')) !!}
                                         </div>
                                     </div>
-                                    <div class="col-3 col-auto">
+                                    <div class="col-xs-3 col-sm-3 col-md-3">
                                         {!! Form::button('<i class="fa fa-search"> Buscar</i>', ['type' => 'submit', 'class' => 'btn btn-primary']) !!}
                                     </div>
-                                    <div class="col-2 col-auto d-flex justify-content-end" style="height: 2.3rem;"> 
-                                        <a href="#!" class="btn btn-primary mr-2" data-toggle="modal" data-target="#filtrar" data-bs-toggle="Filtro" data-bs-placement="top" title="Filtro"><i class="fa fa-filter"></i> Filtro</a>
-
-                                        <a href="#!" class="btn btn-primary" data-toggle="modal" data-target="#filtrar"><i class="fa fa-reply"></i></a>
+                                    <div class="col-xs-2 col-sm-2 col-md-2"> 
+                                        <a href="#!" class="btn btn-primary mr-2"><i class="fa fa-filter"></i> Filtro</a>
                                     </div>
                                 </div>
 
@@ -103,25 +101,5 @@
 @endsection
 
 @section('scripts')
-
-    <script>
-        $('.eliminar').submit(function(e){
-            e.preventDefault();
-
-            Swal.fire({
-            title: '¿Estás seguro?',
-            text: "No podrás revertir esta Acción",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, Eliminar!'
-            }).then((result) => {
-            if (result.value) {
-                this.submit();
-            }
-            })
-        });
-    </script>
-
+    <script src="{{ asset('public/js/resenna/index.js')}}"></script>
 @endsection

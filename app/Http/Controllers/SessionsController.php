@@ -98,7 +98,9 @@ class SessionsController extends Controller
             event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Sessions'));
         }
 
-        return view('sessions.index', ['sessions' => $sessions]);
+        $countSessions = Sessions::count();
+
+        return view('sessions.index', ['sessions' => $sessions, 'countSessions' => $countSessions]);
     }
 
     /**

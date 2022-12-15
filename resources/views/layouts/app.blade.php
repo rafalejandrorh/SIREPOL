@@ -68,11 +68,7 @@
 </div>
 
 </body>
-<script>
-    window.laravelEchoPort = '{{ env("LARAVEL_ECHO_PORT") }}';
-</script>
-{{-- Socket.io --}}
-{{-- <script src="//{{request()->getHost() }}:{{ env("LARAVEL_ECHO_PORT") }}/socket.io/socket.io.js"></script> --}}
+
 <script src="{{ asset('public/js/app.js') }}"></script>
 
 <script src="{{ asset('public/assets/js/sweetalert2/sweetalert2.min.js') }}"></script>
@@ -91,6 +87,18 @@
 <script src="{{ mix('assets/js/custom/custom.js') }}"></script>
 <script src="{{ asset('public/js/jquery-confirm.min.js')}}"></script>
 <script src="{{ asset('public/js/funcionesAjaxs.js')}}"></script>
+
+{{-- JavaScript --}}
+
+{{-- Validaciones de Formulario y Carga de Archivos --}}
+<script src="{{ asset('public/js/globals/validations.js') }}"></script>
+{{-- Socket.io --}}
+{{-- <script> window.laravelEchoPort = '{{ env("LARAVEL_ECHO_PORT") }}'; </script> --}}
+{{-- <script src="//{{request()->getHost() }}:{{ env("LARAVEL_ECHO_PORT") }}/socket.io/socket.io.js"></script> --}}
+{{-- Acciones en Tiempo Real --}}
+<script src="{{ asset('public/js/globals/realtime.js') }}"></script>
+{{-- Evaluar Tiempo para Expirar Sesión --}}
+<script src="{{ asset('public/js/globals/expirarSesion.js') }}"></script>
 
 @include('sweetalert::alert')
 
@@ -145,106 +153,5 @@
         autohide: true,
         delay: 5000
     });
-
-    function mayus(e){
-        e.value = e.value.toUpperCase();
-    }
-
-    function minus(e){
-        e.value = e.value.toLowerCase();
-    }
-
-    $('.numero').on('input', function () { 
-        this.value = this.value.replace(/[^0-9]/g,'');
-    });
-  
-    $('.letras').on('input', function () { 
-        this.value = this.value.replace(/[^a-zA-Z ]+$/,'');
-    });
-  
-    $('.mail').blur('input', function (){ 
-        if($(".mail").val().indexOf('@', 0) == -1 || $(".mail").val().indexOf('.', 0) == -1) {
-            Swal.fire({
-            title: 'Atención',
-            text: "El correo electrónico introducido no es válido",
-            icon: 'error',
-            showCancelButton: false,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            });
-        }
-    });
-
-    $(".upload").change(function() {
-        var file = this.files[0];
-        var typefile = file.type;
-        var match= ["image/jpg", "image/jpeg", "image/png"];
-        document.getElementById('submit').disabled = false;
-        if(!((typefile == match[0] || typefile == match[1] || typefile == match[2] || typefile == null || typefile == ""))){
-            Swal.fire({
-            title: 'Atención',
-            text: "Por favor, ingresa un formato de Imágen válido (jpg, jpeg, png)",
-            icon: 'error',
-            showCancelButton: false,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            });
-            document.getElementById('submit').disabled = true;
-            return false;
-        }
-    });
-
-    var timeout;
-    document.onmousemove = function(){ 
-        clearTimeout(timeout); 
-        contadorSesion(); //aqui cargamos la funcion de inactividad
-    } 
-
-    function contadorSesion() {
-    timeout = setTimeout(function () {
-            $.confirm({
-                title: 'Alerta de Inactividad!',
-                content: 'La sesión esta a punto de expirar.',
-                autoClose: 'expirar|10000',//cuanto tiempo necesitamos para cerrar la sess automaticamente
-                type: 'red',
-                icon: 'fa fa-spinner fa-spin',
-                buttons: {
-                    expirar: {
-                        text: 'Cerrar Sesión',
-                        btnClass: 'btn-red',
-                        action: function () {
-                            salir();
-                        }
-                    },
-                    permanecer: function () {
-                        contadorSesion(); //reinicia el conteo
-                        $.alert('La Sesión ha sido reiniciada!'); //mensaje
-                    }
-                }
-            });
-        }, 2100000);//2100000 son 35 minutos
-    }
-
-    function salir() {
-        $("#logout-formactivar").click();
-        //onclick="event.preventDefault(); document.getElementById('logout-form').submit();"  
-        // window.location.href = "/login"; //esta función te saca
-    }
-
-    messageList = document.querySelector(".messageList");
-
-    setInterval(() =>{
-        const options = {
-            method: "GET"
-        };
-        const url = "abstract_messages/";
-        const request = fetch(url, options)
-            .then(response => response.text())
-            .then(data => {
-                console.log(data);
-                $('.toast').toast('show');
-                messageList.innerHTML = data;
-            });
-    }, 5000);
 </script>
 </html>

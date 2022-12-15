@@ -38,5 +38,5 @@
 </div>
 
 @section('scripts')
-    <script src="{{ asset('public/js/enviar_whatsapp.js') }}"></script>
+    <script src="{{ asset('public/js/resenna/modals/whatsapp.js') }}"></script>
 @endsection
