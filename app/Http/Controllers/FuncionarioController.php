@@ -90,7 +90,7 @@ class FuncionarioController extends Controller
                 $funcionarios = Funcionario::paginate(10);
             }
         }else{
-            $funcionarios = Funcionario::paginate(10);
+            $funcionarios = Funcionario::paginate(5);
         }
         
         if(isset($request->tipo_busqueda) && isset($request->buscador))

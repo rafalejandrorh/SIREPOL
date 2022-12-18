@@ -10,6 +10,41 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 col-xl-4">
+                                    <div class="card bg-primary order-card">
+                                        <div class="card-block">
+                                            <h4>Reseñas de Hoy</h4>
+                                            <h2 class="text-left"><span>{{$countResennasDia}}</span></h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-xl-4">
+                                    <div class="card bg-primary order-card">
+                                        <div class="card-block">
+                                            <h4>Reseñas del Mes</h4>
+                                            <h2 class="text-left"><span>{{$countResennasMes}}</span></h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-xl-4">
+                                    <div class="card bg-primary order-card">
+                                        <div class="card-block">
+                                            <h4>Reseñas del Año</h4>
+                                            <h2 class="text-left"><span>{{$countResennasAnno}}</span></h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
                                 {!! Form::open(array('route' => 'resenna.index','method' => 'GET')) !!}
                                 <div class="row">
                                     <div class="col-xs-4 col-sm-4 col-md-4">

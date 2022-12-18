@@ -10,6 +10,7 @@
         
         <div class="section-body">
             <div class="row">
+
                 <div class="col-lg-6">
                     <div class="card">
                         <div class="card-body">
@@ -32,24 +33,20 @@
                                 <div class="col-md-12 col-xl-12">
                                     <div class="card bg-primary order-card">
                                         <div class="card-block">
+                                            <h4>Total de Usuarios</h4>
+                                            <h2 class="text-left"><span>{{$countUsers}}</span></h2>
+                                        </div>
+                                    </div>
+                                    <div class="card bg-primary order-card">
+                                        <div class="card-block">
+                                            <h4>Sesiones Activas</h4>
+                                            <h2 class="text-left"><span>{{$countSessions}}</span></h2>
+                                        </div>
+                                    </div>
+                                    <div class="card bg-primary order-card">
+                                        <div class="card-block">
                                             <h4>Reseñas Hoy</h4>
                                             <h2 class="text-left"><span>{{$countResennasDia}}</span></h2>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 col-xl-12">
-                                    <div class="card bg-primary order-card">
-                                        <div class="card-block">
-                                            <h4>Reseñas del Mes</h4>
-                                            <h2 class="text-left"><span>{{$countResennasMes}}</span></h2>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 col-xl-12">
-                                    <div class="card bg-primary order-card">
-                                        <div class="card-block">
-                                            <h4>Reseñas del Año</h4>
-                                            <h2 class="text-left"><span>{{$countResennasAnno}}</span></h2>
                                         </div>
                                     </div>
                                 </div>
@@ -60,35 +57,8 @@
             </div>
         </div>
 
-        {{-- <div class="section-body">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6 col-xl-6">
-                                    <div class="card bg-info order-card">
-                                        <div class="card-block">
-                                            <h4>Sesiones Activas</h4>
-                                            <h2 class="text-left"><span>{{$countSessions}}</span></h2>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-xl-6">
-                                    <div class="card bg-info order-card">
-                                        <div class="card-block">
-                                            <h4>Usuarios Activos</h4>
-                                            <h2 class="text-left"><span>{{$countUsers}}</span></h2>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-
     </section>
 @endsection
+
+
 

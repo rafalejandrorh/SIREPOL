@@ -6,6 +6,42 @@
             <h3 class="page__heading"><b>Usuarios</b></h3>
         </div>
         <div class="section-body">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 col-xl-4">
+                                    <div class="card bg-info order-card">
+                                        <div class="card-block">
+                                            <h4>Total de Usuarios</h4>
+                                            <h2 class="text-left"><span>{{$countUsers}}</span></h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-xl-4">
+                                    <div class="card bg-success order-card">
+                                        <div class="card-block">
+                                            <h4>Usuarios Activos</h4>
+                                            <h2 class="text-left"><span>{{$countUsersActive}}</span></h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-xl-4">
+                                    <div class="card bg-danger order-card">
+                                        <div class="card-block">
+                                            <h4>Usuarios Inactivos</h4>
+                                            <h2 class="text-left"><span>{{$countUsersInactive}}</span></h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">

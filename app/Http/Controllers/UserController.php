@@ -41,29 +41,29 @@ class UserController extends Controller
         if(isset($request->buscador) && is_numeric($request->buscador))
         {
             if($request->tipo_busqueda == 'cedula'){
-                $user = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+                $Users = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
                 ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
                 ->select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
                 ->Where('persons.cedula', '=', $request->buscador)->paginate(10);
                 
             }else if($request->tipo_busqueda == 'credencial'){
-                $user = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+                $Users = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
                 ->select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
                 ->Where('funcionarios.credencial', '=', $request->buscador)->paginate(10);
             }else{
                 Alert()->warning('Búsqueda no permitida');
-                $user = User::paginate(10);
+                $Users = User::paginate(10);
             }
         }else if(isset($request->buscador) && is_string($request->buscador)){
             
             if($request->tipo_busqueda == 'jerarquia'){
-                $user = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+                $Users = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
                 ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
                 ->select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
                 ->Where('jerarquia.valor', 'ilike', '%'.$request->buscador.'%')->paginate(10);
 
             }else if($request->tipo_busqueda == 'usuario'){
-                $user = User::select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
+                $Users = User::select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
                 ->Where('users', 'ilike', '%'.$request->buscador.'%')
                 ->paginate(10);
 
@@ -73,28 +73,28 @@ class UserController extends Controller
                 }else if($request->buscador == 'inactivo' || $request->buscador == 'Inactivo' || $request->buscador == 'INACTIVO'){
                     $status = false;
                 }
-                $user = User::select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
+                $Users = User::select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
                 ->Where('status', '=', $status)
                 ->paginate(10);
 
             }else if($request->tipo_busqueda == 'nombre'){
-                $user = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+                $Users = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
                 ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
                 ->select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
                 ->Where('persons.primer_nombre', 'ilike', '%'.$request->buscador.'%')->paginate(5);
 
             }else if($request->tipo_busqueda == 'apellido'){
-                $user = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+                $Users = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
                 ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
                 ->select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
                 ->Where('persons.primer_apellido', 'ilike', '%'.$request->buscador.'%')->paginate(5);
 
             }else{
                 Alert()->warning('Búsqueda no permitida');
-                $user = User::paginate(10);
+                $Users = User::paginate(10);
             }
         }else{
-            $user = User::paginate(10);
+            $Users = User::paginate(10);
         }
 
         if(isset($request->tipo_busqueda) && isset($request->buscador))
@@ -104,8 +104,15 @@ class UserController extends Controller
             $valores_modificados = 'Tipo de Búsqueda: '.$request->tipo_busqueda.'. Valor Buscado: '.$request->buscador;
             event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_User'));
         }
+
+        $dateYM = date('Y-m');
+        $dateY = date('Y');
+        $dateYMD = date('Y-m-d');
+        $countUsers = User::count();
+        $countUsersActive = User::Where('status', true)->count();
+        $countUsersInactive = User::Where('status', false)->count();
         
-        return view('users.index', ['Users' => $user]);
+        return view('users.index', compact('Users', 'countUsers', 'countUsersActive', 'countUsersInactive'));
     }
 
     /**

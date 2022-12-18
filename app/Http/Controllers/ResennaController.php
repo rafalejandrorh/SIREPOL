@@ -197,6 +197,13 @@ class ResennaController extends Controller
             }
         }
 
+        $dateYM = date('Y-m');
+        $dateY = date('Y');
+        $dateYMD = date('Y-m-d');
+        $countResennasAnno = Resenna::WhereBetween('created_at', [$dateY.'-01-01', $dateY.'-12-31'])->count();
+        $countResennasMes = Resenna::WhereBetween('created_at', [$dateYM.'-01', $dateYM.'-31'])->count();
+        $countResennasDia = Resenna::Where('created_at', $dateYMD)->count();
+        
         $genero = Genero::pluck('valor', 'id')->all();
         $motivo_resenna = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 94)->pluck('valor', 'id')->all();
         $tez = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 240)->pluck('valor', 'id')->all();
@@ -204,7 +211,7 @@ class ResennaController extends Controller
         $estado = Geografia_Venezuela::orderBy('valor', 'asc')->Where('id_padre', 107)->pluck('valor', 'id')->all();
         $municipio = Geografia_Venezuela::orderBy('valor', 'asc')->Where('id_padre', 108)->pluck('valor', 'id')->all();
         
-        return view('resenna.index', compact('resennas', 'genero', 'motivo_resenna', 'tez', 'contextura', 'estado', 'municipio'));
+        return view('resenna.index', compact('resennas', 'genero', 'motivo_resenna', 'tez', 'contextura', 'estado', 'municipio', 'countResennasAnno', 'countResennasMes', 'countResennasDia'));
     }
 
     /**

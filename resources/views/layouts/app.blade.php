@@ -57,7 +57,6 @@
                     Cuerpo de la notificación
                 </div>
             </div> --}}
-
             @yield('content')
         </div>
         
