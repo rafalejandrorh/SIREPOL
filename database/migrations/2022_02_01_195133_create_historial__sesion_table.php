@@ -19,6 +19,7 @@ return new class extends Migration
             $table->dateTime('login')->nullable();
             $table->dateTime('logout')->nullable();
             $table->integer('tipo_logout')->nullable();
+            $table->string('MAC');
             $table->timestamps();
         });
     }

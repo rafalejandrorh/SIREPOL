@@ -15,7 +15,7 @@ class GeografiaVenezuelaSeeder extends Seeder
      */
     public function run()
     {
-        Geografia_Venezuela::create(['id' => 107, 'valor' => "ESTADO"]);
+        Geografia_Venezuela::create(['id' => 107, 'valor' => "ESTADO", 'id_padre' => 1, 'id_hijo' => 1]);
         Geografia_Venezuela::create(['id' => 1070000, 'valor' => "Distrito Capital", 'id_padre' => 107, 'id_hijo' => 1060223]);
         Geografia_Venezuela::create(['id' => 1070001, 'valor' => "Amazonas", 'id_padre' => 107, 'id_hijo' => 1060223]);
         Geografia_Venezuela::create(['id' => 1070003, 'valor' => "Apure", 'id_padre' => 107, 'id_hijo' => 1060223]);
@@ -41,7 +41,7 @@ class GeografiaVenezuelaSeeder extends Seeder
         Geografia_Venezuela::create(['id' => 1070023, 'valor' => "Vargas", 'id_padre' => 107, 'id_hijo' => 1060223]);
         Geografia_Venezuela::create(['id' => 1070024, 'valor' => "Dep. Federales", 'id_padre' => 107, 'id_hijo' => 1060223]);
         Geografia_Venezuela::create(['id' => 1070002, 'valor' => "Anzoategui", 'id_padre' => 107, 'id_hijo' => 1060223]);
-        Geografia_Venezuela::create(['id' => 108, 'valor' => "MUNICIPIO"]);
+        Geografia_Venezuela::create(['id' => 108, 'valor' => "MUNICIPIO", 'id_padre' => 1, 'id_hijo' => 1]);
         Geografia_Venezuela::create(['id' => 1080000, 'valor' => "Municipio Libertador", 'id_padre' => 108, 'id_hijo' => 1070000]);
         Geografia_Venezuela::create(['id' => 1080001, 'valor' => "Municipio Alto Orinoco", 'id_padre' => 108, 'id_hijo' => 1070001]);
         Geografia_Venezuela::create(['id' => 1080002, 'valor' => "Municipio Atabapo", 'id_padre' => 108, 'id_hijo' => 1070001]);
@@ -386,7 +386,7 @@ class GeografiaVenezuelaSeeder extends Seeder
         Geografia_Venezuela::create(['id' => 1080373, 'valor' => "Municipio Tinaquillo", 'id_padre' => 108, 'id_hijo' => 1070008]);
         Geografia_Venezuela::create(['id' => 1080374, 'valor' => "Municipio Ezequiel Zamora", 'id_padre' => 108, 'id_hijo' => 1070008]);
         Geografia_Venezuela::create(['id' => 1080375, 'valor' => "Municipio Bolivariano Guajira", 'id_padre' => 108, 'id_hijo' => 1070022]);
-        Geografia_Venezuela::create(['id' => 109, 'valor' => "PARROQUIA"]);
+        Geografia_Venezuela::create(['id' => 109, 'valor' => "PARROQUIA", 'id_padre' => 1, 'id_hijo' => 1]);
         Geografia_Venezuela::create(['id' => 1090093, 'valor' => "Parroquia La Trampa", 'id_padre' => 109, 'id_hijo' => 1080172]);
         Geografia_Venezuela::create(['id' => 1090000, 'valor' => "Parroquia Las Vegas del Tuy", 'id_padre' => 109, 'id_hijo' => 1080126]);
         Geografia_Venezuela::create(['id' => 1090001, 'valor' => "Parroquia Urumaco", 'id_padre' => 109, 'id_hijo' => 1080127]);
@@ -1561,7 +1561,7 @@ class GeografiaVenezuelaSeeder extends Seeder
         Geografia_Venezuela::create(['id' => 1091289, 'valor' => "Parroquia Manuel Manrique", 'id_padre' => 109, 'id_hijo' => 1080374]);
         Geografia_Venezuela::create(['id' => 7860012, 'valor' => "PARROQUIA CUA", 'id_padre' => 109, 'id_hijo' => 1080195]);
         Geografia_Venezuela::create(['id' => 7860013, 'valor' => "PARROQUIA NUEVA CUA", 'id_padre' => 109, 'id_hijo' => 1080195]);
-        Geografia_Venezuela::create(['id' => 110, 'valor' => "Ciudades"]);
+        Geografia_Venezuela::create(['id' => 110, 'valor' => "Ciudades", 'id_padre' => 1, 'id_hijo' => 1]);
         Geografia_Venezuela::create(['id' => 9865373, 'valor' => "Sifontes", 'id_padre' => 110, 'id_hijo' => 1070006]);
         Geografia_Venezuela::create(['id' => 9865382, 'valor' => "Mariara", 'id_padre' => 110, 'id_hijo' => 1070007]);
         Geografia_Venezuela::create(['id' => 9865374, 'valor' => "Chien", 'id_padre' => 110, 'id_hijo' => 1070006]);
@@ -1945,7 +1945,7 @@ class GeografiaVenezuelaSeeder extends Seeder
         Geografia_Venezuela::create(['id' => 9865676, 'valor' => "Isla La Orchila", 'id_padre' => 110, 'id_hijo' => 1070024]);
         Geografia_Venezuela::create(['id' => 9865677, 'valor' => "Archipielago Las Aves", 'id_padre' => 110, 'id_hijo' => 1070024]);
         Geografia_Venezuela::create(['id' => 9865678, 'valor' => "Isla de Aves", 'id_padre' => 110, 'id_hijo' => 1070024]);
-        Geografia_Venezuela::create(['id' => 106, 'valor' => "PAISES"]);
+        Geografia_Venezuela::create(['id' => 106, 'valor' => "PAISES", 'id_padre' => 1, 'id_hijo' => 1]);
         Geografia_Venezuela::create(['id' => 1060000, 'valor' => "Angola", 'id_padre' => 106, 'id_hijo' => 1060000]);
         Geografia_Venezuela::create(['id' => 1060001, 'valor' => "Anguilla", 'id_padre' => 106, 'id_hijo' => 1060001]);
         Geografia_Venezuela::create(['id' => 1060002, 'valor' => "Antártica", 'id_padre' => 106, 'id_hijo' => 1060002]);

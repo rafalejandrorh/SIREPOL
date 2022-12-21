@@ -17,8 +17,8 @@ return new class extends Migration
 
             $table->bigIncrements('id');
             $table->string('valor', 300);
-            $table->bigIncrements('id_padre');
-            $table->bigIncrements('id_hijo');
+            $table->unsignedInteger('id_padre');
+            $table->unsignedInteger('id_hijo');
              
             $table->timestamps();
         });

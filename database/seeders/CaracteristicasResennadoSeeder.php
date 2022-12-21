@@ -15,23 +15,23 @@ class CaracteristicasResennadoSeeder extends Seeder
      */
     public function run()
     {
-        Caracteristicas_Resennado::create(['id' => 240, 'valor' => "TEZ"]);
+        Caracteristicas_Resennado::create(['id' => 240, 'valor' => "TEZ", 'id_padre' => 1, 'id_nomenclador' => 1]);
         Caracteristicas_Resennado::create(['id' => 2400000, 'valor' => "BLANCO", 'id_padre' => 240, 'id_nomenclador' => 2400000]);
         Caracteristicas_Resennado::create(['id' => 2400001, 'valor' => "NEGRO", 'id_padre' => 240, 'id_nomenclador' => 2400001]);
         Caracteristicas_Resennado::create(['id' => 2400002, 'valor' => "TRIGUEÑO", 'id_padre' => 240, 'id_nomenclador' => 2400002]);
         Caracteristicas_Resennado::create(['id' => 2400003, 'valor' => "AMARILLO", 'id_padre' => 240, 'id_nomenclador' => 2400003]);
         Caracteristicas_Resennado::create(['id' => 2400004, 'valor' => "MORENO", 'id_padre' => 240, 'id_nomenclador' => 2400004]);
         Caracteristicas_Resennado::create(['id' => 2400006, 'valor' => "ROJIZO", 'id_padre' => 240, 'id_nomenclador' => 2400006]);
-        Caracteristicas_Resennado::create(['id' => 241, 'valor' => "ESTADO_CIVIL"]);
+        Caracteristicas_Resennado::create(['id' => 241, 'valor' => "ESTADO_CIVIL", 'id_padre' => 1, 'id_nomenclador' => 1]);
         Caracteristicas_Resennado::create(['id' => 2410000, 'valor' => "SOLTERO/A", 'id_padre' => 241, 'id_nomenclador' => 2410000]);
         Caracteristicas_Resennado::create(['id' => 2410001, 'valor' => "CASADO/A", 'id_padre' => 241, 'id_nomenclador' => 2410001]);
         Caracteristicas_Resennado::create(['id' => 2410002, 'valor' => "DIVORCIADO/A", 'id_padre' => 241, 'id_nomenclador' => 2410002]);
         Caracteristicas_Resennado::create(['id' => 2410003, 'valor' => "VIUDO/A", 'id_padre' => 241, 'id_nomenclador' => 2410003]);
-        Caracteristicas_Resennado::create(['id' => 243, 'valor' => "CONTEXTURA"]);
+        Caracteristicas_Resennado::create(['id' => 243, 'valor' => "CONTEXTURA", 'id_padre' => 1, 'id_nomenclador' => 1]);
         Caracteristicas_Resennado::create(['id' => 2430000, 'valor' => "DELGADO/A", 'id_padre' => 243, 'id_nomenclador' => 2430000]);
         Caracteristicas_Resennado::create(['id' => 2430001, 'valor' => "OBESO/A", 'id_padre' => 243, 'id_nomenclador' => 2430001]);
         Caracteristicas_Resennado::create(['id' => 2430002, 'valor' => "MUSCULOSO/A", 'id_padre' => 243, 'id_nomenclador' => 2430002]);
-        Caracteristicas_Resennado::create(['id' => 94, 'valor' => "Delito"]);
+        Caracteristicas_Resennado::create(['id' => 94, 'valor' => "Delito", 'id_padre' => 1, 'id_nomenclador' => 1]);
         Caracteristicas_Resennado::create(['id' => 94000, 'valor' => "ABUSO DE AUTORIDAD", 'id_padre' => 94, 'id_nomenclador' => 94000]);
         Caracteristicas_Resennado::create(['id' => 94001, 'valor' => "ABUSO SEXUAL (ADULTOS)", 'id_padre' => 94, 'id_nomenclador' => 94001]);
         Caracteristicas_Resennado::create(['id' => 94002, 'valor' => "ABUSO SEXUAL A ADOLESCENTE (LOPNA)", 'id_padre' => 94, 'id_nomenclador' => 94002]);
@@ -121,7 +121,7 @@ class CaracteristicasResennadoSeeder extends Seeder
         Caracteristicas_Resennado::create(['id' => 94087, 'valor' => "VIOLENCIA SEXUAL", 'id_padre' => 94, 'id_nomenclador' => 94087]);
         Caracteristicas_Resennado::create(['id' => 94088, 'valor' => "VIOLENCIA SIMBÓLICA", 'id_padre' => 94, 'id_nomenclador' => 94088]);
         Caracteristicas_Resennado::create(['id' => 94005, 'valor' => "ACCESO CARNAL VIOLENTO", 'id_padre' => 94, 'id_nomenclador' => 94005]);
-        Caracteristicas_Resennado::create(['id' => 234, 'valor' => "PROFESIÓN"]);
+        Caracteristicas_Resennado::create(['id' => 234, 'valor' => "PROFESIÓN", 'id_padre' => 1, 'id_nomenclador' => 1]);
         Caracteristicas_Resennado::create(['id' => 2340000, 'valor' => "Profesor de entrenamiento deportivo", 'id_padre' => 234, 'id_nomenclador' => 2330009]);
         Caracteristicas_Resennado::create(['id' => 2340001, 'valor' => "Profesor de Gestión tecnológica del deporte", 'id_padre' => 234, 'id_nomenclador' => 2330010]);
         Caracteristicas_Resennado::create(['id' => 2340002, 'valor' => "TSU en deportes", 'id_padre' => 234, 'id_nomenclador' => 2330011]);

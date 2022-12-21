@@ -18,6 +18,9 @@ class UserSeeder extends Seeder
         User::create([
             'users' => 'Superadmin',
             'id_funcionario' => 1,
+            'status' => true,
+            'last_login' => date('Y-m-d H:i:s'),
+            'password_status' => false,
             'password' => bcrypt('sup3r4dm1n*2022')
         ])->assignRole('Superadmin');
     }

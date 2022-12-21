@@ -16,16 +16,15 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             RoleSeeder::class,
-            UserSeeder::class,
-            FuncionarioSeeder::class,
-            PersonSeeder::class,
-            CaracteristicasResennadoSeeder::class,
+            JerarquiaSeeder::class,
+            TipoDocumentacionSeeder::class,
             EstatusFuncionarioSeeder::class,
             GeneroSeeder::class,
             GeografiaVenezuelaSeeder::class,
-            JerarquiaSeeder::class,
-            TipoDocumentacionSeeder::class,
-            
+            CaracteristicasResennadoSeeder::class,
+            PersonSeeder::class,
+            FuncionarioSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }
