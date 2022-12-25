@@ -203,6 +203,7 @@ class ResennaController extends Controller
         $countResennasAnno = Resenna::WhereBetween('created_at', [$dateY.'-01-01', $dateY.'-12-31'])->count();
         $countResennasMes = Resenna::WhereBetween('created_at', [$dateYM.'-01', $dateYM.'-31'])->count();
         $countResennasDia = Resenna::Where('created_at', $dateYMD)->count();
+        $last_id_resenna = Resenna::orderBy('id', 'desc')->first();
         
         $genero = Genero::pluck('valor', 'id')->all();
         $motivo_resenna = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 94)->pluck('valor', 'id')->all();
@@ -211,7 +212,19 @@ class ResennaController extends Controller
         $estado = Geografia_Venezuela::orderBy('valor', 'asc')->Where('id_padre', 107)->pluck('valor', 'id')->all();
         $municipio = Geografia_Venezuela::orderBy('valor', 'asc')->Where('id_padre', 108)->pluck('valor', 'id')->all();
         
-        return view('resenna.index', compact('resennas', 'genero', 'motivo_resenna', 'tez', 'contextura', 'estado', 'municipio', 'countResennasAnno', 'countResennasMes', 'countResennasDia'));
+        return view('resenna.index', compact('resennas', 'last_id_resenna', 'genero', 'motivo_resenna', 'tez', 'contextura', 'estado', 'municipio', 'countResennasAnno', 'countResennasMes', 'countResennasDia'));
+    }
+
+    public function verifyNewStore(Request $request)
+    {
+        $verify_new_resenna = Resenna::orderBy('id', 'desc')->first();
+        if($verify_new_resenna['id'] != $request->id)
+        {
+            $response = 1;
+        }else{
+            $response = 0;
+        };
+        return response()->json($response);
     }
 
     /**
@@ -228,12 +241,21 @@ class ResennaController extends Controller
             $request->buscador = null;
         }
         if($request->tipo_busqueda == 'cedula_resennado'){
-            $resennado = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
-            ->Where('persons.cedula', '=', $request->buscador)
-            ->select('persons.id_tipo_documentacion', 'persons.letra_cedula', 'persons.cedula', 'persons.primer_nombre',
-            'persons.segundo_nombre', 'persons.primer_apellido', 'persons.segundo_apellido', 'persons.fecha_nacimiento',
-            'persons.id_estado_nacimiento', 'persons.id_municipio_nacimiento', 'resenna_detenido.direccion', 'resenna_detenido.id_estado_civil',
-            'persons.id_genero', 'resenna_detenido.id_tez', 'resenna_detenido.id_contextura', 'resenna_detenido.id_profesion')->first();
+            $resennado_exists = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
+            ->Where('persons.cedula', '=', $request->buscador)->exists();
+            if($resennado_exists)
+            {
+                $resennado = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
+                ->Where('persons.cedula', '=', $request->buscador)
+                ->select('persons.id_tipo_documentacion', 'persons.letra_cedula', 'persons.cedula', 'persons.primer_nombre',
+                'persons.segundo_nombre', 'persons.primer_apellido', 'persons.segundo_apellido', 'persons.fecha_nacimiento',
+                'persons.id_estado_nacimiento', 'persons.id_municipio_nacimiento', 'resenna_detenido.direccion', 'resenna_detenido.id_estado_civil',
+                'persons.id_genero', 'resenna_detenido.id_tez', 'resenna_detenido.id_contextura', 'resenna_detenido.id_profesion')->first();
+            }else{
+                Alert()->warning('El Ciudadano no posee Reseñas');
+                return back();
+            }
+
         }else{
             $resennado = null;
         }

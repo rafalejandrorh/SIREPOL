@@ -14,6 +14,7 @@ use App\Http\Controllers\TrazasController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GeografiaVenezuelaController;
 use App\Http\Controllers\MessagesController;
+use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\SessionsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
@@ -54,31 +55,33 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/historial_sesion', [App\Http\Controllers\TrazasController::class, 'index_historial_sesion'])->name('historial_sesion.index')->middleware('auth');
 
-Route::get('/traza_resennas', [App\Http\Controllers\TrazasController::class, 'index_resenna'])->name('traza_resenna.index')->middleware('auth');
+Route::get('/trazasResennas', [App\Http\Controllers\TrazasController::class, 'index_resenna'])->name('traza_resenna.index')->middleware('auth');
 
-Route::get('/traza_funcionarios', [App\Http\Controllers\TrazasController::class, 'index_funcionarios'])->name('traza_funcionarios.index')->middleware('auth');
+Route::get('/trazasFuncionarios', [App\Http\Controllers\TrazasController::class, 'index_funcionarios'])->name('traza_funcionarios.index')->middleware('auth');
 
-Route::get('/traza_users', [App\Http\Controllers\TrazasController::class, 'index_usuarios'])->name('traza_user.index')->middleware('auth');
+Route::get('/trazasUsers', [App\Http\Controllers\TrazasController::class, 'index_usuarios'])->name('traza_user.index')->middleware('auth');
 
-Route::get('/traza_roles', [App\Http\Controllers\TrazasController::class, 'index_roles'])->name('traza_roles.index')->middleware('auth');
+Route::get('/trazasRoles', [App\Http\Controllers\TrazasController::class, 'index_roles'])->name('traza_roles.index')->middleware('auth');
 
-Route::get('/traza_sesiones', [App\Http\Controllers\TrazasController::class, 'index_sesiones'])->name('traza_sesiones.index')->middleware('auth');
+Route::get('/trazasSesiones', [App\Http\Controllers\TrazasController::class, 'index_sesiones'])->name('traza_sesiones.index')->middleware('auth');
 
-Route::get('/traza_resennas/{resenna}', [App\Http\Controllers\TrazasController::class, 'show_resenna'])->name('traza_resenna.show')->middleware('auth');
+Route::get('/trazas/resennas/{resenna}', [App\Http\Controllers\TrazasController::class, 'show_resenna'])->name('traza_resenna.show')->middleware('auth');
 
-Route::get('/traza_funcionario/{funcionario}', [App\Http\Controllers\TrazasController::class, 'show_funcionarios'])->name('traza_funcionarios.show')->middleware('auth');
+Route::get('/trazas/funcionarios/{funcionario}', [App\Http\Controllers\TrazasController::class, 'show_funcionarios'])->name('traza_funcionarios.show')->middleware('auth');
 
-Route::get('/traza_users/{user}', [App\Http\Controllers\TrazasController::class, 'show_usuarios'])->name('traza_user.show')->middleware('auth');
+Route::get('/trazas/users/{user}', [App\Http\Controllers\TrazasController::class, 'show_usuarios'])->name('traza_user.show')->middleware('auth');
 
-Route::get('/traza_roles/{role}', [App\Http\Controllers\TrazasController::class, 'show_roles'])->name('traza_roles.show')->middleware('auth');
+Route::get('/trazas/roles{role}', [App\Http\Controllers\TrazasController::class, 'show_roles'])->name('traza_roles.show')->middleware('auth');
 
-Route::get('/traza_sesiones/{sesion}', [App\Http\Controllers\TrazasController::class, 'show_sesiones'])->name('traza_sesiones.show')->middleware('auth');
+Route::get('/trazas/sesiones/{sesion}', [App\Http\Controllers\TrazasController::class, 'show_sesiones'])->name('traza_sesiones.show')->middleware('auth');
 
-Route::get('/resenna_pdf/{resenna}', [App\Http\Controllers\ResennaController::class, 'pdf'])->name('resenna.pdf')->middleware('auth');
+Route::get('/resenna/pdf/{resenna}', [App\Http\Controllers\ResennaController::class, 'pdf'])->name('resenna.pdf')->middleware('auth');
 
 Route::get('resenna/create/select/{id}/{id_hijo}', [App\Http\Controllers\GeografiaVenezuelaController::class, 'getCombo']);
 
 Route::get('resenna/{id}/edit/select/{tipo}/{id_hijo}', [App\Http\Controllers\GeografiaVenezuelaController::class, 'getCombos']);
+
+Route::get('resenna/verify/{id}', [ResennaController::class, 'verifyNewStore'])->name('resenna.verify')->middleware('auth');
 
 Route::get('/resenna/mail', [EmailController::class, 'index'])->name('resenna.mail')->middleware('auth');
 
@@ -92,13 +95,13 @@ Route::post('/password/mail', [ForgotPasswordController::class, 'sendMail'])->na
 
 Route::post('/password/reset', [ResetPasswordController::class, 'index'])->name('password.reset');
 
-Route::patch('/traza_resennas/{resenna}', [App\Http\Controllers\TrazasController::class, 'update_resenna'])->name('traza_resenna.update')->middleware('auth');
+Route::patch('/trazas/resennas/{resenna}', [App\Http\Controllers\TrazasController::class, 'update_resenna'])->name('traza_resenna.update')->middleware('auth');
 
-Route::patch('/traza_funcionarios/{funcionario}', [App\Http\Controllers\TrazasController::class, 'update_roles'])->name('traza_funcionarios.update')->middleware('auth');
+Route::patch('/trazas/funcionarios/{funcionario}', [App\Http\Controllers\TrazasController::class, 'update_roles'])->name('traza_funcionarios.update')->middleware('auth');
 
-Route::patch('/traza_users/{user}', [App\Http\Controllers\TrazasController::class, 'update_roles'])->name('traza_user.update')->middleware('auth');
+Route::patch('/trazas/users/{user}', [App\Http\Controllers\TrazasController::class, 'update_roles'])->name('traza_user.update')->middleware('auth');
 
-Route::patch('/traza_roles/{role}', [App\Http\Controllers\TrazasController::class, 'update_roles'])->name('traza_roles.update')->middleware('auth');
+Route::patch('/trazas/roles{role}', [App\Http\Controllers\TrazasController::class, 'update_roles'])->name('traza_roles.update')->middleware('auth');
 
 Route::patch('/reset{user}', [UserController::class, 'ResetPassword'])->name('users.reset')->middleware('auth');
 

@@ -233,9 +233,9 @@ class TrazasController extends Controller
         }
 
         $accion = Traza_Acciones::pluck('valor', 'id')->all();
-        $usr = User::pluck('users', 'id')->all();
+        $user = User::pluck('users', 'id')->all();
 
-        return view('trazas.users_index', compact('users', 'usr', 'accion'));
+        return view('trazas.users_index', compact('users', 'user', 'accion'));
     }
 
     public function show_usuarios(Traza_User $user)

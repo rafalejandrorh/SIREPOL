@@ -1,10 +1,21 @@
 setInterval(() => {
-    location.reload();
-}, 60000);
-
-document.querySelector('#refresh').addEventListener('click', function(){
-        location.reload();
-});
+    const options = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    };
+    const url = "resenna/verify/"+last_id_resenna;
+    const request = fetch(url, options)
+        .then(response => response.text())
+        .then(data => {
+            console.log(data);
+            if(data == 1)
+            {
+                location.reload();
+            }
+        });
+}, 10000); // 60000 = 60 Segundos
 
 $('.eliminar').submit(function(e){
     e.preventDefault();

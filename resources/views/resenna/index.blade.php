@@ -133,8 +133,12 @@
         @include('resenna.modals.filtro')
 
     </section>
+
 @endsection
 
 @section('scripts')
+    <script type="application/javascript">
+        const last_id_resenna = "@php echo $last_id_resenna['id']; @endphp";
+    </script>
     <script src="{{ asset('public/js/resenna/index.js')}}"></script>
 @endsection

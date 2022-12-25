@@ -13,3 +13,17 @@ messageList = document.querySelector(".messageList");
 //             messageList.innerHTML = data;
 //         });
 // }, 5000);
+
+// setInterval(() => {
+//     const options = {
+//         method: "GET"
+//     };
+//     const url = "notifications/";
+//     const request = fetch(url, options)
+//         .then(response => response.text())
+//         .then(data => {
+//             console.log(data);
+//             //$('.toast').toast('show');
+//             messageList.innerHTML = data;
+//         });
+// }, 5000);

@@ -53,7 +53,7 @@ class MessagesController extends Controller
         $data = null;
         $data.= '<a class="dropdown-item has-icon" href="'.$href.'"> Rafael Rivero</a>';
         $data.= '<a class="dropdown-item has-icon" href="'.$href.'"> Fabian Rivero</a>';
-        return $data;
+        return response($data);
     }
 
     /**
