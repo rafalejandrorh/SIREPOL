@@ -91,6 +91,8 @@ Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->n
 
 Route::get('/abstract_messages', [MessagesController::class, 'abstract'])->name('messages.abstract')->middleware('auth');
 
+Route::get('logout/{id}', [LoginController::class, 'logout'])->middleware('auth');
+
 Route::post('/password/mail', [ForgotPasswordController::class, 'sendMail'])->name('password.mail');
 
 Route::post('/password/reset', [ResetPasswordController::class, 'index'])->name('password.reset');
@@ -107,7 +109,7 @@ Route::patch('/reset{user}', [UserController::class, 'ResetPassword'])->name('us
 
 Route::patch('/user/{user}/status', [UserController::class, 'update_status'])->name('users.update_status')->middleware('auth');
 
-Route::post('logout/{id}', [LoginController::class, 'logout']);
+Route::post('logout/{id}', [LoginController::class, 'logout'])->middleware('auth');
 
 // Ruta para colocar buscador en tiempo real 
 // Route::get('resenna/search/{cedula}', [ResennaController::class, 'search'])->name('resenna.search')->middleware('auth');

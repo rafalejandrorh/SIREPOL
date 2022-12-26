@@ -9,7 +9,6 @@ setInterval(() => {
     const request = fetch(url, options)
         .then(response => response.text())
         .then(data => {
-            console.log(data);
             if(data == 1)
             {
                 location.reload();

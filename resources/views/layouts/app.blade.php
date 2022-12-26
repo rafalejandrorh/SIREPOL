@@ -85,7 +85,7 @@
 <script src="{{ mix('assets/js/profile.js') }}"></script>
 <script src="{{ mix('assets/js/custom/custom.js') }}"></script>
 <script src="{{ asset('public/js/jquery-confirm.min.js')}}"></script>
-<script src="{{ asset('public/js/funcionesAjaxs.js')}}"></script>
+<script src="{{ asset('public/js/globals/funcionesAjaxs.js')}}"></script>
 
 {{-- JavaScript --}}
 
