@@ -14,7 +14,7 @@ class Resenna extends Model
     protected $dates = ['fecha_resenna'];
 
     protected $fillable = ['url_foto', 'fecha_resenna', 'id_person', 'id_estado_civil', 'id_profesion', 'id_motivo_resenna', 
-    'id_tez', 'id_contextura', 'id_funcionario_aprehensor', 'id_funcionario_resenna', 'direccion', 'observaciones'];
+    'id_tez', 'id_contextura', 'id_funcionario_aprehensor', 'id_funcionario_resenna', 'direccion', 'observaciones', 'coordenadas_aprehension'];
 
     public function resennado()
     {
