@@ -152,6 +152,17 @@
         {!! Form::textarea('observaciones', $resenna->observaciones, array('class' => 'form-control', 'readonly')) !!}
     </div>
 </div>
+<div class="col-xs-3 col-sm-3 col-md-3">
+    <div class="form-group">
+        <label for="email"><i class="fa fa-globe text-info" id="openBtn"></i> Coordenadas de Aprehensión</label>
+        {!! Form::text('coordenadas_aprehension', $resenna->coordenadas_aprehension, array('class' => 'form-control', 'readonly')) !!}  
+    </div>
+</div>
+<div class="col-xs-12 col-sm-12 col-md-12">
+    <div class="form-group">
+        @include('resenna.partials.maps')
+    </div>
+</div>
 <div class="col-xs-9 col-sm-9 col-md-9">
     @can('resenna.pdf')
     <div class="form-group">

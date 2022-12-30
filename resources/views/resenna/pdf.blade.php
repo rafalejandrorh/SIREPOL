@@ -92,25 +92,27 @@
         </tr>
 
         <tr role="row" class="odd">
-            <td class="sorting_1" colspan="3"><center><b>Profesión</b></center></td>
-            <td class="sorting_1" colspan="3"><center><b>Dirección</b></center></td>
+            <td class="sorting_1" colspan="2"><center><b>Profesión</b></center></td>
+            <td class="sorting_1" colspan="2"><center><b>Dirección</b></center></td>
+            <td class="sorting_1" colspan="2"><center><b>Coordenadas de Aprehensión</b></center></td>
         </tr>
 
         <tr>
-            <td class="sorting_1" colspan="3"><center>{{$resenna->profesion->valor}}</center></td>
-            <td class="sorting_1" colspan="3"><center>{{$resenna->direccion}}</center></td>
+            <td class="sorting_1" colspan="2"><center>{{$resenna->profesion->valor}}</center></td>
+            <td class="sorting_1" colspan="2"><center>{{$resenna->direccion}}</center></td>
+            <td class="sorting_1" colspan="2"><center>{{$resenna->coordenadas_aprehension}}</center></td>
         </tr>
 
         <tr>
             <td class="sorting_1" colspan="2"><center><b>Motivo de Reseña</b></center></td>
-            <td class="sorting_1" colspan="2"><center><b>Funcionario Aprehensor</b></center></td>
             <td class="sorting_1" colspan="2"><center><b>Funcionario que Reseña</b></center></td>
+            <td class="sorting_1" colspan="2"><center><b>Funcionario Aprehensor</b></center></td>
         </tr>
 
         <tr role="row" class="odd">
             <td class="sorting_1" colspan="2"><center>{{$resenna->motivo_resenna->valor}}</center></td>
-            <td class="sorting_1" colspan="2"><center>{{$resenna->funcionario_aprehensor->jerarquia->valor.'. '.$resenna->funcionario_aprehensor->person->primer_nombre.' '.$resenna->funcionario_aprehensor->person->primer_apellido }}</center></td>
             <td class="sorting_1" colspan="2"><center>{{$resenna->funcionario_resenna->jerarquia->valor.'. '.$resenna->funcionario_resenna->person->primer_nombre.' '.$resenna->funcionario_resenna->person->primer_apellido }}</center></td>
+            <td class="sorting_1" colspan="2"><center>{{$resenna->funcionario_aprehensor->jerarquia->valor.'. '.$resenna->funcionario_aprehensor->person->primer_nombre.' '.$resenna->funcionario_aprehensor->person->primer_apellido }}</center></td>
         </tr>
         
         <tr role="row" class="odd">

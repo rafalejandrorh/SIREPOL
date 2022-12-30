@@ -128,18 +128,26 @@
                 {!! Form::select('id_contextura', $contextura, $resenna->id_contextura, array('class' => 'form-control select2', 'required' => 'required')) !!}
             </div>
         </div>
-        <div class="col-xs-6 col-sm-6 col-md-6">
+        <div class="col-xs-4 col-sm-4 col-md-4">
             <div class="form-group">
                 <label for="email">Profesión</label>
                 {!! Form::select('id_profesion', $profesion, $resenna->id_profesion, array('class' => 'form-control select2')) !!}
             </div>
         </div>
-        <div class="col-xs-6 col-sm-6 col-md-6">
+        <div class="col-xs-4 col-sm-4 col-md-4">
             <div class="form-group">
                 <label for="email">Motivo de Reseña</label>
                 {!! Form::select('id_motivo_resenna', $motivo_resenna, $resenna->id_motivo_resenna, array('class' => 'form-control select2', 'required' => 'required')) !!}
             </div>
         </div>
+
+        <div class="col-xs-4 col-sm-4 col-md-4">
+            <div class="form-group">
+                <label for="email"><i class="fa fa-globe text-info" id="openBtn"> </i> Coordenadas de Aprehensión</label>
+                {!! Form::text('coordenadas_aprehension', $resenna->coordenadas_aprehension, array('class' => 'form-control', 'required' => 'required')) !!}  
+            </div>
+        </div>
+
         <div class="col-xs-6 col-sm-6 col-md-6">
             <div class="form-group">
                 <label for="">Funcionario Aprehensor</label>

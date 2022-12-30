@@ -30,3 +30,5 @@
         @include('resenna.modals.whatsapp')
     </section>
 @endsection
+
+<script src="{{ asset('public/js/maps/index.js')}}"></script>

@@ -201,7 +201,7 @@ return [
         Biscolab\ReCaptcha\ReCaptchaServiceProvider::class, 
         Barryvdh\Debugbar\ServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
-
+        Cornford\Googlmapper\MapperServiceProvider::class,
     ],
 
     /*
@@ -223,5 +223,6 @@ return [
     'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
     'ReCaptcha' => Biscolab\ReCaptcha\Facades\ReCaptcha::class,
     'Debugbar' => Barryvdh\Debugbar\Facade::class,
+    'Mapper' => Cornford\Googlmapper\Facades\MapperFacade::class,
 
 ];

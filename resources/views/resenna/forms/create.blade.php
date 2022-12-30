@@ -114,19 +114,27 @@
                         {!! Form::select('id_contextura', $contextura, isset($resennado->id_contextura) ? $resennado->id_contextura : null, array('class' => 'form-control select2', 'placeholder'=>'Seleccione', 'required' => 'required')) !!}
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="col-xs-12 col-sm-12 col-md-4">
                     <div class="form-group">
                         <label for="email">Profesión</label>
                         {!! Form::select('id_profesion',  $profesion, isset($resennado->id_profesion) ? $resennado->id_profesion : null, array('class' => 'form-control select2', 'placeholder'=>'Seleccione', 'required' => 'required')) !!}
                     </div>
                 </div>
 
-                <div class="col-xs-12 col-sm-12 col-md-6">
+                <div class="col-xs-12 col-sm-12 col-md-4">
                     <div class="form-group">
                         <label for="email">Motivo de Reseña</label>
                         {!! Form::select('id_motivo_resenna', $motivo_resenna, [], array('class' => 'form-control select2', 'placeholder'=>'Seleccione', 'required' => 'required')) !!}
                     </div>
                 </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-4">
+                    <div class="form-group">
+                        <label for="email"><i class="fa fa-globe text-info" id="openBtn"></i> Coordenadas de Aprehensión</label>
+                        {!! Form::text('coordenadas_aprehension', null, array('class' => 'form-control', 'placeholder'=>'Ejemplo: 10.216264, -66.859045', 'required' => 'required')) !!}  
+                    </div>
+                </div>
+
                 <div class="col-xs-12 col-sm-12 col-md-6">
                     <div class="form-group">
                         <label for="">Funcionario Aprehensor</label>
