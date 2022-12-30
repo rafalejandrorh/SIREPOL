@@ -9,21 +9,18 @@ use App\Models\Resenna;
 use App\Models\Genero;
 use App\Models\Geografia_Venezuela;
 use App\Models\Person;
-use App\Models\Traza_Resenna;
-use App\Mail\ResennaMail;
 use App\ComboDependientes\Nomenclador\NomencladorBase as Nomenclador;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Alert;
+use App\Events\NotificationResennaEvent;
 use App\Events\TrazasEvent;
 use Carbon\Carbon;
+//use Cornford\Googlmapper\Mapper;
+use Cornford\Googlmapper\Facades\MapperFacade as Mapper;
 use File;
 
 
@@ -197,6 +194,35 @@ class ResennaController extends Controller
             }
         }
 
+        Mapper::map(10.216264, -66.859045, ['marker' => false, 'zoom' => 6.5, 'center' => true]);
+        $i = 0;
+        while($i < count($resennas))
+        {
+            if($resennas[$i]['coordenadas_aprehension'] != null)
+            {
+                $ex = explode(',', $resennas[$i]['coordenadas_aprehension']);
+                $long = $ex[0];
+                $lat = $ex[1];
+                $resennado = Person::Where('id', $resennas[$i]['id_person'])
+                ->select('primer_nombre', 'primer_apellido', 'cedula', 'letra_cedula')
+                ->first();
+                $motivo_resenna = Caracteristicas_Resennado::Where('id', $resennas[$i]['id_motivo_resenna'])->first();
+                $funcionario_aprehensor = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
+                ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
+                ->Where('funcionarios.id', $resennas[$i]['id_funcionario_aprehensor'])
+                ->select('jerarquia.valor AS jerarquia', 'persons.primer_nombre', 'persons.primer_apellido', 'funcionarios.credencial')
+                ->first();
+
+                Mapper::marker($long, $lat, [
+                    'animation' => 'DROP', 
+                    'clickable' => true, 
+                    'title' => $resennado['primer_nombre'].' '.$resennado['primer_apellido'].' - '.$resennado['letra_cedula'].$resennado['cedula'] , 
+                    'eventClick' => 'alert("Motivo de Reseña: '.$motivo_resenna['valor'].' \r\nFuncionario Aprehensor: '.$funcionario_aprehensor['jerarquia'].'. '.$funcionario_aprehensor['primer_nombre'].' '.$funcionario_aprehensor['primer_apellido'].' - '.$funcionario_aprehensor['credencial'].'")'
+                ]); 
+            }
+            $i++;
+        }
+
         $dateYM = date('Y-m');
         $dateY = date('Y');
         $dateYMD = date('Y-m-d');
@@ -259,7 +285,7 @@ class ResennaController extends Controller
         }else{
             $resennado = null;
         }
-        
+
         $genero = Genero::pluck('valor', 'id')->all();
         $estado_civil = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 241)->pluck('valor', 'id')->all();
         $profesion = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 234)->pluck('valor', 'id')->all();
@@ -315,6 +341,7 @@ class ResennaController extends Controller
             $resenna->id_funcionario_aprehensor = $request->id_funcionario_aprehensor;
             $resenna->id_funcionario_resenna = $request->id_funcionario_resenna;
             $resenna->direccion = $request->direccion;
+            $resenna->coordenadas_aprehension = $request->coordenadas_aprehension;
             $resenna->observaciones = $request->observaciones;
             $resenna->save();
             $id_resenna = $resenna->id;
@@ -414,6 +441,7 @@ class ResennaController extends Controller
             $resenna->id_funcionario_aprehensor = $request->id_funcionario_aprehensor;
             $resenna->id_funcionario_resenna = $request->id_funcionario_resenna;
             $resenna->direccion = $request->direccion;
+            $resenna->coordenadas_aprehension = $request->coordenadas_aprehension;
             $resenna->observaciones = $request->observaciones;
             $resenna->save();
             $id_resenna = $resenna->id;
@@ -474,14 +502,18 @@ class ResennaController extends Controller
                 $funcionario_resenna = $fun_resenna['valor'].'. '.$fun_resenna['primer_nombre'].' '.$fun_resenna['primer_apellido'];
             }
 
+            // Trazas
             $id_user = Auth::user()->id;
             $id_Accion = 1; //Registro
             $valores_modificados = 'Datos de Reseña: '.
             $request->fecha_resenna.' || '.$request->cedula.' || '.$request->primer_nombre.' '.$request->segundo_nombre.' || '.
-            $request->primer_apellido.' || '.$request->segundo_apellido.' || '.$request->fecha_nacimiento.' || '.$genero.' || '.$estado_civil.' || '.$profesion.' || '.$motivo_resenna.' || '.
+            $request->primer_apellido.'  '.$request->segundo_apellido.' || '.$request->fecha_nacimiento.' || '.$genero.' || '.$estado_civil.' || '.$profesion.' || '.$motivo_resenna.' || '.
             $tez.' || '.$contextura.' || '.$funcionario_aprehensor.' || '.$funcionario_resenna.' || '.$request->direccion.' || '.$request->observaciones.' || '.$imagen;
             event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Resenna'));
-            
+
+            // Notificacion
+            event(new NotificationResennaEvent($resenna, $id_user));
+
             Alert()->success('Reseña creada Satisfactoriamente','Ciudadano: '.$request->primer_nombre.' '.$request->primer_apellido.
             '. Portador de la Cédula de Identidad:'.$request->cedula);
             return redirect()->route('resenna.index');
@@ -509,6 +541,30 @@ class ResennaController extends Controller
 
         $edad = Carbon::parse($resenna->resennado->fecha_nacimiento)->age;
 
+        Mapper::map(10.216264, -66.859045, ['marker' => false, 'zoom' => 6.5, 'center' => true]);
+        if($resenna->coordenadas_aprehension != null)
+        {
+            $ex = explode(',', $resenna->coordenadas_aprehension);
+            $long = $ex[0];
+            $lat = $ex[1];
+            // $resennado = Person::Where('id', $resenna->id_person)
+            // ->select('primer_nombre', 'primer_apellido', 'cedula', 'letra_cedula')
+            // ->first();
+            // $motivo_resenna = Caracteristicas_Resennado::Where('id', $resenna->id_motivo_resenna)->first();
+            // $funcionario_aprehensor = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
+            // ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
+            // ->Where('funcionarios.id', $resenna->id_funcionario_aprehensor)
+            // ->select('jerarquia.valor AS jerarquia', 'persons.primer_nombre', 'persons.primer_apellido', 'funcionarios.credencial')
+            // ->first();
+
+            Mapper::marker($long, $lat, [
+                'animation' => 'DROP', 
+                'clickable' => true, 
+                //'title' => $resennado['primer_nombre'].' '.$resennado['primer_apellido'].' - '.$resennado['letra_cedula'].$resennado['cedula'] , 
+                //'eventClick' => 'alert("Motivo de Reseña: '.$motivo_resenna['valor'].' \r\nFuncionario Aprehensor: '.$funcionario_aprehensor['jerarquia'].'. '.$funcionario_aprehensor['primer_nombre'].' '.$funcionario_aprehensor['primer_apellido'].' - '.$funcionario_aprehensor['credencial'].'")'
+            ]); 
+        }
+
         $QR = QrCode::size(150)->style('round')->generate('Resenna Policial. Fecha: '.date('d/m/Y', strtotime($resenna->fecha_resenna)).'. Hace '.$resenna->fecha_resenna->diff(date('Y-m-d'))->days.' dias. Estatus de Documentacion: '.
         $resenna->resennado->documentacion->valor.', Cedula: '.$resenna->resennado->letra_cedula.$resenna->resennado->cedula.
         ', Nombre Completo: '.$resenna->resennado->primer_nombre.' '.$resenna->resennado->segundo_nombre.', '.$resenna->resennado->primer_apellido.' '.
@@ -516,7 +572,7 @@ class ResennaController extends Controller
         $resenna->resennado->genero->valor.', Tez: '.$resenna->tez->valor.', Contextura: '.$resenna->contextura->valor.', Estado Civil: '.
         $resenna->estado_civil->valor.', Estado de Nacimiento: '.$resenna->resennado->estado_nacimiento->valor.', Municipio de Nacimiento: '.
         $resenna->resennado->municipio_nacimiento->valor.', Direccion: '.$resenna->direccion.', Profesion: '.$resenna->profesion->valor.
-        ', Motivo de Resenna: '.$resenna->motivo_resenna->valor.', Funcionario Aprehensor: '.
+        ', Motivo de Resenna: '.$resenna->motivo_resenna->valor.', Coordenadas de Aprehension: '.$resenna->coordenadas_aprehension.', Funcionario Aprehensor: '.
         $resenna->funcionario_aprehensor->jerarquia->valor.'. '.$resenna->funcionario_aprehensor->person->primer_nombre.' '.$resenna->funcionario_aprehensor->person->primer_apellido.
         ', Funcionario que Resenna: '.$resenna->funcionario_resenna->jerarquia->valor.'. '.$resenna->funcionario_resenna->person->primer_nombre.' '.$resenna->funcionario_resenna->person->primer_apellido);
 
@@ -586,7 +642,7 @@ class ResennaController extends Controller
 
         $resenna = Resenna::find($id, ['id']);
         $resenna->update($request->all('fecha_resenna', 'id_estado_civil', 'id_profesion', 'id_motivo_resenna', 'id_tez', 
-        'id_contextura', 'id_funcionario_aprehensor', 'id_funcionario_resenna', 'direccion', 'observaciones'));
+        'id_contextura', 'id_funcionario_aprehensor', 'id_funcionario_resenna', 'direccion', 'coordenadas_aprehension', 'observaciones'));
         $persona = Person::find($id_person, ['id']);
         $persona->update($request->all('id_tipo_documentacion', 'letra_cedula', 'cedula', 'primer_nombre', 
         'segundo_nombre', 'primer_apellido','segundo_apellido', 'id_genero', 'fecha_nacimiento', 'id_estado_nacimiento',
