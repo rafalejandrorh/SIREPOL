@@ -28,26 +28,40 @@ class Location implements ObjectableInterface
      */
     protected $address;
 
-        /**
-     * Address.
+    /**
+     * State.
      *
      * @var string
      */
     protected $state;
 
-        /**
-     * Address.
+    /**
+     * City.
+     *
+     * @var string
+     */
+    protected $city;
+
+    /**
+     * Municipality.
      *
      * @var string
      */
     protected $municipality;
 
-        /**
-     * Address.
+    /**
+     * Sector.
      *
      * @var string
      */
     protected $sector;
+
+    /**
+     * Street.
+     *
+     * @var string
+     */
+    protected $street;
 
     /**
      * Postal Code.
@@ -95,8 +109,10 @@ class Location implements ObjectableInterface
         $this->setSearch($parameters['search']);
         $this->setAddress($parameters['address']);
         $this->setState($parameters['state']);
+        $this->setCity($parameters['city']);
         $this->setMunicipality($parameters['municipality']);
         $this->setSector($parameters['sector']);
+        $this->setStreet($parameters['street']);
         $this->setPostalCode($parameters['postalCode']);
         $this->setType($parameters['type']);
         $this->setLatitude($parameters['latitude']);
@@ -192,6 +208,28 @@ class Location implements ObjectableInterface
         $this->state = $state;
     }
 
+    /**
+     * Get the locations city.
+     *
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set the locations city.
+     *
+     * @param string $city
+     *
+     * @return void
+     */
+    protected function setCity($city)
+    {
+        $this->city = $city;
+    }
+
         /**
      * Get the locations municipality.
      *
@@ -234,6 +272,28 @@ class Location implements ObjectableInterface
     protected function setSector($sector)
     {
         $this->sector = $sector;
+    }
+
+        /**
+     * Get the locations street.
+     *
+     * @return string
+     */
+    public function getStreet()
+    {
+        return $this->street;
+    }
+
+    /**
+     * Set the locations street.
+     *
+     * @param string $street
+     *
+     * @return void
+     */
+    protected function setStreet($street)
+    {
+        $this->street = $street;
     }
 
     /**

@@ -75,7 +75,7 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-3 col-sm-3 col-md-3">
-                                    {!! Form::button('<i class="fa fa-search"> Buscar</i>', ['type' => 'submit', 'class' => 'btn btn-primary']) !!}
+                                    {!! Form::button('<i class="fa fa-search"></i> Buscar', ['type' => 'submit', 'class' => 'btn btn-primary']) !!}
                                 </div>
                                 <div class="col-xs-2 col-sm-2 col-md-2"> 
                                     <a href="#!" class="btn btn-primary"><i class="fa fa-filter"></i> Filtro</a>

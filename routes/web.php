@@ -13,6 +13,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TrazasController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GeografiaVenezuelaController;
+use App\Http\Controllers\MapsGeoreferenceController;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\SessionsController;
@@ -86,6 +87,8 @@ Route::get('resenna/verify/{id}', [ResennaController::class, 'verifyNewStore'])-
 Route::get('/resenna/mail', [EmailController::class, 'index'])->name('resenna.mail')->middleware('auth');
 
 Route::get('/password/forgot', [ForgotPasswordController::class, 'index'])->name('password.forgot');
+
+Route::get('/georeference/search', [MapsGeoreferenceController::class, 'searchLocation'])->name('georeference.search');
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('logs')->middleware('auth');
 

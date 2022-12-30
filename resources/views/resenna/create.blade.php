@@ -42,8 +42,8 @@
                                     {!! Form::text('buscador', null, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
-                            <div class="col-xs-3 col-sm-3 col-md-3">
-                                {!! Form::button('<i class="fa fa-search"> Buscar</i>', ['type' => 'submit', 'class' => 'btn btn-primary']) !!}
+                            <div class="col-xs-2 col-sm-2 col-md-2">
+                                {!! Form::button('<i class="fa fa-search"></i> Buscar', ['type' => 'submit', 'class' => 'btn btn-primary']) !!}
                             </div>
                         </div>
                         {!! Form::close() !!}
@@ -55,4 +55,11 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('scripts')
+    <script type="application/javascript">
+        const url = "{{ route('georeference.search') }}";
+    </script>
+    <script src="{{ asset('public/js/resenna/georeferenceRedirecting.js')}}"></script>
 @endsection

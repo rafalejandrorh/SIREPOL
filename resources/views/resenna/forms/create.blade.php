@@ -164,8 +164,11 @@
                     </div>
                 </div>
 
-                <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="col-xs-10 col-sm-10 col-md-10">
                     {!! Form::button('<i class="fa fa-save"> Guardar</i>', ['type' => 'submit', 'class' => 'btn btn-primary', 'id' => 'submit']) !!}
+                </div>
+                <div class="col-xs-2 col-sm-2 col-md-2">
+                    {!! Form::button('<i class="fa fa-globe"></i> Georeferencia', ['type' => 'button', 'class' => 'btn btn-terciary', 'id' => 'newPageGeoreference']) !!}
                 </div>
         </div>
     {!! Form::close() !!}

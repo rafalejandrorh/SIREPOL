@@ -188,15 +188,57 @@ class Mapper extends MapperBase implements MappingInterface
             }
         }
 
+        if(count($result->results[0]->address_components) == 7)
+        {
+            // Búsqueda por Calle/Avenida
+            $state = isset($result->results[0]->address_components[4]->long_name) ? $result->results[0]->address_components[4]->long_name : null;
+            $city = isset($result->results[0]->address_components[2]->long_name) ? $result->results[0]->address_components[2]->long_name : null;
+            $municipality = isset($result->results[0]->address_components[3]->long_name) ? $result->results[0]->address_components[3]->long_name : null;
+            $sector = isset($result->results[0]->address_components[1]->long_name) ? $result->results[0]->address_components[1]->long_name : null;
+            $street = isset($result->results[0]->address_components[0]->long_name) ? $result->results[0]->address_components[0]->long_name : null;
+        }else if(count($result->results[0]->address_components) == 5){
+            // Búsqueda por Sector
+            if($result->results[0]->address_components[3]->long_name == 'Venezuela')
+            {
+                $state = isset($result->results[0]->address_components[2]->long_name) ? $result->results[0]->address_components[2]->long_name : null;
+                $municipality = isset($result->results[0]->address_components[1]->long_name) ? $result->results[0]->address_components[1]->long_name : null;
+                $sector = isset($result->results[0]->address_components[0]->long_name) ? $result->results[0]->address_components[0]->long_name : null;
+                $city = null;
+                $street = null;
+            }else{
+                $state = isset($result->results[0]->address_components[3]->long_name) ? $result->results[0]->address_components[3]->long_name : null;
+                $municipality = isset($result->results[0]->address_components[2]->long_name) ? $result->results[0]->address_components[2]->long_name : null;
+                $city = isset($result->results[0]->address_components[1]->long_name) ? $result->results[0]->address_components[1]->long_name : null;
+                $sector = isset($result->results[0]->address_components[0]->long_name) ? $result->results[0]->address_components[0]->long_name : null;
+                $street = null;
+            }
+        }else if(count($result->results[0]->address_components) == 4){
+            // Búsqueda por Ciudad
+            $state = isset($result->results[0]->address_components[2]->long_name) ? $result->results[0]->address_components[2]->long_name : null;
+            $municipality = isset($result->results[0]->address_components[1]->long_name) ? $result->results[0]->address_components[1]->long_name : null;
+            $city = isset($result->results[0]->address_components[0]->long_name) ? $result->results[0]->address_components[0]->long_name : null;
+            $sector = null;
+            $street = null;
+        }else if(count($result->results[0]->address_components) == 3){
+            // Búsqueda por Municipio
+            $municipality = isset($result->results[0]->address_components[0]->long_name) ? $result->results[0]->address_components[0]->long_name : null;
+            $state = isset($result->results[0]->address_components[1]->long_name) ? $result->results[0]->address_components[1]->long_name : null;
+            $city = null;
+            $sector = null;
+            $street = null;
+        }
+
         return new Location([
             'mapper'     => $this,
             'search'     => $location,
-            'address'    => $result->results[0]->formatted_address,
-            'state'      => $result->results[0]->address_components[4]->long_name,
-            'municipality' => $result->results[0]->address_components[3]->long_name,
-            'sector'     => $result->results[0]->address_components[1]->long_name,
+            'address'    => isset($result->results[0]->formatted_address) ? $result->results[0]->formatted_address : null,
+            'state'      => $state,
+            'city'       => $city,
+            'municipality' => $municipality,
+            'sector'     => $sector,
+            'street'     => $street,
             'postalCode' => $postalCode,
-            'type'       => ($result->results[0]->address_components[0]->types[0] ?? null),
+            'type'       => $result->results[0]->address_components[0]->types[0],
             'latitude'   => $result->results[0]->geometry->location->lat,
             'longitude'  => $result->results[0]->geometry->location->lng,
             'placeId'    => $result->results[0]->place_id,

@@ -25,7 +25,7 @@
                         @endif
 
                         <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="col-xs-10 col-sm-10 col-md-10">
                                 <a href="{{ route('resenna.index') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
                             </div>
                         </div>
@@ -38,4 +38,11 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('scripts')
+    <script type="application/javascript">
+        const url = "{{ route('georeference.search') }}";
+    </script>
+    <script src="{{ asset('public/js/resenna/georeferenceRedirecting.js')}}"></script>
 @endsection
