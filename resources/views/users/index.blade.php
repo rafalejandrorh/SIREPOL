@@ -15,24 +15,24 @@
                                 <div class="col-md-4 col-xl-4">
                                     <div class="card bg-info order-card">
                                         <div class="card-block">
-                                            <h4>Total de Usuarios</h4>
-                                            <h2 class="text-left"><span>{{$countUsers}}</span></h2>
+                                            <h5>Total de Usuarios</h5>
+                                            <h3 class="text-left"><span>{{$countUsers}}</span></h3>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-xl-4">
                                     <div class="card bg-success order-card">
                                         <div class="card-block">
-                                            <h4>Usuarios Activos</h4>
-                                            <h2 class="text-left"><span>{{$countUsersActive}}</span></h2>
+                                            <h5>Usuarios Activos</h5>
+                                            <h3 class="text-left"><span>{{$countUsersActive}}</span></h3>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-xl-4">
                                     <div class="card bg-danger order-card">
                                         <div class="card-block">
-                                            <h4>Usuarios Inactivos</h4>
-                                            <h2 class="text-left"><span>{{$countUsersInactive}}</span></h2>
+                                            <h5>Usuarios Inactivos</h5>
+                                            <h3 class="text-left"><span>{{$countUsersInactive}}</span></h3>
                                         </div>
                                     </div>
                                 </div>

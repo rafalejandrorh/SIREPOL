@@ -17,7 +17,7 @@
                             <h3 class="text-center" style="color:#000000"><b>Bienvenido al Sistema de Reseña Policial</b></h3>
                             <div class="col-md-12 col-xl-12">
                                 <div class="login-brand">
-                                    <center><img src="{{ asset('public/img/pmcr_y_mpprjip.jpeg') }}" alt="logo" width="430" height="220" class="shadow-light"></center>
+                                    <center><img src="{{ asset('public/img/pmcr_y_mpprjip.jpeg') }}" alt="logo" width="430" height="200" class="shadow-light"></center>
                                 </div>
                                 @yield('content')
                                 <h5 align="center">{!! $QR !!}</h5>
@@ -33,20 +33,20 @@
                                 <div class="col-md-12 col-xl-12">
                                     <div class="card bg-primary order-card">
                                         <div class="card-block">
-                                            <h4>Total de Usuarios</h4>
-                                            <h2 class="text-left"><span>{{$countUsers}}</span></h2>
+                                            <h5>Total de Usuarios</h5>
+                                            <h3 class="text-left"><span>{{$countUsers}}</span></h3>
                                         </div>
                                     </div>
                                     <div class="card bg-primary order-card">
                                         <div class="card-block">
-                                            <h4>Sesiones Activas</h4>
-                                            <h2 class="text-left"><span>{{$countSessions}}</span></h2>
+                                            <h5>Sesiones Activas</h5>
+                                            <h3 class="text-left"><span>{{$countSessions}}</span></h3>
                                         </div>
                                     </div>
                                     <div class="card bg-primary order-card">
                                         <div class="card-block">
-                                            <h4>Reseñas Hoy</h4>
-                                            <h2 class="text-left"><span>{{$countResennasDia}}</span></h2>
+                                            <h5>Reseñas Hoy</h5>
+                                            <h3 class="text-left"><span>{{$countResennasDia}}</span></h3>
                                         </div>
                                     </div>
                                 </div>
