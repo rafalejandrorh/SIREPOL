@@ -82,10 +82,14 @@
 <!-- Template JS File -->
 <script src="{{ asset('public/web/js/stisla.js') }}"></script>
 <script src="{{ asset('public/web/js/scripts.js') }}"></script>
-<script src="{{ mix('assets/js/profile.js') }}"></script>
-<script src="{{ mix('assets/js/custom/custom.js') }}"></script>
 <script src="{{ asset('public/js/jquery-confirm.min.js')}}"></script>
 <script src="{{ asset('public/js/globals/funcionesAjaxs.js')}}"></script>
+{{--  --}}
+{{-- <script src="{{ mix('assets/js/profile.js') }}"></script>
+<script src="{{ mix('assets/js/custom/custom.js') }}"></script> --}}
+<script src="{{ asset('public/js/profile.js') }}"></script>
+<script src="{{ asset('public/js/custom/custom.js') }}"></script>
+{{--  --}}
 
 {{-- JavaScript --}}
 

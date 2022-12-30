@@ -10,6 +10,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
+                            <h4 class="page__heading"><b>Indicadores</b></h4>
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4 col-md-4">
                                     <div class="card bg-primary order-card">
@@ -45,6 +46,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
+                            <h4 class="page__heading"><b>Reseñados</b></h4>
                             {!! Form::open(array('route' => 'resenna.index','method' => 'GET')) !!}
                             <div class="row">
                                 <div class="col-xs-4 col-sm-4 col-md-4">
@@ -130,9 +132,25 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
+                            <h4 class="page__heading"><b>Coordenadas Geográficas de Aprehensión de los Reseñados</b></h4>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     @include('resenna.partials.maps')
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="page__heading"><b>Gráficos</b></h4>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    @include('resenna.partials.graphicsOriginResennados')
                                 </div>
                             </div>
                         </div>
