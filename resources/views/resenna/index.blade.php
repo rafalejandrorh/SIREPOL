@@ -78,15 +78,28 @@
                                     {!! Form::button('<i class="fa fa-search"></i> Buscar', ['type' => 'submit', 'class' => 'btn btn-primary']) !!}
                                 </div>
                                 <div class="col-xs-2 col-sm-2 col-md-2"> 
-                                    <a href="#!" class="btn btn-primary"><i class="fa fa-filter"></i> Filtro</a>
+                                    <a href="#!" class="btn btn-primary" data-toggle="modal" data-target="#filtrar"><i class="fa fa-filter"></i> Filtro</a>
                                 </div>
                             </div>
 
                             {!! Form::close() !!}
-                            @can('resenna.create')
-                            <a class="btn btn-success" href="{{ route('resenna.create') }}">Crear Reseña</a>  
-                            <br>                      
-                            @endcan
+                            <div class="row">
+                                <div class="col-xs-10 col-sm-10 col-md-10">
+                                    <div class="form-group">
+                                        @can('resenna.create')
+                                        <a class="btn btn-success" href="{{ route('resenna.create') }}">Crear Reseña</a>  
+                                        @endcan
+                                    </div>
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2">
+                                    <div class="form-group">
+                                        @can('resenna.create')
+                                        <a class="btn btn-info" href="{{ route('resenna.charts') }}"><i class="fa fa-bars"></i> Gráficos</a>  
+                                        @endcan
+                                    </div>
+                                </div>
+                            </div>
+
                             <table class="table table-striped mt-2 display dataTable table-hover">
                                 <thead>
                                     <tr role="row">
@@ -142,26 +155,9 @@
                     </div>
                 </div>
             </div> 
-
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="page__heading"><b>Gráficos</b></h4>
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12">
-                                    @include('resenna.partials.graphicsOriginResennados')
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> 
-
-        @include('resenna.modals.filtro')
-
     </section>
 
+    @include('resenna.modals.filtro')
 @endsection
 
 @section('scripts')

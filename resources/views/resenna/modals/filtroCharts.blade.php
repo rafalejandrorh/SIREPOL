@@ -6,10 +6,25 @@
                         <h3 class="page__heading text-white"><b>Filtro</b></h3>
                         <span aria-hidden="true" class="close text-white" data-dismiss="modal" aria-label="Close">&times;</span>
                     </div>
-                {!! Form::open(array('route' => 'resenna.index','method' => 'GET')) !!}
+                {!! Form::open(array('route' => 'resenna.charts','method' => 'GET')) !!}
                 <div class="modal-body">
 
                     <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                            <label for="email">Gráficos</label>
+                                {!! Form::select('tipo_grafico', [
+                                '' => 'Seleccione',
+                                'origenresennados' => 'Estado de Origen de los Reseñados',
+                                // 'edadresennados' => 'Edad de los Reseñados',
+                                'cantresennasdelito' => 'Cantidad de Reseñas por Delito',
+                                // 'cantresennasmes' => 'Cantidad de Reseñas por Mes', 
+                                // 'cantresennasanno' => 'Cantidad de Reseñas por Año', 
+                                // 'cantresennasaprehensor' => 'Cantidad de Reseñas por Funcionario Aprehensor',
+                                ], 
+                                'Seleccionar', array('class' => 'form-control')) !!}
+                            </div>
+                        </div>
                         <div class="col-xs-6 col-sm-6 col-md-6">
                             <div class="form-group">
                                 <label for="email">Desde</label>
@@ -65,7 +80,7 @@
                             </div>
                         </div>
                         <div class="col-xs-3 col-sm-3 col-md-3">
-                            {!! Form::hidden('filtro', 1, array('class' => 'form-control datepicker')) !!}
+                            {!! Form::hidden('filtro', 1, array('class' => 'form-control')) !!}
                             {!! Form::button('<i class="fa fa-check"></i> Aplicar', ['type' => 'submit', 'class' => 'btn btn-primary']) !!}
                         </div>
                     </div>

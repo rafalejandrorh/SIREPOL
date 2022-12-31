@@ -84,6 +84,8 @@ Route::get('resenna/{id}/edit/select/{tipo}/{id_hijo}', [App\Http\Controllers\Ge
 
 Route::get('resenna/verify/{id}', [ResennaController::class, 'verifyNewStore'])->name('resenna.verify')->middleware('auth');
 
+Route::get('charts/resenna', [ResennaController::class, 'charts'])->name('resenna.charts')->middleware('auth');
+
 Route::get('/resenna/mail', [EmailController::class, 'index'])->name('resenna.mail')->middleware('auth');
 
 Route::get('/password/forgot', [ForgotPasswordController::class, 'index'])->name('password.forgot');
