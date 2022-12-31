@@ -86,11 +86,11 @@ Route::get('resenna/verify/{id}', [ResennaController::class, 'verifyNewStore'])-
 
 Route::get('charts/resenna', [ResennaController::class, 'charts'])->name('resenna.charts')->middleware('auth');
 
+Route::get('/georeference/search', [MapsGeoreferenceController::class, 'searchLocation'])->name('georeference.search');
+
 Route::get('/resenna/mail', [EmailController::class, 'index'])->name('resenna.mail')->middleware('auth');
 
 Route::get('/password/forgot', [ForgotPasswordController::class, 'index'])->name('password.forgot');
-
-Route::get('/georeference/search', [MapsGeoreferenceController::class, 'searchLocation'])->name('georeference.search');
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('logs')->middleware('auth');
 

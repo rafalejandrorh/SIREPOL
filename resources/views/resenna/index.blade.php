@@ -93,7 +93,7 @@
                                 </div>
                                 <div class="col-xs-2 col-sm-2 col-md-2">
                                     <div class="form-group">
-                                        @can('resenna.create')
+                                        @can('resenna.charts')
                                         <a class="btn btn-info" href="{{ route('resenna.charts') }}"><i class="fa fa-bars"></i> Gráficos</a>  
                                         @endcan
                                     </div>
@@ -141,20 +141,23 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="page__heading"><b>Coordenadas Geográficas de Aprehensión de los Reseñados</b></h4>
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12">
-                                    @include('resenna.partials.maps')
+            @can('resenna.georeference')
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="page__heading"><b>Coordenadas Geográficas de Aprehensión de los Reseñados</b></h4>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        @include('resenna.partials.maps')
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div> 
+                </div> 
+            @endcan
+
     </section>
 
     @include('resenna.modals.filtro')

@@ -34,6 +34,7 @@ class ResennaController extends Controller
         $this->middleware('can:resenna.edit')->only('edit', 'update');
         $this->middleware('can:resenna.destroy')->only('destroy');
         $this->middleware('can:resenna.pdf')->only('pdf');
+        $this->middleware('can:resenna.charts')->only('charts');
     }
     /**
      * Display a listing of the resource.

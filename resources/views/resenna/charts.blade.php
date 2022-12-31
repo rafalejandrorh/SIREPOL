@@ -10,13 +10,18 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            {!! Form::open(array('route' => 'resenna.charts','method' => 'GET')) !!}
                             <div class="row">
+                                <div class="col-xs-10 col-sm-10 col-md-10">
+                                    <a href="{{ route('resenna.index') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
+                                </div>
+                            
                                 <div class="col-xs-2 col-sm-2 col-md-2"> 
+                                    {!! Form::open(array('route' => 'resenna.charts','method' => 'GET')) !!}
                                     <a href="#!" class="btn btn-primary" data-toggle="modal" data-target="#filtrar"><i class="fa fa-filter"></i> Filtro</a>
+                                    {!! Form::close() !!}
                                 </div>
                             </div>
-                            {!! Form::close() !!}
+                           
                             @if ($dataType == 'origenresennados')
                                 <div class="row">
                                     <div class="col-lg-12">
