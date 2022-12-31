@@ -35,6 +35,18 @@
                                 </div>
                             </div>
                             {!! Form::close() !!}
+
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                            <div class="form-group">
+                                                {{-- @can('sessions.destroyAll') --}}
+                                                {!! Form::open(['method' => 'DELETE', 'route' => ['sessions.destroy', 'all'], 'style'=>'display:inline', 'class' => 'eliminar']) !!}
+                                                    {!! Form::button('Cerrar Todas las Sesiones', ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
+                                                {!! Form::close() !!}    
+                                                {{-- @endcan --}}
+                                            </div>
+                                        </div>
+                                    </div>
                                     <table class="table table-striped mt-2 display dataTable table-hover">
                                         <thead>
                                             <tr role="row">
@@ -53,7 +65,7 @@
                                                     <td class="sorting_1">
                                                         @can('sessions.destroy')
                                                             {!! Form::open(['method' => 'DELETE', 'route' => ['sessions.destroy', $session->session_id], 'style'=>'display:inline', 'class' => 'eliminar']) !!}
-                                                                {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
+                                                                {!! Form::button('<i class="fa fa-window-close"></i>', ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
                                                             {!! Form::close() !!}                                                  
                                                         @endcan
                                                     </td>

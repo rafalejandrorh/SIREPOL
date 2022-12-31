@@ -19,9 +19,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Events\NotificationResennaEvent;
 use App\Events\TrazasEvent;
 use Carbon\Carbon;
-//use Cornford\Googlmapper\Mapper;
 use Cornford\Googlmapper\Facades\MapperFacade as Mapper;
-use File;
 
 
 
@@ -47,6 +45,7 @@ class ResennaController extends Controller
         $request->all();
         if(isset($request->filtro) && $request->filtro == 1)
         {
+            //Filtros
             $queryBuilder = Resenna::query();
             if($request->fecha_inicio != null && $request->fecha_fin == null)
             {
@@ -85,6 +84,7 @@ class ResennaController extends Controller
 
         }else{
 
+            //Buscador
             if(isset($request->buscador) && is_numeric($request->buscador))
             {
                 if($request->tipo_busqueda == 'cedula_resennado'){
@@ -182,9 +182,11 @@ class ResennaController extends Controller
                 }
 
             }else{
+                // Obtener Todos los Reseñados sin filtros o Búsquedas
                 $resennas = Resenna::orderBy('fecha_resenna', 'desc')->paginate(5);
             }
 
+            // Trazas de Búsquedas
             if(isset($request->tipo_busqueda) && isset($request->buscador))
             {
                 $id_user = Auth::user()->id;
@@ -194,7 +196,9 @@ class ResennaController extends Controller
             }
         }
 
-        Mapper::map(10.216264, -66.859045, ['marker' => false, 'zoom' => 6.5, 'center' => true]);
+        // Mapa de Google para Georeferencias las Coordenadas del Lugar de Aprehensión
+        // ROADMAP, TERRAIN o SATELLITE
+        Mapper::map(10.216264, -66.859045, ['marker' => false, 'zoom' => 6.5, 'center' => true, 'type' => 'TERRAIN']);
         $i = 0;
         while($i < count($resennas))
         {
@@ -217,12 +221,14 @@ class ResennaController extends Controller
                     'animation' => 'DROP', 
                     'clickable' => true, 
                     'title' => $resennado['primer_nombre'].' '.$resennado['primer_apellido'].' - '.$resennado['letra_cedula'].$resennado['cedula'] , 
-                    'eventClick' => 'alert("Motivo de Reseña: '.$motivo_resenna['valor'].' \r\nFuncionario Aprehensor: '.$funcionario_aprehensor['jerarquia'].'. '.$funcionario_aprehensor['primer_nombre'].' '.$funcionario_aprehensor['primer_apellido'].' - '.$funcionario_aprehensor['credencial'].'")'
+                    //'eventClick' => 'alert("Motivo de Reseña: '.$motivo_resenna['valor'].' \r\nFuncionario Aprehensor: '.$funcionario_aprehensor['jerarquia'].'. '.$funcionario_aprehensor['primer_nombre'].' '.$funcionario_aprehensor['primer_apellido'].' - '.$funcionario_aprehensor['credencial'].'")',
+                    'content' => 'Reseñado: '.$resennado['primer_nombre'].' '.$resennado['primer_apellido'].' - '.$resennado['letra_cedula'].$resennado['cedula'].' || Motivo de Reseña: '.$motivo_resenna['valor'].' || Funcionario Aprehensor: '.$funcionario_aprehensor['jerarquia'].'. '.$funcionario_aprehensor['primer_nombre'].' '.$funcionario_aprehensor['primer_apellido'].' - '.$funcionario_aprehensor['credencial']
                 ]); 
             }
             $i++;
         }
 
+        // Indicadores de Reseñados
         $dateYM = date('Y-m');
         $dateY = date('Y');
         $dateYMD = date('Y-m-d');
@@ -231,6 +237,7 @@ class ResennaController extends Controller
         $countResennasDia = Resenna::Where('created_at', $dateYMD)->count();
         $last_id_resenna = Resenna::orderBy('id', 'desc')->first();
         
+        // Opciones del Filtro
         $genero = Genero::pluck('valor', 'id')->all();
         $motivo_resenna = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 94)->pluck('valor', 'id')->all();
         $tez = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 240)->pluck('valor', 'id')->all();
@@ -238,19 +245,157 @@ class ResennaController extends Controller
         $estado = Geografia_Venezuela::orderBy('valor', 'asc')->Where('id_padre', 107)->pluck('valor', 'id')->all();
         $municipio = Geografia_Venezuela::orderBy('valor', 'asc')->Where('id_padre', 108)->pluck('valor', 'id')->all();
         
-        return view('resenna.index', compact('resennas', 'last_id_resenna', 'genero', 'motivo_resenna', 'tez', 'contextura', 'estado', 'municipio', 'countResennasAnno', 'countResennasMes', 'countResennasDia'));
+        return view('resenna.index', compact(
+            'resennas', 
+            'last_id_resenna', 
+            'genero', 
+            'motivo_resenna', 
+            'tez', 
+            'contextura', 
+            'estado', 
+            'municipio', 
+            'countResennasAnno', 
+            'countResennasMes', 
+            'countResennasDia', 
+        ));
     }
 
-    public function verifyNewStore(Request $request)
+    public function charts(Request $request)
     {
-        $verify_new_resenna = Resenna::orderBy('id', 'desc')->first();
-        if($verify_new_resenna['id'] != $request->id)
+        $request->all();
+        if(isset($request->filtro) && $request->filtro == 1)
         {
-            $response = 1;
+            //Filtros
+            $queryBuilder = Resenna::query();
+            if($request->fecha_inicio != null && $request->fecha_fin == null)
+            {
+                Alert()->error('Error en el Filtrado','Atención: Al filtrar por fecha, debes colocar fecha de Inicio y Fin (Desde y Hasta)');
+                return back();
+            }
+            if($request->fecha_inicio != null && $request->fecha_fin != null)    
+            {
+                $queryBuilder->WhereBetween('fecha_resenna', [$request->fecha_inicio, $request->fecha_fin]);
+            }
+            if($request->id_tez != null)
+            {
+                $queryBuilder->Where('id_tez', $request->id_tez);
+            }
+            if($request->id_contextura != null)
+            {
+                $queryBuilder->Where('id_contextura', $request->id_contextura);
+            }
+            if($request->id_genero != null)
+            {
+                $queryBuilder->join('persons as genero', 'genero.id', '=', 'resenna_detenido.id_person')->Where('genero.id_genero', $request->id_genero);
+            }
+            if($request->id_estado_nacimiento != null)
+            {
+                $queryBuilder->join('persons as estado', 'estado.id', '=', 'resenna_detenido.id_person')->Where('estado.id_estado_nacimiento', $request->id_estado_nacimiento);
+            }
+            if($request->id_municipio_nacimiento != null)
+            {
+                $queryBuilder->join('persons as municipio', 'municipio.id', '=', 'resenna_detenido.id_person')->Where('municipio.id_municipio_nacimiento', $request->id_municipio_nacimiento);
+            }
+            if($request->id_motivo_resenna != null)
+            {
+                $queryBuilder->Where('id_motivo_resenna', $request->id_motivo_resenna);
+            }
+            if($request->tipo_grafico != null)
+            {
+                if($request->tipo_grafico == 'origenresennados')
+                {
+                    // Datos para Gráfico de Estados de Origen de los Reseñados
+                    $i = 0;
+                    $data = array();
+                    $dataPerson = $queryBuilder->get()->unique('id_person');
+                    foreach($dataPerson as $person)
+                    {
+                        $uniquePerson[] = $person;
+                    }
+                    while($i < count($uniquePerson))
+                    {
+                        $persons = Person::Where('id', $uniquePerson[$i]['id_person'])->first();
+                        if($persons['id_estado_nacimiento'] != null)
+                        {
+                            $data[] = array(
+                                'id_person' => $persons['id'],
+                                'id_estado_nacimiento' => $persons['id_estado_nacimiento']
+                            );
+                        }
+                        $i++;
+                    }
+
+                    $i = 0;
+                    $dataGraphicsOriginResennados = array();
+                    while($i < count($data))
+                    {
+                        $estado = Geografia_Venezuela::Where('id', $data[$i]['id_estado_nacimiento'])->first();
+                        $dataGraphicsOriginResennados[] = $estado['valor'];
+                        $i++;
+                    }
+                    $data = null;
+                    $data = array_count_values($dataGraphicsOriginResennados);
+
+                }else if($request->tipo_grafico == 'cantresennasdelito'){
+
+                    // Datos para Gráfico de Cantidad de Reseñas por Delito
+                    $dataResennas = $queryBuilder->selectRaw('caracteristicas_resennado.valor, count(resenna_detenido.id_motivo_resenna) as total_resennados')
+                    ->join('caracteristicas_resennado', 'caracteristicas_resennado.id', '=', 'resenna_detenido.id_motivo_resenna')
+                    ->groupBy('caracteristicas_resennado.valor')
+                    ->get();
+
+                    foreach($dataResennas as $data)
+                    {
+                        $dataGraphics[] = [
+                            'name' => $data['valor'],
+                            'y' => floatval($data['total_resennados'])
+                        ];
+                    }
+                    $data = json_encode($dataGraphics);
+
+                }else{
+                    $data = '';
+                }
+            }else if($request->tipo_grafico == null || $request->tipo_grafico == ''){
+                $data = '';
+            }
+            $dataType = $request->tipo_grafico;
+
         }else{
-            $response = 0;
-        };
-        return response()->json($response);
+            $dataType = '';
+            $data = '';
+        }
+
+        // // Trazas de Búsquedas
+        // if(isset($request->tipo_busqueda) && isset($request->buscador))
+        // {
+        //     $id_user = Auth::user()->id;
+        //     $id_Accion = 5; //Búsqueda
+        //     $valores_modificados = 'Tipo de Búsqueda: '.$request->tipo_busqueda.'. Valor Buscado: '.$request->buscador;
+        //     event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Resenna'));
+        // }
+
+        // Opciones del Filtro
+        $genero = Genero::pluck('valor', 'id')->all();
+        $motivo_resenna = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 94)->pluck('valor', 'id')->all();
+        $tez = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 240)->pluck('valor', 'id')->all();
+        $contextura = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 243)->pluck('valor', 'id')->all();
+        $estado = Geografia_Venezuela::orderBy('valor', 'asc')->Where('id_padre', 107)->pluck('valor', 'id')->all();
+        $municipio = Geografia_Venezuela::orderBy('valor', 'asc')->Where('id_padre', 108)->pluck('valor', 'id')->all();
+
+        $last_id_resenna = Resenna::orderBy('id', 'desc')->first();
+
+        return view('resenna.charts', compact(
+            'genero', 
+            'motivo_resenna', 
+            'tez', 
+            'contextura', 
+            'estado', 
+            'municipio',
+            'last_id_resenna',
+            'data',
+            'dataType'
+        ));
     }
 
     /**
@@ -325,96 +470,11 @@ class ResennaController extends Controller
         }
 
         $cedula = $request['cedula'];
-        $obtener_persona = Person::where('cedula','=',$cedula)->get();
-        $validar_persona = Person::where('cedula','=',$cedula)->exists();
+        $obtener_persona = Person::where('cedula', $cedula)->get();
+        $validar_persona = Person::where('cedula', $cedula)->exists();
+        $validar_resenna = Resenna::where('id_person', $obtener_persona[0]['id'])->exists();
 
-        if($validar_persona == true)
-        {
-            $resenna = new Resenna();
-            $resenna->fecha_resenna = $request->fecha_resenna;
-            $resenna->id_person = $obtener_persona[0]['id'];
-            $resenna->id_estado_civil = $request->id_estado_civil;
-            $resenna->id_profesion = $request->id_profesion;
-            $resenna->id_motivo_resenna = $request->id_motivo_resenna;
-            $resenna->id_tez = $request->id_tez;
-            $resenna->id_contextura = $request->id_contextura;
-            $resenna->id_funcionario_aprehensor = $request->id_funcionario_aprehensor;
-            $resenna->id_funcionario_resenna = $request->id_funcionario_resenna;
-            $resenna->direccion = $request->direccion;
-            $resenna->coordenadas_aprehension = $request->coordenadas_aprehension;
-            $resenna->observaciones = $request->observaciones;
-            $resenna->save();
-            $id_resenna = $resenna->id;
-
-            if($request->hasFile('url_foto')) {
-                $imagen = $request->file('url_foto')->store('imagenes/resennados/'.$obtener_persona[0]['id'].'-'.$request->cedula);
-            }else{
-                if($request->id_genero == '1'){
-                    $imagen = 'imagenes/resennados/masculino.png';
-                }
-                if($request->id_genero == '2'){
-                    $imagen = 'imagenes/resennados/femenino.png';
-                }
-                if($request->id_genero == null){
-                    $imagen = 'imagenes/resennados/desconocido.png';
-                }
-            }
-            $resenna = Resenna::find($id_resenna, ['id']);
-            $resenna->update(['url_foto' => 'storage/'.$imagen]);
-
-            $caracteristicas_Resennado = Caracteristicas_Resennado::get();
-            $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
-            ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
-            $funcionarios_resenna = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
-            ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
-            $generos = Genero::get();
-
-            $genero_for = $generos->Where('id', $obtener_persona[0]['id_genero']);
-            foreach($genero_for as $genero){
-                $genero = $genero['valor'];
-            }
-            $estado_civil_for = $caracteristicas_Resennado->Where('id', $request->id_estado_civil);
-            foreach($estado_civil_for as $estado_civil){
-                $estado_civil = $estado_civil['valor'];
-            }
-            $profesion_for = $caracteristicas_Resennado->Where('id', $request->id_profesion);
-            foreach($profesion_for as $profesion){
-                $profesion = $profesion['valor'];
-            }
-            $motivo_resenna_for = $caracteristicas_Resennado->Where('id', $request->id_motivo_resenna);
-            foreach($motivo_resenna_for as $motivo_resenna){
-                $motivo_resenna = $motivo_resenna['valor'];
-            }
-            $tez_for = $caracteristicas_Resennado->Where('id', $request->id_tez);
-            foreach($tez_for as $tez){
-                $tez = $tez['valor'];
-            }
-            $contextura_for = $caracteristicas_Resennado->Where('id', $request->id_contextura);
-            foreach($contextura_for as $contextura){
-                $contextura = $contextura['valor'];
-            }
-            $funcionario_aprehensor_for = $funcionarios->Where('funcionarios.id', $request->id_funcionario_aprehensor)->get();
-            foreach($funcionario_aprehensor_for as $funcionario_aprehensor){
-                $funcionario_aprehensor = $funcionario_aprehensor['valor'].'. '.$funcionario_aprehensor['primer_nombre'].' '.$funcionario_aprehensor['primer_apellido'];
-            }
-            $funcionario_resenna_for = $funcionarios_resenna->Where('funcionarios.id', $request->id_funcionario_resenna)->get();
-            foreach($funcionario_resenna_for as $fun_resenna){
-                $funcionario_resenna = $fun_resenna['valor'].'. '.$fun_resenna['primer_nombre'].' '.$fun_resenna['primer_apellido'];
-            }
-            $id_user = Auth::user()->id;
-            $id_Accion = 1; //Registro
-            $valores_modificados = 'El ciudadano ya posee reseñas en el Sistema. Datos de Reseña: '.
-            $request->fecha_resenna.' || '.$obtener_persona[0]['cedula'].' || '.$obtener_persona[0]['primer_nombre'].' || '.
-            $obtener_persona[0]['segundo_nombre'].' || '.$obtener_persona[0]['primer_apellido'].' || '.$obtener_persona[0]['segundo_apellido'].' || '.
-            $genero.' || '.$obtener_persona[0]['fecha_nacimiento'].' || '.$estado_civil.' || '.$profesion.' || '.$motivo_resenna.' || '.$tez.' || '.$contextura.' || Funcionario Aprehensor: '
-            .$funcionario_aprehensor.' || Funcionario que Reseña: '.$funcionario_resenna.' || '.$request->direccion.' || '.$request->observaciones.' || '.$imagen;
-            event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Resenna'));
-
-            Alert()->success('Reseña creada Satisfactoriamente','Atención: El ciudadano ya posee reseñas en el Sistema!');
-            return redirect()->route('resenna.index');  
-
-        }else if($validar_persona == false){
-            
+        if($validar_persona == false){
             $persona = new Person();
             $persona->id_tipo_documentacion = $request->id_tipo_documentacion;
             $persona->letra_cedula = $request->letra_cedula;
@@ -429,96 +489,109 @@ class ResennaController extends Controller
             $persona->id_municipio_nacimiento = $request->id_municipio_nacimiento;
             $persona->save();
             $id_person = $persona->id;
-
-            $resenna = new Resenna();
-            $resenna->fecha_resenna = $request->fecha_resenna;
-            $resenna->id_person = $id_person;
-            $resenna->id_estado_civil = $request->id_estado_civil;
-            $resenna->id_profesion = $request->id_profesion;
-            $resenna->id_motivo_resenna = $request->id_motivo_resenna;
-            $resenna->id_tez = $request->id_tez;
-            $resenna->id_contextura = $request->id_contextura;
-            $resenna->id_funcionario_aprehensor = $request->id_funcionario_aprehensor;
-            $resenna->id_funcionario_resenna = $request->id_funcionario_resenna;
-            $resenna->direccion = $request->direccion;
-            $resenna->coordenadas_aprehension = $request->coordenadas_aprehension;
-            $resenna->observaciones = $request->observaciones;
-            $resenna->save();
-            $id_resenna = $resenna->id;
-
-            if($request->hasFile('url_foto')) {
-                $imagen = $request->file('url_foto')->store('imagenes/resennados/'.$id_person.'-'.$request->cedula);
-            }else{
-                if($request->id_genero == '1'){
-                    $imagen = 'imagenes/resennados/masculino.png';
-                }
-                if($request->id_genero == '2'){
-                    $imagen = 'imagenes/resennados/femenino.png';
-                }
-                if($request->id_genero == null){
-                    $imagen = 'imagenes/resennados/desconocido.png';
-                }
-            }
-            $resenna = Resenna::find($id_resenna, ['id']);
-            $resenna->update(['url_foto' => 'storage/'.$imagen]);
-
-            $caracteristicas_Resennado = Caracteristicas_Resennado::get();
-            $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
-            ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
-            $funcionarios_resenna = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
-            ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
-            $generos = Genero::get();
-
-            $genero_for = $generos->Where('id', $request->id_genero);
-            foreach($genero_for as $genero){
-                $genero = $genero['valor'];
-            }
-            $estado_civil_for = $caracteristicas_Resennado->Where('id', $request->id_estado_civil);
-            foreach($estado_civil_for as $estado_civil){
-                $estado_civil = $estado_civil['valor'];
-            }
-            $profesion_for = $caracteristicas_Resennado->Where('id', $request->id_profesion);
-            foreach($profesion_for as $profesion){
-                $profesion = $profesion['valor'];
-            }
-            $motivo_resenna_for = $caracteristicas_Resennado->Where('id', $request->id_motivo_resenna);
-            foreach($motivo_resenna_for as $motivo_resenna){
-                $motivo_resenna = $motivo_resenna['valor'];
-            }
-            $tez_for = $caracteristicas_Resennado->Where('id', $request->id_tez);
-            foreach($tez_for as $tez){
-                $tez = $tez['valor'];
-            }
-            $contextura_for = $caracteristicas_Resennado->Where('id', $request->id_contextura);
-            foreach($contextura_for as $contextura){
-                $contextura = $contextura['valor'];
-            }
-            $funcionario_aprehensor_for = $funcionarios->Where('funcionarios.id', $request->id_funcionario_aprehensor)->get();
-            foreach($funcionario_aprehensor_for as $fun_aprehensor){
-                $funcionario_aprehensor = $fun_aprehensor['valor'].'. '.$fun_aprehensor['primer_nombre'].' '.$fun_aprehensor['primer_apellido'];
-            }
-            $funcionario_resenna_for = $funcionarios_resenna->Where('funcionarios.id', $request->id_funcionario_resenna)->get();
-            foreach($funcionario_resenna_for as $fun_resenna){
-                $funcionario_resenna = $fun_resenna['valor'].'. '.$fun_resenna['primer_nombre'].' '.$fun_resenna['primer_apellido'];
-            }
-
-            // Trazas
-            $id_user = Auth::user()->id;
-            $id_Accion = 1; //Registro
-            $valores_modificados = 'Datos de Reseña: '.
-            $request->fecha_resenna.' || '.$request->cedula.' || '.$request->primer_nombre.' '.$request->segundo_nombre.' || '.
-            $request->primer_apellido.'  '.$request->segundo_apellido.' || '.$request->fecha_nacimiento.' || '.$genero.' || '.$estado_civil.' || '.$profesion.' || '.$motivo_resenna.' || '.
-            $tez.' || '.$contextura.' || '.$funcionario_aprehensor.' || '.$funcionario_resenna.' || '.$request->direccion.' || '.$request->observaciones.' || '.$imagen;
-            event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Resenna'));
-
-            // Notificacion
-            event(new NotificationResennaEvent($resenna, $id_user));
-
-            Alert()->success('Reseña creada Satisfactoriamente','Ciudadano: '.$request->primer_nombre.' '.$request->primer_apellido.
-            '. Portador de la Cédula de Identidad:'.$request->cedula);
-            return redirect()->route('resenna.index');
         };
 
+        $resenna = new Resenna();
+        $resenna->fecha_resenna = $request->fecha_resenna;
+        $resenna->id_person = isset($id_person) ? $id_person : $obtener_persona[0]['id'];
+        $resenna->id_estado_civil = $request->id_estado_civil;
+        $resenna->id_profesion = $request->id_profesion;
+        $resenna->id_motivo_resenna = $request->id_motivo_resenna;
+        $resenna->id_tez = $request->id_tez;
+        $resenna->id_contextura = $request->id_contextura;
+        $resenna->id_funcionario_aprehensor = $request->id_funcionario_aprehensor;
+        $resenna->id_funcionario_resenna = $request->id_funcionario_resenna;
+        $resenna->direccion = $request->direccion;
+        $resenna->coordenadas_aprehension = $request->coordenadas_aprehension;
+        $resenna->observaciones = $request->observaciones;
+        $resenna->save();
+        $id_resenna = $resenna->id;
+
+        if($request->hasFile('url_foto')) {
+            $imagen = $request->file('url_foto')->store('imagenes/resennados/'.$id_person.'-'.$request->cedula);
+        }else{
+            if($request->id_genero == '1'){
+                $imagen = 'imagenes/resennados/masculino.png';
+            }
+            if($request->id_genero == '2'){
+                $imagen = 'imagenes/resennados/femenino.png';
+            }
+            if($request->id_genero == null){
+                $imagen = 'imagenes/resennados/desconocido.png';
+            }
+        }
+        $resenna = Resenna::find($id_resenna, ['id']);
+        $resenna->update(['url_foto' => 'storage/'.$imagen]);
+
+        $cedula = isset($request->cedula) ? $request->cedula : $obtener_persona[0]['cedula'];
+        $primer_nombre = isset($request->primer_nombre) ? $request->primer_nombre : $obtener_persona[0]['primer_nombre'];
+        $segundo_nombre = isset($request->segundo_nombre) ? $request->segundo_nombre : $obtener_persona[0]['segundo_nombre'];
+        $primer_apellido = isset($request->primer_apellido) ? $request->primer_apellido : $obtener_persona[0]['primer_apellido'];
+        $segundo_apellido = isset($request->segundo_apellido) ? $request->segundo_apellido : $obtener_persona[0]['segundo_apellido'];
+        $fecha_nacimiento = isset($request->fecha_nacimiento) ? $request->fecha_nacimiento : $obtener_persona[0]['fecha_nacimiento'];
+        $id_genero = isset($request->id_genero) ? $request->id_genero : $obtener_persona[0]['id_genero'];
+
+        $caracteristicas_Resennado = Caracteristicas_Resennado::get();
+        $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
+        ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
+        $funcionarios_resenna = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
+        ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
+        $generos = Genero::get();
+
+        $genero_for = $generos->Where('id', $id_genero);
+        foreach($genero_for as $genero){
+            $genero = $genero['valor'];
+        }
+        $estado_civil_for = $caracteristicas_Resennado->Where('id', $request->id_estado_civil);
+        foreach($estado_civil_for as $estado_civil){
+            $estado_civil = $estado_civil['valor'];
+        }
+        $profesion_for = $caracteristicas_Resennado->Where('id', $request->id_profesion);
+        foreach($profesion_for as $profesion){
+            $profesion = $profesion['valor'];
+        }
+        $motivo_resenna_for = $caracteristicas_Resennado->Where('id', $request->id_motivo_resenna);
+        foreach($motivo_resenna_for as $motivo_resenna){
+            $motivo_resenna = $motivo_resenna['valor'];
+        }
+        $tez_for = $caracteristicas_Resennado->Where('id', $request->id_tez);
+        foreach($tez_for as $tez){
+            $tez = $tez['valor'];
+        }
+        $contextura_for = $caracteristicas_Resennado->Where('id', $request->id_contextura);
+        foreach($contextura_for as $contextura){
+            $contextura = $contextura['valor'];
+        }
+        $funcionario_aprehensor_for = $funcionarios->Where('funcionarios.id', $request->id_funcionario_aprehensor)->get();
+        foreach($funcionario_aprehensor_for as $fun_aprehensor){
+            $funcionario_aprehensor = $fun_aprehensor['valor'].'. '.$fun_aprehensor['primer_nombre'].' '.$fun_aprehensor['primer_apellido'];
+        }
+        $funcionario_resenna_for = $funcionarios_resenna->Where('funcionarios.id', $request->id_funcionario_resenna)->get();
+        foreach($funcionario_resenna_for as $fun_resenna){
+            $funcionario_resenna = $fun_resenna['valor'].'. '.$fun_resenna['primer_nombre'].' '.$fun_resenna['primer_apellido'];
+        }
+
+        // Trazas
+        $id_user = Auth::user()->id;
+        $id_Accion = 1; //Registro
+        $valores_modificados = 'Datos de Reseña: '.
+        $request->fecha_resenna.' || '.$cedula.' || '.$primer_nombre.' '.$segundo_nombre.' || '.
+        $primer_apellido.'  '.$segundo_apellido.' || '.$fecha_nacimiento.' || '.$genero.' || '.$estado_civil.' || '.$profesion.' || '.$motivo_resenna.' || '.
+        $tez.' || '.$contextura.' || '.$funcionario_aprehensor.' || '.$funcionario_resenna.' || '.$request->direccion.' || '.$request->observaciones.' || '.$imagen;
+        event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Resenna'));
+
+        // Notificacion
+        event(new NotificationResennaEvent($resenna, $id_user));
+
+        if($validar_resenna)
+        {
+            Alert()->success('Reseña creada Satisfactoriamente','Atención: El ciudadano ya posee reseñas en el Sistema!');
+        }else{
+            Alert()->success('Reseña creada Satisfactoriamente','Ciudadano: '.$request->primer_nombre.' '.$request->primer_apellido.
+            '. Portador de la Cédula de Identidad:'.$request->cedula);
+        }
+
+        return redirect()->route('resenna.index');
     }
 
     /**
@@ -547,21 +620,10 @@ class ResennaController extends Controller
             $ex = explode(',', $resenna->coordenadas_aprehension);
             $long = $ex[0];
             $lat = $ex[1];
-            // $resennado = Person::Where('id', $resenna->id_person)
-            // ->select('primer_nombre', 'primer_apellido', 'cedula', 'letra_cedula')
-            // ->first();
-            // $motivo_resenna = Caracteristicas_Resennado::Where('id', $resenna->id_motivo_resenna)->first();
-            // $funcionario_aprehensor = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
-            // ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
-            // ->Where('funcionarios.id', $resenna->id_funcionario_aprehensor)
-            // ->select('jerarquia.valor AS jerarquia', 'persons.primer_nombre', 'persons.primer_apellido', 'funcionarios.credencial')
-            // ->first();
 
             Mapper::marker($long, $lat, [
                 'animation' => 'DROP', 
                 'clickable' => true, 
-                //'title' => $resennado['primer_nombre'].' '.$resennado['primer_apellido'].' - '.$resennado['letra_cedula'].$resennado['cedula'] , 
-                //'eventClick' => 'alert("Motivo de Reseña: '.$motivo_resenna['valor'].' \r\nFuncionario Aprehensor: '.$funcionario_aprehensor['jerarquia'].'. '.$funcionario_aprehensor['primer_nombre'].' '.$funcionario_aprehensor['primer_apellido'].' - '.$funcionario_aprehensor['credencial'].'")'
             ]); 
         }
 
@@ -806,6 +868,18 @@ class ResennaController extends Controller
         return PDF::loadView('resenna.pdf', compact('resenna', 'edad'))->setOption(['dpi' => 100, 'defaultFont' => 'sans-serif'])
         ->stream('Reseña Policial '.$resenna->resennado->letra_cedula.$resenna->resennado->cedula.'-'.$resenna->resennado->primer_nombre.' '.
         $resenna->resennado->primer_apellido.'.pdf');
+    }
+
+    public function verifyNewStore(Request $request)
+    {
+        $verify_new_resenna = Resenna::orderBy('id', 'desc')->first();
+        if($verify_new_resenna['id'] != $request->id)
+        {
+            $response = 1;
+        }else{
+            $response = 0;
+        };
+        return response()->json($response);
     }
 
         ////////////////////////////////////////////////////// SERVICIOS DE API //////////////////////////////////////////////////////

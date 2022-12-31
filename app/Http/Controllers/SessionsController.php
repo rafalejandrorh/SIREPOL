@@ -145,22 +145,53 @@ class SessionsController extends Controller
      */
     public function destroy(Request $request)
     {
-        $session = Sessions::Where('sessions.id', $request->session)
-        ->join('users', 'users.id', '=', 'sessions.user_id')
-        ->select('users.users', 'sessions.ip_address')
-        ->first();
+
+        if($request->session == 'all')
+        {
+            $datoSesion = null;
+            $sessions = Sessions::WhereNotNull('user_id')
+            ->join('users', 'users.id', '=', 'sessions.user_id')
+            ->select('users.users', 'sessions.ip_address')
+            ->get();
+            $i = 0;
+            while($i < count($sessions))
+            {
+                $datoSesion .= $sessions[$i]['users'].' || '.$sessions[$i]['ip_address'].', ';
+                $i++;
+            }
+        }else{
+            $sessions = Sessions::Where('sessions.id', $request->session)
+            ->join('users', 'users.id', '=', 'sessions.user_id')
+            ->select('users.users', 'sessions.ip_address')
+            ->first();
+            $datoSesion = $sessions['users'].' || '.$sessions['ip_address'];
+        }
 
         $id_user = Auth::user()->id;
         $id_Accion = 3; //Búsqueda
-        $valores_modificados = 'Datos de Sesión: '.$session['users'].' || '.$session['ip_address'];
+        $valores_modificados = 'Datos de Sesión: '.$datoSesion;
         event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Sessions'));
 
-        $session = Sessions::Where('id', $request->session);
-        $user = $session->first();
+        if($request->session == 'all')
+        {
+            $user = Sessions::WhereNotNull('user_id')->get();
+            $session = Sessions::query()->delete();
 
-        $session = Sessions::find($request->session, ['id']);
-        $session->delete();
-        event(new LogoutHistorialEvent(null, 3, $user['user_id']));
+            $i = 0;
+            while($i < count($user))
+            {
+                event(new LogoutHistorialEvent(null, 3, $user[$i]['user_id']));
+                $i++;
+            } 
+        }else{
+            $session = Sessions::Where('id', $request->session);
+            $user = $session->first();
+
+            $session = Sessions::find($request->session, ['id']);
+            $session->delete();
+
+            event(new LogoutHistorialEvent(null, 3, $user['user_id']));
+        }
 
         Alert()->success('La Sesión ha sido finalizada Exitosamente');
         return redirect()->route('sessions.index');
