@@ -13,7 +13,7 @@ class CreateJerarquiaTable extends Migration
      */
     public function up()
     {
-        Schema::create('jerarquia', function (Blueprint $table) {
+        Schema::create('nomenclador.jerarquia', function (Blueprint $table) {
 
             $table->bigIncrements('id');
             $table->string('valor', 200);
@@ -29,6 +29,6 @@ class CreateJerarquiaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jerarquia');
+        Schema::dropIfExists('nomenclador.jerarquia');
     }
 }

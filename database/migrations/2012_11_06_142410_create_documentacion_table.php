@@ -13,7 +13,7 @@ class CreateDocumentacionTable extends Migration
      */
     public function up()
     {
-        Schema::create('tipo_documentacion', function (Blueprint $table) {
+        Schema::create('nomenclador.tipo_documentacion', function (Blueprint $table) {
 
             $table->bigIncrements('id');
             $table->string('valor', 100);
@@ -29,6 +29,6 @@ class CreateDocumentacionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipo_documentacion');
+        Schema::dropIfExists('nomenclador.tipo_documentacion');
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Geografia_Venezuela;
+use App\Models\Geografia;
 
 class GeografiaVenezuelaController extends Controller
 {
@@ -12,12 +12,12 @@ class GeografiaVenezuelaController extends Controller
     {
         // dd($tipo.'-'.$id);
       if($id_hijo == 9865879){
-        $arreglo = Geografia_Venezuela::where('id_padre','=',$tipo)->pluck('valor','id')->get();
+        $arreglo = Geografia::where('id_padre','=',$tipo)->pluck('valor','id')->get();
         foreach ($arreglo as $code => $name) {
             echo "<option value=\"$code\">$name</option>";
         }
       }else{
-        $arreglo = Geografia_Venezuela::all()
+        $arreglo = Geografia::all()
         ->where('id_hijo','=',$id_hijo)
         ->where('id_padre','=',$tipo)
         ->pluck('valor','id');
@@ -31,12 +31,12 @@ class GeografiaVenezuelaController extends Controller
     {
         // dd($tipo.'-'.$id);
       if($id_hijo == 9865879){
-        $arreglo = Geografia_Venezuela::where('id_padre','=',$tipo)->pluck('valor','id')->get();
+        $arreglo = Geografia::where('id_padre','=',$tipo)->pluck('valor','id')->get();
         foreach ($arreglo as $code => $name) {
             echo "<option value=\"$code\">$name</option>";
         }
       }else{
-        $arreglo = Geografia_Venezuela::all()
+        $arreglo = Geografia::all()
         ->where('id_hijo','=',$id_hijo)
         ->where('id_padre','=',$tipo)
         ->pluck('valor','id');

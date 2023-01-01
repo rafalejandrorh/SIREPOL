@@ -9,7 +9,7 @@ class Traza_Sessions extends Model
 {
     use HasFactory;
 
-    protected $table = 'traza_sessions';
+    protected $table = 'trazas.sessions';
 
     protected $fillable = ['id_user','id_accion', 'valores_modificados'];
 

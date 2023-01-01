@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('traza_api', function (Blueprint $table) {
+        Schema::create('trazas.api', function (Blueprint $table) {
             $table->id();
             $table->string('ip');
             $table->string('mac');
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('trazas_api');
+        Schema::dropIfExists('trazas.api');
     }
 };

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('geografia_venezuela', function (Blueprint $table) {
+        Schema::create('nomenclador.geografia', function (Blueprint $table) {
 
             $table->bigIncrements('id');
             $table->string('valor', 300);
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('geografia_venezuela');
+        Schema::dropIfExists('nomenclador.geografia');
     }
 };

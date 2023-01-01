@@ -2,7 +2,7 @@
 namespace App\ComboDependientes\Nomenclador;
 
 use App\ComboDependientes\Base\AbstractRepository as Repository;
-use App\Models\Geografia_Venezuela;
+use App\Models\Geografia;
 /**
 * 
 */
@@ -14,7 +14,7 @@ class NomencladorBase extends Repository
 	
 	public function GetModel()
 	{
-		return new Geografia_Venezuela();
+		return new Geografia();
 	}
 	/**
 	 * [Pluck description]

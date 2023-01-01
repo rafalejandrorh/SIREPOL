@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('traza_resenna', function (Blueprint $table) {
+        Schema::create('trazas.resenna', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('id_user');
             $table->unsignedInteger('id_accion');
             $table->string('valores_modificados');
             $table->timestamps();
 
-            $table->foreign('id_accion')->references('id')->on('traza_acciones'); 
+            $table->foreign('id_accion')->references('id')->on('trazas.acciones'); 
         });
     }
 
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('traza_resenna');
+        Schema::dropIfExists('trazas.resenna');
     }
 };

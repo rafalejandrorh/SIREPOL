@@ -22,8 +22,8 @@ class CreateFuncionariosTable extends Migration
             $table->unsignedInteger('id_estatus');
 
             $table->foreign('id_person')->references('id')->on('persons'); 
-            $table->foreign('id_jerarquia')->references('id')->on('jerarquia'); 
-            $table->foreign('id_estatus')->references('id')->on('estatus_funcionario'); 
+            $table->foreign('id_jerarquia')->references('id')->on('nomenclador.jerarquia'); 
+            $table->foreign('id_estatus')->references('id')->on('nomenclador.estatus_funcionario'); 
             $table->timestamps();
         });
     }

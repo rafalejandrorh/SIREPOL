@@ -9,7 +9,7 @@ class Traza_Roles extends Model
 {
     use HasFactory;
 
-    protected $table = 'traza_roles';
+    protected $table = 'trazas.roles';
 
     protected $fillable = ['id_user','id_accion', 'valores_modificados'];
 

@@ -9,5 +9,5 @@ class Genero extends Model
 {
     use HasFactory;
 
-    protected $table = 'genero';
+    protected $table = 'nomenclador.genero';
 }

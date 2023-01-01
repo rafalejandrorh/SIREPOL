@@ -29,11 +29,11 @@ class CreatePersonsTable extends Migration
             $table->unsignedInteger('id_municipio_nacimiento')->nullable();
             $table->unsignedInteger('id_pais_nacimiento')->nullable();
 
-            $table->foreign('id_tipo_documentacion')->references('id')->on('tipo_documentacion');  
-            $table->foreign('id_genero')->references('id')->on('genero'); 
-            $table->foreign('id_estado_nacimiento')->references('id')->on('geografia_venezuela');
-            $table->foreign('id_municipio_nacimiento')->references('id')->on('geografia_venezuela');
-            $table->foreign('id_pais_nacimiento')->references('id')->on('geografia_venezuela');
+            $table->foreign('id_tipo_documentacion')->references('id')->on('nomenclador.tipo_documentacion');  
+            $table->foreign('id_genero')->references('id')->on('nomenclador.genero'); 
+            $table->foreign('id_estado_nacimiento')->references('id')->on('nomenclador.geografia');
+            $table->foreign('id_municipio_nacimiento')->references('id')->on('nomenclador.geografia');
+            $table->foreign('id_pais_nacimiento')->references('id')->on('nomenclador.geografia');
              
             $table->timestamps();
         });

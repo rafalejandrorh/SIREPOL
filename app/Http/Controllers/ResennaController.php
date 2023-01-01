@@ -7,7 +7,7 @@ use App\Models\Documentacion;
 use App\Models\Funcionario;
 use App\Models\Resenna;
 use App\Models\Genero;
-use App\Models\Geografia_Venezuela;
+use App\Models\Geografia;
 use App\Models\Person;
 use App\ComboDependientes\Nomenclador\NomencladorBase as Nomenclador;
 use Illuminate\Http\Request;
@@ -26,9 +26,9 @@ use Cornford\Googlmapper\Facades\MapperFacade as Mapper;
 
 class ResennaController extends Controller
 {
-    function __construct(Nomenclador $geografia_venezuela)
+    function __construct(Nomenclador $geografia)
     {
-        $this->geografia_venezuela = $geografia_venezuela;
+        $this->geografia = $geografia;
         $this->middleware('can:resenna.index')->only('index');
         $this->middleware('can:resenna.create')->only('create');
         $this->middleware('can:resenna.show')->only('show');
@@ -244,8 +244,8 @@ class ResennaController extends Controller
         $motivo_resenna = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 94)->pluck('valor', 'id')->all();
         $tez = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 240)->pluck('valor', 'id')->all();
         $contextura = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 243)->pluck('valor', 'id')->all();
-        $estado = Geografia_Venezuela::orderBy('valor', 'asc')->Where('id_padre', 107)->pluck('valor', 'id')->all();
-        $municipio = Geografia_Venezuela::orderBy('valor', 'asc')->Where('id_padre', 108)->pluck('valor', 'id')->all();
+        $estado = Geografia::orderBy('valor', 'asc')->Where('id_padre', 107)->pluck('valor', 'id')->all();
+        $municipio = Geografia::orderBy('valor', 'asc')->Where('id_padre', 108)->pluck('valor', 'id')->all();
         
         return view('resenna.index', compact(
             'resennas', 
@@ -331,7 +331,7 @@ class ResennaController extends Controller
                     $dataGraphicsOriginResennados = array();
                     while($i < count($data))
                     {
-                        $estado = Geografia_Venezuela::Where('id', $data[$i]['id_estado_nacimiento'])->first();
+                        $estado = Geografia::Where('id', $data[$i]['id_estado_nacimiento'])->first();
                         $dataGraphicsOriginResennados[] = $estado['valor'];
                         $i++;
                     }
@@ -382,8 +382,8 @@ class ResennaController extends Controller
         $motivo_resenna = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 94)->pluck('valor', 'id')->all();
         $tez = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 240)->pluck('valor', 'id')->all();
         $contextura = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 243)->pluck('valor', 'id')->all();
-        $estado = Geografia_Venezuela::orderBy('valor', 'asc')->Where('id_padre', 107)->pluck('valor', 'id')->all();
-        $municipio = Geografia_Venezuela::orderBy('valor', 'asc')->Where('id_padre', 108)->pluck('valor', 'id')->all();
+        $estado = Geografia::orderBy('valor', 'asc')->Where('id_padre', 107)->pluck('valor', 'id')->all();
+        $municipio = Geografia::orderBy('valor', 'asc')->Where('id_padre', 108)->pluck('valor', 'id')->all();
 
         $last_id_resenna = Resenna::orderBy('id', 'desc')->first();
 
@@ -439,12 +439,12 @@ class ResennaController extends Controller
         $motivo_resenna = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 94)->pluck('valor', 'id')->all();
         $tez = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 240)->pluck('valor', 'id')->all();
         $contextura = Caracteristicas_Resennado::orderBy('valor', 'asc')->Where('id_padre', 243)->pluck('valor', 'id')->all();
-        $estado = Geografia_Venezuela::orderBy('valor', 'asc')->Where('id_padre', 107)->pluck('valor', 'id')->all();
-        $municipio = Geografia_Venezuela::orderBy('valor', 'asc')->Where('id_padre', 108)->pluck('valor', 'id')->all();
+        $estado = Geografia::orderBy('valor', 'asc')->Where('id_padre', 107)->pluck('valor', 'id')->all();
+        $municipio = Geografia::orderBy('valor', 'asc')->Where('id_padre', 108)->pluck('valor', 'id')->all();
         $documentacion = Documentacion::pluck('valor', 'id')->all();
         $fecha_hoy = date('Y-m-d');
 
-        $estados = $this->geografia_venezuela->combos();
+        $estados = $this->geografia->combos();
 
         $funcionario_resenna = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
         ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
@@ -664,8 +664,8 @@ class ResennaController extends Controller
         $motivo_resenna = Caracteristicas_Resennado::Where('id_padre', 94)->pluck('valor', 'id')->all();
         $tez = Caracteristicas_Resennado::Where('id_padre', 240)->pluck('valor', 'id')->all();
         $contextura = Caracteristicas_Resennado::Where('id_padre', 243)->pluck('valor', 'id')->all();
-        $estado = Geografia_Venezuela::Where('id_padre', 107)->pluck('valor', 'id')->all();
-        $municipio = Geografia_Venezuela::Where('id_padre', 108)->pluck('valor', 'id')->all();
+        $estado = Geografia::Where('id_padre', 107)->pluck('valor', 'id')->all();
+        $municipio = Geografia::Where('id_padre', 108)->pluck('valor', 'id')->all();
         $documentacion = Documentacion::pluck('valor', 'id')->all();
         $funcionario_resenna = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
         ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
@@ -674,7 +674,7 @@ class ResennaController extends Controller
         ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
         ->select('funcionarios.id', 'persons.primer_nombre', 'persons.primer_apellido', 'jerarquia.valor')->get();
 
-        $estados = $this->geografia_venezuela->combos();
+        $estados = $this->geografia->combos();
 
         return view('resenna.edit', compact('edad', 'genero', 'estado_civil', 'profesion', 'motivo_resenna', 'tez', 'contextura', 
         'estado', 'municipio', 'estados', 'funcionario_resenna', 'funcionario_aprehensor', 'documentacion', 'resenna'));
@@ -903,8 +903,8 @@ class ResennaController extends Controller
         if($result['Count'] > 0)
         {
             $result['QueryPerson'] = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
-            ->join('geografia_venezuela as estado', 'estado.id', '=', 'persons.id_estado_nacimiento')
-            ->join('geografia_venezuela as municipio', 'municipio.id', '=', 'persons.id_municipio_nacimiento')
+            ->join('geografia as estado', 'estado.id', '=', 'persons.id_estado_nacimiento')
+            ->join('geografia as municipio', 'municipio.id', '=', 'persons.id_municipio_nacimiento')
             ->join('tipo_documentacion', 'tipo_documentacion.id', '=', 'persons.id_tipo_documentacion')
             ->join('genero', 'genero.id', '=', 'persons.id_genero')
             ->select(

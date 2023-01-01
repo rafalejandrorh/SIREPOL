@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('rutas_almacenamiento', function (Blueprint $table) {
+        Schema::create('configuracion.rutas_almacenamiento', function (Blueprint $table) {
             $table->id();
             $table->string('ruta');
             $table->string('tipo_archivo');

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('caracteristicas_resennado', function (Blueprint $table) {
+        Schema::create('nomenclador.caracteristicas_resennado', function (Blueprint $table) {
 
             $table->bigIncrements('id');
             $table->string('valor', 300);
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('caracteristicas_resennado');
+        Schema::dropIfExists('nomenclador.caracteristicas_resennado');
     }
 };

@@ -38,16 +38,16 @@ class Person extends Model
 
     public function estado_nacimiento()
     {
-        return $this->belongsto(Geografia_Venezuela::class,'id_estado_nacimiento');
+        return $this->belongsto(Geografia::class,'id_estado_nacimiento');
     }
 
     public function municipio_nacimiento()
     {
-        return $this->belongsto(Geografia_Venezuela::class,'id_municipio_nacimiento');
+        return $this->belongsto(Geografia::class,'id_municipio_nacimiento');
     }
 
     public function pais_nacimiento()
     {
-        return $this->belongsto(Geografia_Venezuela::class,'id_pais_nacimiento');
+        return $this->belongsto(Geografia::class,'id_pais_nacimiento');
     }
 }

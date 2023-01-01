@@ -9,5 +9,5 @@ class Documentacion extends Model
 {
     use HasFactory;
 
-    protected $table = 'tipo_documentacion';
+    protected $table = 'nomenclador.tipo_documentacion';
 }

@@ -9,5 +9,5 @@ class Caracteristicas_Resennado extends Model
 {
     use HasFactory;
 
-    protected $table = 'caracteristicas_resennado';
+    protected $table = 'nomenclador.caracteristicas_resennado';
 }

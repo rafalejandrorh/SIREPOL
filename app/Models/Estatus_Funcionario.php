@@ -9,5 +9,5 @@ class Estatus_Funcionario extends Model
 {
     use HasFactory;
 
-    protected $table = 'estatus_funcionario';
+    protected $table = 'nomenclador.estatus_funcionario';
 }

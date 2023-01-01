@@ -9,5 +9,5 @@ class Traza_Acciones extends Model
 {
     use HasFactory;
 
-    protected $table = 'traza_acciones';
+    protected $table = 'trazas.acciones';
 }

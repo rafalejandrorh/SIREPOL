@@ -169,8 +169,14 @@ class UserController extends Controller
             $usuario->save();
             $usuario->roles()->sync($request['roles']);
 
-            $roles = Role::Where('id', $request['roles'])->get();
-            $rol = $roles[0]['name'];
+            $i = 0;
+            $rol = null;
+            while($i < count($request['roles']))
+            {
+                $roles = Role::Where('id', $request['roles'][$i])->first();
+                $rol .= $roles['name'].', ';
+                $i++;
+            }
 
             $id_user = Auth::user()->id;
             $id_Accion = 1; //Registro
@@ -240,8 +246,14 @@ class UserController extends Controller
         DB::table('model_has_roles')->where('model_id',$user->id)->delete();
         $user->roles()->sync($request->roles);
 
-        $roles = Role::Where('id', $request['roles'])->get();
-        $rol = $roles[0]['name'];
+        $i = 0;
+        $rol = null;
+        while($i < count($request['roles']))
+        {
+            $roles = Role::Where('id', $request['roles'][$i])->first();
+            $rol .= $roles['name'].', ';
+            $i++;
+        }
 
         $id_user = Auth::user()->id;
         $id_Accion = 2; //Actualización

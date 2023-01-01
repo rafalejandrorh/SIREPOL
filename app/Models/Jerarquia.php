@@ -9,5 +9,5 @@ class Jerarquia extends Model
 {
     use HasFactory;
 
-    protected $table = 'jerarquia';
+    protected $table = 'nomenclador.jerarquia';
 }

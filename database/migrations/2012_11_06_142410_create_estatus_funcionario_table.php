@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('estatus_funcionario', function (Blueprint $table) {
+        Schema::create('nomenclador.estatus_funcionario', function (Blueprint $table) {
 
             $table->bigIncrements('id');
             $table->string('valor', 60);
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('estatus_funcionario');
+        Schema::dropIfExists('nomenclador.estatus_funcionario');
     }
 };

@@ -9,7 +9,7 @@ class Traza_Resenna extends Model
 {
     use HasFactory;
 
-    protected $table = 'traza_resenna';
+    protected $table = 'trazas.resenna';
 
     protected $fillable = ['id_user','id_accion', 'valores_modificados'];
 

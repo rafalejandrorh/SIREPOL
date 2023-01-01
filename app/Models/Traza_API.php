@@ -9,7 +9,7 @@ class Traza_API extends Model
 {
     use HasFactory;
 
-    protected $table = 'traza_api';
+    protected $table = 'trazas.api';
 
     public function user()
     {
