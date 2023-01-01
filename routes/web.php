@@ -5,6 +5,7 @@ use App\Events\PublicNotification;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\ConfiguracionesController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\SesionController;
@@ -50,6 +51,8 @@ Route::resource('sessions', SessionsController::class)->middleware('auth');
 
 Route::resource('messages', MessagesController::class)->middleware('auth');
 
+Route::resource('configuraciones', ConfiguracionesController::class)->middleware('auth');
+
 Route::get('/', [LoginController::class, 'index']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
@@ -72,7 +75,7 @@ Route::get('/trazas/funcionarios/{funcionario}', [App\Http\Controllers\TrazasCon
 
 Route::get('/trazas/users/{user}', [App\Http\Controllers\TrazasController::class, 'show_usuarios'])->name('traza_user.show')->middleware('auth');
 
-Route::get('/trazas/roles{role}', [App\Http\Controllers\TrazasController::class, 'show_roles'])->name('traza_roles.show')->middleware('auth');
+Route::get('/trazas/roles/{role}', [App\Http\Controllers\TrazasController::class, 'show_roles'])->name('traza_roles.show')->middleware('auth');
 
 Route::get('/trazas/sesiones/{sesion}', [App\Http\Controllers\TrazasController::class, 'show_sesiones'])->name('traza_sesiones.show')->middleware('auth');
 

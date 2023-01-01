@@ -129,12 +129,12 @@ class TrazasController extends Controller
         $accion = Traza_Acciones::pluck('valor', 'id')->all();
         $user = User::pluck('users', 'id')->all();
 
-        return view('trazas.resenna_index', compact('resennas', 'user', 'accion'));
+        return view('trazas.resennaIndex', compact('resennas', 'user', 'accion'));
     }
 
     public function show_resenna(Traza_Resenna $resenna)
     {
-        return view('trazas.resenna_show', compact('resenna'));
+        return view('trazas.resennaShow', compact('resenna'));
     }
 
     /**
@@ -235,12 +235,12 @@ class TrazasController extends Controller
         $accion = Traza_Acciones::pluck('valor', 'id')->all();
         $user = User::pluck('users', 'id')->all();
 
-        return view('trazas.users_index', compact('users', 'user', 'accion'));
+        return view('trazas.usersIndex', compact('users', 'user', 'accion'));
     }
 
     public function show_usuarios(Traza_User $user)
     {
-        return view('trazas.users_show', compact('user'));
+        return view('trazas.userShow', compact('user'));
     }
 
         /**
@@ -342,12 +342,12 @@ class TrazasController extends Controller
         $accion = Traza_Acciones::pluck('valor', 'id')->all();
         $user = User::pluck('users', 'id')->all();
 
-        return view('trazas.funcionarios_index', compact('funcionario', 'user', 'accion'));
+        return view('trazas.funcionariosIndex', compact('funcionario', 'user', 'accion'));
     }
 
     public function show_funcionarios(Traza_Funcionarios $funcionario)
     {
-        return view('trazas.funcionarios_show', compact('funcionario'));
+        return view('trazas.funcionarioShow', compact('funcionario'));
     }
 
     /**
@@ -438,12 +438,12 @@ class TrazasController extends Controller
         $accion = Traza_Acciones::pluck('valor', 'id')->all();
         $user = User::pluck('users', 'id')->all();
 
-        return view('trazas.roles_index', compact('roles', 'user', 'accion'));
+        return view('trazas.rolesIndex', compact('roles', 'user', 'accion'));
     }
 
     public function show_roles(Traza_Roles $role)
     {
-        return view('trazas.roles_show', compact('role'));
+        return view('trazas.roleShow', compact('role'));
     }
 
     /**
@@ -527,7 +527,7 @@ class TrazasController extends Controller
         $accion = Traza_Acciones::pluck('valor', 'id')->all();
         $user = User::pluck('users', 'id')->all();
 
-        return view('trazas.historial_sesion_index', compact('historial_sesion', 'user', 'accion'));
+        return view('trazas.historialsesionIndex', compact('historial_sesion', 'user', 'accion'));
     }
 
     public function index_sesiones(Request $request)
@@ -622,12 +622,12 @@ class TrazasController extends Controller
         $accion = Traza_Acciones::pluck('valor', 'id')->all();
         $user = User::pluck('users', 'id')->all();
 
-        return view('trazas.sesiones_index', compact('sesiones', 'user', 'accion'));
+        return view('trazas.sesionesIndex', compact('sesiones', 'user', 'accion'));
     }
 
     public function show_sesiones(Traza_Sessions $sesion)
     {
-        return view('trazas.sesiones_show', compact('sesion'));
+        return view('trazas.sesioneShow', compact('sesion'));
     }
 
 }

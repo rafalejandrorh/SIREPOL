@@ -27,7 +27,7 @@
 @can('roles.index') 
 <li class="side-menus {{ Request::is('roles') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('roles.index') }}">
-        <i class=" fas fa-key"></i><span>Roles</span>
+        <i class=" fas fa-users"></i><span>Roles</span>
     </a>
 </li>
 @endcan
@@ -55,4 +55,13 @@
     </a>
 </li>
 @endcan
+@can('configuraciones.index')
+<li class="side-menus {{ Request::is('configuraciones') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('configuraciones.index') }}">
+        <i class=" fas fa-cogs"></i>
+        <span>Configuración</span>
+    </a>
+</li>
+@endcan
+
 
