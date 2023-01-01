@@ -87,7 +87,7 @@
                                 <div class="col-xs-10 col-sm-10 col-md-10">
                                     <div class="form-group">
                                         @can('resenna.create')
-                                        <a class="btn btn-success" href="{{ route('resenna.create') }}">Crear Reseña</a>  
+                                        <a class="btn btn-success" href="{{ route('resenna.create') }}">Registrar</a>  
                                         @endcan
                                     </div>
                                 </div>

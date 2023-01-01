@@ -88,7 +88,7 @@ Route::get('/configuraciones/rutas/almacenamiento', [App\Http\Controllers\Config
 
 Route::get('/configuraciones/rutas/almacenamiento/create', [App\Http\Controllers\ConfiguracionesController::class, 'create_rutasAlmacenamiento'])->name('rutasAlmacenamiento.create')->middleware('auth');
 
-Route::get('/configuraciones/rutas/almacenamiento/{permiso}/edit', [ConfiguracionesController::class, 'edit_rutasAlmacenamiento'])->name('rutasAlmacenamiento.edit')->middleware('auth');
+Route::get('/configuraciones/rutas/almacenamiento/{almacenamiento}/edit', [ConfiguracionesController::class, 'edit_rutasAlmacenamiento'])->name('rutasAlmacenamiento.edit')->middleware('auth');
 
 Route::get('/resenna/pdf/{resenna}', [App\Http\Controllers\ResennaController::class, 'pdf'])->name('resenna.pdf')->middleware('auth');
 

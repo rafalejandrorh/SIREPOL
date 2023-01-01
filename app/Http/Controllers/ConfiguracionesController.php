@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\TrazasEvent;
 use App\Models\Permissions;
+use App\Models\Rutas_Almacenamiento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -44,7 +45,8 @@ class ConfiguracionesController extends Controller
      */
     public function index_rutasAlmacenamiento()
     {
-        return view('configuraciones.rutasAlmacenamiento');
+        $rutasAlmacenamiento = Rutas_Almacenamiento::orderBy('created_at', 'desc')->paginate(10);
+        return view('configuraciones.rutasAlmacenamiento', compact('rutasAlmacenamiento'));
     }
 
     /**
@@ -64,7 +66,7 @@ class ConfiguracionesController extends Controller
      */
     public function create_rutasAlmacenamiento()
     {
-        //
+        return view('configuraciones.createRutasAlmacenamiento');
     }
 
     /**
@@ -98,7 +100,20 @@ class ConfiguracionesController extends Controller
      */
     public function store_rutasAlmacenamiento(Request $request)
     {
-        //
+        $rutasAlmacenamiento = new Rutas_Almacenamiento();
+        $rutasAlmacenamiento->ruta = $request->ruta;
+        $rutasAlmacenamiento->tipo_archivo = $request->tipo_archivo;
+        $rutasAlmacenamiento->modulo = $request->modulo;
+        $rutasAlmacenamiento->descripcion = $request->descripcion;
+        $rutasAlmacenamiento->save();
+
+        // $id_user = Auth::user()->id;
+        // $id_Accion = 1; //Registro
+        // $valores_modificados = 'Datos de la Ruta: '.$request->ruta.' || .'.$request->tipo_archivo.' || '.$request->modulo.' || '.$request->descripcion;
+        // event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_RutasAlmacenamiento'));
+
+        Alert()->success('Ruta de Almacenamiento registrada Satisfactoriamente');
+        return redirect()->route('rutasAlmacenamiento.index');
     }
 
     /**
@@ -118,9 +133,9 @@ class ConfiguracionesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit_rutasAlmacenamiento($id)
+    public function edit_rutasAlmacenamiento(Rutas_Almacenamiento $almacenamiento)
     {
-        //
+        return view('configuraciones.editRutasAlmacenamiento', compact('almacenamiento'));
     }
 
     /**
@@ -157,7 +172,21 @@ class ConfiguracionesController extends Controller
      */
     public function update_rutasAlmacenamiento(Request $request, $id)
     {
-        //
+        $rutasAlmacenamiento = Rutas_Almacenamiento::find($id, ['id']);
+        $rutasAlmacenamiento->update([
+            'ruta' => $request->ruta,
+            'tipo_archivo' => $request->tipo_archivo,
+            'modulo' => $request->modulo,
+            'descripcion' => $request->descripcion
+        ]);
+
+        // $id_user = Auth::user()->id;
+        // $id_Accion = 2; //Actualización
+        // $valores_modificados = 'Datos de la Ruta: '.$request->ruta.' || .'.$request->tipo_archivo.' || '.$request->modulo.' || '.$request->descripcion;
+        // event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_RutasAlmacenamiento'));
+
+        Alert()->success('Ruta de Almacenamiento Actualizada Satisfactoriamente');
+        return redirect()->route('rutasAlmacenamiento.index');
     }
 
     /**
@@ -174,8 +203,8 @@ class ConfiguracionesController extends Controller
         // $valores_modificados = 'Datos de Permiso: '.$permissions['name'].' || '.$permissions['description'].' || '.$permissions['guard_name'];
         // event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Permisos'));
         
-        $resenna = Permissions::find($id, ['id']);
-        $resenna->delete();
+        $permissions = Permissions::find($id, ['id']);
+        $permissions->delete();
 
         Alert()->success('El Permiso ha sido Eliminada');
         return redirect()->route('permisos.index');
@@ -189,6 +218,16 @@ class ConfiguracionesController extends Controller
      */
     public function destroy_rutasAlmacenamiento($id)
     {
-        //
+        // $rutasAlmacenamiento = Rutas_Almacenamiento::where('id', $id)->first();
+        // $id_user = Auth::user()->id;
+        // $id_Accion = 3; //Eliminación
+        // $valores_modificados = 'Datos de la Ruta: '.$rutasAlmacenamiento['ruta'].' || '.$rutasAlmacenamiento['tipo_archivo'].' || '.$rutasAlmacenamiento['modulo'].' || '.$rutasAlmacenamiento['descripcion'];
+        // event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_RutasAlmacenamiento'));
+        
+        $rutasAlmacenamiento = Rutas_Almacenamiento::find($id, ['id']);
+        $rutasAlmacenamiento->delete();
+
+        Alert()->success('La Ruta de Almacenamiento ha sido Eliminada');
+        return redirect()->route('rutasAlmacenamiento.index');
     }
 }

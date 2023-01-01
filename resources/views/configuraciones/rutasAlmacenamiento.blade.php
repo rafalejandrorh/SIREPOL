@@ -3,7 +3,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h3 class="page__heading"><b>Configuraciones - Permisos</b></h3>
+            <h3 class="page__heading"><b>Configuraciones - Rutas de Almacenamiento</b></h3>
         </div>
         <div class="section-body">
             <div class="row">
@@ -12,28 +12,30 @@
                         <div class="card-body">
 
                             @can('permisos.create')
-                            <a class="btn btn-success" href="{{ route('permisos.create') }}">Registrar</a>                        
+                            <a class="btn btn-success" href="{{ route('rutasAlmacenamiento.create') }}">Registrar</a>                        
                             @endcan
                                     <table class="table table-striped mt-2 display dataTable table-hover">
                                         <thead>
                                             <tr role="row">
-                                                <th>Nomenclatura</th>
+                                                <th>Ruta</th>
+                                                <th>Tipos de Archivo</th>
+                                                <th>Módulo</th>
                                                 <th>Descripción</th>
-                                                <th>Tipo de Permiso</th>
                                                 <th>Acciones</th>
                                         </thead>
                                         <tbody>
-                                            @foreach ($permissions as $permission)
+                                            @foreach ($rutasAlmacenamiento as $almacenamiento)
                                             <tr role="row" class="odd">
-                                                <td class="sorting_1">{{$permission->name}}</td>
-                                                <td class="sorting_1">{{$permission->description}}</td>
-                                                <td class="sorting_1">{{$permission->guard_name}}</td>
+                                                <td class="sorting_1">{{$almacenamiento->ruta}}</td>
+                                                <td class="sorting_1">{{$almacenamiento->tipo_archivo}}</td>
+                                                <td class="sorting_1">{{$almacenamiento->modulo}}</td>
+                                                <td class="sorting_1">{{$almacenamiento->descripcion}}</td>
                                                 <td align="center">
                                                     @can('permisos.edit')
-                                                        <a class="btn btn-primary" href="{{ route('permisos.edit', $permission->id) }}"><i class='fa fa-edit'></i></a>
+                                                        <a class="btn btn-primary" href="{{ route('rutasAlmacenamiento.edit', $almacenamiento->id) }}"><i class='fa fa-edit'></i></a>
                                                     @endcan
                                                     @can('permisos.destroy')
-                                                        {!! Form::open(['method' => 'DELETE', 'route' => ['permisos.destroy', $permission->id], 'style'=>'display:inline', 'class' => 'eliminar']) !!}
+                                                        {!! Form::open(['method' => 'DELETE', 'route' => ['rutasAlmacenamiento.destroy', $almacenamiento->id], 'style'=>'display:inline', 'class' => 'eliminar']) !!}
                                                             {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
                                                         {!! Form::close() !!}  
                                                     @endcan
@@ -43,7 +45,7 @@
                                         </tbody>
                                     </table>
                                 <div class="pagination justify-content-end">
-                                    {{ $permissions->appends(request()->input())->links() }}
+                                    {{ $rutasAlmacenamiento->appends(request()->input())->links() }}
                                 </div> 
                             </div>
                         </div>

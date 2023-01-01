@@ -34,7 +34,7 @@
                             </div>
                             {!! Form::close() !!}
                             @can('funcionarios.create')
-                            <a class="btn btn-success" href="{{ route('funcionarios.create') }}">Registrar Funcionario</a>                        
+                            <a class="btn btn-success" href="{{ route('funcionarios.create') }}">Registrar</a>                        
                             @endcan
                                     <table class="table table-striped mt-2 display dataTable table-hover">
                                         <thead>

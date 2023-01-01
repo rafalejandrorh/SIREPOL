@@ -72,7 +72,7 @@
                             </div>
                             {!! Form::close() !!}
                             @can('users.create')
-                            <a class="btn btn-success" href="{{ route('users.create') }}">Añadir Usuario</a>                        
+                            <a class="btn btn-success" href="{{ route('users.create') }}">Crear</a>                        
                             @endcan
                                     <table class="table table-striped mt-2 display dataTable table-hover">
                                         <thead>

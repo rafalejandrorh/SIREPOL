@@ -12,7 +12,7 @@
                         <div class="card-body">
         
                         @can('roles.create')
-                        <a class="btn btn-success" href="{{ route('roles.create') }}">Nuevo</a>                        
+                        <a class="btn btn-success" href="{{ route('roles.create') }}">Crear</a>                        
                         @endcan
 
                             <table class="table table-striped mt-2 display dataTable table-hover">
