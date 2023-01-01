@@ -26,7 +26,6 @@ class FuncionarioController extends Controller
         $this->middleware('can:funcionarios.create')->only('create');
         $this->middleware('can:funcionarios.show')->only('show');
         $this->middleware('can:funcionarios.edit')->only('edit', 'update');
-        $this->header_log = 'Módulo de Funcionarios';
     }
     /**
      * Display a listing of the resource.

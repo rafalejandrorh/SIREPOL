@@ -19,7 +19,6 @@ use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\SessionsController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 /*
@@ -51,8 +50,6 @@ Route::resource('sessions', SessionsController::class)->middleware('auth');
 
 Route::resource('messages', MessagesController::class)->middleware('auth');
 
-Route::resource('configuraciones', ConfiguracionesController::class)->middleware('auth');
-
 Route::get('/', [LoginController::class, 'index']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
@@ -78,6 +75,20 @@ Route::get('/trazas/users/{user}', [App\Http\Controllers\TrazasController::class
 Route::get('/trazas/roles/{role}', [App\Http\Controllers\TrazasController::class, 'show_roles'])->name('traza_roles.show')->middleware('auth');
 
 Route::get('/trazas/sesiones/{sesion}', [App\Http\Controllers\TrazasController::class, 'show_sesiones'])->name('traza_sesiones.show')->middleware('auth');
+
+Route::get('/configuraciones', [App\Http\Controllers\ConfiguracionesController::class, 'index'])->name('configuraciones.index')->middleware('auth');
+
+Route::get('/configuraciones/permisos', [App\Http\Controllers\ConfiguracionesController::class, 'index_permisos'])->name('permisos.index')->middleware('auth');
+
+Route::get('/configuraciones/permisos/create', [App\Http\Controllers\ConfiguracionesController::class, 'create_permisos'])->name('permisos.create')->middleware('auth');
+
+Route::get('/configuraciones/permisos/{permiso}/edit', [ConfiguracionesController::class, 'edit_permisos'])->name('permisos.edit')->middleware('auth');
+
+Route::get('/configuraciones/rutas/almacenamiento', [App\Http\Controllers\ConfiguracionesController::class, 'index_rutasAlmacenamiento'])->name('rutasAlmacenamiento.index')->middleware('auth');
+
+Route::get('/configuraciones/rutas/almacenamiento/create', [App\Http\Controllers\ConfiguracionesController::class, 'create_rutasAlmacenamiento'])->name('rutasAlmacenamiento.create')->middleware('auth');
+
+Route::get('/configuraciones/rutas/almacenamiento/{permiso}/edit', [ConfiguracionesController::class, 'edit_rutasAlmacenamiento'])->name('rutasAlmacenamiento.edit')->middleware('auth');
 
 Route::get('/resenna/pdf/{resenna}', [App\Http\Controllers\ResennaController::class, 'pdf'])->name('resenna.pdf')->middleware('auth');
 
@@ -111,13 +122,25 @@ Route::patch('/trazas/funcionarios/{funcionario}', [App\Http\Controllers\TrazasC
 
 Route::patch('/trazas/users/{user}', [App\Http\Controllers\TrazasController::class, 'update_roles'])->name('traza_user.update')->middleware('auth');
 
-Route::patch('/trazas/roles{role}', [App\Http\Controllers\TrazasController::class, 'update_roles'])->name('traza_roles.update')->middleware('auth');
+Route::patch('/trazas/roles/{role}', [App\Http\Controllers\TrazasController::class, 'update_roles'])->name('traza_roles.update')->middleware('auth');
 
 Route::patch('/reset{user}', [UserController::class, 'ResetPassword'])->name('users.reset')->middleware('auth');
 
 Route::patch('/user/{user}/status', [UserController::class, 'update_status'])->name('users.update_status')->middleware('auth');
 
+Route::patch('/configuraciones/permisos/{permiso}', [ConfiguracionesController::class, 'update_permisos'])->name('permisos.update')->middleware('auth');
+
+Route::patch('/configuraciones/rutas/almacenamiento/{almacenamiento}', [ConfiguracionesController::class, 'update_rutasAlmacenamiento'])->name('rutasAlmacenamiento.update')->middleware('auth');
+
 Route::post('logout/{id}', [LoginController::class, 'logout'])->middleware('auth');
+
+Route::post('/configuraciones/permisos', [ConfiguracionesController::class, 'store_permisos'])->name('permisos.store')->middleware('auth');
+
+Route::post('/configuraciones/rutas/almacenamiento', [ConfiguracionesController::class, 'store_rutasAlmacenamiento'])->name('rutasAlmacenamiento.store')->middleware('auth');
+
+Route::delete('/configuraciones/permisos/{permiso}', [ConfiguracionesController::class, 'destroy_permisos'])->name('permisos.destroy')->middleware('auth');
+
+Route::delete('/configuraciones/rutas/almacenamiento/{almacenamiento}', [ConfiguracionesController::class, 'destroy_rutasAlmacenamiento'])->name('rutasAlmacenamiento.destroy')->middleware('auth');
 
 // Ruta para colocar buscador en tiempo real 
 // Route::get('resenna/search/{cedula}', [ResennaController::class, 'search'])->name('resenna.search')->middleware('auth');
