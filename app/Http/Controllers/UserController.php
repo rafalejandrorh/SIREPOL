@@ -167,8 +167,7 @@ class UserController extends Controller
             $usuario->password = $request['password'];
             $usuario->status = 'true';
             $usuario->save();
-
-            $usuario->assignRole($request['roles']);
+            $usuario->roles()->sync($request['roles']);
 
             $roles = Role::Where('id', $request['roles'])->get();
             $rol = $roles[0]['name'];

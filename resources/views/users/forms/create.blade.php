@@ -14,7 +14,7 @@
     <div class="col-xs-12 col-sm-12 col-md-4">
         <div class="form-group">
             <label for="">Roles</label>
-            {!! Form::select('roles', $roles,[], array('class' => 'form-control select2', 'required' => 'required', 'placeholder'=>'Seleccione')) !!}
+            {!! Form::select('roles[]', $roles, [], array('class' => 'form-control select2', 'required' => 'required', 'placeholder' => 'Seleccione', 'multiple' => 'multiple')) !!}
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-3">
