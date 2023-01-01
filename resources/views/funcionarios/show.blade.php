@@ -25,7 +25,7 @@
 
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
-                                <a href="{{ route('funcionarios.index') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
+                                <a href="{{ url()->previous() }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
                             </div>
                         </div>
                         <br>

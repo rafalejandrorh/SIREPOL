@@ -14,7 +14,7 @@
    
                             <div class="row">
                                 <div class="col-xs-10 col-sm-10 col-md-10">
-                                    <a href="{{ route('resenna.index') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
+                                    <a href="{{ url()->previous() }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
                                 </div>
                             </div>
                             <br>

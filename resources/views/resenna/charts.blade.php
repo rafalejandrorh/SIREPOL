@@ -12,7 +12,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-xs-10 col-sm-10 col-md-10">
-                                    <a href="{{ route('resenna.index') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
+                                    <a href="{{ url()->previous() }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
                                 </div>
                             
                                 <div class="col-xs-2 col-sm-2 col-md-2"> 
