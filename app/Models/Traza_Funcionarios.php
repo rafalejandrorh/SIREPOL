@@ -9,7 +9,7 @@ class Traza_Funcionarios extends Model
 {
     use HasFactory;
 
-    protected $table = 'trazas_funcionarios';
+    protected $table = 'traza_funcionarios';
 
     protected $fillable = ['id_user','id_accion', 'valores_modificados'];
 

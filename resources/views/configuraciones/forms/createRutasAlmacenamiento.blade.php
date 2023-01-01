@@ -1,20 +1,27 @@
     {!! Form::open(array('route' => 'rutasAlmacenamiento.store','method' => 'POST')) !!}
         <div class="row">
-            <div class="col-xs-4 col-sm-4 col-md-4">
+            <div class="col-xs-3 col-sm-3 col-md-3">
                 <div class="form-group">
                     <label for="name">Ruta</label>
-                    {!! Form::text('ruta', null, array('class' => 'form-control', 'placeholder' => 'Ejm: storage/imagenes/resennados', 'required' => 'required')) !!}
+                    {!! Form::text('ruta', null, array('class' => 'form-control', 'placeholder' => 'Ejm: imagenes/resennados', 'required' => 'required')) !!}
                 </div>
             </div>
 
-            <div class="col-xs-4 col-sm-4 col-md-4">
+            <div class="col-xs-3 col-sm-3 col-md-3">
                 <div class="form-group">
                     <label for="email">Tipos de Archivo</label>
                     {!! Form::text('tipo_archivo', null, array('class' => 'form-control', 'placeholder' => 'Ejm: jpeg, png, jpg', 'required' => 'required')) !!}
                 </div>
             </div>
 
-            <div class="col-xs-4 col-sm-4 col-md-4">
+            <div class="col-xs-3 col-sm-3 col-md-3">
+                <div class="form-group">
+                    <label for="email">Nomenclatura</label>
+                    {!! Form::text('nomenclatura', null, array('class' => 'form-control', 'placeholder' => 'Ejm: resenna.resennado.imagen', 'required' => 'required')) !!}
+                </div>
+            </div>
+
+            <div class="col-xs-3 col-sm-3 col-md-3">
                 <div class="form-group">
                     <label for="email">Módulo</label>
                     {!! Form::text('modulo', null, array('class' => 'form-control', 'placeholder' => 'Ejm: Reseñas', 'required' => 'required')) !!}

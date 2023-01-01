@@ -103,13 +103,14 @@ class ConfiguracionesController extends Controller
         $rutasAlmacenamiento = new Rutas_Almacenamiento();
         $rutasAlmacenamiento->ruta = $request->ruta;
         $rutasAlmacenamiento->tipo_archivo = $request->tipo_archivo;
+        $rutasAlmacenamiento->nomenclatura = $request->nomenclatura;
         $rutasAlmacenamiento->modulo = $request->modulo;
         $rutasAlmacenamiento->descripcion = $request->descripcion;
         $rutasAlmacenamiento->save();
 
         // $id_user = Auth::user()->id;
         // $id_Accion = 1; //Registro
-        // $valores_modificados = 'Datos de la Ruta: '.$request->ruta.' || .'.$request->tipo_archivo.' || '.$request->modulo.' || '.$request->descripcion;
+        // $valores_modificados = 'Datos de la Ruta: '.$request->ruta.' || .'.$request->tipo_archivo.' || .'.$request->nomenclatura.' || '.$request->modulo.' || '.$request->descripcion;
         // event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_RutasAlmacenamiento'));
 
         Alert()->success('Ruta de Almacenamiento registrada Satisfactoriamente');
@@ -176,13 +177,14 @@ class ConfiguracionesController extends Controller
         $rutasAlmacenamiento->update([
             'ruta' => $request->ruta,
             'tipo_archivo' => $request->tipo_archivo,
+            'nomenclatura' => $request->nomenclatura,
             'modulo' => $request->modulo,
             'descripcion' => $request->descripcion
         ]);
 
         // $id_user = Auth::user()->id;
         // $id_Accion = 2; //Actualización
-        // $valores_modificados = 'Datos de la Ruta: '.$request->ruta.' || .'.$request->tipo_archivo.' || '.$request->modulo.' || '.$request->descripcion;
+        // $valores_modificados = 'Datos de la Ruta: '.$request->ruta.' || .'.$request->tipo_archivo.' || .'.$request->nomenclatura.' || '.$request->modulo.' || '.$request->descripcion;
         // event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_RutasAlmacenamiento'));
 
         Alert()->success('Ruta de Almacenamiento Actualizada Satisfactoriamente');
@@ -221,7 +223,7 @@ class ConfiguracionesController extends Controller
         // $rutasAlmacenamiento = Rutas_Almacenamiento::where('id', $id)->first();
         // $id_user = Auth::user()->id;
         // $id_Accion = 3; //Eliminación
-        // $valores_modificados = 'Datos de la Ruta: '.$rutasAlmacenamiento['ruta'].' || '.$rutasAlmacenamiento['tipo_archivo'].' || '.$rutasAlmacenamiento['modulo'].' || '.$rutasAlmacenamiento['descripcion'];
+        // $valores_modificados = 'Datos de la Ruta: '.$rutasAlmacenamiento['ruta'].' || '.$rutasAlmacenamiento['tipo_archivo'].' || '.$rutasAlmacenamiento['nomenclatura'].' || '.$rutasAlmacenamiento['modulo'].' || '.$rutasAlmacenamiento['descripcion'];
         // event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_RutasAlmacenamiento'));
         
         $rutasAlmacenamiento = Rutas_Almacenamiento::find($id, ['id']);

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('trazas_api', function (Blueprint $table) {
+        Schema::create('traza_api', function (Blueprint $table) {
             $table->id();
             $table->string('ip');
             $table->string('mac');

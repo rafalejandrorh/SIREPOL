@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('ruta');
             $table->string('tipo_archivo');
+            $table->string('nomenclatura');
             $table->string('modulo');
             $table->string('descripcion');
             $table->timestamps();

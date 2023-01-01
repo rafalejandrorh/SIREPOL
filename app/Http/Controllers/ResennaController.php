@@ -18,6 +18,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Events\NotificationResennaEvent;
 use App\Events\TrazasEvent;
+use App\Models\Rutas_Almacenamiento;
 use Carbon\Carbon;
 use Cornford\Googlmapper\Facades\MapperFacade as Mapper;
 
@@ -508,20 +509,22 @@ class ResennaController extends Controller
         $resenna->save();
         $id_resenna = $resenna->id;
 
+        $ruta = Rutas_Almacenamiento::where('nomenclatura', 'resenna.resennado.imagen')->select('ruta')->first();
         if($request->hasFile('url_foto')) {
-            $imagen = $request->file('url_foto')->store('imagenes/resennados/'.$id_person.'-'.$request->cedula);
+            $imagen = $request->file('url_foto')->store($ruta['ruta'].date('Y').date('m').date('d').'/'.$id_person.'-'.$request->cedula);
         }else{
             if($request->id_genero == '1'){
-                $imagen = 'imagenes/resennados/masculino.png';
+                $imagen = $ruta['ruta'].'generico/masculino.png';
             }
             if($request->id_genero == '2'){
-                $imagen = 'imagenes/resennados/femenino.png';
+                $imagen = $ruta['ruta'].'generico/femenino.png';
             }
             if($request->id_genero == null){
-                $imagen = 'imagenes/resennados/desconocido.png';
+                $imagen = $ruta['ruta'].'generico/desconocido.png';
             }
         }
         $resenna = Resenna::find($id_resenna, ['id']);
+        
         $resenna->update(['url_foto' => 'storage/'.$imagen]);
 
         $cedula = isset($request->cedula) ? $request->cedula : $obtener_persona[0]['cedula'];
@@ -628,13 +631,17 @@ class ResennaController extends Controller
             ]); 
         }
 
+        $municipio_nacimiento = isset($resenna->resennado->municipio_nacimiento->valor) ? $resenna->resennado->municipio_nacimiento->valor : 'No posee Información sobre su Estado de Nacimiento';
+        $estado_nacimiento = isset($resenna->resennado->estado_nacimiento->valor) ? $resenna->resennado->estado_nacimiento->valor : 'No posee Información sobre su Municipio de Nacimiento';
+
+
         $QR = QrCode::size(150)->style('round')->generate('Resenna Policial. Fecha: '.date('d/m/Y', strtotime($resenna->fecha_resenna)).'. Hace '.$resenna->fecha_resenna->diff(date('Y-m-d'))->days.' dias. Estatus de Documentacion: '.
         $resenna->resennado->documentacion->valor.', Cedula: '.$resenna->resennado->letra_cedula.$resenna->resennado->cedula.
         ', Nombre Completo: '.$resenna->resennado->primer_nombre.' '.$resenna->resennado->segundo_nombre.', '.$resenna->resennado->primer_apellido.' '.
         $resenna->resennado->segundo_apellido.', Fecha de Nacimiento: '.date('d/m/Y', strtotime($resenna->resennado->fecha_nacimiento)).', Edad: '.$edad.', Genero: '.
         $resenna->resennado->genero->valor.', Tez: '.$resenna->tez->valor.', Contextura: '.$resenna->contextura->valor.', Estado Civil: '.
-        $resenna->estado_civil->valor.', Estado de Nacimiento: '.$resenna->resennado->estado_nacimiento->valor.', Municipio de Nacimiento: '.
-        $resenna->resennado->municipio_nacimiento->valor.', Direccion: '.$resenna->direccion.', Profesion: '.$resenna->profesion->valor.
+        $resenna->estado_civil->valor.', Estado de Nacimiento: '.$estado_nacimiento.', Municipio de Nacimiento: '.
+        $municipio_nacimiento.', Direccion: '.$resenna->direccion.', Profesion: '.$resenna->profesion->valor.
         ', Motivo de Resenna: '.$resenna->motivo_resenna->valor.', Coordenadas de Aprehension: '.$resenna->coordenadas_aprehension.', Funcionario Aprehensor: '.
         $resenna->funcionario_aprehensor->jerarquia->valor.'. '.$resenna->funcionario_aprehensor->person->primer_nombre.' '.$resenna->funcionario_aprehensor->person->primer_apellido.
         ', Funcionario que Resenna: '.$resenna->funcionario_resenna->jerarquia->valor.'. '.$resenna->funcionario_resenna->person->primer_nombre.' '.$resenna->funcionario_resenna->person->primer_apellido);
@@ -690,8 +697,9 @@ class ResennaController extends Controller
             $id_person = $per['id'];
         }
 
+        $ruta = Rutas_Almacenamiento::where('nomenclatura', 'resenna.resennado.imagen')->select('ruta')->first();
         if($request->hasFile('url_foto')) {
-            $imagen = $request->file('url_foto')->store('imagenes/resennados/'.$id_person.'-'.$request->cedula);
+            $imagen = $request->file('url_foto')->store($ruta['ruta'].date('Y').date('m').date('d').'/'.$id_person.'-'.$request->cedula);
             
         }else{
             $imagen = null;
@@ -700,6 +708,7 @@ class ResennaController extends Controller
         if($imagen != null)
         {
             $resenna = Resenna::find($id, ['id']);
+            
             $resenna->update(['url_foto' => 'storage/'.$imagen]);
         }
 

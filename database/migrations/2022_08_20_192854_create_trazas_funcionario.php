@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('trazas_funcionarios', function (Blueprint $table) {
+        Schema::create('traza_funcionarios', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('id_user');
             $table->unsignedInteger('id_accion');

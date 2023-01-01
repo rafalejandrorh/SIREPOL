@@ -19,6 +19,7 @@
                                             <tr role="row">
                                                 <th>Ruta</th>
                                                 <th>Tipos de Archivo</th>
+                                                <th>Nomenclatura</th>
                                                 <th>Módulo</th>
                                                 <th>Descripción</th>
                                                 <th>Acciones</th>
@@ -28,6 +29,7 @@
                                             <tr role="row" class="odd">
                                                 <td class="sorting_1">{{$almacenamiento->ruta}}</td>
                                                 <td class="sorting_1">{{$almacenamiento->tipo_archivo}}</td>
+                                                <td class="sorting_1">{{$almacenamiento->nomenclatura}}</td>
                                                 <td class="sorting_1">{{$almacenamiento->modulo}}</td>
                                                 <td class="sorting_1">{{$almacenamiento->descripcion}}</td>
                                                 <td align="center">

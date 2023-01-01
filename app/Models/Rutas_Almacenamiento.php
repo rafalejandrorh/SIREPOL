@@ -10,6 +10,6 @@ class Rutas_Almacenamiento extends Model
     use HasFactory;
 
     protected $table = 'rutas_almacenamiento';
-    protected $fillable = ['ruta', 'tipo_archivo', 'modulo', 'descripcion'];
+    protected $fillable = ['ruta', 'tipo_archivo', 'modulo', 'descripcion', 'nomenclatura'];
 
 }

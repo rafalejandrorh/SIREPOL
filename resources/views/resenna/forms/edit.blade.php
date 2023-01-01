@@ -88,13 +88,13 @@
         <div class="col-xs-3 col-sm-3 col-md-3">
             <div class="form-group">
                 <label for="email">Estado de Nacimiento</label>
-                {!! Form::select('id_estado_nacimiento', $estados['estados'], $resenna->resennado->id_estado_nacimiento, array('class' => 'form-control select2', 'placeholder' => 'Seleccione', 'id'=>'estados2')) !!}
+                {!! Form::select('id_estado_nacimiento', $estados['estados'], isset($resenna->resennado->id_estado_nacimiento) ? $resenna->resennado->id_estado_nacimiento : 'N/A', array('class' => 'form-control select2', 'placeholder' => 'Seleccione', 'id'=>'estados2')) !!}
             </div>
         </div>
         <div class="col-xs-3 col-sm-3 col-md-3">
             <div class="form-group">
                 <label for="email">Municipio de Nacimiento</label>
-                {!! Form::select('id_municipio_nacimiento', $estados['municipios'], $resenna->resennado->id_municipio_nacimiento, array('class' => 'form-control select2', 'placeholder'=>'Seleccione', 
+                {!! Form::select('id_municipio_nacimiento', $estados['municipios'], isset($resenna->resennado->id_municipio_nacimiento) ? $resenna->resennado->id_municipio_nacimiento : 'N/A', array('class' => 'form-control select2', 'placeholder'=>'Seleccione', 
                 'id'=>'municipios2','title'=>'Municipio', 'onchange'=>"cargarCombo(109,this.value,'#parroquias')")) !!}
             </div>
         </div>

@@ -107,13 +107,13 @@
 <div class="col-xs-6 col-sm-6 col-md-6">
     <div class="form-group">
         <label for="email">Estado de Nacimiento</label>
-        {!! Form::text('estado_nacimiento', $resenna->resennado->estado_nacimiento->valor, array('class' => 'form-control', 'readonly')) !!}
+        {!! Form::text('estado_nacimiento', isset($resenna->resennado->estado_nacimiento->valor) ? $resenna->resennado->estado_nacimiento->valor : 'N/A', array('class' => 'form-control', 'readonly')) !!}
     </div>
 </div>
 <div class="col-xs-6 col-sm-6 col-md-6">
     <div class="form-group">
         <label for="email">Municipio de Nacimiento</label>
-        {!! Form::text('municipio_nacimiento', $resenna->resennado->municipio_nacimiento->valor, array('class' => 'form-control', 'readonly')) !!}
+        {!! Form::text('municipio_nacimiento', isset($resenna->resennado->municipio_nacimiento->valor) ? $resenna->resennado->municipio_nacimiento->valor : 'N/A', array('class' => 'form-control', 'readonly')) !!}
     </div>
 </div>
 <div class="col-xs-6 col-sm-6 col-md-6">
