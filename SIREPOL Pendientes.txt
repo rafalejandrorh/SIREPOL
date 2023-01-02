@@ -1,13 +1,21 @@
 POR HACER:
 - Revisar si se puede implementar el tipo de grafico circular
+
 - Añadir a nomenclador de Características del Reseñado los Estatus (Con Registros MPPRIJ, SIIPOL, SIREPOL, SIAES; Detenido,
 En proceso de Investigación, Occiso, por Determinar, Sin Registros, Solicitado (MPPRIJ, CICPC, PNB, FANB))
+- Añadir Estatus en Reseñas 
+
 - Crear nomenclador de Notificaciones de Interpol (Amarilla, Azul, Morada, Naranja, Negra, Roja, Verde)
 - Añadir Notificación de Interpol en Reseñas
-- Añadir Estatus en Reseñas 
+
 - Conseguir Imagen de Genero Desconocido de SIICOC
+
 - Crear Módulo para gestionar información de los nomencladores
 - Crear Sub-Módulos para gestionar Estatus de Funcionario, jerarquía y Organismos de Seguridad
+- Crear Tablas de Trazas de Estatus de Funcionario, Jerarquía y Organismos de Seguridad
+- Crear Trazas de los Sub-Módulos de Estatus de Funcionario, Jerarquía y Organismos de Seguridad
+- Crear Vistas para Trazas de Estatus de Funcionario, Jerarquía y Organismos de Seguridad
+
 - Crear Vistas para Trazas de Permisos y Rutas de Almacenamiento
 
 HACIENDO:
