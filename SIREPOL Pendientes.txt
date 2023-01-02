@@ -1,0 +1,30 @@
+POR HACER:
+- Revisar si se puede implementar el tipo de grafico circular
+- Añadir a nomenclador de Características del Reseñado los Estatus (Con Registros MPPRIJ, SIIPOL, SIREPOL, SIAES; Detenido,
+En proceso de Investigación, Occiso, por Determinar, Sin Registros, Solicitado (MPPRIJ, CICPC, PNB, FANB))
+- Crear nomenclador de Notificaciones de Interpol (Amarilla, Azul, Morada, Naranja, Negra, Roja, Verde)
+- Añadir Notificación de Interpol en Reseñas
+- Añadir Estatus en Reseñas 
+- Conseguir Imagen de Genero Desconocido de SIICOC
+- Crear Módulo para gestionar información de los nomencladores
+- Crear Sub-Módulos para gestionar Estatus de Funcionario, jerarquía y Organismos de Seguridad
+- Crear Vistas para Trazas de Permisos y Rutas de Almacenamiento
+
+HACIENDO:
+
+
+LISTO:
+- Crear Botón para cerrar sesión a todos los Usuarios
+- Crear Permisos para los gráficos y la georeferenciación de aprehensiones
+- Crear Sub-Módulo en Configuración del Sistema para crear Permisos nuevos
+- Crear tabla para almacenar rutas del proyecto donde se almacenarán las imagenes de reseñas,  funcionarios, etc 
+  (id, ruta, tipo de archivo, Módulo al que pertenece, descripcion)
+- Crear Sub-Módulo de configuración del sistema para modificar rutas de almacenamiento de imagenes
+- Implementar las rutas almacenadas en BBDD al momento de guardar imágenes en Reseñas
+- Permitir que un usuario pueda tener varios roles, para flexibilizar los permisos
+- Separar las tablas en la BBDD por Esquemas
+- Crear nomenclador de Organismos de Seguridad
+- Crear Select Dependiente de Jerarquía según el Organismo de Seguridad
+- Añadir Organismos (Institución/Despacho) en Funcionarios 
+- Crear Tablas de Trazas de Permisos y Rutas de Almacenamiento
+- Crear Trazas de los Sub-Módulos de Permisos y Rutas de Almacenamiento (solo falta adicionar al Event las acciones)
