@@ -14,6 +14,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TrazasController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GeografiaVenezuelaController;
+use App\Http\Controllers\JerarquiaController;
 use App\Http\Controllers\MapsGeoreferenceController;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\NotificationsController;
@@ -109,6 +110,8 @@ Route::get('/password/forgot', [ForgotPasswordController::class, 'index'])->name
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('logs')->middleware('auth');
 
 Route::get('/abstract_messages', [MessagesController::class, 'abstract'])->name('messages.abstract')->middleware('auth');
+
+Route::get('/jerarquia/{jerarquia}', [JerarquiaController::class, 'getJerarquiaByOrganismo'])->name('jerarquia.select')->middleware('auth');
 
 Route::get('logout/{id}', [LoginController::class, 'logout'])->middleware('auth');
 

@@ -20,10 +20,12 @@ class CreateFuncionariosTable extends Migration
             $table->string('telefono', 50)->nullable();
             $table->unsignedInteger('id_person');
             $table->unsignedInteger('id_estatus');
+            $table->unsignedInteger('id_organismo');
 
             $table->foreign('id_person')->references('id')->on('persons'); 
             $table->foreign('id_jerarquia')->references('id')->on('nomenclador.jerarquia'); 
             $table->foreign('id_estatus')->references('id')->on('nomenclador.estatus_funcionario'); 
+            $table->foreign('id_organismo')->references('id')->on('nomenclador.organismos_seguridad');
             $table->timestamps();
         });
     }

@@ -11,7 +11,7 @@ class Funcionario extends Model
 
     protected $table = 'funcionarios';
 
-    protected $fillable = ['credencial','id_jerarquia', 'id_estatus', 'telefono', 'id_person'];
+    protected $fillable = ['credencial','id_jerarquia', 'id_estatus', 'telefono', 'id_person', 'id_organismo'];
 
     public function person()
     {
@@ -31,6 +31,11 @@ class Funcionario extends Model
     public function estatus()
     {
         return $this->belongsto(Estatus_Funcionario::class, 'id_estatus');
+    }
+
+    public function organismo()
+    {
+        return $this->belongsto(Organismos_Seguridad::class, 'id_organismo');
     }
 
     static function returnValidations(){

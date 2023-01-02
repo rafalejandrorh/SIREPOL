@@ -17,8 +17,10 @@ class CreateJerarquiaTable extends Migration
 
             $table->bigIncrements('id');
             $table->string('valor', 200);
-             
+            $table->unsignedInteger('id_organismo');
             $table->timestamps();
+
+            $table->foreign('id_organismo')->references('id')->on('nomenclador.organismos_seguridad'); 
         });
     }
 

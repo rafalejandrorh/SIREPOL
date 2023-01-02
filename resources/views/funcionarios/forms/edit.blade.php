@@ -60,16 +60,22 @@
                     {!! Form::text('telefono', $funcionario->telefono, array('class' => 'form-control numero')) !!}
                 </div>
             </div>
-            <div class="col-xs-3 col-sm-3 col-md-3">
+            <div class="col-xs-6 col-sm-6 col-md-6">
                 <div class="form-group">
-                    <label for="email">Jerarquía</label>
-                    {!! Form::select('id_jerarquia', $jerarquia, $funcionario->id_jerarquia, array('class' => 'form-control select2')) !!}
+                    <label for="email">Organismo</label>
+                    {!! Form::select('id_organismo', $organismo, $organismoPredeterminado->id, array('class' => 'form-control select2', 'placeholder'=>'Seleccione', 'required', 'id' => 'organismo')) !!}
                 </div>
             </div>
             <div class="col-xs-3 col-sm-3 col-md-3">
                 <div class="form-group">
                     <label for="email">Estatus Laboral</label>
                     {!! Form::select('id_estatus', $estatus, $funcionario->id_estatus, array('class' => 'form-control select2', 'required' => 'required')) !!}
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-4">
+                <div class="form-group">
+                    <label for="email">Jerarquía</label>
+                    {!! Form::select('id_jerarquia', $jerarquia, $funcionario->id_jerarquia, array('class' => 'form-control select2', 'id' => 'jerarquia')) !!}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">

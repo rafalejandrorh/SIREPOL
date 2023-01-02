@@ -16,6 +16,7 @@ use App\Models\Funcionario;
 use Alert;
 use App\Events\LogsEvent;
 use App\Events\TrazasEvent;
+use App\Models\Organismos_Seguridad;
 use App\Models\Traza_Funcionarios;
 
 class FuncionarioController extends Controller
@@ -110,10 +111,12 @@ class FuncionarioController extends Controller
     public function create()
     {
         $genero = Genero::pluck('valor', 'id')->all();
-        $jerarquia = Jerarquia::pluck('valor', 'id')->all();
+        $jerarquia = Jerarquia::where('id_organismo', 9)->pluck('valor', 'id')->all();
+        $organismo = Organismos_Seguridad::pluck('nombre', 'id')->all();
+        $organismoPredeterminado = Organismos_Seguridad::where('id', 9)->select('id')->first();
         $estatus = Estatus_Funcionario::pluck('valor', 'id')->all();
         $estado = Geografia::Where('id_padre', 107)->pluck('valor', 'id')->all();
-        return view('funcionarios.create',compact('genero', 'jerarquia', 'estatus', 'estado'));
+        return view('funcionarios.create',compact('genero', 'jerarquia', 'organismo', 'organismoPredeterminado', 'estatus', 'estado'));
     }
 
     /**
@@ -168,6 +171,7 @@ class FuncionarioController extends Controller
             $funcionario->telefono = $request['telefono'];
             $funcionario->id_person = $id_person;
             $funcionario->id_estatus = $request['id_estatus'];
+            $funcionario->id_organismo = $request['id_organismo'];
             $funcionario->save();
             $id_funcionario = $funcionario->id;
 
@@ -213,6 +217,7 @@ class FuncionarioController extends Controller
             $funcionario->telefono = $request['telefono'];
             $funcionario->id_person = $obtener_persona[0]['id'];
             $funcionario->id_estatus = $request['id_estatus'];
+            $funcionario->id_organismo = $request['id_organismo'];
             $funcionario->save();
 
             $jerarquia = Jerarquia::get();
@@ -277,11 +282,13 @@ class FuncionarioController extends Controller
     public function edit(Funcionario $funcionario)
     {
         $genero = Genero::pluck('valor', 'id')->all();
-        $jerarquia = Jerarquia::pluck('valor', 'id')->all();
+        $jerarquia = Jerarquia::Where('id_organismo', $funcionario->id_organismo)->pluck('valor', 'id')->all();
+        $organismo = Organismos_Seguridad::pluck('nombre', 'id')->all();
+        $organismoPredeterminado = Organismos_Seguridad::where('id', $funcionario->id_organismo)->select('id')->first();
         $estatus = Estatus_Funcionario::pluck('valor', 'id')->all();
         $estado = Geografia::Where('id_padre', 107)->pluck('valor', 'id')->all();
 
-        return view('funcionarios.edit', compact('funcionario', 'genero', 'jerarquia', 'estatus', 'estado'));
+        return view('funcionarios.edit', compact('funcionario', 'genero', 'jerarquia', 'organismo', 'organismoPredeterminado', 'estatus', 'estado'));
     }
 
     /**
@@ -304,7 +311,7 @@ class FuncionarioController extends Controller
         }
         $personas = Person::Find($id_person, ['id']);
         $personas->update($request->all('primer_nombre', 'segundo_nombre', 'primer_apellido',
-        'segundo_apellido', 'id_genero', 'fecha_nacimiento', 'id_estado_nacimiento'));
+        'segundo_apellido', 'id_genero', 'fecha_nacimiento', 'id_estado_nacimiento', 'id_organismo'));
         
         $geografia = Geografia::get();
         $jerarquia = Jerarquia::get();
