@@ -11,6 +11,13 @@
                     <div class="card">
                         <div class="card-body">
 
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <a href="{{ url()->previous() }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
+                                </div>
+                            </div>
+                            <br>
+
                             @can('permisos.create')
                             <a class="btn btn-success" href="{{ route('permisos.create') }}">Registrar</a>                        
                             @endcan

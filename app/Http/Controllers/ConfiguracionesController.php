@@ -16,6 +16,11 @@ class ConfiguracionesController extends Controller
         $this->middleware('can:permisos.create')->only('create_permisos');
         $this->middleware('can:permisos.edit')->only('edit_permisos', 'update_permisos');
         $this->middleware('can:permisos.destroy')->only('destroy_permisos');
+
+        $this->middleware('can:rutasAlmacenamiento.index')->only('index_rutasAlmacenamiento');
+        $this->middleware('can:rutasAlmacenamiento.create')->only('create_rutasAlmacenamiento');
+        $this->middleware('can:rutasAlmacenamiento.edit')->only('edit_rutasAlmacenamiento', 'update_rutasAlmacenamiento');
+        $this->middleware('can:rutasAlmacenamiento.destroy')->only('destroy_rutasAlmacenamiento');
     }
     /**
      * Display a listing of the resource.
@@ -83,10 +88,10 @@ class ConfiguracionesController extends Controller
         $permissions->guard_name = $request->tipo_permiso;
         $permissions->save();
 
-        // $id_user = Auth::user()->id;
-        // $id_Accion = 1; //Registro
-        // $valores_modificados = 'Datos de Permiso: '.$request->nomenclatura.' || .'.$request->descripcion.' || '.$request->tipo_permiso;
-        // event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Permisos'));
+        $id_user = Auth::user()->id;
+        $id_Accion = 1; //Registro
+        $valores_modificados = 'Datos de Permiso: '.$request->nomenclatura.' || .'.$request->descripcion.' || '.$request->tipo_permiso;
+        event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Permisos'));
 
         Alert()->success('Permiso registrado Satisfactoriamente');
         return redirect()->route('permisos.index');
@@ -108,10 +113,10 @@ class ConfiguracionesController extends Controller
         $rutasAlmacenamiento->descripcion = $request->descripcion;
         $rutasAlmacenamiento->save();
 
-        // $id_user = Auth::user()->id;
-        // $id_Accion = 1; //Registro
-        // $valores_modificados = 'Datos de la Ruta: '.$request->ruta.' || .'.$request->tipo_archivo.' || .'.$request->nomenclatura.' || '.$request->modulo.' || '.$request->descripcion;
-        // event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_RutasAlmacenamiento'));
+        $id_user = Auth::user()->id;
+        $id_Accion = 1; //Registro
+        $valores_modificados = 'Datos de la Ruta: '.$request->ruta.' || .'.$request->tipo_archivo.' || .'.$request->nomenclatura.' || '.$request->modulo.' || '.$request->descripcion;
+        event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_RutasAlmacenamiento'));
 
         Alert()->success('Ruta de Almacenamiento registrada Satisfactoriamente');
         return redirect()->route('rutasAlmacenamiento.index');
@@ -155,10 +160,10 @@ class ConfiguracionesController extends Controller
             'guard_name' => $request->tipo_permiso
         ]);
 
-        // $id_user = Auth::user()->id;
-        // $id_Accion = 2; //Actualización
-        // $valores_modificados = 'Datos de Permiso: '.$request->nomenclatura.' || '.$request->descripcion.' || '.$request->tipo_permiso;
-        // event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Permisos'));
+        $id_user = Auth::user()->id;
+        $id_Accion = 2; //Actualización
+        $valores_modificados = 'Datos de Permiso: '.$request->nomenclatura.' || '.$request->descripcion.' || '.$request->tipo_permiso;
+        event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Permisos'));
 
         Alert()->success('Permiso Actualizado Satisfactoriamente');
         return redirect()->route('permisos.index');
@@ -182,10 +187,10 @@ class ConfiguracionesController extends Controller
             'descripcion' => $request->descripcion
         ]);
 
-        // $id_user = Auth::user()->id;
-        // $id_Accion = 2; //Actualización
-        // $valores_modificados = 'Datos de la Ruta: '.$request->ruta.' || .'.$request->tipo_archivo.' || .'.$request->nomenclatura.' || '.$request->modulo.' || '.$request->descripcion;
-        // event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_RutasAlmacenamiento'));
+        $id_user = Auth::user()->id;
+        $id_Accion = 2; //Actualización
+        $valores_modificados = 'Datos de la Ruta: '.$request->ruta.' || .'.$request->tipo_archivo.' || .'.$request->nomenclatura.' || '.$request->modulo.' || '.$request->descripcion;
+        event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_RutasAlmacenamiento'));
 
         Alert()->success('Ruta de Almacenamiento Actualizada Satisfactoriamente');
         return redirect()->route('rutasAlmacenamiento.index');
@@ -199,11 +204,11 @@ class ConfiguracionesController extends Controller
      */
     public function destroy_permisos($id)
     {
-        // $permissions = Permissions::where('id', $id)->first();
-        // $id_user = Auth::user()->id;
-        // $id_Accion = 3; //Eliminación
-        // $valores_modificados = 'Datos de Permiso: '.$permissions['name'].' || '.$permissions['description'].' || '.$permissions['guard_name'];
-        // event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Permisos'));
+        $permissions = Permissions::where('id', $id)->first();
+        $id_user = Auth::user()->id;
+        $id_Accion = 3; //Eliminación
+        $valores_modificados = 'Datos de Permiso: '.$permissions['name'].' || '.$permissions['description'].' || '.$permissions['guard_name'];
+        event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Permisos'));
         
         $permissions = Permissions::find($id, ['id']);
         $permissions->delete();
@@ -220,11 +225,11 @@ class ConfiguracionesController extends Controller
      */
     public function destroy_rutasAlmacenamiento($id)
     {
-        // $rutasAlmacenamiento = Rutas_Almacenamiento::where('id', $id)->first();
-        // $id_user = Auth::user()->id;
-        // $id_Accion = 3; //Eliminación
-        // $valores_modificados = 'Datos de la Ruta: '.$rutasAlmacenamiento['ruta'].' || '.$rutasAlmacenamiento['tipo_archivo'].' || '.$rutasAlmacenamiento['nomenclatura'].' || '.$rutasAlmacenamiento['modulo'].' || '.$rutasAlmacenamiento['descripcion'];
-        // event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_RutasAlmacenamiento'));
+        $rutasAlmacenamiento = Rutas_Almacenamiento::where('id', $id)->first();
+        $id_user = Auth::user()->id;
+        $id_Accion = 3; //Eliminación
+        $valores_modificados = 'Datos de la Ruta: '.$rutasAlmacenamiento['ruta'].' || '.$rutasAlmacenamiento['tipo_archivo'].' || '.$rutasAlmacenamiento['nomenclatura'].' || '.$rutasAlmacenamiento['modulo'].' || '.$rutasAlmacenamiento['descripcion'];
+        event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_RutasAlmacenamiento'));
         
         $rutasAlmacenamiento = Rutas_Almacenamiento::find($id, ['id']);
         $rutasAlmacenamiento->delete();

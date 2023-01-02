@@ -3,8 +3,10 @@
 namespace App\Listeners;
 
 use App\Models\Traza_Funcionarios;
+use App\Models\Traza_Permisos;
 use App\Models\Traza_Resenna;
 use App\Models\Traza_Roles;
+use App\Models\Traza_Rutas_Almacenamiento;
 use App\Models\Traza_Sessions;
 use App\Models\Traza_User;
 
@@ -45,6 +47,12 @@ class TrazasListener
                 break;
             case 'Traza_Sessions':
                 Traza_Sessions::Create($data);
+                break;
+            case 'Traza_Permisos':
+                Traza_Permisos::Create($data);
+                break;
+            case 'Traza_RutasAlmacenamiento':
+                Traza_Rutas_Almacenamiento::Create($data);
                 break;
             default:
                 break;

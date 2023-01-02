@@ -10,8 +10,15 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
+                            
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <a href="{{ url()->previous() }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
+                                </div>
+                            </div>
+                            <br>
 
-                            @can('permisos.create')
+                            @can('rutasAlmacenamiento.create')
                             <a class="btn btn-success" href="{{ route('rutasAlmacenamiento.create') }}">Registrar</a>                        
                             @endcan
                                     <table class="table table-striped mt-2 display dataTable table-hover">
@@ -33,10 +40,10 @@
                                                 <td class="sorting_1">{{$almacenamiento->modulo}}</td>
                                                 <td class="sorting_1">{{$almacenamiento->descripcion}}</td>
                                                 <td align="center">
-                                                    @can('permisos.edit')
+                                                    @can('rutasAlmacenamiento.edit')
                                                         <a class="btn btn-primary" href="{{ route('rutasAlmacenamiento.edit', $almacenamiento->id) }}"><i class='fa fa-edit'></i></a>
                                                     @endcan
-                                                    @can('permisos.destroy')
+                                                    @can('rutasAlmacenamiento.destroy')
                                                         {!! Form::open(['method' => 'DELETE', 'route' => ['rutasAlmacenamiento.destroy', $almacenamiento->id], 'style'=>'display:inline', 'class' => 'eliminar']) !!}
                                                             {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
                                                         {!! Form::close() !!}  
