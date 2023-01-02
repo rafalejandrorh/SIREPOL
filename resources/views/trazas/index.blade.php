@@ -113,6 +113,36 @@
                 </div>
             </div>
 
+            <div class="col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <center><a class="btn btn-primary" href="{{ route('traza_permisos.index') }}"><i class='fa fa-lock'> Permisos</i></a></center>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <center><a class="btn btn-primary" href="{{ route('traza_rutasAlmacenamiento.index') }}"><i class='fa fa-server'> Rutas de Almacenamiento</i></a></center>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>

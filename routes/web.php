@@ -67,6 +67,10 @@ Route::get('/trazasRoles', [App\Http\Controllers\TrazasController::class, 'index
 
 Route::get('/trazasSesiones', [App\Http\Controllers\TrazasController::class, 'index_sesiones'])->name('traza_sesiones.index')->middleware('auth');
 
+Route::get('/trazasPermisos', [App\Http\Controllers\TrazasController::class, 'index_permisos'])->name('traza_permisos.index')->middleware('auth');
+
+Route::get('/trazasRutasAlmacenamiento', [App\Http\Controllers\TrazasController::class, 'index_rutas_almacenamiento'])->name('traza_rutasAlmacenamiento.index')->middleware('auth');
+
 Route::get('/trazas/resennas/{resenna}', [App\Http\Controllers\TrazasController::class, 'show_resenna'])->name('traza_resenna.show')->middleware('auth');
 
 Route::get('/trazas/funcionarios/{funcionario}', [App\Http\Controllers\TrazasController::class, 'show_funcionarios'])->name('traza_funcionarios.show')->middleware('auth');
@@ -76,6 +80,10 @@ Route::get('/trazas/users/{user}', [App\Http\Controllers\TrazasController::class
 Route::get('/trazas/roles/{role}', [App\Http\Controllers\TrazasController::class, 'show_roles'])->name('traza_roles.show')->middleware('auth');
 
 Route::get('/trazas/sesiones/{sesion}', [App\Http\Controllers\TrazasController::class, 'show_sesiones'])->name('traza_sesiones.show')->middleware('auth');
+
+Route::get('/trazas/permisos/{permiso}', [App\Http\Controllers\TrazasController::class, 'show_permisos'])->name('traza_permisos.show')->middleware('auth');
+
+Route::get('/trazas/rutas/almacenamiento/{ruta}', [App\Http\Controllers\TrazasController::class, 'show_rutas_almacenamiento'])->name('traza_rutasAlmacenamiento.show')->middleware('auth');
 
 Route::get('/configuraciones', [App\Http\Controllers\ConfiguracionesController::class, 'index'])->name('configuraciones.index')->middleware('auth');
 

@@ -90,7 +90,7 @@ class ConfiguracionesController extends Controller
 
         $id_user = Auth::user()->id;
         $id_Accion = 1; //Registro
-        $valores_modificados = 'Datos de Permiso: '.$request->nomenclatura.' || .'.$request->descripcion.' || '.$request->tipo_permiso;
+        $valores_modificados = 'Datos de Permiso: '.$request->nomenclatura.' || '.$request->descripcion.' || '.$request->tipo_permiso;
         event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Permisos'));
 
         Alert()->success('Permiso registrado Satisfactoriamente');
@@ -115,7 +115,7 @@ class ConfiguracionesController extends Controller
 
         $id_user = Auth::user()->id;
         $id_Accion = 1; //Registro
-        $valores_modificados = 'Datos de la Ruta: '.$request->ruta.' || .'.$request->tipo_archivo.' || .'.$request->nomenclatura.' || '.$request->modulo.' || '.$request->descripcion;
+        $valores_modificados = 'Datos de la Ruta: '.$request->ruta.' || '.$request->tipo_archivo.' || .'.$request->nomenclatura.' || '.$request->modulo.' || '.$request->descripcion;
         event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_RutasAlmacenamiento'));
 
         Alert()->success('Ruta de Almacenamiento registrada Satisfactoriamente');
@@ -189,7 +189,7 @@ class ConfiguracionesController extends Controller
 
         $id_user = Auth::user()->id;
         $id_Accion = 2; //Actualización
-        $valores_modificados = 'Datos de la Ruta: '.$request->ruta.' || .'.$request->tipo_archivo.' || .'.$request->nomenclatura.' || '.$request->modulo.' || '.$request->descripcion;
+        $valores_modificados = 'Datos de la Ruta: '.$request->ruta.' || '.$request->tipo_archivo.' || .'.$request->nomenclatura.' || '.$request->modulo.' || '.$request->descripcion;
         event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_RutasAlmacenamiento'));
 
         Alert()->success('Ruta de Almacenamiento Actualizada Satisfactoriamente');

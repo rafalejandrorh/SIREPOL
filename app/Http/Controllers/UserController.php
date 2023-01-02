@@ -58,7 +58,7 @@ class UserController extends Controller
             
             if($request->tipo_busqueda == 'jerarquia'){
                 $Users = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
-                ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
+                ->join('nomenclador.jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
                 ->select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
                 ->Where('jerarquia.valor', 'ilike', '%'.$request->buscador.'%')->paginate(10);
 
@@ -124,7 +124,7 @@ class UserController extends Controller
     {
         $roles = Role::pluck('name','id')->all();
         $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
-        ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
+        ->join('nomenclador.jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
         ->select('funcionarios.id', 'persons.primer_nombre', 'persons.primer_apellido', 'jerarquia.valor')->get();
         return view('users.create',compact('roles', 'funcionarios'));
     }

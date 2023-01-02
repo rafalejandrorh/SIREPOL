@@ -12,6 +12,8 @@ use App\Models\Traza_Resenna;
 use App\Models\Traza_Roles;
 use App\Models\Traza_Sessions;
 use App\Models\Traza_User;
+use App\Models\Traza_Permisos;
+use App\Models\Traza_Rutas_Almacenamiento;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 
@@ -497,7 +499,7 @@ class TrazasController extends Controller
                 if($request->tipo_busqueda == 'jerarquia'){
                     $historial_sesion = Historial_Sesion::join('users', 'users.id', '=', 'historial_sesion.id_user')
                     ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
-                    ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
+                    ->join('nomenclador.jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
                     ->Where('jerarquia.valor', 'ilike', '%'.$request->buscador.'%')->orderBy('login', 'DESC')->paginate(10);
 
                 }else if($request->tipo_busqueda == 'usuario'){
@@ -628,6 +630,206 @@ class TrazasController extends Controller
     public function show_sesiones(Traza_Sessions $sesion)
     {
         return view('trazas.sesioneShow', compact('sesion'));
+    }
+
+    public function index_permisos(Request $request)
+    {
+        $request->all();
+        if(isset($request->filtro) && $request->filtro == 1)
+        {
+            if($request->fecha_inicio != null && $request->fecha_fin == null)
+            {
+                Alert()->error('Error en el Filtrado','Atención: Al filtrar por fecha, debes colocar fecha de Inicio y Fin (Desde y Hasta)');
+                return back();
+            }
+            $queryBuilder = Traza_Permisos::query();
+            if($request->fecha_inicio != null && $request->fecha_fin != null)    
+            {
+                $inicio = date('Y-m-d H:i:s', strtotime($request->fecha_inicio));
+                $fin = date('Y-m-d H:i:s', strtotime($request->fecha_fin.' 23:59:59'));
+                $queryBuilder->WhereBetween('created_at', [$inicio, $fin]);
+            }
+            if($request->id_accion != null)
+            {
+                $queryBuilder->Where('id_accion', $request->id_accion);
+            }
+            if($request->id_usuario != null)
+            {
+                $queryBuilder->Where('id_user', $request->id_usuario);
+            }
+            $permisos = $queryBuilder->orderBy('created_at', 'desc')->paginate(10);
+        }else{
+
+            if(isset($request->buscador) && is_numeric($request->buscador))
+            {
+                if($request->tipo_busqueda == 'cedula'){
+                    $permisos = Traza_Permisos::join('users', 'users.id', '=', 'permisos.id_user')
+                    ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+                    ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+                    ->select('permisos.id', 'permisos.id_user', 'permisos.id_accion', 'permisos.valores_modificados', 'permisos.created_at')
+                    ->Where('persons.cedula', '=', $request->buscador)->orderBy('permisos.created_at', 'desc')->paginate(10);
+
+                }else if($request->tipo_busqueda == 'credencial'){
+                    $permisos = Traza_Permisos::join('users', 'users.id', '=', 'permisos.id_user')
+                    ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+                    ->select('permisos.id', 'permisos.id_user', 'permisos.id_accion', 'permisos.valores_modificados', 'permisos.created_at')
+                    ->Where('funcionarios.credencial', '=', $request->buscador)->orderBy('permisos.created_at', 'desc')->paginate(10);
+                }else{
+                    Alert()->warning('Búsqueda no permitida');
+                    $permisos = Traza_Permisos::orderBy('created_at', 'desc')->paginate(10);
+                }
+            }else if(isset($request->buscador) && is_string($request->buscador)){
+
+                if($request->tipo_busqueda == 'usuario'){
+                    $permisos = Traza_Permisos::join('users', 'users.id', '=', 'permisos.id_user')
+                    ->select('permisos.id', 'permisos.id_user', 'permisos.id_accion', 'permisos.valores_modificados', 'permisos.created_at')
+                    ->Where('users', 'LIKE', '%'.$request->buscador.'%')->orderBy('permisos.created_at', 'desc')->paginate(10);
+
+                }else if($request->tipo_busqueda == 'nombre'){
+                    $permisos = Traza_Permisos::join('users', 'users.id', '=', 'permisos.id_user')
+                    ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+                    ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+                    ->select('permisos.id', 'permisos.id_user', 'permisos.id_accion', 'permisos.valores_modificados', 'permisos.created_at')
+                    ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')
+                    ->orderBy('permisos.created_at', 'desc')->paginate(10);
+
+                }else if($request->tipo_busqueda == 'apellido'){
+                    $permisos = Traza_Permisos::join('users', 'users.id', '=', 'permisos.id_user')
+                    ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+                    ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+                    ->select('permisos.id', 'permisos.id_user', 'permisos.id_accion', 'permisos.valores_modificados', 'permisos.created_at')
+                    ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')
+                    ->orderBy('permisos.created_at', 'desc')->paginate(10);
+
+                }else if($request->tipo_busqueda == 'accion'){
+                    $permisos = Traza_Permisos::join('traza_acciones', 'traza_acciones.id', '=', 'permisos.id_accion')
+                    ->select('permisos.id', 'permisos.id_user', 'permisos.id_accion', 'permisos.valores_modificados', 'permisos.created_at')
+                    ->Where('traza_acciones.valor', 'LIKE', '%'.$request->buscador.'%')
+                    ->orderBy('permisos.created_at', 'desc')->paginate(10);
+
+                }else if($request->tipo_busqueda == 'valores_modificados'){
+                    $permisos = Traza_Permisos::select('permisos.id', 'permisos.id_user', 'permisos.id_accion', 'permisos.valores_modificados', 'permisos.created_at')
+                    ->Where('valores_modificados', 'LIKE', '%'.$request->buscador.'%')
+                    ->orderBy('permisos.created_at', 'desc')->paginate(10);
+
+                }else{
+                    Alert()->warning('Búsqueda no permitida');
+                    $permisos = Traza_Permisos::orderBy('created_at', 'desc')->paginate(10);
+                }
+            }else{
+                $permisos = Traza_Permisos::orderBy('created_at', 'desc')->paginate(10);
+            }
+        }
+
+        $accion = Traza_Acciones::pluck('valor', 'id')->all();
+        $user = User::pluck('users', 'id')->all();
+
+        return view('trazas.permisosIndex', compact('permisos', 'user', 'accion'));
+    }
+
+    public function show_permisos(Traza_Permisos $permiso)
+    {
+        return view('trazas.permisoShow', compact('permiso'));
+    }
+
+    public function index_rutas_almacenamiento(Request $request)
+    {
+        $request->all();
+        if(isset($request->filtro) && $request->filtro == 1)
+        {
+            if($request->fecha_inicio != null && $request->fecha_fin == null)
+            {
+                Alert()->error('Error en el Filtrado','Atención: Al filtrar por fecha, debes colocar fecha de Inicio y Fin (Desde y Hasta)');
+                return back();
+            }
+            $queryBuilder = Traza_Rutas_Almacenamiento::query();
+            if($request->fecha_inicio != null && $request->fecha_fin != null)    
+            {
+                $inicio = date('Y-m-d H:i:s', strtotime($request->fecha_inicio));
+                $fin = date('Y-m-d H:i:s', strtotime($request->fecha_fin.' 23:59:59'));
+                $queryBuilder->WhereBetween('created_at', [$inicio, $fin]);
+            }
+            if($request->id_accion != null)
+            {
+                $queryBuilder->Where('id_accion', $request->id_accion);
+            }
+            if($request->id_usuario != null)
+            {
+                $queryBuilder->Where('id_user', $request->id_usuario);
+            }
+            $rutas = $queryBuilder->orderBy('created_at', 'desc')->paginate(10);
+        }else{
+
+            if(isset($request->buscador) && is_numeric($request->buscador))
+            {
+                if($request->tipo_busqueda == 'cedula'){
+                    $rutas = Traza_Rutas_Almacenamiento::join('users', 'users.id', '=', 'rutas_almacenamiento.id_user')
+                    ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+                    ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+                    ->select('rutas_almacenamiento.id', 'rutas_almacenamiento.id_user', 'rutas_almacenamiento.id_accion', 'rutas_almacenamiento.valores_modificados', 'rutas_almacenamiento.created_at')
+                    ->Where('persons.cedula', '=', $request->buscador)->orderBy('rutas_almacenamiento.created_at', 'desc')->paginate(10);
+
+                }else if($request->tipo_busqueda == 'credencial'){
+                    $rutas = Traza_Rutas_Almacenamiento::join('users', 'users.id', '=', 'rutas_almacenamiento.id_user')
+                    ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+                    ->select('rutas_almacenamiento.id', 'rutas_almacenamiento.id_user', 'rutas_almacenamiento.id_accion', 'rutas_almacenamiento.valores_modificados', 'rutas_almacenamiento.created_at')
+                    ->Where('funcionarios.credencial', '=', $request->buscador)->orderBy('rutas_almacenamiento.created_at', 'desc')->paginate(10);
+                }else{
+                    Alert()->warning('Búsqueda no permitida');
+                    $rutas = Traza_Rutas_Almacenamiento::orderBy('created_at', 'desc')->paginate(10);
+                }
+            }else if(isset($request->buscador) && is_string($request->buscador)){
+
+                if($request->tipo_busqueda == 'usuario'){
+                    $rutas = Traza_Rutas_Almacenamiento::join('users', 'users.id', '=', 'rutas_almacenamiento.id_user')
+                    ->select('rutas_almacenamiento.id', 'rutas_almacenamiento.id_user', 'rutas_almacenamiento.id_accion', 'rutas_almacenamiento.valores_modificados', 'rutas_almacenamiento.created_at')
+                    ->Where('users', 'LIKE', '%'.$request->buscador.'%')->orderBy('rutas_almacenamiento.created_at', 'desc')->paginate(10);
+
+                }else if($request->tipo_busqueda == 'nombre'){
+                    $rutas = Traza_Rutas_Almacenamiento::join('users', 'users.id', '=', 'rutas_almacenamiento.id_user')
+                    ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+                    ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+                    ->select('rutas_almacenamiento.id', 'rutas_almacenamiento.id_user', 'rutas_almacenamiento.id_accion', 'rutas_almacenamiento.valores_modificados', 'rutas_almacenamiento.created_at')
+                    ->Where('persons.primer_nombre', 'LIKE', '%'.$request->buscador.'%')
+                    ->orderBy('rutas_almacenamiento.created_at', 'desc')->paginate(10);
+
+                }else if($request->tipo_busqueda == 'apellido'){
+                    $rutas = Traza_Rutas_Almacenamiento::join('users', 'users.id', '=', 'rutas_almacenamiento.id_user')
+                    ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
+                    ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
+                    ->select('rutas_almacenamiento.id', 'rutas_almacenamiento.id_user', 'rutas_almacenamiento.id_accion', 'rutas_almacenamiento.valores_modificados', 'rutas_almacenamiento.created_at')
+                    ->Where('persons.primer_apellido', 'LIKE', '%'.$request->buscador.'%')
+                    ->orderBy('rutas_almacenamiento.created_at', 'desc')->paginate(10);
+
+                }else if($request->tipo_busqueda == 'accion'){
+                    $rutas = Traza_Rutas_Almacenamiento::join('traza_acciones', 'traza_acciones.id', '=', 'rutas_almacenamiento.id_accion')
+                    ->select('rutas_almacenamiento.id', 'rutas_almacenamiento.id_user', 'rutas_almacenamiento.id_accion', 'rutas_almacenamiento.valores_modificados', 'rutas_almacenamiento.created_at')
+                    ->Where('traza_acciones.valor', 'LIKE', '%'.$request->buscador.'%')
+                    ->orderBy('rutas_almacenamiento.created_at', 'desc')->paginate(10);
+
+                }else if($request->tipo_busqueda == 'valores_modificados'){
+                    $rutas = Traza_Rutas_Almacenamiento::select('rutas_almacenamiento.id', 'rutas_almacenamiento.id_user', 'rutas_almacenamiento.id_accion', 'rutas_almacenamiento.valores_modificados', 'rutas_almacenamiento.created_at')
+                    ->Where('valores_modificados', 'LIKE', '%'.$request->buscador.'%')
+                    ->orderBy('rutas_almacenamiento.created_at', 'desc')->paginate(10);
+
+                }else{
+                    Alert()->warning('Búsqueda no permitida');
+                    $rutas = Traza_Rutas_Almacenamiento::orderBy('created_at', 'desc')->paginate(10);
+                }
+            }else{
+                $rutas = Traza_Rutas_Almacenamiento::orderBy('created_at', 'desc')->paginate(10);
+            }
+        }
+
+        $accion = Traza_Acciones::pluck('valor', 'id')->all();
+        $user = User::pluck('users', 'id')->all();
+
+        return view('trazas.rutasAlmacenamientoIndex', compact('rutas', 'user', 'accion'));
+    }
+
+    public function show_rutas_almacenamiento(Traza_Rutas_Almacenamiento $ruta)
+    {
+        return view('trazas.rutasAlmacenamientoShow', compact('ruta'));
     }
 
 }

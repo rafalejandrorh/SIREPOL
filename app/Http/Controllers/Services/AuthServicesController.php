@@ -10,6 +10,9 @@ use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthServicesController extends Controller
 {
+    public $dataservices;
+    public $user;
+    
     public function __construct(DataServicesController $dataservices, User $user)
     {
         $this->dataservices = $dataservices;
@@ -27,7 +30,7 @@ class AuthServicesController extends Controller
             {
                 $data_user = $user->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
                 ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
-                ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
+                ->join('nomenclador.jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
                 ->select('persons.primer_nombre', 'persons.primer_apellido', 'jerarquia.valor AS jerarquia')
                 ->first();
 

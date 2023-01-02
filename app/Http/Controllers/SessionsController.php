@@ -52,7 +52,7 @@ class SessionsController extends Controller
             if($request->tipo_busqueda == 'jerarquia'){
                 $sessions = Sessions::join('users', 'users.id', '=', 'sessions.user_id')
                 ->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
-                ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
+                ->join('nomecnlador.jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
                 ->select('sessions.id AS session_id', 'sessions.ip_address', 'sessions.last_activity', 'sessions.user_id')
                 ->orderBy('last_activity', 'DESC')
                 ->Where('jerarquia.valor', 'ilike', '%'.$request->buscador.'%')

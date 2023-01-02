@@ -26,6 +26,8 @@ use Cornford\Googlmapper\Facades\MapperFacade as Mapper;
 
 class ResennaController extends Controller
 {
+    public $geografia;
+    
     function __construct(Nomenclador $geografia)
     {
         $this->geografia = $geografia;
@@ -131,7 +133,7 @@ class ResennaController extends Controller
                         $columna = 'id_funcionario_aprehensor';
                     }
                     $resennas = Resenna::join('funcionarios', 'funcionarios.id', '=', $columna)
-                    ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
+                    ->join('nomenclador.jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
                     ->select('resenna_detenido.id', 'resenna_detenido.fecha_resenna', 'resenna_detenido.id_funcionario_aprehensor', 'resenna_detenido.id_funcionario_resenna',
                     'resenna_detenido.id_person')
                     ->Where('jerarquia.valor', 'ilike', '%'.$request->buscador.'%')->paginate(5);
@@ -214,7 +216,7 @@ class ResennaController extends Controller
                 ->first();
                 $motivo_resenna = Caracteristicas_Resennado::Where('id', $resennas[$i]['id_motivo_resenna'])->first();
                 $funcionario_aprehensor = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
-                ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
+                ->join('nomenclador.jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
                 ->Where('funcionarios.id', $resennas[$i]['id_funcionario_aprehensor'])
                 ->select('jerarquia.valor AS jerarquia', 'persons.primer_nombre', 'persons.primer_apellido', 'funcionarios.credencial')
                 ->first();
@@ -342,7 +344,7 @@ class ResennaController extends Controller
 
                     // Datos para Gráfico de Cantidad de Reseñas por Delito
                     $dataResennas = $queryBuilder->selectRaw('caracteristicas_resennado.valor, count(resenna_detenido.id_motivo_resenna) as total_resennados')
-                    ->join('caracteristicas_resennado', 'caracteristicas_resennado.id', '=', 'resenna_detenido.id_motivo_resenna')
+                    ->join('nomenclador.caracteristicas_resennado', 'caracteristicas_resennado.id', '=', 'resenna_detenido.id_motivo_resenna')
                     ->groupBy('caracteristicas_resennado.valor')
                     ->get();
 
@@ -447,10 +449,10 @@ class ResennaController extends Controller
         $estados = $this->geografia->combos();
 
         $funcionario_resenna = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
-        ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
+        ->join('nomenclador.jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
         ->select('funcionarios.id', 'persons.primer_nombre', 'persons.primer_apellido', 'jerarquia.valor')->get();
         $funcionario_aprehensor = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
-        ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
+        ->join('nomenclador.jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
         ->select('funcionarios.id', 'persons.primer_nombre', 'persons.primer_apellido', 'jerarquia.valor')->get();
 
         return view('resenna.create', compact('resennado', 'fecha_hoy', 'genero', 'estado_civil', 'profesion', 'motivo_resenna', 'tez', 'contextura', 
@@ -537,9 +539,9 @@ class ResennaController extends Controller
 
         $caracteristicas_Resennado = Caracteristicas_Resennado::get();
         $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
-        ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
+        ->join('nomenclador.jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
         $funcionarios_resenna = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
-        ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
+        ->join('nomenclador.jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
         $generos = Genero::get();
 
         $genero_for = $generos->Where('id', $id_genero);
@@ -668,10 +670,10 @@ class ResennaController extends Controller
         $municipio = Geografia::Where('id_padre', 108)->pluck('valor', 'id')->all();
         $documentacion = Documentacion::pluck('valor', 'id')->all();
         $funcionario_resenna = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
-        ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
+        ->join('nomenclador.jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
         ->select('funcionarios.id', 'persons.primer_nombre', 'persons.primer_apellido', 'jerarquia.valor')->get();
         $funcionario_aprehensor = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
-        ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
+        ->join('nomenclador.jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
         ->select('funcionarios.id', 'persons.primer_nombre', 'persons.primer_apellido', 'jerarquia.valor')->get();
 
         $estados = $this->geografia->combos();
@@ -722,9 +724,9 @@ class ResennaController extends Controller
 
         $caracteristicas_Resennado = Caracteristicas_Resennado::get();
         $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
-        ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
+        ->join('nomenclador.jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
         $funcionarios_resenna = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
-        ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
+        ->join('nomenclador.jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
         $generos = Genero::get();
 
         $genero_for = $generos->Where('id', $request->id_genero);
@@ -809,12 +811,12 @@ class ResennaController extends Controller
         
         $caracteristicas_Resennado = Caracteristicas_Resennado::get();
         $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
-        ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
+        ->join('nomenclador.jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
         $funcionarios_resenna = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
-        ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
+        ->join('nomenclador.jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
         $caracteristicas_Resennado = Caracteristicas_Resennado::get();
         $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
-        ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
+        ->join('nomenclador.jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
         $generos = Genero::get();
 
         $genero_for = $generos->Where('id', $id_genero);
@@ -903,10 +905,10 @@ class ResennaController extends Controller
         if($result['Count'] > 0)
         {
             $result['QueryPerson'] = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
-            ->join('geografia as estado', 'estado.id', '=', 'persons.id_estado_nacimiento')
-            ->join('geografia as municipio', 'municipio.id', '=', 'persons.id_municipio_nacimiento')
-            ->join('tipo_documentacion', 'tipo_documentacion.id', '=', 'persons.id_tipo_documentacion')
-            ->join('genero', 'genero.id', '=', 'persons.id_genero')
+            ->join('nomenclador.geografia as estado', 'estado.id', '=', 'persons.id_estado_nacimiento')
+            ->join('nomenclador.geografia as municipio', 'municipio.id', '=', 'persons.id_municipio_nacimiento')
+            ->join('nomenclador.tipo_documentacion', 'tipo_documentacion.id', '=', 'persons.id_tipo_documentacion')
+            ->join('nomenclador.genero', 'genero.id', '=', 'persons.id_genero')
             ->select(
                 'persons.id', 'persons.letra_cedula', 'persons.cedula', 'persons.primer_nombre', 'persons.segundo_nombre', 
                 'persons.primer_apellido', 'persons.segundo_apellido', 'persons.fecha_nacimiento', 'tipo_documentacion.valor AS documentacion',
@@ -915,12 +917,12 @@ class ResennaController extends Controller
             ->Where('persons.cedula', '=', $parametros['cedula'])->first();
 
             $result['QueryResenna'] = Resenna::join('caracteristicas_resennado AS Motivo_Resenna', 'Motivo_Resenna.id', '=', 'resenna_detenido.id_motivo_resenna')
-            ->join('caracteristicas_resennado AS Tez', 'Tez.id', '=', 'resenna_detenido.id_tez')
-            ->join('caracteristicas_resennado AS Contextura', 'Contextura.id', '=', 'resenna_detenido.id_contextura')
-            ->join('caracteristicas_resennado as profesion', 'profesion.id', '=', 'resenna_detenido.id_profesion')
-            ->join('caracteristicas_resennado as estado_civil', 'estado_civil.id', '=', 'resenna_detenido.id_estado_civil')
+            ->join('nomenclador.caracteristicas_resennado AS Tez', 'Tez.id', '=', 'resenna_detenido.id_tez')
+            ->join('nomenclador.caracteristicas_resennado AS Contextura', 'Contextura.id', '=', 'resenna_detenido.id_contextura')
+            ->join('nomenclador.caracteristicas_resennado as profesion', 'profesion.id', '=', 'resenna_detenido.id_profesion')
+            ->join('nomenclador.caracteristicas_resennado as estado_civil', 'estado_civil.id', '=', 'resenna_detenido.id_estado_civil')
             ->join('funcionarios as funcionario_aprehensor', 'funcionario_aprehensor.id', '=', 'resenna_detenido.id_funcionario_aprehensor')
-            ->join('jerarquia', 'jerarquia.id', '=', 'funcionario_aprehensor.id_jerarquia')
+            ->join('nomenclador.jerarquia', 'jerarquia.id', '=', 'funcionario_aprehensor.id_jerarquia')
             ->join('persons as person_funcionario_aprehensor', 'person_funcionario_aprehensor.id', '=', 'funcionario_aprehensor.id_person')
             ->select(
             'resenna_detenido.fecha_resenna', 'resenna_detenido.direccion', 

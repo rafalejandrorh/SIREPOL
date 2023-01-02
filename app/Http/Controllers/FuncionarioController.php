@@ -375,7 +375,7 @@ class FuncionarioController extends Controller
         
         $jerarquia = Jerarquia::get();
         $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
-        ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
+        ->join('nomenclador.jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
         $estatus = Estatus_Funcionario::get();
         $generos = Genero::get();
         $estado_nacimiento = Geografia::get();
@@ -434,8 +434,8 @@ class FuncionarioController extends Controller
         {
             if($parametros['tipo'] == 'cedula'){
                 $result['Query'] = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
-                ->join('estatus_funcionario', 'estatus_funcionario.id', '=', 'funcionarios.id_estatus')
-                ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
+                ->join('nomenclador.estatus_funcionario', 'estatus_funcionario.id', '=', 'funcionarios.id_estatus')
+                ->join('nomenclador.jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
                 ->select('persons.cedula', 'funcionarios.credencial', 'persons.primer_nombre', 
                 'persons.segundo_nombre', 'persons.primer_apellido', 'persons.segundo_apellido', 
                 'estatus_funcionario.valor as estatus_funcionario', 'jerarquia.valor as jerarquia')
@@ -443,8 +443,8 @@ class FuncionarioController extends Controller
 
             }else if($parametros['tipo'] == 'credencial'){
                 $result['Query'] = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
-                ->join('estatus_funcionario', 'estatus_funcionario.id', '=', 'funcionarios.id_estatus')
-                ->join('jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
+                ->join('nomenclador.estatus_funcionario', 'estatus_funcionario.id', '=', 'funcionarios.id_estatus')
+                ->join('nomenclador.jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia')
                 ->select('persons.cedula', 'funcionarios.credencial', 'persons.primer_nombre', 
                 'persons.segundo_nombre', 'persons.primer_apellido', 'persons.segundo_apellido', 
                 'estatus_funcionario.valor as estatus_funcionario', 'jerarquia.valor as jerarquia')
