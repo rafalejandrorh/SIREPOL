@@ -58,7 +58,7 @@
             <div class="dropdown-menu dropdown-menu-right">
                 @can('users.password')
                     @if (!isset($password_status) || $password_status == false)
-                        <a class="dropdown-item" href="{{ route('sesion.index') }}"><i class="fa fa-key"></i>  Cambiar Contraseña</a>
+                        <a class="dropdown-item" href="{{ route('users.settings') }}"><i class="fa fa-key"></i>  Cambiar Contraseña</a>
                     @endif
                 @endcan
                 <a class="dropdown-item text-danger" onclick="event.preventDefault(); localStorage.clear();  document.getElementById('logout-form').submit();">

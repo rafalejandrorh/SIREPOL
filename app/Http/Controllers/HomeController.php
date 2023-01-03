@@ -28,7 +28,7 @@ class HomeController extends Controller
     public function index()
     {
 
-        $countSessions = Sessions::count();
+        $countSessions = Sessions::WhereNotNull('user_id')->count();
         $countUsers = User::Where('status', true)->count();
         $countResennasDia = Resenna::Where('created_at', date('Y-m-d'))->count();
         $QR = QrCode::size(160)->style('round')->geo(10.249304786553445, -66.85708425051814);

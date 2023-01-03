@@ -13,7 +13,7 @@ use Illuminate\Http\JsonResponse;
 use Alert;
 use App\Events\LoginHistorialEvent;
 use App\Events\LogoutHistorialEvent;
-use App\Http\Controllers\SesionController;
+use App\Http\Controllers\UserController;
 use App\Models\Sessions;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -141,7 +141,7 @@ class LoginController extends Controller
         if($response)
         {
             Alert()->warning('Atención', 'Por Razones de Seguridad, debe cambiar su contraseña.');
-            return app(SesionController::class)->index($response);
+            return app(UserController::class)->settings($response);
         }else{
             Alert()->toast('Inicio de Sesión Exitoso','success');
             return $request->wantsJson()

@@ -45,8 +45,6 @@ Route::resource('resenna', ResennaController::class)->middleware('auth');
 
 Route::resource('trazas', TrazasController::class)->middleware('auth');
 
-Route::resource('sesion', SesionController::class)->middleware('auth');
-
 Route::resource('sessions', SessionsController::class)->middleware('auth');
 
 Route::resource('messages', MessagesController::class)->middleware('auth');
@@ -54,6 +52,8 @@ Route::resource('messages', MessagesController::class)->middleware('auth');
 Route::get('/', [LoginController::class, 'index']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+
+Route::get('/settings/user', [App\Http\Controllers\UserController::class, 'settings'])->name('users.settings')->middleware('auth');
 
 Route::get('/historial_sesion', [App\Http\Controllers\TrazasController::class, 'index_historial_sesion'])->name('historial_sesion.index')->middleware('auth');
 
@@ -137,11 +137,13 @@ Route::patch('/trazas/roles/{role}', [App\Http\Controllers\TrazasController::cla
 
 Route::patch('/reset{user}', [UserController::class, 'ResetPassword'])->name('users.reset')->middleware('auth');
 
-Route::patch('/user/{user}/status', [UserController::class, 'update_status'])->name('users.update_status')->middleware('auth');
+Route::patch('/users/{user}/status', [UserController::class, 'update_status'])->name('users.update_status')->middleware('auth');
 
 Route::patch('/configuraciones/permisos/{permiso}', [ConfiguracionesController::class, 'update_permisos'])->name('permisos.update')->middleware('auth');
 
 Route::patch('/configuraciones/rutas/almacenamiento/{almacenamiento}', [ConfiguracionesController::class, 'update_rutasAlmacenamiento'])->name('rutasAlmacenamiento.update')->middleware('auth');
+
+Route::patch('/settings/user/{user}', [UserController::class, 'settings_update'])->name('users.settings.update')->middleware('auth');
 
 Route::post('logout/{id}', [LoginController::class, 'logout'])->middleware('auth');
 

@@ -1,4 +1,4 @@
-{!! Form::model($user, ['method' => 'PATCH','route' => ['sesion.update', $user->id]]) !!}
+{!! Form::model($user, ['method' => 'PATCH','route' => ['users.settings.update', $user->id]]) !!}
 {{-- {!! Form::open(array('route' => ['sesion.update', $user->id],'method'=>'POST')) !!} --}}
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12">

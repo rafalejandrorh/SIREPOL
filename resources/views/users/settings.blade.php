@@ -1,5 +1,4 @@
 @extends('layouts.app')
-@extends('sesion.partials.header')
 @section('content')
     <section class="section">
         <div class="section-header">
@@ -32,7 +31,7 @@
                         @endif
 
                         <br>
-                        @each('sesion.forms.index', $user, 'user')
+                        @each('users.forms.settings', $user, 'user')
                         </div>
                     </div>
                 </div>

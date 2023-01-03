@@ -40,3 +40,6 @@ LISTO:
 - Ajustar Lógica de Funcionarios para proporcionar mayor escalabilidad 
 - Ajustar vista de forms para proporcionar mayor escalabilidad (Funcionarios, Usuarios)
 - Ajustar filtros para proporcionar mayor escalabilidad (Resenna)
+- Se elimina el controlador SesionController y las vistas de la carpeta Sesion que hacian referencia a la modificación 
+de Contraseña por parte del Usuario; En su lugar, se migraron las vistas correspondientes a users y los métodos a UserController
+- Se Ajusta el contador de sesiones activas del home para que solo cuente aquellas que poseen User_id

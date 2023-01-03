@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 use Alert;
 use App\Events\PublicNotification;
 use App\Events\TrazasEvent;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -330,5 +331,39 @@ class UserController extends Controller
 
         Alert()->success('Estatus de Usuario Actualizado', 'Nuevo Estatus: '.$notificacion);
         return redirect()->route('users.index');
+    }
+
+    public function settings($password_status = null)
+    {
+        $data = Auth::user()->id;
+        $user = User::Where('id', $data)->get();
+        return view('users.settings', compact('user', 'data', 'password_status'));
+    }
+
+    public function settings_update(Request $request, $id)
+    {
+        $persona = User::where('id', '=', $id)->first();
+        $validacion_password = Hash::check(request('curr_password'), $persona->password);
+        if($validacion_password == true)
+        {
+            $validacion_password_new = Hash::check(request('password'), $persona->password);
+            if($validacion_password_new == false)
+            {
+                $request['password'] = bcrypt($request['password']);
+                $user = User::find($id, ['id']);
+                $user->update([
+                    'password' => $request['password'],
+                    'password_status' => false
+                ]);
+                Alert()->success('Cambio de Contraseña Exitoso');
+                return redirect()->route('home');
+            }else{
+                Alert()->warning('Lo sentimos', 'La nueva Contraseña coincide con la Actual. Por favor, inserta una Contraseña distinta.');
+                return back();
+            }
+        }else{
+            Alert()->error('La Contraseña Actual indicada no coincide con nuestros registros.');
+            return back()->with('error', 'Ok');
+        }
     }
 }
