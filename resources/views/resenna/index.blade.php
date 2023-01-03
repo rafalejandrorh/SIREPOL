@@ -160,7 +160,7 @@
 
     </section>
 
-    @include('resenna.modals.filtro')
+    @include('resenna.modals.filtro', ['filtro' => 'resenna.index'])
 @endsection
 
 @section('scripts')

@@ -29,7 +29,7 @@
                             </div>
                         </div>
                         <br>
-                            @include('users.forms.edit')
+                            @include('users.forms.form', ['user' => $user])
                         </div>
                         </div>
                     </div>
@@ -37,4 +37,8 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('public/js/users/edit.js') }}"></script>
 @endsection

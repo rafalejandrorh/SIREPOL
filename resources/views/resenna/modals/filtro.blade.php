@@ -6,10 +6,27 @@
                         <h3 class="page__heading text-white"><b>Filtro</b></h3>
                         <span aria-hidden="true" class="close text-white" data-dismiss="modal" aria-label="Close">&times;</span>
                     </div>
-                {!! Form::open(array('route' => 'resenna.index','method' => 'GET')) !!}
+                {!! Form::open(array('route' => $filtro,'method' => 'GET')) !!}
                 <div class="modal-body">
 
                     <div class="row">
+                    @if($filtro == 'resenna.charts')
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                            <label for="email">Gráficos</label>
+                                {!! Form::select('tipo_grafico', [
+                                '' => 'Seleccione',
+                                'origenresennados' => 'Estado de Origen de los Reseñados',
+                                // 'edadresennados' => 'Edad de los Reseñados',
+                                'cantresennasdelito' => 'Cantidad de Reseñas por Delito',
+                                // 'cantresennasmes' => 'Cantidad de Reseñas por Mes', 
+                                // 'cantresennasanno' => 'Cantidad de Reseñas por Año', 
+                                // 'cantresennasaprehensor' => 'Cantidad de Reseñas por Funcionario Aprehensor',
+                                ], 
+                                'Seleccionar', array('class' => 'form-control')) !!}
+                            </div>
+                        </div>
+                    @endif    
                         <div class="col-xs-6 col-sm-6 col-md-6">
                             <div class="form-group">
                                 <label for="email">Desde</label>

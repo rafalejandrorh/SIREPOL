@@ -29,7 +29,7 @@
                             </div>
                         </div>
                         <br>
-                        @include('funcionarios.forms.create')
+                        @include('funcionarios.forms.form')
                         </div>
                     </div>
                 </div>

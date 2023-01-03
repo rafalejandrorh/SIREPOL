@@ -72,7 +72,7 @@
             </div>
     </section>
 
-    @include('resenna.modals.filtroCharts')
+    @include('resenna.modals.filtro', ['filtro' => 'resenna.charts'])
 @endsection
 
 @section('scripts')

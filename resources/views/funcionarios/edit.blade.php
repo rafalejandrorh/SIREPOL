@@ -29,8 +29,7 @@
                             </div>
                         </div>
                         <br>
- 
-                        @include('funcionarios.forms.edit')
+                        @include('funcionarios.forms.form', ['funcionario' => $funcionario])
                         </div>
                     </div>
                     </div>
