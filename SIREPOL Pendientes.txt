@@ -10,8 +10,6 @@ En proceso de Investigación, Occiso, por Determinar, Sin Registros, Solicitado 
 
 - Conseguir Imagen de Genero Desconocido de SIICOC
 
-- Crear Módulo para gestionar información de los nomencladores
-- Crear Sub-Módulos para gestionar Estatus de Funcionario, jerarquía y Organismos de Seguridad
 - Crear Tablas de Trazas de Estatus de Funcionario, Jerarquía y Organismos de Seguridad
 - Crear Trazas de los Sub-Módulos de Estatus de Funcionario, Jerarquía y Organismos de Seguridad
 - Crear Vistas para Trazas de Estatus de Funcionario, Jerarquía y Organismos de Seguridad
@@ -19,7 +17,8 @@ En proceso de Investigación, Occiso, por Determinar, Sin Registros, Solicitado 
 - Evaluar factibilidad para Ajustar vista de forms para proporcionar mayor escalabilidad (Reseña)
 
 HACIENDO:
-
+- Crear Módulo para gestionar información de los nomencladores (Vista y Controlador)
+- Crear Sub-Módulos para gestionar Estatus de Funcionario, jerarquía y Organismos de Seguridad (Vistas y Controladores)
 
 LISTO:
 - Crear Botón para cerrar sesión a todos los Usuarios
@@ -43,3 +42,7 @@ LISTO:
 - Se elimina el controlador SesionController y las vistas de la carpeta Sesion que hacian referencia a la modificación 
 de Contraseña por parte del Usuario; En su lugar, se migraron las vistas correspondientes a users y los métodos a UserController
 - Se Ajusta el contador de sesiones activas del home para que solo cuente aquellas que poseen User_id
+- Rutas de Nomencladores de Jerarquía, Estatus Funcionario y Organismos de Seguridad
+- Botón en Menú para Nomencladores
+- Permiso para Nomencladores
+- Se Ajustan Modelos de Jerarquía, Estatus Funcionario y Organismos de Seguridad para gestionar la Información

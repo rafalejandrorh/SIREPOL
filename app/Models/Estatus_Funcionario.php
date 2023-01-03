@@ -10,4 +10,6 @@ class Estatus_Funcionario extends Model
     use HasFactory;
 
     protected $table = 'nomenclador.estatus_funcionario';
+
+    protected $fillable = ['valor'];
 }

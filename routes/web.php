@@ -15,6 +15,7 @@ use App\Http\Controllers\TrazasController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GeografiaVenezuelaController;
 use App\Http\Controllers\JerarquiaController;
+use App\Http\Controllers\NomencladoresController;
 use App\Http\Controllers\MapsGeoreferenceController;
 use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\NotificationsController;
@@ -99,6 +100,26 @@ Route::get('/configuraciones/rutas/almacenamiento/create', [App\Http\Controllers
 
 Route::get('/configuraciones/rutas/almacenamiento/{almacenamiento}/edit', [ConfiguracionesController::class, 'edit_rutasAlmacenamiento'])->name('rutasAlmacenamiento.edit')->middleware('auth');
 
+Route::get('/nomencladores', [NomencladoresController::class, 'index'])->name('nomencladores.index')->middleware('auth');
+
+Route::get('/nomencladores/jerarquia', [NomencladoresController::class, 'index_jerarquia'])->name('jerarquia.index')->middleware('auth');
+
+Route::get('/nomencladores/jerarquia/create', [NomencladoresController::class, 'create_jerarquia'])->name('jerarquia.create')->middleware('auth');
+
+Route::get('/nomencladores/jerarquia/{jerarquia}/edit', [NomencladoresController::class, 'edit_jerarquia'])->name('jerarquia.edit')->middleware('auth');
+
+Route::get('/nomencladores/organismoSeguridad', [NomencladoresController::class, 'index_organismoSeguridad'])->name('organismoSeguridad.index')->middleware('auth');
+
+Route::get('/nomencladores/organismoSeguridad/create', [NomencladoresController::class, 'create_organismoSeguridad'])->name('organismoSeguridad.create')->middleware('auth');
+
+Route::get('/nomencladores/organismoSeguridad/{organismo}/edit', [NomencladoresController::class, 'edit_organismoSeguridad'])->name('organismoSeguridad.edit')->middleware('auth');
+
+Route::get('/nomencladores/estatusFuncionario', [NomencladoresController::class, 'index_estatusFuncionario'])->name('estatusFuncionario.index')->middleware('auth');
+
+Route::get('/nomencladores/estatusFuncionario/create', [NomencladoresController::class, 'create_estatusFuncionario'])->name('estatusFuncionario.create')->middleware('auth');
+
+Route::get('/nomencladores/estatusFuncionario/{estatusFuncionario}/edit', [NomencladoresController::class, 'edit_estatusFuncionario'])->name('estatusFuncionario.edit')->middleware('auth');
+
 Route::get('/resenna/pdf/{resenna}', [App\Http\Controllers\ResennaController::class, 'pdf'])->name('resenna.pdf')->middleware('auth');
 
 Route::get('resenna/create/select/{id}/{id_hijo}', [App\Http\Controllers\GeografiaVenezuelaController::class, 'getCombo']);
@@ -143,6 +164,12 @@ Route::patch('/configuraciones/permisos/{permiso}', [ConfiguracionesController::
 
 Route::patch('/configuraciones/rutas/almacenamiento/{almacenamiento}', [ConfiguracionesController::class, 'update_rutasAlmacenamiento'])->name('rutasAlmacenamiento.update')->middleware('auth');
 
+Route::patch('/nomencladores/jerarquia/{jerarquia}', [NomencladoresController::class, 'update_jerarquia'])->name('jerarquia.update')->middleware('auth');
+
+Route::patch('/nomencladores/organismoSeguridad/{organismo}', [NomencladoresController::class, 'update_organismoSeguridad'])->name('organismoSeguridad.update')->middleware('auth');
+
+Route::patch('/nomencladores/estatusFuncionario/{estatusFuncionario}', [NomencladoresController::class, 'update_estatusFuncionario'])->name('estatusFuncionario.update')->middleware('auth');
+
 Route::patch('/settings/user/{user}', [UserController::class, 'settings_update'])->name('users.settings.update')->middleware('auth');
 
 Route::post('logout/{id}', [LoginController::class, 'logout'])->middleware('auth');
@@ -151,9 +178,21 @@ Route::post('/configuraciones/permisos', [ConfiguracionesController::class, 'sto
 
 Route::post('/configuraciones/rutas/almacenamiento', [ConfiguracionesController::class, 'store_rutasAlmacenamiento'])->name('rutasAlmacenamiento.store')->middleware('auth');
 
+Route::post('/nomencladores/jerarquia', [NomencladoresController::class, 'store_jerarquia'])->name('jerarquia.store')->middleware('auth');
+
+Route::post('/nomencladores/organismoSeguridad', [NomencladoresController::class, 'store_organismoSeguridad'])->name('organismoSeguridad.store')->middleware('auth');
+
+Route::post('/nomencladores/estatusFuncionario', [NomencladoresController::class, 'store_estatusFuncionario'])->name('estatusFuncionario.store')->middleware('auth');
+
 Route::delete('/configuraciones/permisos/{permiso}', [ConfiguracionesController::class, 'destroy_permisos'])->name('permisos.destroy')->middleware('auth');
 
 Route::delete('/configuraciones/rutas/almacenamiento/{almacenamiento}', [ConfiguracionesController::class, 'destroy_rutasAlmacenamiento'])->name('rutasAlmacenamiento.destroy')->middleware('auth');
+
+Route::delete('/nomencladores/jerarquia/{jerarquia}', [NomencladoresController::class, 'destroy_jerarquia'])->name('jerarquia.destroy')->middleware('auth');
+
+Route::delete('/nomencladores/organismoSeguridad/{organismo}', [NomencladoresController::class, 'destroy_organismoSeguridad'])->name('organismoSeguridad.destroy')->middleware('auth');
+
+Route::delete('/nomencladores/estatusFuncionario/{estatusFuncionario}', [NomencladoresController::class, 'destroy_estatusFuncionario'])->name('estatusFuncionario.destroy')->middleware('auth');
 
 // Ruta para colocar buscador en tiempo real 
 // Route::get('resenna/search/{cedula}', [ResennaController::class, 'search'])->name('resenna.search')->middleware('auth');

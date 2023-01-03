@@ -55,6 +55,14 @@
     </a>
 </li>
 @endcan
+@can('nomencladores.index')
+<li class="side-menus {{ Request::is('nomencladores') ? 'active' : '' }}">
+    <a class="nav-link" href="{{ route('nomencladores.index') }}">
+        <i class=" fas fa-database"></i>
+        <span>Nomencladores</span>
+    </a>
+</li>
+@endcan
 @can('configuraciones.index')
 <li class="side-menus {{ Request::is('configuraciones') ? 'active' : '' }}">
     <a class="nav-link" href="{{ route('configuraciones.index') }}">

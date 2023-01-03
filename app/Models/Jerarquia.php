@@ -10,4 +10,6 @@ class Jerarquia extends Model
     use HasFactory;
 
     protected $table = 'nomenclador.jerarquia';
+
+    protected $fillable = ['valor', 'id_organismo'];
 }
