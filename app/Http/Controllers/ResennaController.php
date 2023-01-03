@@ -411,10 +411,6 @@ class ResennaController extends Controller
     {
         $request->all();
         
-        if($request->buscador == null)
-        {
-            $request->buscador = null;
-        }
         if($request->tipo_busqueda == 'cedula_resennado'){
             $resennado_exists = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
             ->Where('persons.cedula', '=', $request->buscador)->exists();

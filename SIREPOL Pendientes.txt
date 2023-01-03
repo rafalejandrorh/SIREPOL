@@ -16,6 +16,8 @@ En proceso de Investigación, Occiso, por Determinar, Sin Registros, Solicitado 
 - Crear Trazas de los Sub-Módulos de Estatus de Funcionario, Jerarquía y Organismos de Seguridad
 - Crear Vistas para Trazas de Estatus de Funcionario, Jerarquía y Organismos de Seguridad
 
+- Ajustar vista de forms de cada módulo y filtros para proporcionar mayor escalabilidad
+
 HACIENDO:
 
 LISTO:
@@ -34,3 +36,4 @@ LISTO:
 - Crear Tablas de Trazas de Permisos y Rutas de Almacenamiento
 - Crear Trazas de los Sub-Módulos de Permisos y Rutas de Almacenamiento (solo falta adicionar al Event las acciones)
 - Crear Vistas para Trazas de Permisos y Rutas de Almacenamiento
+- Ajustar Lógica de Funcionarios para proporcionar mayor escalabilidad 

@@ -164,94 +164,56 @@ class FuncionarioController extends Controller
             $person->id_estado_nacimiento = $request['id_estado_nacimiento'];
             $person->save();
             $id_person = $person->id;
-            //$id_person = $person->Where('cedula', $request['cedula'])->pluck('id');
-
-            $funcionario->credencial = $request['credencial'];
-            $funcionario->id_jerarquia = $request['id_jerarquia'];
-            $funcionario->telefono = $request['telefono'];
-            $funcionario->id_person = $id_person;
-            $funcionario->id_estatus = $request['id_estatus'];
-            $funcionario->id_organismo = $request['id_organismo'];
-            $funcionario->save();
-            $id_funcionario = $funcionario->id;
-
-            $geografia = Geografia::get();
-            $estatus_laboral = Estatus_Funcionario::get();
-            $jerarquia = Jerarquia::get();
-            $generos = Genero::get();
-
-            $genero_for = $generos->Where('id', $request['id_genero']);
-            foreach($genero_for as $genero){
-                $genero = $genero['valor'];
-            }
-            $estado_nacimiento_for = $geografia->Where('id', $request['id_estado_nacimiento']);
-            foreach($estado_nacimiento_for as $estado_nacimiento){
-                $estado_nacimiento = $estado_nacimiento['valor'];
-            }
-            $id_jerarquia_for = $jerarquia->Where('id', $request['id_jerarquia']);
-            foreach($id_jerarquia_for as $jerarquia){
-                $jerarquia = $jerarquia['valor'];
-            }
-            $estatus_laboral_for = $estatus_laboral->Where('id', $request['id_estatus']);
-            foreach($estatus_laboral_for as $estatus){
-                $estatus_laboral = $estatus['valor'];
-            }
-
-            $id_user = Auth::user()->id;
-            $id_Accion = 1; //Registro
-            $valores_modificados = 'Datos de Funcionario: V'.$request['cedula'].' || '.$request['primer_nombre'].' || '.$request['segundo_nombre'].' || '.$request['primer_apellido'].' || '.
-            $request['segundo_apellido'].' || '.$genero.' || '.$request['fecha_nacimiento'].' || '.$estado_nacimiento.' || '.$request['credencial'].' || '.
-            $jerarquia.' || '.$request['telefono'].' || '.$estatus_laboral;
-            event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Funcionarios'));
-
-            Alert()->success('Funcionario ingresado Satisfactoriamente');
-            return redirect()->route('funcionarios.index');
         }
 
-        if($validar_persona == true and $validar_funcionario == false){
+        $funcionario->credencial = $request['credencial'];
+        $funcionario->id_jerarquia = $request['id_jerarquia'];
+        $funcionario->telefono = $request['telefono'];
+        $funcionario->id_person = isset($id_person) ? $id_person : $obtener_persona[0]['id'];
+        $funcionario->id_estatus = $request['id_estatus'];
+        $funcionario->id_organismo = $request['id_organismo'];
+        $funcionario->save();
+        $id_funcionario = $funcionario->id;
 
-            $obtener_funcionario = $funcionario->where('id_person','=',$obtener_persona[0]['id'])->get();
+        $cedula = isset($request['cedula']) ? $request['cedula'] : $obtener_persona[0]['cedula'];
+        $primer_nombre = isset($request['primer_nombre']) ? $request['primer_nombre'] : $obtener_persona[0]['primer_nombre'];
+        $segundo_nombre = isset($request['segundo_nombre']) ? $request['segundo_nombre'] : $obtener_persona[0]['segundo_nombre'];
+        $primer_apellido = isset($request['primer_apellido']) ? $request['primer_apellido'] : $obtener_persona[0]['primer_apellido'];
+        $segundo_apellido = isset($request['segundo_apellido']) ? $request['segundo_apellido'] : $obtener_persona[0]['segundo_apellido'];
+        $fecha_nacimiento = isset($request['fecha_nacimiento']) ? $request['fecha_nacimiento'] : $obtener_persona[0]['fecha_nacimiento'];
+        $id_genero = isset($request['id_genero']) ? $request['id_genero'] : $obtener_persona[0]['id_genero'];
 
-            $funcionario->credencial = $request['credencial'];
-            $funcionario->id_jerarquia = $request['id_jerarquia'];
-            $funcionario->telefono = $request['telefono'];
-            $funcionario->id_person = $obtener_persona[0]['id'];
-            $funcionario->id_estatus = $request['id_estatus'];
-            $funcionario->id_organismo = $request['id_organismo'];
-            $funcionario->save();
+        $geografia = Geografia::get();
+        $estatus_laboral = Estatus_Funcionario::get();
+        $jerarquia = Jerarquia::get();
+        $generos = Genero::get();
 
-            $jerarquia = Jerarquia::get();
-            $estatus_laboral = Estatus_Funcionario::get();
-            $genero = Genero::get();
-            $estado_nacimiento = Geografia::get();
-            $id_jerarquia_for = $jerarquia->Where('id', $request['id_jerarquia']);
-            foreach($id_jerarquia_for as $jerarquia){
-                $jerarquia = $jerarquia['valor'];
-            }
-            $estatus_laboral_for = $estatus_laboral->Where('id', $request['id_estatus']);
-            foreach($estatus_laboral_for as $estatus){
-                $estatus_laboral = $estatus['valor'];
-            }
-            $genero_for = $genero->Where('id', $obtener_persona[0]['id_genero']);
-            foreach($genero_for as $gen){
-                $genero = $gen['valor'];
-            }
-            $estado_for = $estado_nacimiento->Where('id', $obtener_persona[0]['id_gestado']);
-            foreach($estado_for as $estado){
-                $estado_nacimiento = $estado['valor'];
-            }
-
-            $id_user = Auth::user()->id;
-            $id_Accion = 1; //Registro
-            $valores_modificados = 'Datos de Funcionario: La Persona que intentas registrar ya está registrada, se agregó solamente la información del Funcionario - V'.$obtener_persona[0]['cedula'].' || '.$obtener_persona[0]['primer_nombre'].' || '.$obtener_persona[0]['segundo_nombre'].' || '.
-            $obtener_persona[0]['primer_apellido'].' || '.$obtener_persona[0]['segundo_apellido'].' || '.$genero.' || '.$obtener_persona[0]['fecha_nacimiento'].' || '.
-            $estado_nacimiento.' || '.$request['credencial'].' || '.$jerarquia.' || '.$request['telefono'].' || '.$estatus_laboral;
-            event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Funcionarios'));
-
-            Alert()->success('Funcionario ingresado Satisfactoriamente');
-            return redirect()->route('funcionarios.index');
+        $genero_for = $generos->Where('id', $id_genero);
+        foreach($genero_for as $genero){
+            $genero = $genero['valor'];
+        }
+        $estado_nacimiento_for = $geografia->Where('id', $request['id_estado_nacimiento']);
+        foreach($estado_nacimiento_for as $estado_nacimiento){
+            $estado_nacimiento = $estado_nacimiento['valor'];
+        }
+        $id_jerarquia_for = $jerarquia->Where('id', $request['id_jerarquia']);
+        foreach($id_jerarquia_for as $jerarquia){
+            $jerarquia = $jerarquia['valor'];
+        }
+        $estatus_laboral_for = $estatus_laboral->Where('id', $request['id_estatus']);
+        foreach($estatus_laboral_for as $estatus){
+            $estatus_laboral = $estatus['valor'];
         }
 
+        $id_user = Auth::user()->id;
+        $id_Accion = 1; //Registro
+        $valores_modificados = 'Datos de Funcionario: V'.$cedula.' || '.$primer_nombre.' || '.$segundo_nombre.' || '.$primer_apellido.' || '.
+        $segundo_apellido.' || '.$genero.' || '.$fecha_nacimiento.' || '.$estado_nacimiento.' || '.$request['credencial'].' || '.
+        $jerarquia.' || '.$request['telefono'].' || '.$estatus_laboral;
+        event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Funcionarios'));
+
+        Alert()->success('Funcionario registrado Satisfactoriamente');
+        return redirect()->route('funcionarios.index');
     }
 
     /**
