@@ -23,7 +23,6 @@ $(document).ready(function () {
                 select.html('').val('');
                 
                 for (var i = 0; i < result.length; i++) {
-                    console.log(result[i].valor)
                     select.append('<option value="'+result[i].id+'">'+result[i].valor+'</option>');
                 };
             },
