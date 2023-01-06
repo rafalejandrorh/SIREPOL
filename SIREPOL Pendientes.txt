@@ -19,6 +19,7 @@ En proceso de Investigación, Occiso, por Determinar, Sin Registros, Solicitado 
 HACIENDO:
 - Crear Módulo para gestionar información de los nomencladores (Vista y Controlador)
 - Crear Sub-Módulos para gestionar Estatus de Funcionario, jerarquía y Organismos de Seguridad (Vistas y Controladores)
+- Aplicar Papelera de Reciclaje (SoftDeletes para los Módulos existentes)
 
 LISTO:
 - Crear Botón para cerrar sesión a todos los Usuarios
