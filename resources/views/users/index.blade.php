@@ -87,6 +87,7 @@
                                                 <th>Usuario</th>
                                                 <th>Estatus</th>
                                                 <th>Acciones</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($Users as $user)
