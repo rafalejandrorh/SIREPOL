@@ -13,14 +13,17 @@
                             
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
-                                    <a href="{{ url()->previous() }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
+                                    <a href="{{ route('configuraciones.index') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
                                 </div>
                             </div>
                             <br>
-
-                            @can('rutasAlmacenamiento.create')
-                            <a class="btn btn-success" href="{{ route('rutasAlmacenamiento.create') }}">Registrar</a>                        
-                            @endcan
+                                <div class="col-xs-2 col-sm-2 col-md-2">
+                                    <div class="form-group">
+                                        @can('rutasAlmacenamiento.create')
+                                        <a class="btn btn-success" href="{{ route('rutasAlmacenamiento.create') }}"><i class="fas fa-plus"></i> Registrar</a>                        
+                                        @endcan
+                                    </div>
+                                </div>
                                     <table class="table table-striped mt-2 display dataTable table-hover">
                                         <thead>
                                             <tr role="row">

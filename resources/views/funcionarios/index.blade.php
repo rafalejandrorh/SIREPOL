@@ -33,9 +33,13 @@
                                 </div>
                             </div>
                             {!! Form::close() !!}
-                            @can('funcionarios.create')
-                            <a class="btn btn-success" href="{{ route('funcionarios.create') }}">Registrar</a>                        
-                            @endcan
+                                <div class="col-xs-2 col-sm-2 col-md-2">
+                                    <div class="form-group">
+                                        @can('funcionarios.create')
+                                        <a class="btn btn-success" href="{{ route('funcionarios.create') }}"><i class="fas fa-plus"></i> Registrar</a>                        
+                                        @endcan
+                                    </div>
+                                </div>
                                     <table class="table table-striped mt-2 display dataTable table-hover">
                                         <thead>
                                             <tr role="row">

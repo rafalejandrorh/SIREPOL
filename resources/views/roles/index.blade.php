@@ -11,9 +11,13 @@
                     <div class="card">
                         <div class="card-body">
         
-                        @can('roles.create')
-                        <a class="btn btn-success" href="{{ route('roles.create') }}">Crear</a>                        
-                        @endcan
+                            <div class="col-xs-2 col-sm-2 col-md-2">
+                                <div class="form-group">
+                                    @can('roles.create')
+                                    <a class="btn btn-success" href="{{ route('roles.create') }}"><i class="fas fa-plus"></i> Crear</a>                        
+                                    @endcan
+                                </div>
+                            </div>
 
                             <table class="table table-striped mt-2 display dataTable table-hover">
                                 <thead>                                         
