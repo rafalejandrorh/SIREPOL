@@ -49,3 +49,4 @@ de Contraseña por parte del Usuario; En su lugar, se migraron las vistas corres
 - Permiso para Nomencladores
 - Se Ajustan Modelos de Jerarquía, Estatus Funcionario y Organismos de Seguridad para gestionar la Información
 - Aplicar Papelera de Reciclaje (SoftDeletes) para el Módulo de Reseñas
+- Colocar validación al ingresar cambiar contraseña (JavaScript)

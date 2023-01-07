@@ -39,3 +39,7 @@
         </div>
     </section>
 @endsection
+
+@section('scripts')
+    <script src="{{ asset('public/js/users/settings.js')}}"></script>
+@endsection
