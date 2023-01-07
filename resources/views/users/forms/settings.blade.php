@@ -20,13 +20,13 @@
             <span for="" id="message_password" class="text-danger"></span>
         </div>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-12">
+    <div class="col-xs-12 col-sm-12 col-md-12 classPasswordCollapse collapse">
         <div class="form-group">
             <label for="password">Contraseña Nueva</label>
             {!! Form::password('password', array('class' => 'form-control', 'id' => 'new_password')) !!}
         </div>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-12">
+    <div class="col-xs-12 col-sm-12 col-md-12 classPasswordCollapse collapse">
         <div class="form-group">
             <label for="confirm-password">Confirmar Contraseña</label>
             {!! Form::password('confirm-password', array('class' => 'form-control', 'id' => 'new_password_confirm')) !!}

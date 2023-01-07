@@ -12,14 +12,16 @@ $(document).ready(function () {
     });
 
     function verifyCurrentPassword() {
-        current_password = $('#new_password').val();
+        current_password = $('#current_password').val();
 
         if(current_password != ''){
             document.getElementById('save').disabled = false;
             $('#message_password').html('');
+            $('.classPasswordCollapse').removeClass("collapse");
         }else{
             document.getElementById('save').disabled = true;
             $('#message_password').html('Ingrese su Contraseña Actual');
+            $('.classPasswordCollapse').addClass("collapse");
         }
     }
 
