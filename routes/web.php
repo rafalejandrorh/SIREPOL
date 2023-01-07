@@ -128,6 +128,12 @@ Route::get('resenna/{id}/edit/select/{tipo}/{id_hijo}', [App\Http\Controllers\Ge
 
 Route::get('resenna/verify/{id}', [ResennaController::class, 'verifyNewStore'])->name('resenna.verify')->middleware('auth');
 
+Route::get('/restore/resenna', [ResennaController::class, 'restoreIndex'])->name('resenna.restore.index')->middleware('auth');
+
+Route::get('/restore/resenna/{id}', [ResennaController::class, 'restore'])->name('resenna.restore')->middleware('auth');
+
+Route::get('/restore/all/resenna/', [ResennaController::class, 'restoreAll'])->name('resenna.restore.all')->middleware('auth');
+
 Route::get('charts/resenna', [ResennaController::class, 'charts'])->name('resenna.charts')->middleware('auth');
 
 Route::get('/georeference/search', [MapsGeoreferenceController::class, 'searchLocation'])->name('georeference.search');

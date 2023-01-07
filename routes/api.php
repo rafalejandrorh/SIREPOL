@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::post('/Login/{user}/{password}', [AuthServicesController::class, 'login'])->name('login');
+Route::post('/Login', [AuthServicesController::class, 'login'])->name('login');
 
 Route::post('/Logout', [AuthServicesController::class, 'logout'])->name('logout')->middleware('auth:sanctum');
 

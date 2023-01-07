@@ -19,13 +19,14 @@ class AuthServicesController extends Controller
         $this->user = $user;
     }
 
-    public function login($user, $password)
+    public function login(Request $request)
     {
-        $validar_user = $this->user::where('users', $user)->exists();
+        dd($request);die;
+        $validar_user = $this->user::where('users', $request->user)->exists();
         if($validar_user == true)
         {
-            $user = $this->user::where('users', $user)->first();
-            $validacion_password = Hash::check($password, $user->password);
+            $user = $this->user::where('users', $request->user)->first();
+            $validacion_password = Hash::check($request->password, $user->password);
             if($validacion_password == true)
             {
                 $data_user = $user->join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')

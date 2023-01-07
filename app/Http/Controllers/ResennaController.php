@@ -21,8 +21,7 @@ use App\Events\TrazasEvent;
 use App\Models\Rutas_Almacenamiento;
 use Carbon\Carbon;
 use Cornford\Googlmapper\Facades\MapperFacade as Mapper;
-
-
+use PhpParser\Node\Stmt\While_;
 
 class ResennaController extends Controller
 {
@@ -861,6 +860,112 @@ class ResennaController extends Controller
         $resenna->delete();
         Alert()->success('La Reseña ha sido Eliminada');
         return redirect()->route('resenna.index');
+    }
+
+    public function restore($id)
+    {
+        $resennas = Resenna::join('persons', 'persons.id', '=', 'resenna_detenido.id_person')
+        ->Where('resenna_detenido.id', $id)->onlyTrashed()->get();
+
+        foreach($resennas as $resenna)
+        {
+            $fecha_resenna = $resenna['fecha_resenna'];
+            $cedula = $resenna['cedula'];
+            $primer_nombre = $resenna['primer_nombre'];
+            $segundo_nombre = $resenna['segundo_nombre'];
+            $primer_apellido = $resenna['primer_apellido'];
+            $segundo_apellido = $resenna['segundo_apellido'];
+            $fecha_nacimiento = $resenna['fecha_nacimiento'];
+            $id_genero = $resenna['id_genero'];
+            $id_estado_civil = $resenna['id_estado_civil'];
+            $id_profesion = $resenna['id_profesion'];
+            $id_motivo_resenna = $resenna['id_motivo_resenna'];
+            $id_tez = $resenna['id_tez'];
+            $id_contextura = $resenna['id_contextura'];
+            $id_funcionario_aprehensor = $resenna['id_funcionario_aprehensor'];
+            $id_funcionario_resenna = $resenna['id_funcionario_resenna'];
+            $direccion = $resenna['direccion'];
+            $observaciones = $resenna['observaciones'];
+            $imagen = $resenna['url_foto'];
+        }
+        
+        $caracteristicas_Resennado = Caracteristicas_Resennado::get();
+        $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
+        ->join('nomenclador.jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
+        $funcionarios_resenna = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
+        ->join('nomenclador.jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
+        $caracteristicas_Resennado = Caracteristicas_Resennado::get();
+        $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')
+        ->join('nomenclador.jerarquia', 'jerarquia.id', '=', 'funcionarios.id_jerarquia');
+        $generos = Genero::get();
+
+        $genero_for = $generos->Where('id', $id_genero);
+        foreach($genero_for as $genero){
+            $genero = $genero['valor'];
+        }
+        $estado_civil_for = $caracteristicas_Resennado->Where('id', $id_estado_civil);
+        foreach($estado_civil_for as $estado_civil){
+            $estado_civil = $estado_civil['valor'];
+        }
+        $profesion_for = $caracteristicas_Resennado->Where('id', $id_profesion);
+        foreach($profesion_for as $profesion){
+            $profesion = $profesion['valor'];
+        }
+        $motivo_resenna_for = $caracteristicas_Resennado->Where('id', $id_motivo_resenna);
+        foreach($motivo_resenna_for as $motivo_resenna){
+            $motivo_resenna = $motivo_resenna['valor'];
+        }
+        $tez_for = $caracteristicas_Resennado->Where('id', $id_tez);
+        foreach($tez_for as $tez){
+            $tez = $tez['valor'];
+        }
+        $contextura_for = $caracteristicas_Resennado->Where('id', $id_contextura);
+        foreach($contextura_for as $contextura){
+            $contextura = $contextura['valor'];
+        }
+        $funcionario_aprehensor_for = $funcionarios->Where('funcionarios.id', $id_funcionario_aprehensor)->get();
+        foreach($funcionario_aprehensor_for as $funcionario_aprehensor){
+            $funcionario_aprehensor = $funcionario_aprehensor['valor'].'. '.$funcionario_aprehensor['primer_nombre'].' '.$funcionario_aprehensor['primer_apellido'];
+        }
+        $funcionario_resenna_for = $funcionarios_resenna->Where('funcionarios.id', $id_funcionario_resenna)->get();
+        foreach($funcionario_resenna_for as $fun_resenna){
+            $funcionario_resenna = $fun_resenna['valor'].'. '.$fun_resenna['primer_nombre'].' '.$fun_resenna['primer_apellido'];
+        }
+        
+        $id_user = Auth::user()->id;
+        $id_Accion = 7; //Restauración
+        $valores_modificados = 'Datos de Reseña: '.
+        $fecha_resenna.' || '.$cedula.' || '.$primer_nombre.' '.$segundo_nombre.' || '.$primer_apellido.' || '.$segundo_apellido.' || '.
+        $fecha_nacimiento.' || '.$genero.' || '.$estado_civil.' || '.$profesion.' || '.$motivo_resenna.' || '.
+        $tez.' || '.$contextura.' || Funcionario Aprehensor: '.$funcionario_aprehensor.' || Funcionario que Reseña: '.
+        $funcionario_resenna.' || '.$direccion.' || '.$observaciones.' || '.$imagen;
+        event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Resenna'));
+        
+        $resenna = Resenna::withTrashed()->find($id, ['id']);
+        $resenna->restore();
+        Alert()->success('La Reseña ha sido Restaurada satisfactoriamente');
+        return redirect()->route('resenna.index');
+    }
+
+    public function restoreAll()
+    {
+        $id_user = Auth::user()->id;
+        $id_Accion = 7; //Restauración
+        $valores_modificados = 'Se han restaurado todas las Reseñas que se encontraban en la Papelera de Reciclaje, Fecha de Restauración: '.date('Y-m-d H:i:s');
+        event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Resenna'));
+
+        Resenna::onlyTrashed()->restore();
+
+        Alert()->success('Todas las Reseñas han sido Restauradas satisfactoriamente');
+        return redirect()->route('resenna.index');
+    }
+
+    public function restoreIndex()
+    {
+        $resennas = Resenna::onlyTrashed()->paginate(10);
+        $restore = 1;
+        $last_id_resenna['id'] = null;
+        return view('resenna.index', compact('resennas', 'restore', 'last_id_resenna'));
     }
 
     public function pdf(Resenna $resenna)

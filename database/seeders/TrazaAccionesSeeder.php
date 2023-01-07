@@ -21,5 +21,6 @@ class TrazaAccionesSeeder extends Seeder
         Traza_Acciones::create(['id' => 4, 'valor' => "Visualización"]);
         Traza_Acciones::create(['id' => 5, 'valor' => "Búsqueda"]);
         Traza_Acciones::create(['id' => 6, 'valor' => "PDF"]);
+        Traza_Acciones::create(['id' => 7, 'valor' => "Restauración"]);
     }
 }
