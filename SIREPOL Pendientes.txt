@@ -19,7 +19,7 @@ En proceso de Investigación, Occiso, por Determinar, Sin Registros, Solicitado 
 HACIENDO:
 - Crear Módulo para gestionar información de los nomencladores (Vista y Controlador)
 - Crear Sub-Módulos para gestionar Estatus de Funcionario, jerarquía y Organismos de Seguridad (Vistas y Controladores)
-- Añadir Checkbox en el lsitado de Usuarios y Crear Botón para inactivar en base a los checkbox 
+- Añadir Checkbox en el listado de Usuarios y Crear Botón para inactivar en base a los checkbox 
 - Aplicar Papelera de Reciclaje (SoftDeletes) para el Módulo de Permisos
 
 LISTO:
