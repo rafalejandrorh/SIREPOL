@@ -293,7 +293,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update_status($id)
+    public function updateStatus($id)
     {
         $user = User::Where('id', $id)->first();
 
@@ -329,7 +329,7 @@ class UserController extends Controller
         return redirect()->route('users.index');
     }
 
-    public function update_statusAll(Request $request)
+    public function updateStatusAll(Request $request)
     {
         $request = $request->all();
         $i = 0;
@@ -388,7 +388,7 @@ class UserController extends Controller
         return view('users.settings', compact('user', 'data', 'password_status'));
     }
 
-    public function settings_update(Request $request, $id)
+    public function updateSettings(Request $request, $id)
     {
         $persona = User::where('id', '=', $id)->first();
         $validacion_password = Hash::check(request('curr_password'), $persona->password);

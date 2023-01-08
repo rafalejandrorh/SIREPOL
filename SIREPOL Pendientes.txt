@@ -24,7 +24,6 @@ En proceso de Investigación, Occiso, por Determinar, Sin Registros, Solicitado 
 HACIENDO:
 - Añadir Carga masiva de Funcionarios con Archivo de Excel CSV (En el Apartado de Registrar)
 - Añadir Botón para descargar Excel con Información de los Módulos 
-- Acomodar nombres de Metodos adicionales (Ejemplo: update_status a updateStatus)
 
 LISTO:
 - Crear Botón para cerrar sesión a todos los Usuarios
@@ -57,3 +56,6 @@ de Contraseña por parte del Usuario; En su lugar, se migraron las vistas corres
 - Añadir Modal con Checkboxs en listado de Usuarios para activar o inactivar usuarios masivamente (En el Index del Módulo)
 - Añadir Buscador en Sub-Módulo de Permisos
 - Revisar todos los métodos que deban traer un usuario y quitar el get y colocar el first
+- Se organizan las rutas a nivel de Código
+- Acomodar nombres de Metodos adicionales (Ejemplo: update_status a updateStatus)
+- Se ajusta los Select Dependientes de Municipio

@@ -1,4 +1,7 @@
 $(document).ready(function() {
+    const url = window.location;
+    url_base = url.origin+'/SIREPOL/';
+
     $(".wrapper").show('fast');
     //funciones que se ejecutan automaticamente
     //-------------------------------------------------------------------------------------------------
@@ -15,27 +18,7 @@ $('#estados').change(function() {
     tipo = 108;
     campo = '#municipios';
     id = $('#estados').val();
-    cargarCombo(tipo, id, campo);
-});
-
-$("#estados1").change(function() {
-    var tipo;
-    var id;
-    var campo;
-    tipo = 108;
-    campo = '#municipios1';
-    id = $("#estados1").val();
-    cargarCombo(tipo, id, campo);
-});
-
-$("#estados2").change(function() {
-    var tipo;
-    var id;
-    var campo;
-    tipo = 108;
-    campo = '#municipios2';
-    id = $("#estados2").val();
-    cargarCombo2(tipo, id, campo);
+    cargarMunicipio(tipo, id, campo);
 });
 
 $(".forml").on('submit', function(e) {
@@ -49,30 +32,20 @@ $(".forml").on('submit', function(e) {
 //-----------------------------------------------------------------------------------------------------
 
 /**
- * [CargarCombo]
+ * [cargarMunicipio]
  * [recibe 3 parametros desde un select para activar un combo dependiente]
  * @param  {[integer]} tipo  [tipo de nomeclador]
  * @param  {[integer]} id    [id de nomenclador]
  * @param  {[string]} campo  [id del campo dependiente]
  * @return {[function]}      [data]
  */
- function cargarCombo(tipo, id, campo) {
-    var url = "create/select/"+tipo+"/"+id;
-    //alert(url);
-    $.get(url, function(data) {
+ function cargarMunicipio(tipo, id, campo) {
+    getUrl = url_base+'geografia/venezuela/municipio/'+tipo+'/'+id;
+    //alert(getUrl);
+    $.get(getUrl, function(data) {
         $(campo).empty();
         $(campo).append('<option value="">Seleccione</option>');
         $(campo).append(data);
-    });
-}
-
-function cargarCombo2(tipo, id, campo) {
-    var url = "edit/select/"+tipo+"/"+id;
-    $.get(url, function(data) {
-        $(campo).empty();
-        $(campo).append('<option value="">Seleccione</option>');
-        $(campo).append(data);
-        //alert(data);
     });
 }
 

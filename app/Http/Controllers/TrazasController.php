@@ -40,7 +40,7 @@ class TrazasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index_resenna(Request $request)
+    public function indexResenna(Request $request)
     {
         $request->all();
         if(isset($request->filtro) && $request->filtro == 1)
@@ -134,7 +134,7 @@ class TrazasController extends Controller
         return view('trazas.resennaIndex', compact('resennas', 'user', 'accion'));
     }
 
-    public function show_resenna(Traza_Resenna $resenna)
+    public function showResenna(Traza_Resenna $resenna)
     {
         return view('trazas.resennaShow', compact('resenna'));
     }
@@ -145,7 +145,7 @@ class TrazasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index_usuarios(Request $request)
+    public function indexUsuarios(Request $request)
     {
         $request->all();
         if(isset($request->filtro) && $request->filtro == 1)
@@ -240,7 +240,7 @@ class TrazasController extends Controller
         return view('trazas.usersIndex', compact('users', 'user', 'accion'));
     }
 
-    public function show_usuarios(Traza_User $user)
+    public function showUsuarios(Traza_User $user)
     {
         return view('trazas.userShow', compact('user'));
     }
@@ -251,7 +251,7 @@ class TrazasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index_funcionarios(Request $request)
+    public function indexFuncionarios(Request $request)
     {
         $request->all();
         if(isset($request->filtro) && $request->filtro == 1)
@@ -347,7 +347,7 @@ class TrazasController extends Controller
         return view('trazas.funcionariosIndex', compact('funcionario', 'user', 'accion'));
     }
 
-    public function show_funcionarios(Traza_Funcionarios $funcionario)
+    public function showFuncionarios(Traza_Funcionarios $funcionario)
     {
         return view('trazas.funcionarioShow', compact('funcionario'));
     }
@@ -358,7 +358,7 @@ class TrazasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function index_roles(Request $request)
+    public function indexRoles(Request $request)
     {
         $request->all();
         if(isset($request->filtro) && $request->filtro == 1)
@@ -443,7 +443,7 @@ class TrazasController extends Controller
         return view('trazas.rolesIndex', compact('roles', 'user', 'accion'));
     }
 
-    public function show_roles(Traza_Roles $role)
+    public function showRoles(Traza_Roles $role)
     {
         return view('trazas.roleShow', compact('role'));
     }
@@ -454,7 +454,7 @@ class TrazasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function index_historial_sesion(Request $request)
+    public function indexHistorialSesion(Request $request)
     {
         $request->all();
         if(isset($request->filtro) && $request->filtro == 1)
@@ -532,7 +532,7 @@ class TrazasController extends Controller
         return view('trazas.historialsesionIndex', compact('historial_sesion', 'user', 'accion'));
     }
 
-    public function index_sesiones(Request $request)
+    public function indexSesiones(Request $request)
     {
         $request->all();
         if(isset($request->filtro) && $request->filtro == 1)
@@ -627,7 +627,7 @@ class TrazasController extends Controller
         return view('trazas.sesionesIndex', compact('sesiones', 'user', 'accion'));
     }
 
-    public function show_sesiones(Traza_Sessions $sesion)
+    public function showSesiones(Traza_Sessions $sesion)
     {
         return view('trazas.sesioneShow', compact('sesion'));
     }
@@ -732,7 +732,7 @@ class TrazasController extends Controller
         return view('trazas.permisoShow', compact('permiso'));
     }
 
-    public function index_rutas_almacenamiento(Request $request)
+    public function indexRutasAlmacenamiento(Request $request)
     {
         $request->all();
         if(isset($request->filtro) && $request->filtro == 1)
@@ -827,7 +827,7 @@ class TrazasController extends Controller
         return view('trazas.rutasAlmacenamientoIndex', compact('rutas', 'user', 'accion'));
     }
 
-    public function show_rutas_almacenamiento(Traza_Rutas_Almacenamiento $ruta)
+    public function showRutasAlmacenamiento(Traza_Rutas_Almacenamiento $ruta)
     {
         return view('trazas.rutasAlmacenamientoShow', compact('ruta'));
     }
