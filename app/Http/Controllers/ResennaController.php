@@ -469,9 +469,9 @@ class ResennaController extends Controller
         }
 
         $cedula = $request['cedula'];
-        $obtener_persona = Person::where('cedula', $cedula)->get();
+        $obtener_persona = Person::where('cedula', $cedula)->first();
         $validar_persona = Person::where('cedula', $cedula)->exists();
-        $validar_resenna = Resenna::where('id_person', $obtener_persona[0]['id'])->exists();
+        $validar_resenna = Resenna::where('id_person', $obtener_persona['id'])->exists();
 
         if($validar_persona == false){
             $persona = new Person();
@@ -492,7 +492,7 @@ class ResennaController extends Controller
 
         $resenna = new Resenna();
         $resenna->fecha_resenna = $request->fecha_resenna;
-        $resenna->id_person = isset($id_person) ? $id_person : $obtener_persona[0]['id'];
+        $resenna->id_person = isset($id_person) ? $id_person : $obtener_persona['id'];
         $resenna->id_estado_civil = $request->id_estado_civil;
         $resenna->id_profesion = $request->id_profesion;
         $resenna->id_motivo_resenna = $request->id_motivo_resenna;
@@ -524,13 +524,13 @@ class ResennaController extends Controller
         
         $resenna->update(['url_foto' => 'storage/'.$imagen]);
 
-        $cedula = isset($request->cedula) ? $request->cedula : $obtener_persona[0]['cedula'];
-        $primer_nombre = isset($request->primer_nombre) ? $request->primer_nombre : $obtener_persona[0]['primer_nombre'];
-        $segundo_nombre = isset($request->segundo_nombre) ? $request->segundo_nombre : $obtener_persona[0]['segundo_nombre'];
-        $primer_apellido = isset($request->primer_apellido) ? $request->primer_apellido : $obtener_persona[0]['primer_apellido'];
-        $segundo_apellido = isset($request->segundo_apellido) ? $request->segundo_apellido : $obtener_persona[0]['segundo_apellido'];
-        $fecha_nacimiento = isset($request->fecha_nacimiento) ? $request->fecha_nacimiento : $obtener_persona[0]['fecha_nacimiento'];
-        $id_genero = isset($request->id_genero) ? $request->id_genero : $obtener_persona[0]['id_genero'];
+        $cedula = isset($request->cedula) ? $request->cedula : $obtener_persona['cedula'];
+        $primer_nombre = isset($request->primer_nombre) ? $request->primer_nombre : $obtener_persona['primer_nombre'];
+        $segundo_nombre = isset($request->segundo_nombre) ? $request->segundo_nombre : $obtener_persona['segundo_nombre'];
+        $primer_apellido = isset($request->primer_apellido) ? $request->primer_apellido : $obtener_persona['primer_apellido'];
+        $segundo_apellido = isset($request->segundo_apellido) ? $request->segundo_apellido : $obtener_persona['segundo_apellido'];
+        $fecha_nacimiento = isset($request->fecha_nacimiento) ? $request->fecha_nacimiento : $obtener_persona['fecha_nacimiento'];
+        $id_genero = isset($request->id_genero) ? $request->id_genero : $obtener_persona['id_genero'];
 
         $caracteristicas_Resennado = Caracteristicas_Resennado::get();
         $funcionarios = Funcionario::join('persons', 'persons.id', '=', 'funcionarios.id_person')

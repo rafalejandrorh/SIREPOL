@@ -140,7 +140,7 @@ class UserController extends Controller
         
         $usuario = new User();
 
-        $obtener_usuario = $usuario->where('id_funcionario', $request['id_funcionario'])->get();
+        $obtener_usuario = $usuario->where('id_funcionario', $request['id_funcionario'])->first();
         $validar_usuario = $usuario->where('id_funcionario', $request['id_funcionario'])->exists();
         if($validar_usuario == true){
             Alert()->info('El funcionario ya posee un Usuario.');
@@ -150,9 +150,9 @@ class UserController extends Controller
         if($validar_usuario == false){
 
             $funcionario = new Funcionario();
-            $obtener_funcionario = $funcionario->where('id', $request['id_funcionario'])->get();
+            $obtener_funcionario = $funcionario->where('id', $request['id_funcionario'])->first();
 
-            $id_estatus = $obtener_funcionario[0]['id_estatus'];
+            $id_estatus = $obtener_funcionario['id_estatus'];
 
             if($id_estatus == 1310000 || $id_estatus == 1310005)
             {

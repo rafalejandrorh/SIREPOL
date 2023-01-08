@@ -135,11 +135,11 @@ class FuncionarioController extends Controller
         $funcionario = new Funcionario();
 
         $cedula = $request['cedula'];
-        $obtener_persona = $person->where('cedula','=',$cedula)->get();
+        $obtener_persona = $person->where('cedula','=',$cedula)->first();
         $validar_persona = $person->where('cedula','=',$cedula)->exists();
         if($validar_persona == true){
-            $obtener_funcionario = $funcionario->where('id_person','=',$obtener_persona[0]['id'])->get();
-            $validar_funcionario = $funcionario->where('id_person','=',$obtener_persona[0]['id'])->exists();
+            $obtener_funcionario = $funcionario->where('id_person','=',$obtener_persona['id'])->first();
+            $validar_funcionario = $funcionario->where('id_person','=',$obtener_persona['id'])->exists();
             if($validar_funcionario == true){
                     Alert()->warning('El funcionario ya se encuentra registrado en el Sistema.', 'No se realizó el registro de la información ingresada');
                     return redirect()->route('funcionarios.index');
@@ -169,19 +169,19 @@ class FuncionarioController extends Controller
         $funcionario->credencial = $request['credencial'];
         $funcionario->id_jerarquia = $request['id_jerarquia'];
         $funcionario->telefono = $request['telefono'];
-        $funcionario->id_person = isset($id_person) ? $id_person : $obtener_persona[0]['id'];
+        $funcionario->id_person = isset($id_person) ? $id_person : $obtener_persona['id'];
         $funcionario->id_estatus = $request['id_estatus'];
         $funcionario->id_organismo = $request['id_organismo'];
         $funcionario->save();
         $id_funcionario = $funcionario->id;
 
-        $cedula = isset($request['cedula']) ? $request['cedula'] : $obtener_persona[0]['cedula'];
-        $primer_nombre = isset($request['primer_nombre']) ? $request['primer_nombre'] : $obtener_persona[0]['primer_nombre'];
-        $segundo_nombre = isset($request['segundo_nombre']) ? $request['segundo_nombre'] : $obtener_persona[0]['segundo_nombre'];
-        $primer_apellido = isset($request['primer_apellido']) ? $request['primer_apellido'] : $obtener_persona[0]['primer_apellido'];
-        $segundo_apellido = isset($request['segundo_apellido']) ? $request['segundo_apellido'] : $obtener_persona[0]['segundo_apellido'];
-        $fecha_nacimiento = isset($request['fecha_nacimiento']) ? $request['fecha_nacimiento'] : $obtener_persona[0]['fecha_nacimiento'];
-        $id_genero = isset($request['id_genero']) ? $request['id_genero'] : $obtener_persona[0]['id_genero'];
+        $cedula = isset($request['cedula']) ? $request['cedula'] : $obtener_persona['cedula'];
+        $primer_nombre = isset($request['primer_nombre']) ? $request['primer_nombre'] : $obtener_persona['primer_nombre'];
+        $segundo_nombre = isset($request['segundo_nombre']) ? $request['segundo_nombre'] : $obtener_persona['segundo_nombre'];
+        $primer_apellido = isset($request['primer_apellido']) ? $request['primer_apellido'] : $obtener_persona['primer_apellido'];
+        $segundo_apellido = isset($request['segundo_apellido']) ? $request['segundo_apellido'] : $obtener_persona['segundo_apellido'];
+        $fecha_nacimiento = isset($request['fecha_nacimiento']) ? $request['fecha_nacimiento'] : $obtener_persona['fecha_nacimiento'];
+        $id_genero = isset($request['id_genero']) ? $request['id_genero'] : $obtener_persona['id_genero'];
 
         $geografia = Geografia::get();
         $estatus_laboral = Estatus_Funcionario::get();

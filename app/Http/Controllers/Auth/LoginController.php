@@ -70,9 +70,9 @@ class LoginController extends Controller
         $validacion_user = User::Where('users', $request->users)->exists();
         if($validacion_user == true)
         {
-            $users = User::Where('users', '=', $request->users)->get();
-            $id_user = $users[0]['id'];
-            $password = $users[0]['password'];
+            $users = User::Where('users', '=', $request->users)->first();
+            $id_user = $users['id'];
+            $password = $users['password'];
 
             $validacion_sesion = Sessions::Where('user_id', $id_user)->exists();
             if($validacion_sesion == false)
