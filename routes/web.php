@@ -54,6 +54,8 @@ Route::get('/', [LoginController::class, 'index']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 
+Route::get('/status/user', [UserController::class, 'update_statusAll'])->name('users.update_status.all')->middleware('auth');
+
 Route::get('/settings/user', [App\Http\Controllers\UserController::class, 'settings'])->name('users.settings')->middleware('auth');
 
 Route::get('/historial_sesion', [App\Http\Controllers\TrazasController::class, 'index_historial_sesion'])->name('historial_sesion.index')->middleware('auth');

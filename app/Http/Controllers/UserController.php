@@ -34,10 +34,6 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $request->all();
-        if($request->buscador == null)
-        {
-            $request->buscador = null;
-        }
 
         if(isset($request->buscador) && is_numeric($request->buscador))
         {
@@ -299,16 +295,16 @@ class UserController extends Controller
      */
     public function update_status($id)
     {
-        $user = User::Where('id', $id)->get();
+        $user = User::Where('id', $id)->first();
 
-        $id_funcionario = $user[0]['id_funcionario'];
-        $status = $user[0]['status'];
-        $usuario = $user[0]['users'];
+        $id_funcionario = $user['id_funcionario'];
+        $status = $user['status'];
+        $usuario = $user['users'];
 
         $funcionario = new Funcionario();
-        $obtener_funcionario = $funcionario->where('id', $id_funcionario)->get();
+        $obtener_funcionario = $funcionario->where('id', $id_funcionario)->first();
 
-        $id_estatus = $obtener_funcionario[0]['id_estatus'];
+        $id_estatus = $obtener_funcionario['id_estatus'];
 
         if($status == true)
         {
@@ -330,6 +326,58 @@ class UserController extends Controller
         event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_User'));
 
         Alert()->success('Estatus de Usuario Actualizado', 'Nuevo Estatus: '.$notificacion);
+        return redirect()->route('users.index');
+    }
+
+    public function update_statusAll(Request $request)
+    {
+        $request = $request->all();
+        $i = 0;
+        $countUsers = $request['user'];
+        $dataUsers = null;
+        while($i < count($countUsers))
+        {
+            $user = User::Where('id', $countUsers[$i])->first();
+
+            $id_funcionario = $user['id_funcionario'];
+            $status = $user['status'];
+            $usuario = $user['users'];
+    
+            $funcionario = new Funcionario();
+            $obtener_funcionario = $funcionario->where('id', $id_funcionario)->first();
+    
+            $id_estatus = $obtener_funcionario['id_estatus'];
+    
+            if($status == true) {
+                $estatusFuncionario = true;
+                $estatus = false;
+                $notificacion = 'Inactivo';
+            }else if($status == false && $id_estatus == 1310000 || $id_estatus == 1310005){
+                $estatusFuncionario = true;
+                $estatus = true;
+                $notificacion = 'Activo';
+            }else{
+                $estatusFuncionario = false;
+                $notificacion = 'El Funcionario no se encuentra Activo, por lo que no se pudo activar el Usuario';
+            }
+
+            if($estatusFuncionario)
+            {
+                $users = User::find($countUsers[$i], ['id']);
+                $users->update(['status' => $estatus]);
+            }
+
+            $dataUsers .= $usuario.', '.$notificacion.' || ';
+
+            $i++;
+        }
+
+        $id_user = Auth::user()->id;
+        $id_Accion = 2; //Actualización
+        $valores_modificados = 'Datos de Usuario: '.$dataUsers;
+        event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_User'));
+
+        Alert()->success('Estatus de Usuario Actualizado', 'Usuarios Modificados: '.$dataUsers);
         return redirect()->route('users.index');
     }
 

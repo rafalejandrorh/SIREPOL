@@ -22,8 +22,11 @@ En proceso de Investigación, Occiso, por Determinar, Sin Registros, Solicitado 
 - Aplicar Papelera de Reciclaje (SoftDeletes) para el Módulo de Permisos
 
 HACIENDO:
-- Añadir Modal con Checkboxs en listado de Usuarios para activar o inactivar usuarios masivamente (En el Index del Módulo)
-- Añadir Carga masiva de Funcionarios y Usuarios con Archivo de Excel CSV (En el Apartado de Crear)
+- Añadir Carga masiva de Funcionarios con Archivo de Excel CSV (En el Apartado de Registrar)
+- Añadir Botón para descargar Excel con Información de los Módulos 
+- Realizar Buscador en Permisos
+- Revisar todos los métodos que deban traer un usuario y quitar el get y colocar el first
+- Acomodar nombres de Metodos adicionales (Ejemplo: update_status a updateStatus)
 
 LISTO:
 - Crear Botón para cerrar sesión a todos los Usuarios
@@ -53,3 +56,4 @@ de Contraseña por parte del Usuario; En su lugar, se migraron las vistas corres
 - Se Ajustan Modelos de Jerarquía, Estatus Funcionario y Organismos de Seguridad para gestionar la Información
 - Aplicar Papelera de Reciclaje (SoftDeletes) para el Módulo de Reseñas
 - Colocar validación al ingresar cambiar contraseña (JavaScript)
+- Añadir Modal con Checkboxs en listado de Usuarios para activar o inactivar usuarios masivamente (En el Index del Módulo)

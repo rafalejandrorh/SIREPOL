@@ -72,7 +72,7 @@ class RoleController extends Controller
                 $perm['description'];
                 
             } 
-            $roles .= $perm['description'].', '; 
+            $roles .= $perm['description'].' || '; 
             $i++;
         };
 

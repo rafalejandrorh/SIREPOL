@@ -39,11 +39,11 @@
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-12 col-md-12">
                                             <div class="form-group">
-                                                {{-- @can('sessions.destroyAll') --}}
+                                                @can('sessions.destroyAll')
                                                 {!! Form::open(['method' => 'DELETE', 'route' => ['sessions.destroy', 'all'], 'style'=>'display:inline', 'class' => 'eliminar']) !!}
                                                     {!! Form::button('Cerrar Todas las Sesiones', ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
                                                 {!! Form::close() !!}    
-                                                {{-- @endcan --}}
+                                                @endcan
                                             </div>
                                         </div>
                                     </div>

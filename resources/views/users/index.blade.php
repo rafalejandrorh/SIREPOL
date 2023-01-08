@@ -13,7 +13,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-4 col-xl-4">
-                                    <div class="card bg-info order-card">
+                                    <div class="card bg-primary order-card">
                                         <div class="card-block">
                                             <h5>Total de Usuarios</h5>
                                             <h3 class="text-left"><span>{{$countUsers}}</span></h3>
@@ -48,7 +48,7 @@
                         <div class="card-body">
                             {!! Form::open(array('route' => 'users.index','method' => 'GET')) !!}
                             <div class="row">
-                                <div class="col-xs-3 col-sm-3 col-md-5">
+                                <div class="col-xs-4 col-sm-4 col-md-4">
                                     <div class="form-group">
                                         {!! Form::select('tipo_busqueda', ['' => 'Ver todos',
                                         'cedula' => 'Cédula',
@@ -72,11 +72,18 @@
                             </div>
                             {!! Form::close() !!}
 
-                                <div class="col-xs-2 col-sm-2 col-md-2">
-                                    <div class="form-group">
-                                        @can('users.create')
-                                        <a class="btn btn-success" href="{{ route('users.create') }}"><i class="fas fa-plus"></i> Crear</a>                        
-                                        @endcan
+                                <div class="row">
+                                    <div class="col-xs-10 col-sm-10 col-md-10">
+                                        <div class="form-group">
+                                            @can('users.create')
+                                            <a class="btn btn-success" href="{{ route('users.create') }}"><i class="fas fa-plus"></i> Crear</a>                        
+                                            @endcan
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-2 col-sm-2 col-md-2"> 
+                                        <div class="form-group">
+                                            <a href="#!" class="btn btn-primary" data-toggle="modal" data-target="#modifyStatus"><i class="fa fa-spinner"></i> Modificar Estatus</a>
+                                        </div>
                                     </div>
                                 </div>
                                     <table class="table table-striped mt-2 display dataTable table-hover">
@@ -137,6 +144,7 @@
         </div>
     </div>
 </section>
+    @include('users.modals.estatus', ['estatus' => 'users.update_status.all'])
 @endsection
 
 @section('scripts')
