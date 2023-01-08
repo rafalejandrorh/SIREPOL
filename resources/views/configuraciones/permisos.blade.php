@@ -12,8 +12,31 @@
                         <div class="card-body">
 
                             <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="col-xs-2 col-sm-2 col-md-2">
                                     <a href="{{ route('configuraciones.index') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
+                                </div>
+
+                                <div class="col-xs-4 col-sm-4 col-md-4">
+                                    {!! Form::open(array('route' => 'permisos.index','method' => 'GET')) !!}
+                                    <div class="form-group">
+                                        {!! Form::select('tipo_busqueda', [
+                                        '' => 'Ver todos',
+                                        'nomenclatura' => 'Nomenclatura',
+                                        'descripcion' => 'Descripción',
+                                        'permiso' => 'Tipo de Permiso', 
+                                        ], 
+                                        'Seleccionar', array('class' => 'form-control select2')) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-3 col-sm-3 col-md-3">
+                                    <div class="form-group">
+                                        {!! Form::text('buscador', null, array('class' => 'form-control')) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-3 col-sm-3 col-md-3">
+                                    {!! Form::button('<i class="fa fa-search"> Buscar</i>', ['type' => 'submit', 'class' => 'btn btn-primary']) !!}
                                 </div>
                             </div>
                             <br>

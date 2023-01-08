@@ -78,13 +78,13 @@ class UserController extends Controller
                 $Users = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
                 ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
                 ->select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
-                ->Where('persons.primer_nombre', 'ilike', '%'.$request->buscador.'%')->paginate(5);
+                ->Where('persons.primer_nombre', 'ilike', '%'.$request->buscador.'%')->paginate(10);
 
             }else if($request->tipo_busqueda == 'apellido'){
                 $Users = User::join('funcionarios', 'funcionarios.id', '=', 'users.id_funcionario')
                 ->join('persons', 'persons.id', '=', 'funcionarios.id_person')
                 ->select('users.id', 'users.id_funcionario', 'users.users', 'users.status')
-                ->Where('persons.primer_apellido', 'ilike', '%'.$request->buscador.'%')->paginate(5);
+                ->Where('persons.primer_apellido', 'ilike', '%'.$request->buscador.'%')->paginate(10);
 
             }else{
                 Alert()->warning('Búsqueda no permitida');
