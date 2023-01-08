@@ -3,5 +3,5 @@
 </div>
 
 <div class="footer-right">
-    Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }}) <b>SIREPOL</b> 1.0.9
+    Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }}) <i class="fa fa-code-branch"></i> <b>@php echo $_ENV['APP_NAME'].' '.$_ENV['APP_VERSION'] @endphp</b> 
 </div>
