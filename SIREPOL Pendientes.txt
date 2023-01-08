@@ -59,3 +59,50 @@ de Contraseña por parte del Usuario; En su lugar, se migraron las vistas corres
 - Se organizan las rutas a nivel de Código
 - Acomodar nombres de Metodos adicionales (Ejemplo: update_status a updateStatus)
 - Se ajusta los Select Dependientes de Municipio
+
+
+
+
+////////////////////////////////
+
+Lógica para cargar información de Archivos Excel CSV
+
+			$data = null;
+			$file_location = $_FILES['uploadFile']['tmp_name'];
+
+	    $dataFile = file($file_location);
+			$i = 0;
+
+			while($i < count($dataFile))
+			{
+				$ex = explode(';', $dataFile[$i]);
+				$dataFile0 = $ex[0];
+				$column0[] = preg_replace('/[\r\n|\n|\r]+/', '', $dataFile0);
+        if(isset($ex[1]))
+        {
+          $dataFile1 = $ex[1];
+          $column1[] = preg_replace('/[\r\n|\n|\r]+/', '', $dataFile1);
+        }
+
+				$i++;
+			};
+
+	        if(isset($data) && $column0[0] == 'orderNumber')
+	        {
+	        	$i = 0;
+	        	$countData = count($data);
+	        	$truncate = $this->OrdersTreatment_model->truncateOrdersTreatment();
+	        	$fecha = $tools->ClearCadena($this->input->post('fecha'));
+		        while($i < $countData){
+		        	if($data[$i] != 'orderNumber')
+		        	{
+		        		$this->OrdersTreatment_model->storeOrdersForTreatment($data[$i]);
+		        	}
+		        	$i++;
+		        };
+		        $this->OrdersTreatment_model->updateOrders($fecha);
+		        $result = 'OK';
+	        }else{
+	        	$result = null;
+	        }
+			echo json_encode($result);
