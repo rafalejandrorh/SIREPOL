@@ -16,11 +16,14 @@ En proceso de Investigación, Occiso, por Determinar, Sin Registros, Solicitado 
 
 - Evaluar factibilidad para Ajustar vista de forms para proporcionar mayor escalabilidad (Reseña)
 
-HACIENDO:
 - Crear Módulo para gestionar información de los nomencladores (Vista y Controlador)
 - Crear Sub-Módulos para gestionar Estatus de Funcionario, jerarquía y Organismos de Seguridad (Vistas y Controladores)
-- Añadir Checkbox en el listado de Usuarios y Crear Botón para inactivar en base a los checkbox 
+
 - Aplicar Papelera de Reciclaje (SoftDeletes) para el Módulo de Permisos
+
+HACIENDO:
+- Añadir Modal con Checkboxs en listado de Usuarios para activar o inactivar usuarios masivamente (En el Index del Módulo)
+- Añadir Carga masiva de Funcionarios y Usuarios con Archivo de Excel CSV (En el Apartado de Crear)
 
 LISTO:
 - Crear Botón para cerrar sesión a todos los Usuarios
