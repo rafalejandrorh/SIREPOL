@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Validator;
 use Alert;
 use App\Events\PublicNotification;
 use App\Events\TrazasEvent;
+use App\Exports\UsersExport;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -379,6 +381,11 @@ class UserController extends Controller
 
         Alert()->success('Estatus de Usuario Actualizado', 'Usuarios Modificados: '.$dataUsers);
         return redirect()->route('users.index');
+    }
+
+    public function exportExcel()
+    {
+        return Excel::download(new UsersExport, 'users.xlsx');
     }
 
     public function settings($password_status = null)

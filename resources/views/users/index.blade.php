@@ -73,7 +73,7 @@
                             {!! Form::close() !!}
 
                                 <div class="row">
-                                    <div class="col-xs-10 col-sm-10 col-md-10">
+                                    <div class="col-xs-9 col-sm-9 col-md-9">
                                         <div class="form-group">
                                             @can('users.create')
                                             <a class="btn btn-success" href="{{ route('users.create') }}"><i class="fas fa-plus"></i> Crear</a>                        
@@ -83,6 +83,13 @@
                                     <div class="col-xs-2 col-sm-2 col-md-2"> 
                                         <div class="form-group">
                                             <a href="#!" class="btn btn-primary" data-toggle="modal" data-target="#modifyStatus"><i class="fa fa-spinner"></i> Modificar Estatus</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-1 col-sm-1 col-md-1">
+                                        <div class="form-group">
+                                            @can('users.create')
+                                            <a class="btn btn-success" href="{{ route('users.export.excel') }}"><i class="fas fa-file-excel"></i></a>                        
+                                            @endcan
                                         </div>
                                     </div>
                                 </div>

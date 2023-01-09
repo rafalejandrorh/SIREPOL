@@ -61,6 +61,7 @@ Route::get('geografia/venezuela/municipio/{id}/{id_hijo}', [App\Http\Controllers
 
 
 // Rutas Adicionales de Módulo de Usuarios
+Route::get('export/users/', [UserController::class, 'exportExcel'])->name('users.export.excel')->middleware('auth');
 Route::patch('/reset/{user}', [UserController::class, 'ResetPassword'])->name('users.reset')->middleware('auth');
 Route::get('/status/user', [UserController::class, 'updateStatusAll'])->name('users.update_status.all')->middleware('auth');
 Route::patch('/users/{user}/status', [UserController::class, 'updateStatus'])->name('users.update_status')->middleware('auth');

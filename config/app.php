@@ -183,10 +183,6 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
-         * Package Service Providers...
-         */
-
-        /*
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
@@ -195,6 +191,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * Package Service Providers...
+         */
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
@@ -202,6 +201,8 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
         Cornford\Googlmapper\MapperServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+        
     ],
 
     /*
@@ -224,5 +225,6 @@ return [
     'ReCaptcha' => Biscolab\ReCaptcha\Facades\ReCaptcha::class,
     'Debugbar' => Barryvdh\Debugbar\Facade::class,
     'Mapper' => Cornford\Googlmapper\Facades\MapperFacade::class,
+    'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
 ];
