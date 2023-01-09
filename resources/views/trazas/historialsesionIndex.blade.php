@@ -12,8 +12,13 @@
                         <div class="card-body">
 
                             <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="col-xs-11 col-sm-11 col-md-11">
                                     <a href="{{ route('trazas.index') }}" class="btn btn-danger"><i class="fa fa-reply"></i> Regresar</a>
+                                </div>
+                                <div class="col-xs-1 col-sm-1 col-md-1">
+                                    <div class="form-group">
+                                        <a class="btn btn-success" href="{{ route('historial_sesion.export.excel') }}"><i class="fas fa-file-excel"></i></a>                        
+                                    </div>
                                 </div>
                             </div>
                             <br>

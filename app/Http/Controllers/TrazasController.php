@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Historial_Sesion;
 use Illuminate\Http\Request;
 use Alert;
+use App\Exports\Historial_SesionExport;
 use App\Models\Resenna;
 use App\Models\Traza_Acciones;
 use App\Models\Traza_Funcionarios;
@@ -15,6 +16,7 @@ use App\Models\Traza_User;
 use App\Models\Traza_Permisos;
 use App\Models\Traza_Rutas_Almacenamiento;
 use App\Models\User;
+use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Role;
 
 class TrazasController extends Controller
@@ -830,6 +832,11 @@ class TrazasController extends Controller
     public function showRutasAlmacenamiento(Traza_Rutas_Almacenamiento $ruta)
     {
         return view('trazas.rutasAlmacenamientoShow', compact('ruta'));
+    }
+
+    public function exportExcel()
+    {
+        return Excel::download(new Historial_SesionExport, 'historial_sesion.xlsx');
     }
 
 }

@@ -62,7 +62,7 @@ de Contraseña por parte del Usuario; En su lugar, se migraron las vistas corres
 - Se ajusta los Select Dependientes de Municipio
 - Añadir Botón para descargar Excel con Información de los Módulos (Usuarios)
 - Añadir Botón para descargar Excel con Información de los Módulos (Roles)
-
+- Añadir Botón para descargar Excel con Información de los Módulos (Historial de Sesión)
 
 ////////////////////////////////
 
