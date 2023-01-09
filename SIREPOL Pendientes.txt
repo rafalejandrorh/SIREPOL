@@ -21,10 +21,13 @@ En proceso de Investigación, Occiso, por Determinar, Sin Registros, Solicitado 
 
 - Aplicar Papelera de Reciclaje (SoftDeletes) para el Módulo de Permisos
 
-HACIENDO:
 - Añadir Carga masiva de Funcionarios con Archivo de Excel CSV (En el Apartado de Registrar)
+
 - Añadir Botón para descargar Excel con Información de los Módulos (Funcionarios: Toda la Información de Persons y Cantidad de Aprehensiones y Reseñas)
 - Añadir Botón para descargar Excel con Información de los Módulos (Trazas)
+
+HACIENDO:
+
 
 LISTO:
 - Crear Botón para cerrar sesión a todos los Usuarios
