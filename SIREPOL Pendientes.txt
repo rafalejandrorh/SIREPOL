@@ -24,7 +24,6 @@ En proceso de Investigación, Occiso, por Determinar, Sin Registros, Solicitado 
 HACIENDO:
 - Añadir Carga masiva de Funcionarios con Archivo de Excel CSV (En el Apartado de Registrar)
 - Añadir Botón para descargar Excel con Información de los Módulos (Funcionarios: Toda la Información de Persons y Cantidad de Aprehensiones y Reseñas)
-- Añadir Botón para descargar Excel con Información de los Módulos (Roles)
 - Añadir Botón para descargar Excel con Información de los Módulos (Trazas)
 
 LISTO:
@@ -62,8 +61,7 @@ de Contraseña por parte del Usuario; En su lugar, se migraron las vistas corres
 - Acomodar nombres de Metodos adicionales (Ejemplo: update_status a updateStatus)
 - Se ajusta los Select Dependientes de Municipio
 - Añadir Botón para descargar Excel con Información de los Módulos (Usuarios)
-
-
+- Añadir Botón para descargar Excel con Información de los Módulos (Roles)
 
 
 ////////////////////////////////
