@@ -87,7 +87,7 @@
                                     </div>
                                     <div class="col-xs-1 col-sm-1 col-md-1">
                                         <div class="form-group">
-                                            @can('users.create')
+                                            @can('users.excel')
                                             <a class="btn btn-success" href="{{ route('users.export.excel') }}"><i class="fas fa-file-excel"></i></a>                        
                                             @endcan
                                         </div>

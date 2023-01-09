@@ -11,14 +11,23 @@
                     <div class="card">
                         <div class="card-body">
         
-                            <div class="col-xs-2 col-sm-2 col-md-2">
-                                <div class="form-group">
-                                    @can('roles.create')
-                                    <a class="btn btn-success" href="{{ route('roles.create') }}"><i class="fas fa-plus"></i> Crear</a>                        
-                                    @endcan
+                            <div class="row">
+                                <div class="col-xs-11 col-sm-11 col-md-11">
+                                    <div class="form-group">
+                                        @can('roles.create')
+                                        <a class="btn btn-success" href="{{ route('roles.create') }}"><i class="fas fa-plus"></i> Crear</a>                        
+                                        @endcan
+                                    </div>
+                                </div>
+                                <div class="col-xs-1 col-sm-1 col-md-1">
+                                    <div class="form-group">
+                                        @can('roles.excel')
+                                        <a class="btn btn-success" href="{{ route('roles.export.excel') }}"><i class="fas fa-file-excel"></i></a>                        
+                                        @endcan
+                                    </div>
                                 </div>
                             </div>
-
+                            
                             <table class="table table-striped mt-2 display dataTable table-hover">
                                 <thead>                                         
                                     <th>Rol</th>

@@ -60,6 +60,10 @@ Route::get('/abstractMessages', [MessagesController::class, 'abstract'])->name('
 Route::get('geografia/venezuela/municipio/{id}/{id_hijo}', [App\Http\Controllers\GeografiaVenezuelaController::class, 'getMunicipios'])->middleware('auth');
 
 
+// Rutas Adicionales de Módulo de Roles
+Route::get('export/roles/', [RoleController::class, 'exportExcel'])->name('roles.export.excel')->middleware('auth');
+
+
 // Rutas Adicionales de Módulo de Usuarios
 Route::get('export/users/', [UserController::class, 'exportExcel'])->name('users.export.excel')->middleware('auth');
 Route::patch('/reset/{user}', [UserController::class, 'ResetPassword'])->name('users.reset')->middleware('auth');

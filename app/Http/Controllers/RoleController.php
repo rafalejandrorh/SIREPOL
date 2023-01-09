@@ -7,10 +7,10 @@ use Spatie\Permission\Models\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Caracteristicas_Resennado;
-use App\Models\Traza_Roles;
 Use Alert;
 use App\Events\TrazasEvent;
+use App\Exports\RolesExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RoleController extends Controller
 {
@@ -21,6 +21,7 @@ class RoleController extends Controller
         $this->middleware('can:roles.show')->only('show');
         $this->middleware('can:roles.edit')->only('edit', 'update');
         $this->middleware('can:roles.destroy')->only('destroy');
+        $this->middleware('can:roles.excel')->only('exportExcel');
     }
     /**
      * Display a listing of the resource.
@@ -191,5 +192,10 @@ class RoleController extends Controller
         $role->delete();
 
         return redirect()->route('roles.index')->with('eliminar', 'Ok');                        
+    }
+
+    public function exportExcel()
+    {
+        return Excel::download(new RolesExport, 'roles.xlsx');
     }
 }
