@@ -27,7 +27,7 @@ En proceso de Investigación, Occiso, por Determinar, Sin Registros, Solicitado 
 - Añadir Botón para descargar Excel con Información de los Módulos (Trazas)
 
 - Notificación al Enviar Correo para Reset de Password y al Cambiarla Exitosamente
-- 
+- Personalizar mensaje de Email de Reestablecimiento de Contraseña
 
 HACIENDO:
 
