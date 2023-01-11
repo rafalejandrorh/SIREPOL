@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
-use Alert;
 
 trait ResetsPasswords
 {
@@ -136,13 +135,12 @@ trait ResetsPasswords
      */
     protected function sendResetResponse(Request $request, $response)
     {
-        if ($request->wantsJson()) {
-            return new JsonResponse(['message' => trans($response)], 200);
-        }
-        
-        alert()->toast('Reinicio de Contraseña realizado', 'success');
-        return redirect($this->redirectPath())
-                            ->with('status', trans($response));
+        Alert()->success('Reinicio de Contraseña realizado satisfactoriamente'); 
+        //Alert()->toast('Reinicio de Contraseña realizado', 'success');
+
+        return $request->wantsJson()
+        ? new JsonResponse(['message' => trans($response)], 200)
+        : redirect($this->redirectPath())->with('status', trans($response));
     }
 
     /**

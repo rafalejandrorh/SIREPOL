@@ -139,7 +139,7 @@ class LoginController extends Controller
 
         if($response)
         {
-            Alert()->warning('Atención', 'Por Razones de Seguridad, debe cambiar su contraseña.');
+            Alert()->warning('Atención', 'Por Razones de Seguridad, debe cambiar su contraseña');
             return app(UserController::class)->settings($response);
         }else{
             Alert()->toast('Inicio de Sesión Exitoso','success');
