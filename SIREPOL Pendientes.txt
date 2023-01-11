@@ -28,6 +28,7 @@ En proceso de Investigación, Occiso, por Determinar, Sin Registros, Solicitado 
 
 - Notificación al Enviar Correo para Reset de Password y al Cambiarla Exitosamente
 - Personalizar mensaje de Email de Reestablecimiento de Contraseña
+- Añadir campo al Crear y Editar Usuario para colocar Correo Electrónico
 
 HACIENDO:
 
