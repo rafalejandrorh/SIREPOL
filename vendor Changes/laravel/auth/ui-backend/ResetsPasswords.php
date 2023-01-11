@@ -136,7 +136,6 @@ trait ResetsPasswords
     protected function sendResetResponse(Request $request, $response)
     {
         Alert()->success('Reinicio de Contraseña realizado satisfactoriamente'); 
-        //Alert()->toast('Reinicio de Contraseña realizado', 'success');
 
         return $request->wantsJson()
         ? new JsonResponse(['message' => trans($response)], 200)

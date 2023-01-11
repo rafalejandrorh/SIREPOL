@@ -89,6 +89,7 @@ trait SendsPasswordResetEmails
      */
     protected function sendResetLinkFailedResponse(Request $request, $response)
     {
+        Alert()->warning('El correo es incorrecto o el servicio no se encuentra disponible'); 
         if ($request->wantsJson()) {
             throw ValidationException::withMessages([
                 'email' => [trans($response)],

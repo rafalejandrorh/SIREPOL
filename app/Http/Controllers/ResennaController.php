@@ -16,12 +16,12 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Barryvdh\DomPDF\Facade\Pdf;
-use App\Events\NotificationResennaEvent;
 use App\Events\TrazasEvent;
 use App\Models\Rutas_Almacenamiento;
+use App\Models\User;
+use App\Notifications\EmailSendResenna;
 use Carbon\Carbon;
 use Cornford\Googlmapper\Facades\MapperFacade as Mapper;
-use PhpParser\Node\Stmt\While_;
 
 class ResennaController extends Controller
 {
@@ -582,7 +582,6 @@ class ResennaController extends Controller
         event(new TrazasEvent($id_user, $id_Accion, $valores_modificados, 'Traza_Resenna'));
 
         // Notificacion
-        event(new NotificationResennaEvent($resenna, $id_user));
 
         if($validar_resenna)
         {

@@ -28,6 +28,8 @@ En proceso de Investigación, Occiso, por Determinar, Sin Registros, Solicitado 
 
 - Notification al cambiar la contraseña Exitosamente
 
+- Notificaciones vía Correo cada vez que se registre una Reseña
+
 HACIENDO:
 
 
