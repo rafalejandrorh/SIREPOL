@@ -140,7 +140,7 @@ trait ResetsPasswords
             return new JsonResponse(['message' => trans($response)], 200);
         }
         
-        Alert()->success('Reinicio de Contraseña realizado');
+        alert()->toast('Reinicio de Contraseña realizado', 'success');
         return redirect($this->redirectPath())
                             ->with('status', trans($response));
     }
