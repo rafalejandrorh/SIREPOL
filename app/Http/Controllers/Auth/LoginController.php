@@ -7,7 +7,6 @@ use App\Providers\RouteServiceProvider;
 use App\Models\Historial_Sesion;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Arr;
 use Illuminate\Http\JsonResponse;
 use Alert;

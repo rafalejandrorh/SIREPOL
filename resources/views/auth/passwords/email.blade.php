@@ -8,10 +8,10 @@
         </div>  
     </div>
     <div class="card card-primary">
-        <div class="card-header"><h4>Reestablecer Contraseña</h4></div>
+        <div class="card-header"><h4>Olvidé mi Contraseña</h4></div>
 
         <div class="card-body">
-            <form method="POST" action="{{ route('password.mail') }}">
+            <form method="POST" action="{{ route('password.email') }}">
                 @csrf
                 <div class="input-group mb-3">
                     <input type="email"
@@ -22,6 +22,12 @@
                     @if ($errors->has('email'))
                         <span class="error invalid-feedback">{{ $errors->first('password') }}</span>
                     @endif
+
+                    @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                 </div>
 
 

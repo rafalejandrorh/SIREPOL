@@ -24,7 +24,8 @@ class User extends Authenticatable
         'password',
         'status',
         'last_login',
-        'password_status'
+        'password_status',
+        'email'
     ];
 
     /**
@@ -55,11 +56,6 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class, 'id');
     }
-
-    public function sendPasswordResetNotification($token)
-    {
-        //$this->notify();//new ResetPassword($token)
-    } 
 
     static function returnValidations(){
 

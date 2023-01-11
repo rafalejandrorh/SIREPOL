@@ -26,6 +26,9 @@ En proceso de Investigación, Occiso, por Determinar, Sin Registros, Solicitado 
 - Añadir Botón para descargar Excel con Información de los Módulos (Funcionarios: Toda la Información de Persons y Cantidad de Aprehensiones y Reseñas)
 - Añadir Botón para descargar Excel con Información de los Módulos (Trazas)
 
+- Notificación al Enviar Correo para Reset de Password y al Cambiarla Exitosamente
+- 
+
 HACIENDO:
 
 
@@ -66,6 +69,7 @@ de Contraseña por parte del Usuario; En su lugar, se migraron las vistas corres
 - Añadir Botón para descargar Excel con Información de los Módulos (Usuarios)
 - Añadir Botón para descargar Excel con Información de los Módulos (Roles)
 - Añadir Botón para descargar Excel con Información de los Módulos (Historial de Sesión)
+- Habilitar Olvidé mi Contraseña y recuperación por correo
 
 ////////////////////////////////
 

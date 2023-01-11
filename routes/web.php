@@ -155,9 +155,9 @@ Auth::routes();
 
 
 // Rutas Adicionales de Contraseña
-Route::get('/password/forgot', [ForgotPasswordController::class, 'index'])->name('password.forgot');
-Route::post('/password/mail', [ForgotPasswordController::class, 'sendMail'])->name('password.mail');
-Route::post('/password/reset', [ResetPasswordController::class, 'index'])->name('password.reset');
+//Route::get('/password/forgot', [ForgotPasswordController::class, 'index'])->name('password.forgot');
+//Route::post('/password/mail', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.mail');
+//Route::post('/password/reset', [ResetPasswordController::class, 'index'])->name('password.reset');
 
 
 // Rutas Adicionales de Logout
