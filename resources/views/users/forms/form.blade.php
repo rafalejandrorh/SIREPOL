@@ -36,14 +36,20 @@
             {!! Form::text('users', isset($user->users) ? $user->users : null, array('class' => 'form-control', 'required' => 'required')) !!}
         </div>
     </div>
+    <div class="col-xs-4 col-sm-4 col-md-4">
+        <div class="form-group">
+            <label for="email">Correo Electrónico</label>
+            {!! Form::email('email', isset($user->email) ? $user->email : null, array('class' => 'form-control', 'required' => 'required')) !!}
+        </div>
+    </div>
 @if (!isset($user))
-    <div class="col-xs-12 col-sm-12 col-md-6">
+    <div class="col-xs-4 col-sm-4 col-md-4">
         <div class="form-group">
             <label for="password">Password</label>
             {!! Form::password('password', array('class' => 'form-control', 'required' => 'required')) !!}
         </div>
     </div>
-    <div class="col-xs-12 col-sm-12 col-md-6">
+    <div class="col-xs-4 col-sm-4 col-md-4">
         <div class="form-group">
             <label for="confirm-password">Confirmar Password</label>
             {!! Form::password('confirm-password', array('class' => 'form-control', 'required' => 'required')) !!}

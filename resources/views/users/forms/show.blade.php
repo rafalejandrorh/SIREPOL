@@ -33,7 +33,14 @@
         </div>
     </div> 
 
-    <div class="col-xs-6 col-sm-6 col-md-6">
+    <div class="col-xs-3 col-sm-3 col-md-3">
+        <div class="form-group">
+            <label for="email">Correo Electrónico</label>
+            {!! Form::text('email', $user->email, array('class' => 'form-control', 'readonly')) !!}
+        </div>
+    </div> 
+
+    <div class="col-xs-3 col-sm-3 col-md-3">
         <div class="form-group">
             <label for="email">Último Inicio de Sesión</label>
             {!! Form::text('users', $user->last_login, array('class' => 'form-control', 'readonly')) !!}

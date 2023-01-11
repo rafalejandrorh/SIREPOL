@@ -166,6 +166,7 @@ class UserController extends Controller
             $usuario->users = $request['users'];
             $usuario->password = $request['password'];
             $usuario->status = 'true';
+            $usuario->email = $request['email'];
             $usuario->save();
             $usuario->roles()->sync($request['roles']);
 
